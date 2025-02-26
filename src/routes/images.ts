@@ -1,3 +1,4 @@
+//images.ts (client)
 import express, { Request, Response } from 'express';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
@@ -23,20 +24,18 @@ async function getRandomImageWithYear(): Promise<any> {
   }
 
   try {
-    // Fetch random images from Wikimedia API
+    // Fetch random images from Wikimedia API without auth headers
     const response = await fetch(
-      'https://commons.wikimedia.org/w/api.php?action=query&list=random&rnnamespace=6&rnlimit=20&format=json',
-      {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Api-User-Agent': 'Wikimedia Year Guessing Game/1.0',
-          'Client-Id': `${clientId}`
-        }
-      }
+      'https://commons.wikimedia.org/w/api.php?action=query&list=random&rnnamespace=6&rnlimit=20&format=json'
     );
-
+  
     const data = await response.json();
-    const randomImages = data.query.random;
+
+if (!data.query || !data.query.random) {
+  console.error('Unexpected API response:', data);
+  throw new Error('Invalid response from Wikimedia API');
+}
+const randomImages = data.query.random;
 
     // Process each image to get more details and year information
     const processedImages = await Promise.all(
@@ -45,14 +44,7 @@ async function getRandomImageWithYear(): Promise<any> {
         
         // Get image info including upload date, URL, etc.
         const infoResponse = await fetch(
-          `https://commons.wikimedia.org/w/api.php?action=query&titles=${encodeURIComponent(img.title)}&prop=imageinfo&iiprop=url|timestamp|user|extmetadata&format=json`,
-          {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`,
-              'Api-User-Agent': 'Wikimedia Year Guessing Game/1.0',
-              'Client-Id': `${clientId}`
-            }
-          }
+          `https://commons.wikimedia.org/w/api.php?action=query&titles=${encodeURIComponent(img.title)}&prop=imageinfo&iiprop=url|timestamp|user|extmetadata&format=json`
         );
 
         const infoData = await infoResponse.json();
