@@ -26,7 +26,12 @@ async function getRandomImageWithYear(): Promise<any> {
   try {
     // Fetch random images from Wikimedia API without auth headers
     const response = await fetch(
-      'https://commons.wikimedia.org/w/api.php?action=query&list=random&rnnamespace=6&rnlimit=20&format=json'
+      'https://commons.wikimedia.org/w/api.php?action=query&list=random&rnnamespace=6&rnlimit=20&format=json',
+      {
+        headers: {
+          'User-Agent': 'Wikimedia Year Guessing Game/1.0 (ccreguer@gmail.com)'
+        }
+      }
     );
   
     const data = await response.json();
@@ -44,7 +49,12 @@ const randomImages = data.query.random;
         
         // Get image info including upload date, URL, etc.
         const infoResponse = await fetch(
-          `https://commons.wikimedia.org/w/api.php?action=query&titles=${encodeURIComponent(img.title)}&prop=imageinfo&iiprop=url|timestamp|user|extmetadata&format=json`
+          `https://commons.wikimedia.org/w/api.php?action=query&titles=${encodeURIComponent(img.title)}&prop=imageinfo&iiprop=url|timestamp|user|extmetadata&format=json`,
+          {
+            headers: {
+              'User-Agent': 'Wikimedia Year Guessing Game/1.0 (ccreguer@gmail.com)'
+            }
+          }
         );
 
         const infoData = await infoResponse.json();
