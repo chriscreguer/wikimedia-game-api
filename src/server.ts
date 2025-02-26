@@ -17,7 +17,7 @@ app.use(express.json());
 app.use('/api/images', imagesRoutes);
 
 // Health check route
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.json({ status: 'API is running' });
 });
 

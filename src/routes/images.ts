@@ -1,120 +1,122 @@
 import express, { Request, Response } from 'express';
 import fetch from 'node-fetch';
-import { 
-  WikimediaImage, 
-  WikimediaQueryResponse, 
-  ImageCache 
-} from '../types/wikimedia';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const router = express.Router();
 
-// Environment variables
-const ACCESS_TOKEN = process.env.WIKIMEDIA_ACCESS_TOKEN as string;
+// Cache to minimize API calls to Wikimedia
+const imageCache: any[] = [];
 
-// Cache constants
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-const MAX_CACHE_SIZE = 100;
+// Wikimedia API credentials
+const clientId = process.env.WIKIMEDIA_CLIENT_ID;
+const clientSecret = process.env.WIKIMEDIA_CLIENT_SECRET;
+const accessToken = process.env.WIKIMEDIA_ACCESS_TOKEN;
 
-// Cache to minimize API requests
-const imageCache: ImageCache = {
-  items: [],
-  lastUpdate: null
-};
+// Fetch a random image from Wikimedia Commons with year information
+async function getRandomImageWithYear(): Promise<any> {
+  // Check if we have cached images
+  if (imageCache.length > 0) {
+    const randomIndex = Math.floor(Math.random() * imageCache.length);
+    return imageCache[randomIndex];
+  }
 
-// Add to routes/images.ts
-
-// Function to get or fetch images with caching
-// Function to get or fetch images with caching
-async function getOrFetchRandomImages(): Promise<WikimediaImage[]> {
-    // Check if cache is valid
-    const now = Date.now();
-    if (imageCache.items.length > 0 && imageCache.lastUpdate && 
-        (now - imageCache.lastUpdate < CACHE_DURATION)) {
-      return imageCache.items;
-    }
-    
-    // Implementation for fetching a batch of images to cache
-    const apiUrl = 'https://commons.wikimedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=Category:Featured_pictures&gcmlimit=20&prop=imageinfo&iiprop=url|extmetadata&format=json';
-    
-    const response = await fetch(apiUrl, {
-      headers: {
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
+  try {
+    // Fetch random images from Wikimedia API
+    const response = await fetch(
+      'https://commons.wikimedia.org/w/api.php?action=query&list=random&rnnamespace=6&rnlimit=20&format=json',
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Api-User-Agent': 'Wikimedia Year Guessing Game/1.0',
+          'Client-Id': `${clientId}`
+        }
       }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
-    }
-    
-    const data = await response.json() as WikimediaQueryResponse;
-    
-    // Process and filter images with valid dates
-    const validImages: WikimediaImage[] = [];
-    
-    if (data.query && data.query.pages) {
-      const pages = data.query.pages;
-      
-      for (const pageId in pages) {
-        const page = pages[pageId];
-        if (!page.imageinfo || !page.imageinfo[0]) continue;
+    );
+
+    const data = await response.json();
+    const randomImages = data.query.random;
+
+    // Process each image to get more details and year information
+    const processedImages = await Promise.all(
+      randomImages.map(async (img: any) => {
+        const title = img.title.replace('File:', '');
         
-        const imageInfo = page.imageinfo[0];
-        const metadata = imageInfo.extmetadata;
-        
-        if (!metadata) continue;
-        
-        // Try to extract year from different metadata fields
-        const dateFields = ['DateTimeOriginal', 'DateTime', 'date'];
-        let validYear: number | null = null;
-        
-        for (const field of dateFields) {
-          if (metadata[field] && metadata[field]?.value) {
-            const dateString = metadata[field]?.value || '';
-            const yearMatch = dateString.match(/\b(18|19|20)\d{2}\b/);
-            if (yearMatch) {
-              validYear = parseInt(yearMatch[0], 10);
-              break;
+        // Get image info including upload date, URL, etc.
+        const infoResponse = await fetch(
+          `https://commons.wikimedia.org/w/api.php?action=query&titles=${encodeURIComponent(img.title)}&prop=imageinfo&iiprop=url|timestamp|user|extmetadata&format=json`,
+          {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Api-User-Agent': 'Wikimedia Year Guessing Game/1.0',
+              'Client-Id': `${clientId}`
             }
+          }
+        );
+
+        const infoData = await infoResponse.json();
+        const pages = infoData.query.pages;
+        const pageId = Object.keys(pages)[0];
+        const imageInfo = pages[pageId].imageinfo[0];
+        
+        // Extract year from metadata or fallback to upload date
+        let year;
+        if (imageInfo.extmetadata && imageInfo.extmetadata.DateTimeOriginal) {
+          const dateString = imageInfo.extmetadata.DateTimeOriginal.value;
+          const yearMatch = dateString.match(/\b(18|19|20)\d{2}\b/);
+          if (yearMatch) {
+            year = parseInt(yearMatch[0]);
           }
         }
         
-        // If we found a valid year, use this image
-        if (validYear && validYear <= new Date().getFullYear()) {
-          validImages.push({
-            title: page.title.replace('File:', ''),
-            url: imageInfo.url,
-            year: validYear,
-            source: `https://commons.wikimedia.org/wiki/${encodeURIComponent(page.title)}`
-          });
+        // If we couldn't extract the year from metadata, try the upload date
+        if (!year && imageInfo.timestamp) {
+          year = new Date(imageInfo.timestamp).getFullYear();
         }
-      }
+        
+        // Only include images with a valid year
+        if (year && year >= 1800 && year <= new Date().getFullYear()) {
+          return {
+            title,
+            url: imageInfo.url,
+            source: 'Wikimedia Commons',
+            year
+          };
+        }
+        
+        return null;
+      })
+    );
+
+    // Filter out null values and add to cache
+    const validImages = processedImages.filter(img => img !== null);
+    if (validImages.length > 0) {
+      // Update cache with new images
+      imageCache.push(...validImages);
+      
+      // Return a random one
+      const randomIndex = Math.floor(Math.random() * validImages.length);
+      return validImages[randomIndex];
     }
     
-    // Update cache
-    imageCache.items = validImages;
-    imageCache.lastUpdate = now;
-    
-    return validImages;
+    // If no valid images found, retry
+    return getRandomImageWithYear();
+  } catch (error) {
+    console.error('Error fetching image from Wikimedia:', error);
+    throw error;
   }
-  
-  // Modified endpoint to use cache
-  router.get('/random', async (req: Request, res: Response) => {
-    try {
-      // Get images from cache or fetch new ones
-      const images = await getOrFetchRandomImages();
-      
-      if (images.length === 0) {
-        return res.status(404).json({ error: 'No images found' });
-      }
-      
-      // Return a random image from the available images
-      const randomIndex = Math.floor(Math.random() * images.length);
-      return res.json(images[randomIndex]);
-      
-    } catch (error) {
-      console.error('Error fetching random image:', error);
-      res.status(500).json({ error: 'Failed to fetch image from Wikimedia' });
-    }
-  });
+}
+
+// Route to get a random image with year information
+router.get('/', async (_req: Request, res: Response) => {
+  try {
+    const image = await getRandomImageWithYear();
+    res.json(image);
+  } catch (error) {
+    console.error('Error processing request:', error);
+    res.status(500).json({ error: 'Failed to fetch image' });
+  }
+});
 
 export default router;
