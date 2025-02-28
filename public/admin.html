@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Year Guessing Game - Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #0F0422;
+      color: #fff;
+    }
+    .card {
+      background-color: #150A29;
+      border: 1px solid #322A3F;
+    }
+    .card-header, .input-group-text {
+      background-color: #1D1033;
+      color: #fff;
+      border-color: #322A3F;
+    }
+    .form-control, .form-select {
+      background-color: #0F061F;
+      border-color: #322A3F;
+      color: #fff;
+    }
+    .form-control:focus, .form-select:focus {
+      background-color: #0F061F;
+      color: #fff;
+      border-color: #6C2DC7;
+      box-shadow: 0 0 0 0.25rem rgba(108, 45, 199, 0.25);
+    }
+    .btn-primary {
+      background-color: #6C2DC7;
+      border-color: #6C2DC7;
+    }
+    .btn-primary:hover {
+      background-color: #5923A6;
+      border-color: #5923A6;
+    }
+    .btn-danger {
+      background-color: #DC3545;
+      border-color: #DC3545;
+    }
+    .btn-outline-secondary {
+      color: #fff;
+      border-color: #322A3F;
+    }
+    .btn-outline-secondary:hover {
+      background-color: #322A3F;
+      color: #fff;
+    }
+    .challenge-card {
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    .challenge-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    .challenge-image {
+      height: 150px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 4px 4px 0 0;
+    }
+    .form-text {
+      color: #B39DDB;
+    }
+    .table {
+      color: #fff;
+    }
+    .table thead {
+      background-color: #1D1033;
+    }
+    .text-muted {
+      color: #B39DDB !important;
+    }
+    #adminKeyModal .modal-content {
+      background-color: #150A29;
+      border: 1px solid #322A3F;
+      color: #fff;
+    }
+    /* Calendar specific styles */
+    #calendarContainer table {
+      margin-bottom: 0;
+    }
+    #calendarContainer td {
+      vertical-align: middle;
+      height: 40px;
+    }
+  </style>
+</head>
+<body class="text-white">
+  <div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>Year Guessing Game - Admin Dashboard</h1>
+      <button class="btn btn-outline-secondary" id="setKeyBtn">Set Admin Key</button>
+    </div>
+
+    <!-- Create Challenge Card -->
+    <div class="card challenge-card mb-4">
+      <div class="card-header">
+        <h3>Create Daily Challenge</h3>
+      </div>
+      <div class="card-body">
+        <form id="createForm">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="date" class="form-label">Challenge Date</label>
+              <input type="date" class="form-control" id="date" required />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Wikimedia Images</label>
+            <p class="form-text mb-2">Add up to 10 Wikimedia URLs (one per line or separated by commas)</p>
+            <textarea class="form-control" id="imageUrls" rows="5" placeholder="https://upload.wikimedia.org/wikipedia/commons/0/06/50_Ans_de_l%27INRA_Portes_ouvertes_%C3%A0_Versailles-221-cliche_Jean_Weber.jpg" required></textarea>
+            <div class="form-text">Currently added: <span id="urlCount">0</span>/10 images</div>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="appendImages" />
+            <label class="form-check-label" for="appendImages">
+              Append to existing images (if date already has a challenge)
+            </label>
+          </div>
+
+          <div class="mb-3">
+            <div id="previewContainer" class="mt-3">
+              <h5>Image Previews</h5>
+              <div id="previewGrid" class="row"></div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Create Challenge</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Calendar Card -->
+    <div class="card challenge-card mb-4">
+      <div class="card-header">
+        <h3>Calendar</h3>
+      </div>
+      <div class="card-body">
+        <div id="calendarContainer"></div>
+      </div>
+    </div>
+
+    <!-- Existing Challenges Card -->
+    <div class="card challenge-card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Existing Challenges</h3>
+        <button id="refreshBtn" class="btn btn-outline-secondary">Refresh</button>
+      </div>
+      <div class="card-body">
+        <div id="challengesList" class="row"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Key Modal -->
+  <div class="modal fade" id="adminKeyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Set Admin Key</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="adminKey" class="form-label">Admin API Key</label>
+            <input type="password" class="form-control" id="adminKey" placeholder="Enter your admin API key" />
+            <div class="form-text">This should match the ADMIN_API_KEY in your server's environment variables.</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveKeyBtn">Save Key</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Global variables
+    let adminKey = localStorage.getItem('adminKey') || '';
+    let allChallenges = [];
+    let currentDisplayDate = new Date(); // Used for calendar display
+
+    // Modal control
+    const adminKeyModal = new bootstrap.Modal(document.getElementById('adminKeyModal'));
+    document.getElementById('setKeyBtn').addEventListener('click', () => {
+      document.getElementById('adminKey').value = adminKey;
+      adminKeyModal.show();
+    });
+    document.getElementById('saveKeyBtn').addEventListener('click', () => {
+      const newKey = document.getElementById('adminKey').value.trim();
+      if (newKey) {
+        adminKey = newKey;
+        localStorage.setItem('adminKey', adminKey);
+        adminKeyModal.hide();
+        loadChallenges();
+      }
+    });
+
+    // Extract filename from URL
+    function extractFilenameFromUrl(url) {
+      try {
+        const urlObj = new URL(url);
+        const segments = urlObj.pathname.split('/');
+        return decodeURIComponent(segments[segments.length - 1]);
+      } catch (error) {
+        console.error('Invalid URL:', error);
+        return null;
+      }
+    }
+
+    // Parse and validate URLs
+    function parseImageUrls(text) {
+      let urls = text.split(/\n/).map(line => line.trim()).filter(line => line);
+      if (urls.length === 1) {
+        urls = urls[0].split(',').map(url => url.trim()).filter(url => url);
+      }
+      return urls.filter(url => url.includes('wikimedia.org'));
+    }
+
+    // Image preview handler
+    document.getElementById('imageUrls').addEventListener('input', function() {
+      const text = this.value.trim();
+      const previewGrid = document.getElementById('previewGrid');
+      const urlCount = document.getElementById('urlCount');
+      const urls = parseImageUrls(text);
+      urlCount.textContent = urls.length;
+      if (urls.length > 10) {
+        this.value = urls.slice(0, 10).join('\n');
+        urlCount.textContent = '10';
+        return;
+      }
+      previewGrid.innerHTML = '';
+      urls.forEach((url, index) => {
+        const filename = extractFilenameFromUrl(url);
+        const previewCol = document.createElement('div');
+        previewCol.className = 'col-md-6 col-lg-4 mb-3';
+        previewCol.innerHTML = `
+          <div class="card">
+            <img src="${url}" class="challenge-image card-img-top" alt="Preview ${index + 1}">
+            <div class="card-body">
+              <p class="card-text text-muted small">${filename || 'Invalid URL'}</p>
+            </div>
+          </div>
+        `;
+        previewGrid.appendChild(previewCol);
+      });
+    });
+
+    // Create challenge handler
+    document.getElementById('createForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (!adminKey) {
+        alert('Please set your admin key first');
+        adminKeyModal.show();
+        return;
+      }
+      const date = document.getElementById('date').value;
+      const imageUrlsText = document.getElementById('imageUrls').value.trim();
+      const appendImages = document.getElementById('appendImages').checked;
+      if (!date || !imageUrlsText) {
+        alert('Please fill all required fields');
+        return;
+      }
+      const imageUrls = parseImageUrls(imageUrlsText);
+      if (imageUrls.length === 0) {
+        alert('No valid Wikimedia URLs found');
+        return;
+      }
+      if (imageUrls.length > 10) {
+        alert('Maximum 10 images allowed');
+        return;
+      }
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating...';
+      try {
+        const response = await fetch(`/admin/daily-challenge/create?adminKey=${adminKey}&append=${appendImages}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ date, imageUrls })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert(`Success: ${data.message}. Added ${data.challenge.imageCount} images.`);
+          document.getElementById('createForm').reset();
+          document.getElementById('previewGrid').innerHTML = '';
+          document.getElementById('urlCount').textContent = '0';
+          loadChallenges();
+        } else {
+          alert(`Error: ${data.error}`);
+        }
+      } catch (error) {
+        alert(`Request failed: ${error.message}`);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
+    });
+
+    // Render calendar view
+    function renderCalendar(displayDate, challengeDates) {
+      const calendarContainer = document.getElementById('calendarContainer');
+      calendarContainer.innerHTML = '';
+
+      // Header with navigation
+      const headerDiv = document.createElement('div');
+      headerDiv.className = 'd-flex justify-content-between align-items-center mb-3';
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'btn btn-outline-secondary';
+      prevBtn.textContent = '<';
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'btn btn-outline-secondary';
+      nextBtn.textContent = '>';
+      const monthLabel = document.createElement('h4');
+      monthLabel.className = 'mb-0';
+      const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      monthLabel.textContent = monthNames[displayDate.getMonth()] + ' ' + displayDate.getFullYear();
+      headerDiv.appendChild(prevBtn);
+      headerDiv.appendChild(monthLabel);
+      headerDiv.appendChild(nextBtn);
+      calendarContainer.appendChild(headerDiv);
+
+      // Create calendar table
+      const table = document.createElement('table');
+      table.className = 'table table-sm text-center';
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayNames.forEach(day => {
+        const th = document.createElement('th');
+        th.textContent = day;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      const firstDay = new Date(displayDate.getFullYear(), displayDate.getMonth(), 1);
+      const startingDay = firstDay.getDay();
+      const daysInMonth = new Date(displayDate.getFullYear(), displayDate.getMonth() + 1, 0).getDate();
+      let dateCounter = 1;
+      for (let i = 0; i < 6; i++) {
+        const row = document.createElement('tr');
+        for (let j = 0; j < 7; j++) {
+          const cell = document.createElement('td');
+          if (i === 0 && j < startingDay) {
+            cell.textContent = '';
+          } else if (dateCounter > daysInMonth) {
+            cell.textContent = '';
+          } else {
+            cell.textContent = dateCounter;
+            const cellDate = new Date(displayDate.getFullYear(), displayDate.getMonth(), dateCounter);
+            const cellDateStr = cellDate.toISOString().split('T')[0];
+            if (challengeDates.includes(cellDateStr)) {
+              cell.style.backgroundColor = '#6C2DC7';
+              cell.style.color = '#fff';
+            }
+            cell.style.cursor = 'pointer';
+            cell.addEventListener('click', () => {
+              filterChallengesByDate(cellDateStr);
+            });
+            dateCounter++;
+          }
+          row.appendChild(cell);
+        }
+        tbody.appendChild(row);
+      }
+      table.appendChild(tbody);
+      calendarContainer.appendChild(table);
+
+      // Navigation events
+      prevBtn.addEventListener('click', () => {
+        currentDisplayDate.setMonth(currentDisplayDate.getMonth() - 1);
+        renderCalendar(currentDisplayDate, challengeDates);
+      });
+      nextBtn.addEventListener('click', () => {
+        currentDisplayDate.setMonth(currentDisplayDate.getMonth() + 1);
+        renderCalendar(currentDisplayDate, challengeDates);
+      });
+    }
+
+    function renderCalendarFromChallenges(challenges) {
+      const challengeDates = challenges.map(ch => new Date(ch.date).toISOString().split('T')[0]);
+      const uniqueDates = [...new Set(challengeDates)];
+      renderCalendar(currentDisplayDate, uniqueDates);
+    }
+
+    // Render challenges list
+    function renderChallengesList(challenges) {
+      const challengesListEl = document.getElementById('challengesList');
+      if (challenges.length === 0) {
+        challengesListEl.innerHTML = `
+          <div class="col-12">
+            <div class="alert alert-info">No challenges created yet</div>
+          </div>
+        `;
+        return;
+      }
+      const html = challenges.map(challenge => {
+        const date = new Date(challenge.date).toLocaleDateString();
+        const image = challenge.images[0];
+        return `
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title}">
+              <div class="card-body">
+                <h5 class="card-title">${date}</h5>
+                <p class="card-text text-muted">${image.title}</p>
+                <p class="card-text">
+                  <small class="text-muted">Year: ${image.year}</small><br>
+                  <small class="text-muted">Completions: ${challenge.stats ? challenge.stats.completions : 0}</small>
+                </p>
+              </div>
+              <div class="card-footer d-flex justify-content-between">
+                <span class="badge bg-${challenge.active ? 'success' : 'secondary'}">
+                  ${challenge.active ? 'Active' : 'Inactive'}
+                </span>
+                <button class="btn btn-sm btn-danger delete-btn" data-id="${challenge._id}">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      challengesListEl.innerHTML = html;
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', deleteChallenge);
+      });
+    }
+
+    function filterChallengesByDate(dateStr) {
+      const filtered = allChallenges.filter(ch => {
+        const chDateStr = new Date(ch.date).toISOString().split('T')[0];
+        return chDateStr === dateStr;
+      });
+      renderChallengesList(filtered);
+    }
+
+    // Load existing challenges and update calendar
+    async function loadChallenges() {
+      if (!adminKey) {
+        document.getElementById('challengesList').innerHTML = `
+          <div class="col-12">
+            <div class="alert alert-warning">Please set your admin key to view challenges</div>
+          </div>
+        `;
+        return;
+      }
+      document.getElementById('challengesList').innerHTML = `
+        <div class="col-12 text-center">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      `;
+      try {
+        const response = await fetch(`/admin/daily-challenges?adminKey=${adminKey}`);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to load challenges');
+        }
+        const challenges = await response.json();
+        allChallenges = challenges;
+        renderCalendarFromChallenges(challenges);
+        renderChallengesList(challenges);
+      } catch (error) {
+        document.getElementById('challengesList').innerHTML = `
+          <div class="col-12">
+            <div class="alert alert-danger">${error.message || 'Failed to load challenges'}</div>
+          </div>
+        `;
+      }
+    }
+
+    async function deleteChallenge() {
+      if (!confirm('Are you sure you want to delete this challenge?')) {
+        return;
+      }
+      const id = this.getAttribute('data-id');
+      try {
+        const response = await fetch(`/admin/daily-challenge/${id}?adminKey=${adminKey}`, {
+          method: 'DELETE'
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert('Challenge deleted successfully');
+          loadChallenges();
+        } else {
+          alert(`Error: ${data.error}`);
+        }
+      } catch (error) {
+        alert(`Request failed: ${error.message}`);
+      }
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', loadChallenges);
+    document.addEventListener('DOMContentLoaded', loadChallenges);
+    if (!adminKey) {
+      setTimeout(() => {
+        adminKeyModal.show();
+      }, 500);
+    }
+  </script>
+</body>
+</html>

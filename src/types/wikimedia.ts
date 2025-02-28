@@ -1,11 +1,22 @@
 // Wikimedia API response interfaces
 
+
 export interface WikimediaImage {
-  title: string;
   url: string;
-  year: number;
+  title: string;
   source: string;
+  year: number;
+  description?: string;
+  filename?: string;
 }
+
+export interface GuessHistoryItem {
+  year: number;
+  correct: boolean;
+  direction?: 'higher' | 'lower' | null;
+}
+
+
 
 export interface WikimediaMetadataField {
   value: string;
@@ -47,16 +58,29 @@ export interface ImageCache {
 }
 
   
-  interface GameState {
-    image: WikimediaImage | null;
-    actualYear: number | null;
-    userGuess: string;
-    score: number;
-    feedback: string;
-    loading: boolean;
-    error: string | null;
-    guessed: boolean;
-    roundCount: number;
-    attempts: number;
-    maxAttempts: number;
-  }
+export interface GameState {
+  image: WikimediaImage | null;
+  loading: boolean;
+  round: number;
+  totalRounds: number;
+  guessesLeft: number;
+  maxGuesses: number;
+  skipsLeft: number;
+  maxSkips: number;
+  actualYear: number | null;
+  lowerBound: number;
+  upperBound: number;
+  correctGuesses: number;
+  score: number;
+  hintRequested: boolean;
+  hintPenalty: number;
+  hasGuessed: boolean;
+  streak: number;
+  yearInput: string[];
+  gameOver: boolean;
+  lastGuess: number | null;
+  guessDirection: 'higher' | 'lower' | null;
+  feedback: string;
+  showFeedback: boolean;
+  guessHistory: GuessHistoryItem[];
+}

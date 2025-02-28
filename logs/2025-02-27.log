@@ -1,0 +1,86 @@
+[2025-02-27T22:22:50.860Z] [INFO] Server is running on port 3001 
+[2025-02-27T22:23:20.911Z] [ERROR] MongoDB connection error: {"message":"Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/","errorLabelSet":{},"reason":{"type":"ReplicaSetNoPrimary","servers":{"wikimediagame-shard-00-01.pae8e.mongodb.net:27017":{"address":"wikimediagame-shard-00-01.pae8e.mongodb.net:27017","type":"Unknown","hosts":[],"passives":[],"arbiters":[],"tags":{},"minWireVersion":0,"maxWireVersion":0,"roundTripTime":-1,"minRoundTripTime":0,"lastUpdateTime":784523356,"lastWriteDate":0,"error":{"errorLabelSet":{},"beforeHandshake":false},"topologyVersion":null,"setName":null,"setVersion":null,"electionId":null,"logicalSessionTimeoutMinutes":null,"maxMessageSizeBytes":null,"maxWriteBatchSize":null,"maxBsonObjectSize":null,"primary":null,"me":null,"$clusterTime":null,"iscryptd":false},"wikimediagame-shard-00-00.pae8e.mongodb.net:27017":{"address":"wikimediagame-shard-00-00.pae8e.mongodb.net:27017","type":"Unknown","hosts":[],"passives":[],"arbiters":[],"tags":{},"minWireVersion":0,"maxWireVersion":0,"roundTripTime":-1,"minRoundTripTime":0,"lastUpdateTime":784523352,"lastWriteDate":0,"error":{"errorLabelSet":{},"beforeHandshake":false},"topologyVersion":null,"setName":null,"setVersion":null,"electionId":null,"logicalSessionTimeoutMinutes":null,"maxMessageSizeBytes":null,"maxWriteBatchSize":null,"maxBsonObjectSize":null,"primary":null,"me":null,"$clusterTime":null,"iscryptd":false},"wikimediagame-shard-00-02.pae8e.mongodb.net:27017":{"address":"wikimediagame-shard-00-02.pae8e.mongodb.net:27017","type":"Unknown","hosts":[],"passives":[],"arbiters":[],"tags":{},"minWireVersion":0,"maxWireVersion":0,"roundTripTime":-1,"minRoundTripTime":0,"lastUpdateTime":784523397,"lastWriteDate":0,"error":{"errorLabelSet":{},"beforeHandshake":false},"topologyVersion":null,"setName":null,"setVersion":null,"electionId":null,"logicalSessionTimeoutMinutes":null,"maxMessageSizeBytes":null,"maxWriteBatchSize":null,"maxBsonObjectSize":null,"primary":null,"me":null,"$clusterTime":null,"iscryptd":false}},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-1s2o6c-shard-0","maxElectionId":null,"maxSetVersion":null,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+[2025-02-27T22:28:37.464Z] [ERROR] Error listing daily challenges: {}
+[2025-02-27T22:37:57.555Z] [INFO] Server is running on port 3001 
+[2025-02-27T22:38:10.778Z] [ERROR] Error listing daily challenges: {}
+[2025-02-27T22:38:27.620Z] [ERROR] MongoDB connection error: {"message":"Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/","errorLabelSet":{},"reason":{"type":"ReplicaSetNoPrimary","servers":{"wikimediagame-shard-00-02.pae8e.mongodb.net:27017":{"address":"wikimediagame-shard-00-02.pae8e.mongodb.net:27017","type":"Unknown","hosts":[],"passives":[],"arbiters":[],"tags":{},"minWireVersion":0,"maxWireVersion":0,"roundTripTime":-1,"minRoundTripTime":0,"lastUpdateTime":785430093,"lastWriteDate":0,"error":{"errorLabelSet":{},"beforeHandshake":false},"topologyVersion":null,"setName":null,"setVersion":null,"electionId":null,"logicalSessionTimeoutMinutes":null,"maxMessageSizeBytes":null,"maxWriteBatchSize":null,"maxBsonObjectSize":null,"primary":null,"me":null,"$clusterTime":null,"iscryptd":false},"wikimediagame-shard-00-01.pae8e.mongodb.net:27017":{"address":"wikimediagame-shard-00-01.pae8e.mongodb.net:27017","type":"Unknown","hosts":[],"passives":[],"arbiters":[],"tags":{},"minWireVersion":0,"maxWireVersion":0,"roundTripTime":-1,"minRoundTripTime":0,"lastUpdateTime":785430096,"lastWriteDate":0,"error":{"errorLabelSet":{},"beforeHandshake":false},"topologyVersion":null,"setName":null,"setVersion":null,"electionId":null,"logicalSessionTimeoutMinutes":null,"maxMessageSizeBytes":null,"maxWriteBatchSize":null,"maxBsonObjectSize":null,"primary":null,"me":null,"$clusterTime":null,"iscryptd":false},"wikimediagame-shard-00-00.pae8e.mongodb.net:27017":{"address":"wikimediagame-shard-00-00.pae8e.mongodb.net:27017","type":"Unknown","hosts":[],"passives":[],"arbiters":[],"tags":{},"minWireVersion":0,"maxWireVersion":0,"roundTripTime":-1,"minRoundTripTime":0,"lastUpdateTime":785430107,"lastWriteDate":0,"error":{"errorLabelSet":{},"beforeHandshake":false},"topologyVersion":null,"setName":null,"setVersion":null,"electionId":null,"logicalSessionTimeoutMinutes":null,"maxMessageSizeBytes":null,"maxWriteBatchSize":null,"maxBsonObjectSize":null,"primary":null,"me":null,"$clusterTime":null,"iscryptd":false}},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-1s2o6c-shard-0","maxElectionId":null,"maxSetVersion":null,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+[2025-02-27T22:42:47.481Z] [INFO] Server is running on port 3001 
+[2025-02-27T22:42:47.991Z] [ERROR] MongoDB connection error: {"errorLabelSet":{},"errorResponse":{"ok":0,"errmsg":"bad auth : authentication failed","code":8000,"codeName":"AtlasError"},"ok":0,"code":8000,"codeName":"AtlasError","connectionGeneration":0}
+[2025-02-27T22:48:19.587Z] [INFO] Server is running on port 3001 
+[2025-02-27T22:48:20.142Z] [INFO] MongoDB connected successfully 
+[2025-02-27T22:53:01.135Z] [INFO] Server is running on port 3001 
+[2025-02-27T22:53:01.663Z] [INFO] MongoDB connected successfully 
+[2025-02-27T22:54:53.907Z] [INFO] Server is running on port 3001 
+[2025-02-27T22:54:54.487Z] [INFO] MongoDB connected successfully 
+[2025-02-27T22:58:29.758Z] [INFO] Server is running on port 3001 
+[2025-02-27T22:58:30.214Z] [INFO] MongoDB connected successfully 
+[2025-02-27T23:04:46.869Z] [INFO] Fetching data for 10 images 
+[2025-02-27T23:04:47.206Z] [INFO] Successfully fetched image data for Deskohraní_08-10-05_083.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:04:47.206Z] [INFO] Successfully fetched image data for On_ski_in_the_Lairig_Ghru_-_geograph.org.uk_-_1725450.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:04:47.207Z] [INFO] Successfully fetched image data for Angie_Miles,_Greg_at_L.A._Direct_Models_Party_1.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:04:47.208Z] [INFO] Successfully fetched image data for Ação_pela_reabertura_24H_do_SAP_Mangualde_(Esquerda.Net_50643997868).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:04:47.214Z] [INFO] Successfully fetched image data for The_American_Museum_journal_(c1900-(1918))_(17539849053).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:04:47.214Z] [INFO] Successfully fetched image data for Noorderbrug,_Maastricht,_maquette_&_ondertekening_aanbesteding_1981.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:04:47.218Z] [INFO] Successfully fetched image data for Eerste_Wereldoorlog,_SFA022802673.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:04:47.219Z] [INFO] Successfully fetched image data for 50_Ans_de_l'INRA_Portes_ouvertes_à_Versailles-221-cliche_Jean_Weber.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:04:47.226Z] [INFO] Successfully fetched image data for Mercedes_Benz_W111_Convertible_Malaga.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:04:47.227Z] [INFO] Successfully fetched image data for 3_JMSDF_Kawasaki_P-1_in_flight_with_Mount_Fuji_in_the_background.jpg {"confidenceLevel":"low"}
+[2025-02-27T23:04:47.227Z] [INFO] Successfully fetched 10 of 10 images 
+[2025-02-27T23:37:59.551Z] [INFO] Server is running on port 3001 
+[2025-02-27T23:38:00.139Z] [INFO] MongoDB connected successfully 
+[2025-02-27T23:41:32.323Z] [INFO] Server is running on port 3001 
+[2025-02-27T23:41:32.815Z] [INFO] MongoDB connected successfully 
+[2025-02-27T23:41:38.650Z] [INFO] Server is running on port 3001 
+[2025-02-27T23:41:39.053Z] [INFO] MongoDB connected successfully 
+[2025-02-27T23:48:08.060Z] [INFO] Server is running on port 3001 
+[2025-02-27T23:48:08.613Z] [INFO] MongoDB connected successfully 
+[2025-02-27T23:48:47.405Z] [INFO] Fetching data for 10 images 
+[2025-02-27T23:48:47.688Z] [INFO] Successfully fetched image data for The_American_Museum_journal_(c1900-(1918))_(17539849053).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:48:47.688Z] [INFO] Successfully fetched image data for Angie_Miles,_Greg_at_L.A._Direct_Models_Party_1.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:48:47.688Z] [INFO] Successfully fetched image data for On_ski_in_the_Lairig_Ghru_-_geograph.org.uk_-_1725450.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:48:47.691Z] [INFO] Successfully fetched image data for 3_JMSDF_Kawasaki_P-1_in_flight_with_Mount_Fuji_in_the_background.jpg {"confidenceLevel":"low"}
+[2025-02-27T23:48:47.691Z] [INFO] Successfully fetched image data for 50_Ans_de_l'INRA_Portes_ouvertes_à_Versailles-221-cliche_Jean_Weber.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:48:47.692Z] [INFO] Successfully fetched image data for Mercedes_Benz_W111_Convertible_Malaga.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:48:47.704Z] [INFO] Successfully fetched image data for Noorderbrug,_Maastricht,_maquette_&_ondertekening_aanbesteding_1981.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:48:47.704Z] [INFO] Successfully fetched image data for Eerste_Wereldoorlog,_SFA022802673.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:48:47.705Z] [INFO] Successfully fetched image data for Deskohraní_08-10-05_083.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:48:47.705Z] [INFO] Successfully fetched image data for Ação_pela_reabertura_24H_do_SAP_Mangualde_(Esquerda.Net_50643997868).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:48:47.705Z] [INFO] Successfully fetched 10 of 10 images 
+[2025-02-27T23:49:04.797Z] [INFO] Fetching data for 10 images 
+[2025-02-27T23:49:04.949Z] [INFO] Successfully fetched image data for The_American_Museum_journal_(c1900-(1918))_(17539849053).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:04.952Z] [INFO] Successfully fetched image data for 50_Ans_de_l'INRA_Portes_ouvertes_à_Versailles-221-cliche_Jean_Weber.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:04.961Z] [INFO] Successfully fetched image data for On_ski_in_the_Lairig_Ghru_-_geograph.org.uk_-_1725450.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:04.968Z] [INFO] Successfully fetched image data for Ação_pela_reabertura_24H_do_SAP_Mangualde_(Esquerda.Net_50643997868).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:04.970Z] [INFO] Successfully fetched image data for Eerste_Wereldoorlog,_SFA022802673.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:04.976Z] [INFO] Successfully fetched image data for 3_JMSDF_Kawasaki_P-1_in_flight_with_Mount_Fuji_in_the_background.jpg {"confidenceLevel":"low"}
+[2025-02-27T23:49:04.977Z] [INFO] Successfully fetched image data for Deskohraní_08-10-05_083.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:04.978Z] [INFO] Successfully fetched image data for Angie_Miles,_Greg_at_L.A._Direct_Models_Party_1.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:04.982Z] [INFO] Successfully fetched image data for Noorderbrug,_Maastricht,_maquette_&_ondertekening_aanbesteding_1981.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:04.982Z] [INFO] Successfully fetched image data for Mercedes_Benz_W111_Convertible_Malaga.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:04.982Z] [INFO] Successfully fetched 10 of 10 images 
+[2025-02-27T23:49:38.906Z] [INFO] Server is running on port 3001 
+[2025-02-27T23:49:39.547Z] [INFO] MongoDB connected successfully 
+[2025-02-27T23:49:50.284Z] [INFO] Fetching data for 10 images 
+[2025-02-27T23:49:50.546Z] [INFO] Successfully fetched image data for Deskohraní_08-10-05_083.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:50.547Z] [INFO] Successfully fetched image data for Eerste_Wereldoorlog,_SFA022802673.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:50.547Z] [INFO] Successfully fetched image data for Mercedes_Benz_W111_Convertible_Malaga.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:50.547Z] [INFO] Successfully fetched image data for 3_JMSDF_Kawasaki_P-1_in_flight_with_Mount_Fuji_in_the_background.jpg {"confidenceLevel":"low"}
+[2025-02-27T23:49:50.550Z] [INFO] Successfully fetched image data for On_ski_in_the_Lairig_Ghru_-_geograph.org.uk_-_1725450.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:50.551Z] [INFO] Successfully fetched image data for The_American_Museum_journal_(c1900-(1918))_(17539849053).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:50.554Z] [INFO] Successfully fetched image data for Angie_Miles,_Greg_at_L.A._Direct_Models_Party_1.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:50.554Z] [INFO] Successfully fetched image data for 50_Ans_de_l'INRA_Portes_ouvertes_à_Versailles-221-cliche_Jean_Weber.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:50.563Z] [INFO] Successfully fetched image data for Noorderbrug,_Maastricht,_maquette_&_ondertekening_aanbesteding_1981.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:50.594Z] [INFO] Successfully fetched image data for Ação_pela_reabertura_24H_do_SAP_Mangualde_(Esquerda.Net_50643997868).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:49:50.594Z] [INFO] Successfully fetched 10 of 10 images 
+[2025-02-27T23:50:04.459Z] [INFO] Fetching data for 10 images 
+[2025-02-27T23:50:04.606Z] [INFO] Successfully fetched image data for Eerste_Wereldoorlog,_SFA022802673.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:50:04.607Z] [INFO] Successfully fetched image data for 50_Ans_de_l'INRA_Portes_ouvertes_à_Versailles-221-cliche_Jean_Weber.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:50:04.607Z] [INFO] Successfully fetched image data for Deskohraní_08-10-05_083.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:50:04.610Z] [INFO] Successfully fetched image data for Mercedes_Benz_W111_Convertible_Malaga.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:50:04.610Z] [INFO] Successfully fetched image data for The_American_Museum_journal_(c1900-(1918))_(17539849053).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:50:04.615Z] [INFO] Successfully fetched image data for Noorderbrug,_Maastricht,_maquette_&_ondertekening_aanbesteding_1981.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:50:04.615Z] [INFO] Successfully fetched image data for Angie_Miles,_Greg_at_L.A._Direct_Models_Party_1.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:50:04.615Z] [INFO] Successfully fetched image data for On_ski_in_the_Lairig_Ghru_-_geograph.org.uk_-_1725450.jpg {"confidenceLevel":"high"}
+[2025-02-27T23:50:04.617Z] [INFO] Successfully fetched image data for 3_JMSDF_Kawasaki_P-1_in_flight_with_Mount_Fuji_in_the_background.jpg {"confidenceLevel":"low"}
+[2025-02-27T23:50:04.617Z] [INFO] Successfully fetched image data for Ação_pela_reabertura_24H_do_SAP_Mangualde_(Esquerda.Net_50643997868).jpg {"confidenceLevel":"high"}
+[2025-02-27T23:50:04.618Z] [INFO] Successfully fetched 10 of 10 images 

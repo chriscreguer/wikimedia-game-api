@@ -1,6 +1,10 @@
-import express, { Request, Response } from 'express';
+//images.ts
+import express, { Request, Response, NextFunction, RequestHandler } from 'express';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
+import DailyChallenge from '../models/DailyChallenge';
+import { fetchImageData, fetchMultipleImageData } from '../utils/wikimediaHelper';
+import logger from '../utils/logger';
 
 dotenv.config();
 
@@ -41,7 +45,7 @@ interface CachedImage {
 const imageCacheByDecade: Record<string, CachedImage[]> = {};
 
 // STRICTLY photo-only file extensions
-const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png'];
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg'];
 
 // Categories focused specifically on photographs
 const photoCategories = [
@@ -616,4 +620,337 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+const verifyAdmin: RequestHandler = (req, res, next) => {
+  const adminKey = req.headers['x-admin-key'];
+  
+  if (!adminKey || adminKey !== process.env.ADMIN_API_KEY) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+  
+  next();
+};
+
+/**
+ * GET /api/images/daily-challenge
+ * Get today's challenge
+ */
+router.get('/daily-challenge', (async (req, res) => {
+  try {
+    // Get today's date (start of day in UTC)
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    
+    // Find active challenge for today
+    const challenge = await DailyChallenge.findOne({
+      date: { 
+        $gte: today,
+        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000)
+      },
+      active: true
+    });
+    
+    if (!challenge) {
+      res.status(404).json({ error: 'No daily challenge available for today' });
+      return;
+    }
+    
+    // Return challenge without stats (stats are only updated when submitting scores)
+    const challengeData = {
+      id: challenge._id,
+      date: challenge.date,
+      images: challenge.images
+    };
+    
+    res.status(200).json(challengeData);
+  } catch (error) {
+    logger.error('Error fetching daily challenge:', error);
+    res.status(500).json({ error: 'Failed to fetch daily challenge' });
+  }
+}) as RequestHandler);
+
+/**
+ * GET /api/images/daily-challenge/stats
+ * Get stats for today's challenge
+ */
+router.get('/daily-challenge/stats', (async (req, res): Promise<void> => {
+  try {
+    // Get today's date (start of day in UTC)
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    
+    // Find active challenge for today
+    const challenge = await DailyChallenge.findOne({
+      date: { 
+        $gte: today,
+        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000)
+      },
+      active: true
+    });
+    
+    if (!challenge) {
+      res.status(404).json({ error: 'No daily challenge available for today' });
+      return;
+    }
+    
+    // Return only the stats
+    res.status(200).json(challenge.stats);
+  } catch (error) {
+    logger.error('Error fetching daily challenge stats:', error);
+    res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+})as RequestHandler);
+
+/**
+ * POST /api/images/daily-challenge/submit
+ * Submit score for today's challenge
+ */
+router.post('/daily-challenge/submit', (async (req, res) => {
+  try {
+    const { score } = req.body;
+    
+    if (typeof score !== 'number' || score < 0) {
+      return res.status(400).json({ error: 'Valid score required' });
+    }
+    
+    // Get today's date (start of day in UTC)
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    
+    // Find today's challenge
+    const challenge = await DailyChallenge.findOne({
+      date: { 
+        $gte: today,
+        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000)
+      },
+      active: true
+    });
+    
+    if (!challenge) {
+      return res.status(404).json({ error: 'No daily challenge available for today' });
+    }
+    
+    // Update stats
+    // Increment completions
+    challenge.stats.completions += 1;
+    
+    // Update average score
+    const totalScore = challenge.stats.averageScore * (challenge.stats.completions - 1) + score;
+    challenge.stats.averageScore = totalScore / challenge.stats.completions;
+    
+    // Update distributions
+    const existingDistribution = challenge.stats.distributions.find(d => d.score === score);
+    if (existingDistribution) {
+      existingDistribution.count += 1;
+    } else {
+      challenge.stats.distributions.push({ score, count: 1 });
+      // Sort distributions by score
+      challenge.stats.distributions.sort((a, b) => a.score - b.score);
+    }
+    
+    await challenge.save();
+    
+    res.status(200).json({ 
+      message: 'Score submitted successfully',
+      stats: challenge.stats 
+    });
+  } catch (error) {
+    logger.error('Error submitting score:', error);
+    res.status(500).json({ error: 'Failed to submit score' });
+  }
+}) as RequestHandler);
+
+// ADMIN ROUTES
+
+/**
+ * POST /api/images/daily-challenge/admin/create
+ * Create a new daily challenge (Admin only)
+ */
+router.post('/daily-challenge/admin/create', verifyAdmin, (async (req, res) => {
+  try {
+    const { date, filenames } = req.body;
+    
+    if (!date || !Array.isArray(filenames) || filenames.length === 0) {
+      return res.status(400).json({ 
+        error: 'Invalid request. Required: date (YYYY-MM-DD) and filenames array' 
+      });
+    }
+    
+    // Parse date
+    const challengeDate = new Date(date);
+    challengeDate.setUTCHours(0, 0, 0, 0);
+    
+    if (isNaN(challengeDate.getTime())) {
+      return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+    }
+    
+    // Check if a challenge already exists for this date
+    const existingChallenge = await DailyChallenge.findOne({
+      date: challengeDate
+    });
+    
+    if (existingChallenge) {
+      return res.status(409).json({ 
+        error: 'A challenge already exists for this date',
+        challengeId: existingChallenge._id
+      });
+    }
+    
+    // Fetch complete image data from Wikimedia
+    const imageData = await fetchMultipleImageData(filenames);
+    
+    if (imageData.length === 0) {
+      return res.status(400).json({ 
+        error: 'Failed to fetch any valid image data from the provided filenames' 
+      });
+    }
+    
+    // Create new challenge
+    const newChallenge = new DailyChallenge({
+      date: challengeDate,
+      images: imageData,
+      stats: {
+        averageScore: 0,
+        completions: 0,
+        distributions: []
+      },
+      active: true
+    });
+    
+    await newChallenge.save();
+    
+    res.status(201).json({
+      message: 'Daily challenge created successfully',
+      challengeId: newChallenge._id,
+      imageCount: imageData.length
+    });
+  } catch (error) {
+    logger.error('Error creating daily challenge:', error);
+    res.status(500).json({ error: 'Failed to create daily challenge' });
+  }
+})as RequestHandler);
+
+/**
+ * PUT /api/images/daily-challenge/admin/:id
+ * Update an existing daily challenge (Admin only)
+ */
+router.put('/daily-challenge/admin/:id', verifyAdmin, (async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { date, filenames, active } = req.body;
+    
+    // Find the challenge
+    const challenge = await DailyChallenge.findById(id);
+    
+    if (!challenge) {
+      return res.status(404).json({ error: 'Challenge not found' });
+    }
+    
+    // Update date if provided
+    if (date) {
+      const challengeDate = new Date(date);
+      challengeDate.setUTCHours(0, 0, 0, 0);
+      
+      if (isNaN(challengeDate.getTime())) {
+        return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+      }
+      
+      challenge.date = challengeDate;
+    }
+    
+    // Update images if filenames provided
+    if (Array.isArray(filenames) && filenames.length > 0) {
+      const imageData = await fetchMultipleImageData(filenames);
+      
+      if (imageData.length === 0) {
+        return res.status(400).json({ 
+          error: 'Failed to fetch any valid image data from the provided filenames' 
+        });
+      }
+      
+      challenge.images = imageData;
+    }
+    
+    // Update active status if provided
+    if (typeof active === 'boolean') {
+      challenge.active = active;
+    }
+    
+    await challenge.save();
+    
+    res.status(200).json({
+      message: 'Daily challenge updated successfully',
+      challenge: {
+        id: challenge._id,
+        date: challenge.date,
+        imageCount: challenge.images.length,
+        active: challenge.active
+      }
+    });
+  } catch (error) {
+    logger.error('Error updating daily challenge:', error);
+    res.status(500).json({ error: 'Failed to update daily challenge' });
+  }
+})as RequestHandler);
+
+/**
+ * GET /api/images/daily-challenge/admin/list
+ * List all daily challenges (Admin only)
+ */
+router.get('/daily-challenge/admin/list', verifyAdmin, (async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    
+    const challenges = await DailyChallenge.find()
+      .sort({ date: -1 })
+      .skip((pageNumber - 1) * limitNumber)
+      .limit(limitNumber)
+      .select('date active stats.completions _id');
+    
+    const total = await DailyChallenge.countDocuments();
+    
+    res.status(200).json({
+      challenges,
+      totalPages: Math.ceil(total / limitNumber),
+      currentPage: pageNumber
+    });
+  } catch (error) {
+    logger.error('Error listing daily challenges:', error);
+    res.status(500).json({ error: 'Failed to list daily challenges' });
+  }
+})as RequestHandler);
+
+// GET /api/images/daily-challenge/today
+router.get('/daily-challenge/today', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    const challenge = await DailyChallenge.findOne({
+      date: {
+        $gte: today,
+        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000)
+      },
+      active: true
+    });
+
+    if (!challenge) {
+      res.status(404).json({ error: 'No daily challenge available for today' });
+      return;
+    }
+
+    // Return the entire challenge document
+    res.json(challenge);
+    return;
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error fetching daily challenge' });
+    return;
+  }
+});
+
 export default router;
+//end images.ts
