@@ -12,6 +12,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+app.use(cors({
+  origin: '*',  // Allow all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true  // Allow cookies if needed
+}));
+
 // Use TypeScript type safety for environment variables
 const dbPassword = process.env.DB_PASSWORD || '';
 const connectionString = `mongodb+srv://ccreguer:${dbPassword}@wikimediagame.pae8e.mongodb.net/?retryWrites=true&w=majority&appName=WikimediaGame`;
@@ -22,8 +29,8 @@ mongoose.connect(connectionString)
   .catch(err => logger.error('MongoDB connection error:', err));
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+
 
 // Routes
 app.use('/api/images', imagesRoutes);
