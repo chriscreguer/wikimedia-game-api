@@ -10,7 +10,7 @@ import adminRoutes from './routes/admin';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors({
   origin: '*',  // Allow all origins
