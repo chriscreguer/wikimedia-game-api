@@ -13,14 +13,13 @@ const router = express.Router();
 // Cache expiration time
 const CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 const MAX_CACHE_SIZE = 100;
-const MIN_YEAR = 1800; // Minimum year allowed for images
+const MIN_YEAR = 1850; // Minimum year allowed for images
 
 // Get current year for max year limit
 const CURRENT_YEAR = new Date().getFullYear();
 
 // Decade ranges to ensure even distribution
 const DECADE_RANGES = [
-  { start: 1800, end: 1849 },
   { start: 1850, end: 1899 },
   { start: 1900, end: 1919 },
   { start: 1920, end: 1939 },
