@@ -144,4 +144,80 @@ router.get('/daily-challenges', verifyAdmin, async (req: Request, res: Response)
   }
 });
 
+/**
+ * Edit a daily challenge
+ * PUT /admin/daily-challenge/:id/edit
+ */
+router.put('/daily-challenge/:id/edit', verifyAdmin, (async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { date, keepImages, newImageUrls } = req.body;
+
+    // Find the challenge
+    const challenge = await DailyChallenge.findById(id);
+    if (!challenge) {
+      return res.status(404).json({ error: 'Challenge not found' });
+    }
+
+    // Update date if provided
+    if (date) {
+      challenge.date = new Date(date);
+    }
+
+    // Filter images to keep
+    if (Array.isArray(keepImages) && keepImages.length > 0) {
+      challenge.images = keepImages.map(index => challenge.images[index]);
+    }
+
+    // Add new images if provided
+    if (Array.isArray(newImageUrls) && newImageUrls.length > 0) {
+      let newFilenames: string[] = [];
+      
+      for (const url of newImageUrls) {
+        const filename = extractFilenameFromUrl(url);
+        if (filename) {
+          newFilenames.push(filename);
+        }
+      }
+      
+      if (newFilenames.length > 0) {
+        const newImageData = await fetchMultipleImageData(newFilenames);
+        challenge.images = [...challenge.images, ...newImageData];
+      }
+    }
+
+    // Save updated challenge
+    await challenge.save();
+    
+    res.status(200).json({ 
+      message: 'Challenge updated successfully',
+      challenge
+    });
+  } catch (error) {
+    logger.error('Error updating daily challenge:', error);
+    res.status(500).json({ error: 'Failed to update daily challenge' });
+  }
+}) as RequestHandler);
+
+/**
+ * Delete a daily challenge
+ * DELETE /admin/daily-challenge/:id
+ */
+router.delete('/daily-challenge/:id', verifyAdmin, (async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const result = await DailyChallenge.findByIdAndDelete(id);
+    
+    if (!result) {
+      return res.status(404).json({ error: 'Challenge not found' });
+    }
+    
+    res.status(200).json({ message: 'Challenge deleted successfully' });
+  } catch (error) {
+    logger.error('Error deleting daily challenge:', error);
+    res.status(500).json({ error: 'Failed to delete daily challenge' });
+  }
+}) as RequestHandler);
+
 export default router;
