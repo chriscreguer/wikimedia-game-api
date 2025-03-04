@@ -1,4 +1,3 @@
-//images.ts
 import express, { Request, Response, NextFunction, RequestHandler } from 'express';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
@@ -394,7 +393,7 @@ async function getRandomWikimediaImages(decadeRange: { start: number, end: numbe
 
 // Fetch a random image with year information, targeting specific decade
 // With retry mechanism to ensure we always return an image
-async function getRandomImageWithYear(targetDecade?: { start: number, end: number }): Promise<CachedImage> {
+async function getRandomImageWithYear(targetDecade?: { start: number, end: number }){
   // Clean expired cache entries for all decades
   const now = Date.now();
   Object.keys(imageCacheByDecade).forEach(decade => {
@@ -480,100 +479,7 @@ async function getRandomImageWithYear(targetDecade?: { start: number, end: numbe
   // Final fallback: if all else fails, generate a simple image with the decade range
   const middleYear = Math.floor((decadeRange.start + decadeRange.end) / 2);
   
-  console.log(`All attempts failed. Using emergency fallback for decade ${decadeKey}`);
-  
-  // Try one last approach - look for any decade with cached images
-  for (const decade of Object.keys(imageCacheByDecade)) {
-    if (imageCacheByDecade[decade].length > 0) {
-      const randomIndex = Math.floor(Math.random() * imageCacheByDecade[decade].length);
-      return imageCacheByDecade[decade][randomIndex];
-    }
-  }
-  
-  // Absolute last resort - if all else fails, use a dummy image from Wikimedia
-  // These are guaranteed to exist and are representative of different eras
-  const fallbackImages = [
-    {
-      title: "Execution of Louis XVI",
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Hinrichtung_Ludwig_des_XVI.png/800px-Hinrichtung_Ludwig_des_XVI.png",
-      source: "Wikimedia Commons",
-      year: 1793,
-      filename: "Execution_of_Louis_XVI.png",
-description: "Historical illustration of the execution",
-      cachedAt: Date.now()
-    },
-    {
-      title: "Abraham Lincoln portrait",
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg/800px-Abraham_Lincoln_O-77_matte_collodion_print.jpg",
-      source: "Wikimedia Commons",
-      filename: "Execution_of_Louis_XVI.png",
-description: "Historical illustration of the execution",
-      year: 1858,
-      cachedAt: Date.now()
-    },
-    {
-      title: "Wright brothers first flight",
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/First_flight2.jpg/800px-First_flight2.jpg",
-      source: "Wikimedia Commons",
-      filename: "Execution_of_Louis_XVI.png",
-description: "Historical illustration of the execution",
-      year: 1903,
-      cachedAt: Date.now()
-    },
-    {
-      title: "Victory Day in Times Square",
-      url: "https://upload.wikimedia.org/wikipedia/en/thumb/9/95/VJ_Day_Times_Square_kiss.jpg/800px-VJ_Day_Times_Square_kiss.jpg",
-      source: "Wikimedia Commons",
-      filename: "Execution_of_Louis_XVI.png",
-description: "Historical illustration of the execution",
-      year: 1945,
-      cachedAt: Date.now()
-    },
-    {
-      title: "Apollo 11 Lunar Landing",
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Aldrin_Apollo_11_original.jpg/800px-Aldrin_Apollo_11_original.jpg",
-      source: "Wikimedia Commons",
-      filename: "Execution_of_Louis_XVI.png",
-description: "Historical illustration of the execution",
-      year: 1969,
-      cachedAt: Date.now()
-    },
-    {
-      title: "Fall of the Berlin Wall",
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Thefalloftheberlinwall1989.JPG/800px-Thefalloftheberlinwall1989.JPG",
-      source: "Wikimedia Commons",
-      filename: "Execution_of_Louis_XVI.png",
-description: "Historical illustration of the execution",
-      year: 1989,
-      cachedAt: Date.now()
-    },
-    {
-      title: "Barack Obama portrait",
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/800px-President_Barack_Obama.jpg",
-      source: "Wikimedia Commons",
-      filename: "Execution_of_Louis_XVI.png",
-description: "Historical illustration of the execution",
-      year: 2012,
-      cachedAt: Date.now()
-    }
-  ];
-  
-  // Find a fallback image from the appropriate decade if possible
-  const decadeFallbacks = fallbackImages.filter(
-    img => img.year >= decadeRange.start && img.year <= decadeRange.end
-  );
-  
-  if (decadeFallbacks.length > 0) {
-    const fallbackImage = decadeFallbacks[Math.floor(Math.random() * decadeFallbacks.length)];
-    // Add to cache
-    imageCacheByDecade[decadeKey].push(fallbackImage);
-    return fallbackImage;
-  }
-  
-  // Truly last resort - just pick any fallback image
-  const fallbackImage = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
-  imageCacheByDecade[decadeKey].push(fallbackImage);
-  return fallbackImage;
+
 }
 
 // Route to get a random image with year information
@@ -619,17 +525,6 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-const verifyAdmin: RequestHandler = (req, res, next) => {
-  const adminKey = req.headers['x-admin-key'];
-  
-  if (!adminKey || adminKey !== process.env.ADMIN_API_KEY) {
-    res.status(401).json({ error: 'Unauthorized' });
-    return;
-  }
-  
-  next();
-};
-
 /**
  * GET /api/images/daily-challenge
  * Get today's challenge
@@ -668,45 +563,11 @@ router.get('/daily-challenge', (async (req, res) => {
   }
 }) as RequestHandler);
 
-/**
- * GET /api/images/daily-challenge/stats
- * Get stats for today's challenge
- */
-router.get('/daily-challenge/stats', (async (req, res): Promise<void> => {
-  try {
-    // Get today's date (start of day in UTC)
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
-    
-    // Find active challenge for today
-    const challenge = await DailyChallenge.findOne({
-      date: { 
-        $gte: today,
-        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000)
-      },
-      active: true
-    });
-    
-    if (!challenge) {
-      res.status(404).json({ error: 'No daily challenge available for today' });
-      return;
-    }
-    
-    // Return only the stats
-    res.status(200).json(challenge.stats);
-  } catch (error) {
-    logger.error('Error fetching daily challenge stats:', error);
-    res.status(500).json({ error: 'Failed to fetch stats' });
-  }
-})as RequestHandler);
-
-/**
- * POST /api/images/daily-challenge/submit
- * Submit score for today's challenge
- */
 router.post('/daily-challenge/submit', (async (req, res) => {
   try {
     const { score } = req.body;
+    
+    console.log(`Submitting score: ${score}`);
     
     if (typeof score !== 'number' || score < 0) {
       return res.status(400).json({ error: 'Valid score required' });
@@ -729,6 +590,26 @@ router.post('/daily-challenge/submit', (async (req, res) => {
       return res.status(404).json({ error: 'No daily challenge available for today' });
     }
     
+    console.log(`Found challenge: ${challenge._id}`);
+    
+    // Initialize stats object if it doesn't exist
+    if (!challenge.stats) {
+      console.log("Initializing stats object");
+      challenge.stats = {
+        averageScore: 0,
+        completions: 0,
+        distributions: []
+      };
+    }
+    
+    // Ensure distributions array exists
+    if (!challenge.stats.distributions) {
+      console.log("Initializing distributions array");
+      challenge.stats.distributions = [];
+    }
+    
+    console.log("Stats before update:", JSON.stringify(challenge.stats));
+    
     // Update stats
     // Increment completions
     challenge.stats.completions += 1;
@@ -737,29 +618,142 @@ router.post('/daily-challenge/submit', (async (req, res) => {
     const totalScore = challenge.stats.averageScore * (challenge.stats.completions - 1) + score;
     challenge.stats.averageScore = totalScore / challenge.stats.completions;
     
-    // Update distributions
-    const existingDistribution = challenge.stats.distributions.find(d => d.score === score);
+    // Store exact score in distributions (not rounded)
+    const exactScore = Math.round(score); // Ensure it's an integer but keep exact value
+    const existingDistribution = challenge.stats.distributions.find(d => d.score === exactScore);
     if (existingDistribution) {
       existingDistribution.count += 1;
     } else {
-      challenge.stats.distributions.push({ score, count: 1 });
+      // Fixed typo: changed c;unt to count
+      challenge.stats.distributions.push({ score: exactScore, count: 1 });
       // Sort distributions by score
       challenge.stats.distributions.sort((a, b) => a.score - b.score);
     }
     
-    await challenge.save();
+    console.log("Stats after update:", JSON.stringify(challenge.stats));
     
-    res.status(200).json({ 
+    await challenge.save();
+    console.log("Challenge saved successfully");
+    
+    // Return complete stats object
+    const response = { 
       message: 'Score submitted successfully',
       stats: challenge.stats 
-    });
+    };
+    
+    console.log("Sending response:", JSON.stringify(response));
+    res.status(200).json(response);
   } catch (error) {
-    logger.error('Error submitting score:', error);
+    console.error('Error submitting score:', error);
     res.status(500).json({ error: 'Failed to submit score' });
   }
 }) as RequestHandler);
 
+/**
+ * GET /api/images/daily-challenge/stats
+ * Get stats for today's challenge
+ */
+router.get(
+  '/daily-challenge/stats',
+  (async (req, res) => {
+    try {
+      let startDate: Date, endDate: Date;
+      if (req.query.date) {
+        // Parse the provided date in YYYY-MM-DD format
+        const dateStr = req.query.date as string;
+        const dateObj = new Date(dateStr);
+        if (isNaN(dateObj.getTime())) {
+          res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+          return;
+        }
+        dateObj.setUTCHours(0, 0, 0, 0);
+        startDate = dateObj;
+        endDate = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
+      } else {
+        // Default to today if no date is provided
+        startDate = new Date();
+        startDate.setUTCHours(0, 0, 0, 0);
+        endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+      }
+      
+      // Find the daily challenge for the given day
+      const challenge = await DailyChallenge.findOne({
+        date: {
+          $gte: startDate,
+          $lt: endDate
+        },
+        active: true
+      });
+      
+      if (!challenge || !challenge.stats) {
+        res.status(404).json({ error: 'No daily challenge stats available for the selected date' });
+        return;
+      }
+      
+      // Return only the stats object
+      res.status(200).json(challenge.stats);
+      return;
+    } catch (error) {
+      logger.error('Error fetching daily challenge stats:', error);
+      res.status(500).json({ error: 'Failed to fetch stats' });
+      return;
+    }
+  }) as RequestHandler
+);
+
+router.get(
+  '/daily-challenge/date/:date',
+  (async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { date } = req.params;
+      const dateObj = new Date(date);
+
+      // Validate date format
+      if (isNaN(dateObj.getTime())) {
+        res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+        return;
+      }
+      
+      // Normalize the date to start of day in UTC
+      dateObj.setUTCHours(0, 0, 0, 0);
+      const nextDay = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
+      
+      // Find the challenge for that day
+      const challenge = await DailyChallenge.findOne({
+        date: { 
+          $gte: dateObj,
+          $lt: nextDay
+        },
+        active: true
+      });
+      
+      if (!challenge) {
+        res.status(404).json({ error: 'No daily challenge available for this date' });
+        return;
+      }
+      
+      res.status(200).json(challenge);
+    } catch (error) {
+      console.error('Error fetching daily challenge by date:', error);
+      res.status(500).json({ error: 'Server error fetching daily challenge' });
+    }
+  }) as RequestHandler
+);
+
 // ADMIN ROUTES
+
+const verifyAdmin: RequestHandler = (req, res, next) => {
+  const adminKey = req.headers['x-admin-key'];
+  
+  if (!adminKey || adminKey !== process.env.ADMIN_API_KEY) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+  
+  next();
+};
+
+
 
 /**
  * POST /api/images/daily-challenge/admin/create
@@ -827,7 +821,68 @@ router.post('/daily-challenge/admin/create', verifyAdmin, (async (req, res) => {
     logger.error('Error creating daily challenge:', error);
     res.status(500).json({ error: 'Failed to create daily challenge' });
   }
-})as RequestHandler);
+}) as RequestHandler);
+
+/**
+ * GET /api/images/daily-challenge/dates
+ * Returns all dates for which a daily challenge exists.
+ */
+router.get('/daily-challenge/dates', async (req: Request, res: Response) => {
+  try {
+    // Optionally, you can restrict this to active challenges only
+    const challenges = await DailyChallenge.find({ active: true }, { date: 1 }).sort({ date: 1 });
+    // Normalize each date to YYYY-MM-DD format
+    const dates = challenges.map(challenge => 
+      new Date(challenge.date).toISOString().split('T')[0]
+    );
+    res.status(200).json({ dates });
+  } catch (error) {
+    console.error('Error fetching challenge dates:', error);
+    res.status(500).json({ error: 'Failed to fetch challenge dates' });
+  }
+});
+
+router.get(
+  '/daily-challenge/date/:date',
+  (async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { date } = req.params;
+      const dateObj = new Date(date);
+
+      // Validate date format
+      if (isNaN(dateObj.getTime())) {
+        res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+        return;
+      }
+      
+      // Normalize the date to start of day in UTC
+      dateObj.setUTCHours(0, 0, 0, 0);
+      const nextDay = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
+      
+      // Find the challenge for that day
+      const challenge = await DailyChallenge.findOne({
+        date: { 
+          $gte: dateObj,
+          $lt: nextDay
+        },
+        active: true
+      });
+      
+      if (!challenge) {
+        res.status(404).json({ error: 'No daily challenge available for this date' });
+        return;
+      }
+      
+      res.status(200).json(challenge);
+    } catch (error) {
+      console.error('Error fetching daily challenge by date:', error);
+      res.status(500).json({ error: 'Server error fetching daily challenge' });
+      return;
+    }
+  }) as RequestHandler
+);
+
+
 
 /**
  * PUT /api/images/daily-challenge/admin/:id
@@ -890,7 +945,7 @@ router.put('/daily-challenge/admin/:id', verifyAdmin, (async (req, res) => {
     logger.error('Error updating daily challenge:', error);
     res.status(500).json({ error: 'Failed to update daily challenge' });
   }
-})as RequestHandler);
+}) as RequestHandler);
 
 /**
  * GET /api/images/daily-challenge/admin/list
@@ -920,7 +975,7 @@ router.get('/daily-challenge/admin/list', verifyAdmin, (async (req, res) => {
     logger.error('Error listing daily challenges:', error);
     res.status(500).json({ error: 'Failed to list daily challenges' });
   }
-})as RequestHandler);
+}) as RequestHandler);
 
 // GET /api/images/daily-challenge/today
 router.get('/daily-challenge/today', async (req: Request, res: Response): Promise<void> => {
@@ -952,4 +1007,3 @@ router.get('/daily-challenge/today', async (req: Request, res: Response): Promis
 });
 
 export default router;
-//end images.ts
