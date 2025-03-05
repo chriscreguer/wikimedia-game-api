@@ -7,11 +7,26 @@ interface ScoreDistribution {
   count: number;
 }
 
+interface ProcessedDistribution {
+  percentileRank?: number;
+  curvePoints: Array<{
+    score: number;
+    count: number;
+    percentile: number;
+  }>;
+  totalParticipants: number;
+  minScore: number;
+  maxScore: number;
+  medianScore: number;
+}
+
+
 // Interface for daily challenge stats
 interface ChallengeStats {
   averageScore: number;
   completions: number;
   distributions: ScoreDistribution[];
+  processedDistribution?: ProcessedDistribution;
 }
 
 // Interface for daily challenge document
