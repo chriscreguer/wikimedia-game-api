@@ -19,13 +19,13 @@ const CURRENT_YEAR = new Date().getFullYear();
 
 // Decade ranges to ensure even distribution
 const DECADE_RANGES = [
-  { start: 1850, end: 1899 },
-  { start: 1900, end: 1919 },
-  { start: 1920, end: 1939 },
-  { start: 1940, end: 1959 },
-  { start: 1960, end: 1979 },
-  { start: 1980, end: 1999 },
-  { start: 2000, end: CURRENT_YEAR }
+  { start: 1850, end: 1899, weight: 1 },  // Less weight for oldest photos
+  { start: 1900, end: 1919, weight: 2 },
+  { start: 1920, end: 1939, weight: 3 },
+  { start: 1940, end: 1959, weight: 3 },
+  { start: 1960, end: 1979, weight: 3 },
+  { start: 1980, end: 1999, weight: 3 },
+  { start: 2000, end: CURRENT_YEAR, weight: 5 }
 ];
 
 interface CachedImage {
@@ -56,12 +56,22 @@ const photoCategories = [
   'Category:Landscape_photographs',
   'Category:Architecture_photographs',
   'Category:Wildlife_photography',
-  'Category:Street_photography'
+  'Category:Street_photography',
+  'Category:Photographs',
+  'Category:People_in_photographs',
+  'Category:Group_photographs',
+  'Category:Color_photographs',
+  'Category:Black_and_white_photographs',
+  'Category:Digital_photographs',
+  'Category:Photographers',
+  'Category:Vintage_photographs',
+  'Category:Festival_photographs',
+  'Category:Event_photographs'
 ];
 
 // Maximum number of API retries
 const MAX_RETRIES = 3;
-const IMAGES_PER_REQUEST = 50;
+const IMAGES_PER_REQUEST = 100;
 
 // Helper function to check if a file is a photograph by its extension
 function isPhotoFile(filename: string): boolean {
@@ -73,14 +83,19 @@ function isPhotoFile(filename: string): boolean {
 function isLikelyRealPhoto(metadata: any): boolean {
   if (!metadata) return false;
   
+  // Accept more images by being more lenient with metadata checks
+  
   // Check for camera information (strong indicators)
   if (metadata.Artist || metadata.Make || metadata.Model) return true;
   
-  // Check for photo-specific categories
+  // Accept images with copyright information as they're likely real photos
+  if (metadata.Copyright || metadata.LicenseShortName) return true;
+  
+  // Check for photo-specific categories with broader terms
   if (metadata.Categories) {
     const categories = metadata.Categories.value || '';
-    const photoKeywords = ['photograph', 'photo', 'portrait', 'camera'];
-    const negativeKeywords = ['drawing', 'illustration', 'clipart', 'diagram', 'logo', 'map', 'chart'];
+    const photoKeywords = ['photograph', 'photo', 'portrait', 'camera', 'picture', 'image', 'snapshot'];
+    const negativeKeywords = ['drawing', 'illustration', 'clipart', 'diagram', 'logo', 'chart'];
     
     if (photoKeywords.some(keyword => categories.toLowerCase().includes(keyword)) &&
         !negativeKeywords.some(keyword => categories.toLowerCase().includes(keyword))) {
@@ -88,16 +103,43 @@ function isLikelyRealPhoto(metadata: any): boolean {
     }
   }
   
-  // Check for description suggesting it's a photograph
+  // Check for description suggesting it's a photograph with broader terms
   if (metadata.ImageDescription) {
     const description = metadata.ImageDescription.value || '';
-    const photoKeywords = ['photograph', 'photo', 'taken', 'camera', 'picture'];
-    const negativeKeywords = ['drawing', 'illustration', 'clipart', 'diagram', 'logo', 'map', 'chart'];
+    const photoKeywords = ['photograph', 'photo', 'taken', 'camera', 'picture', 'captured', 'shot', 'image'];
+    const negativeKeywords = ['drawing', 'illustration', 'clipart', 'diagram', 'logo', 'chart'];
     
     if (photoKeywords.some(keyword => description.toLowerCase().includes(keyword)) &&
         !negativeKeywords.some(keyword => description.toLowerCase().includes(keyword))) {
       return true;
     }
+  }
+
+  // Check if the file has a date that looks like a photo date
+  if (metadata.DateTimeOriginal || metadata.DateTime || metadata.DateTimeDigitized) {
+    return true;
+  }
+  
+  // More lenient check: if it has author information, it might be a photo
+  if (metadata.AuthorCreditText || metadata.Artist || metadata.Credit) {
+    return true;
+  }
+  
+  // Accept images with GPS data as they're almost certainly photographs
+  if (metadata.GPSLatitude || metadata.GPSLongitude) {
+    return true;
+  }
+  
+  // If it has credit or attribution, it's more likely to be a real photo
+  if (metadata.Attribution || metadata.Credit) {
+    return true;
+  }
+  
+  // If the mime type is known to be a photo type, that's a good indicator
+  if (metadata.MIMEType && 
+      (metadata.MIMEType.value?.includes('image/jpeg') || 
+       metadata.MIMEType.value?.includes('image/png'))) {
+    return true;
   }
   
   return false;
@@ -105,7 +147,7 @@ function isLikelyRealPhoto(metadata: any): boolean {
 
 // Function to extract year from metadata with higher confidence
 function extractYearWithConfidence(metadata: any, uploadYear: number): { year: number, confidence: 'high' | 'medium' | 'low' } {
-  if (!metadata) return { year: uploadYear, confidence: 'low' };
+  if (!metadata) return { year: uploadYear, confidence: 'medium' }; // Changed from low to medium
   
   // Try to get year from DateTimeOriginal with highest confidence
   if (metadata.DateTimeOriginal) {
@@ -121,7 +163,7 @@ function extractYearWithConfidence(metadata: any, uploadYear: number): { year: n
   }
   
   // Try other date fields with medium confidence
-  const dateFields = ['DateTime', 'DateTimeDigitized', 'MetadataDate'];
+  const dateFields = ['DateTime', 'DateTimeDigitized', 'MetadataDate', 'CreateDate', 'ModifyDate'];
   for (const field of dateFields) {
     if (metadata[field]) {
       const dateString = metadata[field].value;
@@ -167,9 +209,21 @@ function extractYearWithConfidence(metadata: any, uploadYear: number): { year: n
     }
   }
   
-  // Use upload year as last resort with low confidence
+  // Use upload year but with medium confidence (not low)
   if (uploadYear >= MIN_YEAR && uploadYear <= CURRENT_YEAR) {
-    return { year: uploadYear, confidence: 'low' };
+    return { year: uploadYear, confidence: 'medium' };
+  }
+
+  // Accept years from other metadata fields
+  if (metadata.DateCreated) {
+    const dateString = metadata.DateCreated.value;
+    const yearMatch = dateString.match(/\b(18\d{2}|19\d{2}|20\d{2})\b/);
+    if (yearMatch) {
+      const year = parseInt(yearMatch[0]);
+      if (year >= MIN_YEAR && year <= CURRENT_YEAR) {
+        return { year, confidence: 'medium' };
+      }
+    }
   }
   
   // If all else fails but we need a year within our range
@@ -520,9 +574,13 @@ async function getImagesFromCategory(category: string, decadeRange: { start: num
         );
         
         // Skip if confidence is low or year isn't in our target decade range
-        if (confidence === 'low' || year < decadeRange.start || year > decadeRange.end) {
+        if (year < decadeRange.start || year > decadeRange.end) {
+           return null;
+         }
+         if (confidence === 'low' && year < 1950) {
           return null;
-        }
+          } 
+          
         
         return {
           title,
@@ -546,7 +604,23 @@ async function getImagesFromCategory(category: string, decadeRange: { start: num
 
 // Function to get random decade range with balanced distribution
 function getRandomDecadeRange(): { start: number, end: number } {
-  return DECADE_RANGES[Math.floor(Math.random() * DECADE_RANGES.length)];
+  // Calculate the total weight
+  const totalWeight = DECADE_RANGES.reduce((sum, range) => sum + range.weight, 0);
+  
+  // Generate a random value between 0 and the total weight
+  const randomValue = Math.random() * totalWeight;
+  
+  // Use the random value to select a decade range based on its weight
+  let weightSum = 0;
+  for (const range of DECADE_RANGES) {
+    weightSum += range.weight;
+    if (randomValue <= weightSum) {
+      return { start: range.start, end: range.end };
+    }
+  }
+  
+  // Fallback (should never reach here if weights are positive)
+  return DECADE_RANGES[DECADE_RANGES.length - 1];
 }
 
 // Function to fetch random images directly
@@ -625,7 +699,7 @@ async function getRandomWikimediaImages(decadeRange: { start: number, end: numbe
         );
         
         // Skip if confidence is low or year isn't in our target decade range
-        if (confidence === 'low' || year < decadeRange.start || year > decadeRange.end) {
+        if (confidence === 'low' && year < 1950) {
           return null;
         }
         
