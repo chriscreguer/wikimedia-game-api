@@ -19,6 +19,34 @@ const verifyAdmin: RequestHandler = (req, res, next) => {
   next();
 };
 
+function setCentralTimeMidnight(date: Date): Date {
+  // Create a new date to avoid modifying the original
+  const ctDate = new Date(date);
+  
+  // Get the UTC offset for US Central Time (CT)
+  // This accounts for Daylight Saving Time automatically
+  const ctOffset = -6 * 60; // -6 hours in minutes for CST, or -5 for CDT
+  const now = new Date();
+  const isDST = (): boolean => {
+    // Simple DST detection for US Central Time
+    // DST starts on second Sunday in March and ends on first Sunday in November
+    const jan = new Date(now.getFullYear(), 0, 1);
+    const jul = new Date(now.getFullYear(), 6, 1);
+    const stdTimezoneOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+    return now.getTimezoneOffset() < stdTimezoneOffset;
+  };
+  
+  // Adjust offset for DST if needed
+  const offset = isDST() ? ctOffset + 60 : ctOffset; // +60 minutes during DST
+  
+  // Set to local midnight in CT
+  ctDate.setUTCHours(0, 0, 0, 0);
+  // Adjust for CT offset (converting UTC midnight to CT midnight)
+  ctDate.setMinutes(ctDate.getMinutes() - offset);
+  
+  return ctDate;
+}
+
 // Serve admin dashboard
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public/admin.html'));
@@ -37,8 +65,7 @@ router.post('/daily-challenge/create', verifyAdmin, (async (req, res) => {
     }
     
     // Parse date and reset to UTC midnight
-    const challengeDate = new Date(date);
-    challengeDate.setUTCHours(0, 0, 0, 0);
+    const challengeDate = setCentralTimeMidnight(new Date(date));
     
     if (isNaN(challengeDate.getTime())) {
       return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
@@ -151,7 +178,7 @@ router.get('/daily-challenges', verifyAdmin, async (req: Request, res: Response)
 router.put('/daily-challenge/:id/edit', verifyAdmin, (async (req, res) => {
   try {
     const { id } = req.params;
-    const { date, keepImages, newImageUrls } = req.body;
+    const { date, keepImages, newImageUrls, imageUpdates } = req.body;
 
     // Find the challenge
     const challenge = await DailyChallenge.findById(id);
@@ -161,12 +188,35 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, (async (req, res) => {
 
     // Update date if provided
     if (date) {
-      challenge.date = new Date(date);
+      challenge.date = setCentralTimeMidnight(new Date(date));
     }
 
     // Filter images to keep
     if (Array.isArray(keepImages) && keepImages.length > 0) {
       challenge.images = keepImages.map(index => challenge.images[index]);
+    }
+
+    // Apply updates to image metadata if provided
+    if (imageUpdates && typeof imageUpdates === 'object') {
+      Object.keys(imageUpdates).forEach(index => {
+        const idx = parseInt(index, 10);
+        if (!isNaN(idx) && idx >= 0 && idx < challenge.images.length) {
+          const updates = imageUpdates[index];
+          
+          // Update year if provided
+          if (updates.year !== undefined) {
+            const year = parseInt(updates.year, 10);
+            if (!isNaN(year)) {
+              challenge.images[idx].year = year;
+            }
+          }
+          
+          // Update description if provided
+          if (updates.description !== undefined) {
+            challenge.images[idx].description = updates.description;
+          }
+        }
+      });
     }
 
     // Add new images if provided

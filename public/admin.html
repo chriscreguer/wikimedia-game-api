@@ -124,7 +124,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h1>Year Guessing Game - Admin Dashboard</h1>
       <div>
-        <span class="timezone-indicator me-3">All times in Eastern Time (ET)</span>
+        <span class="timezone-indicator me-3">All times in Central Time (CT)</span>
         <button class="btn btn-outline-secondary" id="setKeyBtn">Set Admin Key</button>
       </div>
     </div>
@@ -138,7 +138,7 @@
         <form id="createForm">
           <div class="row mb-3">
             <div class="col-md-6">
-              <label for="date" class="form-label">Challenge Date (ET)</label>
+              <label for="date" class="form-label">Challenge Date (CT)</label>
               <input type="datetime-local" class="form-control" id="date" required />
             </div>
           </div>
@@ -251,504 +251,606 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Global variables
-    let adminKey = localStorage.getItem('adminKey') || '';
-    let allChallenges = [];
-    let currentDisplayDate = new Date(); // Used for calendar display
-    let currentEditingChallenge = null;
+   let adminKey = localStorage.getItem('adminKey') || '';
+  let allChallenges = [];
+  let currentDisplayDate = new Date(); // Used for calendar display
+  let currentEditingChallenge = null;
 
-    // Modal control
-    const adminKeyModal = new bootstrap.Modal(document.getElementById('adminKeyModal'));
-    const editChallengeModal = new bootstrap.Modal(document.getElementById('editChallengeModal'));
-    
-    document.getElementById('setKeyBtn').addEventListener('click', () => {
-      document.getElementById('adminKey').value = adminKey;
-      adminKeyModal.show();
-    });
-    
-    document.getElementById('saveKeyBtn').addEventListener('click', () => {
-      const newKey = document.getElementById('adminKey').value.trim();
-      if (newKey) {
-        adminKey = newKey;
-        localStorage.setItem('adminKey', adminKey);
-        adminKeyModal.hide();
-        loadChallenges();
-      }
-    });
+  // Modal control
+  const adminKeyModal = new bootstrap.Modal(document.getElementById('adminKeyModal'));
+  const editChallengeModal = new bootstrap.Modal(document.getElementById('editChallengeModal'));
 
-    // Convert UTC to ET
-    function convertToET(utcDate) {
-      const date = new Date(utcDate);
-      return new Date(date.toLocaleString('en-US', {timeZone: 'America/New_York'}));
+  document.getElementById('setKeyBtn').addEventListener('click', () => {
+    document.getElementById('adminKey').value = adminKey;
+    adminKeyModal.show();
+  });
+
+  document.getElementById('saveKeyBtn').addEventListener('click', () => {
+    const newKey = document.getElementById('adminKey').value.trim();
+    if (newKey) {
+      adminKey = newKey;
+      localStorage.setItem('adminKey', adminKey);
+      adminKeyModal.hide();
+      loadChallenges();
     }
+  });
 
-    // Convert ET to UTC
-    function convertToUTC(etDateStr) {
-      const etDate = new Date(etDateStr);
-      const utcDate = new Date(etDate.getTime() + etDate.getTimezoneOffset() * 60000);
-      return utcDate;
+  // Convert UTC to CT
+  function convertToCT(utcDate) {
+    const date = new Date(utcDate);
+    return new Date(date.toLocaleString('en-US', {timeZone: 'America/Chicago'}));
+  }
+
+  // Convert CT to UTC
+  function convertToUTC(ctDateStr) {
+    const ctDate = new Date(ctDateStr);
+    const utcDate = new Date(ctDate.getTime() + ctDate.getTimezoneOffset() * 60000);
+    return utcDate;
+  }
+
+  // Format date for datetime-local input
+  function formatDateForInput(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
+  // Extract filename from URL
+  function extractFilenameFromUrl(url) {
+    try {
+      const urlObj = new URL(url);
+      const segments = urlObj.pathname.split('/');
+      return decodeURIComponent(segments[segments.length - 1]);
+    } catch (error) {
+      console.error('Invalid URL:', error);
+      return null;
     }
+  }
 
-    // Format date for datetime-local input
-    function formatDateForInput(date) {
-      const d = new Date(date);
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      const hours = String(d.getHours()).padStart(2, '0');
-      const minutes = String(d.getMinutes()).padStart(2, '0');
-      return `${year}-${month}-${day}T${hours}:${minutes}`;
+  // Parse and validate URLs
+  function parseImageUrls(text) {
+    let urls = text.split(/\n/).map(line => line.trim()).filter(line => line);
+    if (urls.length === 1) {
+      urls = urls[0].split(',').map(url => url.trim()).filter(url => url);
     }
+    return urls.filter(url => url.includes('wikimedia.org'));
+  }
 
-    // Extract filename from URL
-    function extractFilenameFromUrl(url) {
-      try {
-        const urlObj = new URL(url);
-        const segments = urlObj.pathname.split('/');
-        return decodeURIComponent(segments[segments.length - 1]);
-      } catch (error) {
-        console.error('Invalid URL:', error);
-        return null;
-      }
+  // Image preview handler
+  document.getElementById('imageUrls').addEventListener('input', function() {
+    const text = this.value.trim();
+    const previewGrid = document.getElementById('previewGrid');
+    const urlCount = document.getElementById('urlCount');
+    const urls = parseImageUrls(text);
+    urlCount.textContent = urls.length;
+    if (urls.length > 10) {
+      this.value = urls.slice(0, 10).join('\n');
+      urlCount.textContent = '10';
+      return;
     }
-
-    // Parse and validate URLs
-    function parseImageUrls(text) {
-      let urls = text.split(/\n/).map(line => line.trim()).filter(line => line);
-      if (urls.length === 1) {
-        urls = urls[0].split(',').map(url => url.trim()).filter(url => url);
-      }
-      return urls.filter(url => url.includes('wikimedia.org'));
-    }
-
-    // Image preview handler
-    document.getElementById('imageUrls').addEventListener('input', function() {
-      const text = this.value.trim();
-      const previewGrid = document.getElementById('previewGrid');
-      const urlCount = document.getElementById('urlCount');
-      const urls = parseImageUrls(text);
-      urlCount.textContent = urls.length;
-      if (urls.length > 10) {
-        this.value = urls.slice(0, 10).join('\n');
-        urlCount.textContent = '10';
-        return;
-      }
-      previewGrid.innerHTML = '';
-      urls.forEach((url, index) => {
-        const filename = extractFilenameFromUrl(url);
-        const previewCol = document.createElement('div');
-        previewCol.className = 'col-md-6 col-lg-4 mb-3';
-        previewCol.innerHTML = `
-          <div class="card">
-            <img src="${url}" class="challenge-image card-img-top" alt="Preview ${index + 1}">
-            <div class="card-body">
-              <p class="card-text text-muted small">${filename || 'Invalid URL'}</p>
-            </div>
-          </div>
-        `;
-        previewGrid.appendChild(previewCol);
-      });
-    });
-
-    // Create challenge handler
-    document.getElementById('createForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      if (!adminKey) {
-        alert('Please set your admin key first');
-        adminKeyModal.show();
-        return;
-      }
-      const dateET = document.getElementById('date').value;
-      const imageUrlsText = document.getElementById('imageUrls').value.trim();
-      const appendImages = document.getElementById('appendImages').checked;
-      if (!dateET || !imageUrlsText) {
-        alert('Please fill all required fields');
-        return;
-      }
-      const imageUrls = parseImageUrls(imageUrlsText);
-      if (imageUrls.length === 0) {
-        alert('No valid Wikimedia URLs found');
-        return;
-      }
-      if (imageUrls.length > 10) {
-        alert('Maximum 10 images allowed');
-        return;
-      }
-      
-      // Convert ET to UTC for API
-      const dateUTC = convertToUTC(dateET).toISOString();
-      
-      const submitBtn = this.querySelector('button[type="submit"]');
-      const originalBtnText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Creating...';
-      try {
-        const response = await fetch(`/admin/daily-challenge/create?adminKey=${adminKey}&append=${appendImages}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ date: dateUTC, imageUrls })
-        });
-        const data = await response.json();
-        if (response.ok) {
-          alert(`Success: ${data.message}. Added ${data.challenge.imageCount} images.`);
-          document.getElementById('createForm').reset();
-          document.getElementById('previewGrid').innerHTML = '';
-          document.getElementById('urlCount').textContent = '0';
-          loadChallenges();
-        } else {
-          alert(`Error: ${data.error}`);
-        }
-      } catch (error) {
-        alert(`Request failed: ${error.message}`);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalBtnText;
-      }
-    });
-
-    // Open edit challenge modal
-    function openEditModal(challengeId) {
-      const challenge = allChallenges.find(ch => ch._id === challengeId);
-      if (!challenge) return;
-      
-      currentEditingChallenge = challenge;
-      
-      // Convert UTC to ET for display
-      const dateET = convertToET(challenge.date);
-      document.getElementById('editChallengeId').value = challengeId;
-      document.getElementById('editChallengeDate').value = formatDateForInput(dateET);
-      
-      // Display existing images
-      const imagesContainer = document.getElementById('editImagesContainer');
-      imagesContainer.innerHTML = '';
-      
-      challenge.images.forEach((image, index) => {
-        const imageCol = document.createElement('div');
-        imageCol.className = 'col-md-6 col-lg-4';
-        imageCol.innerHTML = `
-          <div class="card image-item" data-index="${index}">
-            <div class="badge-overlay">${image.year}</div>
-            <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Challenge image'}">
-            <div class="image-controls">
-              <button type="button" class="btn btn-sm btn-danger delete-image-btn" data-index="${index}">
-                <i class="bi bi-trash"></i> Remove
-              </button>
-            </div>
-            <div class="card-body">
-              <p class="card-text text-muted small">${image.title || extractFilenameFromUrl(image.url) || 'Image'}</p>
-            </div>
-          </div>
-        `;
-        imagesContainer.appendChild(imageCol);
-      });
-      
-      // Add event listeners to delete buttons
-      document.querySelectorAll('.delete-image-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const index = parseInt(this.getAttribute('data-index'));
-          if (confirm(`Remove image ${index + 1}?`)) {
-            this.closest('.col-md-6').remove();
-          }
-        });
-      });
-      
-      editChallengeModal.show();
-    }
-
-    // Save edit challenge changes
-    document.getElementById('saveEditBtn').addEventListener('click', async function() {
-      if (!currentEditingChallenge) return;
-      
-      const challengeId = document.getElementById('editChallengeId').value;
-      const dateET = document.getElementById('editChallengeDate').value;
-      const newImagesText = document.getElementById('editNewImages').value.trim();
-      
-      // Convert ET to UTC for API
-      const dateUTC = convertToUTC(dateET).toISOString();
-      
-      // Get indices of images to keep (those not deleted)
-      const keepIndices = Array.from(document.querySelectorAll('.image-item'))
-        .map(el => parseInt(el.getAttribute('data-index')));
-      
-      // Parse new image URLs
-      const newImageUrls = parseImageUrls(newImagesText);
-      
-      this.disabled = true;
-      this.textContent = 'Saving...';
-      
-      try {
-        const response = await fetch(`/admin/daily-challenge/${challengeId}/edit?adminKey=${adminKey}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            date: dateUTC,
-            keepImages: keepIndices,
-            newImageUrls
-          })
-        });
-        
-        const data = await response.json();
-        if (response.ok) {
-          alert('Challenge updated successfully');
-          editChallengeModal.hide();
-          loadChallenges();
-        } else {
-          alert(`Error: ${data.error}`);
-        }
-      } catch (error) {
-        alert(`Request failed: ${error.message}`);
-      } finally {
-        this.disabled = false;
-        this.textContent = 'Save Changes';
-      }
-    });
-
-    // Render calendar view
-    function renderCalendar(displayDate, challengeDates) {
-      const calendarContainer = document.getElementById('calendarContainer');
-      calendarContainer.innerHTML = '';
-
-      // Header with navigation
-      const headerDiv = document.createElement('div');
-      headerDiv.className = 'd-flex justify-content-between align-items-center mb-3';
-      const prevBtn = document.createElement('button');
-      prevBtn.className = 'btn btn-outline-secondary';
-      prevBtn.textContent = '<';
-      const nextBtn = document.createElement('button');
-      nextBtn.className = 'btn btn-outline-secondary';
-      nextBtn.textContent = '>';
-      const monthLabel = document.createElement('h4');
-      monthLabel.className = 'mb-0';
-      const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-      ];
-      monthLabel.textContent = monthNames[displayDate.getMonth()] + ' ' + displayDate.getFullYear();
-      headerDiv.appendChild(prevBtn);
-      headerDiv.appendChild(monthLabel);
-      headerDiv.appendChild(nextBtn);
-      calendarContainer.appendChild(headerDiv);
-
-      // Create calendar table
-      const table = document.createElement('table');
-      table.className = 'table table-sm text-center';
-      const thead = document.createElement('thead');
-      const headerRow = document.createElement('tr');
-      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      dayNames.forEach(day => {
-        const th = document.createElement('th');
-        th.textContent = day;
-        headerRow.appendChild(th);
-      });
-      thead.appendChild(headerRow);
-      table.appendChild(thead);
-
-      const tbody = document.createElement('tbody');
-      const firstDay = new Date(displayDate.getFullYear(), displayDate.getMonth(), 1);
-      const startingDay = firstDay.getDay();
-      const daysInMonth = new Date(displayDate.getFullYear(), displayDate.getMonth() + 1, 0).getDate();
-      let dateCounter = 1;
-      for (let i = 0; i < 6; i++) {
-        const row = document.createElement('tr');
-        for (let j = 0; j < 7; j++) {
-          const cell = document.createElement('td');
-          if (i === 0 && j < startingDay) {
-            cell.textContent = '';
-          } else if (dateCounter > daysInMonth) {
-            cell.textContent = '';
-          } else {
-            cell.textContent = dateCounter;
-            const cellDate = new Date(displayDate.getFullYear(), displayDate.getMonth(), dateCounter);
-            const cellDateStr = cellDate.toISOString().split('T')[0];
-            if (challengeDates.includes(cellDateStr)) {
-              cell.style.backgroundColor = '#6C2DC7';
-              cell.style.color = '#fff';
-            }
-            cell.style.cursor = 'pointer';
-            cell.addEventListener('click', () => {
-              filterChallengesByDate(cellDateStr);
-            });
-            dateCounter++;
-          }
-          row.appendChild(cell);
-        }
-        tbody.appendChild(row);
-      }
-      table.appendChild(tbody);
-      calendarContainer.appendChild(table);
-
-      // Navigation events
-      prevBtn.addEventListener('click', () => {
-        currentDisplayDate.setMonth(currentDisplayDate.getMonth() - 1);
-        renderCalendar(currentDisplayDate, challengeDates);
-      });
-      nextBtn.addEventListener('click', () => {
-        currentDisplayDate.setMonth(currentDisplayDate.getMonth() + 1);
-        renderCalendar(currentDisplayDate, challengeDates);
-      });
-    }
-
-    function renderCalendarFromChallenges(challenges) {
-      const challengeDates = challenges.map(ch => new Date(ch.date).toISOString().split('T')[0]);
-      const uniqueDates = [...new Set(challengeDates)];
-      renderCalendar(currentDisplayDate, uniqueDates);
-    }
-
-    // Render challenges list
-    function renderChallengesList(challenges) {
-      const challengesListEl = document.getElementById('challengesList');
-      if (challenges.length === 0) {
-        challengesListEl.innerHTML = `
-          <div class="col-12">
-            <div class="alert alert-info">No challenges created yet</div>
-          </div>
-        `;
-        return;
-      }
-      
-      challenges.sort((a, b) => new Date(b.date) - new Date(a.date));
-      
-      const html = challenges.map(challenge => {
-        const dateET = convertToET(challenge.date);
-        const formattedDate = dateET.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          timeZone: 'America/New_York'
-        }) + ' ET';
-        
-        const image = challenge.images[0];
-        return `
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100">
-              <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Challenge image'}">
-              <div class="card-body">
-                <h5 class="card-title">${formattedDate}</h5>
-                <p class="card-text text-muted">${image.title || extractFilenameFromUrl(image.url) || 'Image'}</p>
-                <p class="card-text">
-                  <small class="text-muted">Year: ${image.year}</small><br>
-                  <small class="text-muted">Images: ${challenge.images.length}</small><br>
-                  <small class="text-muted">Completions: ${challenge.stats ? challenge.stats.completions : 0}</small>
-                </p>
-              </div>
-              <div class="card-footer d-flex justify-content-between">
-                <span class="badge bg-${challenge.active ? 'success' : 'secondary'}">
-                  ${challenge.active ? 'Active' : 'Inactive'}
-                </span>
-                <div>
-                  <button class="btn btn-sm btn-primary edit-btn me-1" data-id="${challenge._id}">
-                    Edit
-                  </button>
-                  <button class="btn btn-sm btn-danger delete-btn" data-id="${challenge._id}">
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-      
-      challengesListEl.innerHTML = html;
-      
-      document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', deleteChallenge);
-      });
-      
-      document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const id = this.getAttribute('data-id');
-          openEditModal(id);
-        });
-      });
-    }
-
-    function filterChallengesByDate(dateStr) {
-      const filtered = allChallenges.filter(ch => {
-        const chDateStr = new Date(ch.date).toISOString().split('T')[0];
-        return chDateStr === dateStr;
-      });
-      renderChallengesList(filtered);
-    }
-
-    // Load existing challenges and update calendar
-    async function loadChallenges() {
-      if (!adminKey) {
-        document.getElementById('challengesList').innerHTML = `
-          <div class="col-12">
-            <div class="alert alert-warning">Please set your admin key to view challenges</div>
-          </div>
-        `;
-        return;
-      }
-      document.getElementById('challengesList').innerHTML = `
-        <div class="col-12 text-center">
-          <div class="spinner-border text-light" role="status">
-            <span class="visually-hidden">Loading...</span>
+    previewGrid.innerHTML = '';
+    urls.forEach((url, index) => {
+      const filename = extractFilenameFromUrl(url);
+      const previewCol = document.createElement('div');
+      previewCol.className = 'col-md-6 col-lg-4 mb-3';
+      previewCol.innerHTML = `
+        <div class="card">
+          <img src="${url}" class="challenge-image card-img-top" alt="Preview ${index + 1}">
+          <div class="card-body">
+            <p class="card-text text-muted small">${filename || 'Invalid URL'}</p>
           </div>
         </div>
       `;
-      try {
-        const response = await fetch(`/admin/daily-challenges?adminKey=${adminKey}`);
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to load challenges');
-        }
-        const challenges = await response.json();
-        allChallenges = challenges;
-        renderCalendarFromChallenges(challenges);
-        renderChallengesList(challenges);
-      } catch (error) {
-        document.getElementById('challengesList').innerHTML = `
-          <div class="col-12">
-            <div class="alert alert-danger">${error.message || 'Failed to load challenges'}</div>
+      previewGrid.appendChild(previewCol);
+    });
+  });
+
+  // Open edit challenge modal
+  function openEditModal(challengeId) {
+    const challenge = allChallenges.find(ch => ch._id === challengeId);
+    if (!challenge) return;
+    
+    currentEditingChallenge = challenge;
+    
+    // Convert UTC to CT for display
+    const dateCT = convertToCT(challenge.date);
+    document.getElementById('editChallengeId').value = challengeId;
+    document.getElementById('editChallengeDate').value = formatDateForInput(dateCT);
+    
+    // Display existing images
+    const imagesContainer = document.getElementById('editImagesContainer');
+    imagesContainer.innerHTML = '';
+    
+    challenge.images.forEach((image, index) => {
+      const imageCol = document.createElement('div');
+      imageCol.className = 'col-md-6 col-lg-4';
+      imageCol.innerHTML = `
+        <div class="card image-item mb-3" data-index="${index}">
+          <div class="badge-overlay">${image.year}</div>
+          <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Challenge image'}">
+          <div class="image-controls">
+            <button type="button" class="btn btn-sm btn-danger delete-image-btn" data-index="${index}">
+              <i class="bi bi-trash"></i> Remove
+            </button>
           </div>
-        `;
-      }
-    }
-
-    async function deleteChallenge() {
-      if (!confirm('Are you sure you want to delete this challenge?')) {
-        return;
-      }
-      const id = this.getAttribute('data-id');
-      try {
-        const response = await fetch(`/admin/daily-challenge/${id}?adminKey=${adminKey}`, {
-          method: 'DELETE'
-        });
-        const data = await response.json();
-        if (response.ok) {
-          alert('Challenge deleted successfully');
-          loadChallenges();
-        } else {
-          alert(`Error: ${data.error}`);
+          <div class="card-body">
+            <p class="card-text text-muted small">${image.title || extractFilenameFromUrl(image.url) || 'Image'}</p>
+            <div class="mb-2">
+              <label class="form-label">Year</label>
+              <input type="number" class="form-control form-control-sm image-year" 
+                    value="${image.year}" min="1800" max="2025" data-index="${index}">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Description</label>
+              <textarea class="form-control form-control-sm image-description" 
+                        rows="2" data-index="${index}">${image.description || ''}</textarea>
+            </div>
+          </div>
+        </div>
+      `;
+      imagesContainer.appendChild(imageCol);
+    });
+    
+    // Add event listeners to delete buttons
+    document.querySelectorAll('.delete-image-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const index = parseInt(this.getAttribute('data-index'));
+        if (confirm(`Remove image ${index + 1}?`)) {
+          this.closest('.col-md-6').remove();
         }
-      } catch (error) {
-        alert(`Request failed: ${error.message}`);
-      }
-    }
+      });
+    });
+    
+    // Clear new images input
+    document.getElementById('editNewImages').value = '';
+    
+    editChallengeModal.show();
+  }
 
-    // Set initial date/time to current ET time
-    document.addEventListener('DOMContentLoaded', () => {
-      const now = new Date();
-      const etNow = convertToET(now);
-      document.getElementById('date').value = formatDateForInput(etNow);
+  // Save edit challenge handler
+  document.getElementById('saveEditBtn').addEventListener('click', async function() {
+    if (!adminKey) {
+      alert('Please set your admin key first');
+      adminKeyModal.show();
+      return;
+    }
+    
+    const challengeId = document.getElementById('editChallengeId').value;
+    const dateCT = document.getElementById('editChallengeDate').value;
+    
+    if (!challengeId || !dateCT) {
+      alert('Missing required information');
+      return;
+    }
+    
+    // Convert CT to UTC for API
+    const dateUTC = convertToUTC(dateCT).toISOString();
+    
+    // Get all remaining images (excluding removed ones)
+    const imageElements = document.querySelectorAll('.image-item');
+    const imageUpdates = {};
+    
+    // Collect year and description updates for each image
+    imageElements.forEach((el) => {
+      const index = parseInt(el.getAttribute('data-index'), 10);
       
-      loadChallenges();
+      // Get updated values
+      const yearInput = el.querySelector('.image-year');
+      const descriptionInput = el.querySelector('.image-description');
       
-      if (!adminKey) {
-        setTimeout(() => {
-          adminKeyModal.show();
-        }, 500);
+      if (yearInput && descriptionInput) {
+        imageUpdates[index] = {
+          year: parseInt(yearInput.value, 10),
+          description: descriptionInput.value
+        };
       }
     });
+    
+    // Get new image URLs if any were added
+    const newImageUrls = parseImageUrls(document.getElementById('editNewImages').value);
+    
+    // Prepare request body
+    const requestBody = {
+      date: dateUTC,
+      imageUpdates
+    };
+    
+    if (newImageUrls.length > 0) {
+      requestBody.newImageUrls = newImageUrls;
+    }
+    
+    // Show loading state
+    const saveBtn = this;
+    const originalBtnText = saveBtn.textContent;
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving...';
+    
+    try {
+      const response = await fetch(`/admin/daily-challenge/${challengeId}/edit?adminKey=${adminKey}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        alert(`Success: ${data.message}`);
+        editChallengeModal.hide();
+        loadChallenges(); // Refresh the challenges list
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      alert(`Request failed: ${error.message}`);
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = originalBtnText;
+    }
+  });
 
-    document.getElementById('refreshBtn').addEventListener('click', loadChallenges);
+  // Delete challenge handler
+  async function deleteChallenge() {
+    if (!adminKey) {
+      alert('Please set your admin key first');
+      adminKeyModal.show();
+      return;
+    }
+    
+    const challengeId = this.getAttribute('data-id');
+    
+    if (!confirm('Are you sure you want to delete this challenge? This action cannot be undone.')) {
+      return;
+    }
+    
+    try {
+      const response = await fetch(`/admin/daily-challenge/${challengeId}?adminKey=${adminKey}`, {
+        method: 'DELETE'
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        alert('Challenge deleted successfully');
+        loadChallenges(); // Refresh the challenges list
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      alert(`Request failed: ${error.message}`);
+    }
+  }
+
+  // Render challenges list
+  function renderChallengesList(challenges) {
+    const challengesListEl = document.getElementById('challengesList');
+    if (challenges.length === 0) {
+      challengesListEl.innerHTML = `
+        <div class="col-12">
+          <div class="alert alert-info">No challenges created yet</div>
+        </div>
+      `;
+      return;
+    }
+    
+    challenges.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    const html = challenges.map(challenge => {
+      const dateCT = convertToCT(challenge.date);
+      const formattedDate = dateCT.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'America/Chicago'
+      }) + ' CT';
+      
+      const image = challenge.images[0];
+      return `
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100">
+            <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Challenge image'}">
+            <div class="card-body">
+              <h5 class="card-title">${formattedDate}</h5>
+              <p class="card-text text-muted">${image.title || extractFilenameFromUrl(image.url) || 'Image'}</p>
+              <p class="card-text">
+                <small class="text-muted">Year: ${image.year}</small><br>
+                <small class="text-muted">Images: ${challenge.images.length}</small><br>
+                <small class="text-muted">Completions: ${challenge.stats ? challenge.stats.completions : 0}</small>
+              </p>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+              <span class="badge bg-${challenge.active ? 'success' : 'secondary'}">
+                ${challenge.active ? 'Active' : 'Inactive'}
+              </span>
+              <div>
+                <button class="btn btn-sm btn-primary edit-btn me-1" data-id="${challenge._id}">
+                  Edit
+                </button>
+                <button class="btn btn-sm btn-danger delete-btn" data-id="${challenge._id}">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+    challengesListEl.innerHTML = html;
+    
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', deleteChallenge);
+    });
+    
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        openEditModal(id);
+      });
+    });
+  }
+
+  // Load challenges function
+  async function loadChallenges() {
+    if (!adminKey) {
+      console.log('Admin key not set, skipping challenge load');
+      return;
+    }
+    
+    try {
+      // Show loading state
+      const refreshBtn = document.getElementById('refreshBtn');
+      const originalBtnText = refreshBtn.textContent;
+      refreshBtn.disabled = true;
+      refreshBtn.textContent = 'Loading...';
+      
+      const response = await fetch(`/admin/daily-challenges?adminKey=${adminKey}`);
+      
+      if (!response.ok) {
+        if (response.status === 401) {
+          alert('Unauthorized. Please check your admin key.');
+          adminKeyModal.show();
+        } else {
+          alert(`Error fetching challenges: ${response.statusText}`);
+        }
+        return;
+      }
+      
+      const challenges = await response.json();
+      allChallenges = challenges; // Store for later use
+      
+      // Render the challenges list
+      renderChallengesList(challenges);
+      
+      // Render the calendar with challenge data
+      const now = new Date();
+      renderCalendar(now.getFullYear(), now.getMonth(), challenges);
+    } catch (error) {
+      alert(`Failed to load challenges: ${error.message}`);
+    } finally {
+      const refreshBtn = document.getElementById('refreshBtn');
+      refreshBtn.disabled = false;
+      refreshBtn.textContent = originalBtnText;
+    }
+  }
+
+  // Calendar rendering function
+  function renderCalendar(year, month, challenges) {
+    const calendarContainer = document.getElementById('calendarContainer');
+    
+    // Create date object for the first day of the month
+    const firstDay = new Date(year, month, 1);
+    // Get the day of the week (0-6, Sunday-Saturday)
+    const startDay = firstDay.getDay();
+    // Get the number of days in the month
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    // Get month and year strings
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    // Create calendar navigation controls
+    const calendarControls = document.createElement('div');
+    calendarControls.className = 'd-flex justify-content-between mb-3 align-items-center';
+    calendarControls.innerHTML = `
+      <button class="btn btn-outline-secondary" id="prevMonth">&lt; Prev</button>
+      <h5 class="mb-0">${monthNames[month]} ${year}</h5>
+      <button class="btn btn-outline-secondary" id="nextMonth">Next &gt;</button>
+    `;
+    
+    // Create table for calendar
+    const calendarTable = document.createElement('table');
+    calendarTable.className = 'table table-bordered text-center';
+    
+    // Create header row with day names
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+      <tr>
+        <th>Sun</th>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
+      </tr>
+    `;
+    calendarTable.appendChild(thead);
+    
+    // Create calendar body
+    const tbody = document.createElement('tbody');
+    let date = 1;
+    
+    // Create rows for the calendar
+    for (let i = 0; i < 6; i++) {
+      // Break if we've gone through all days
+      if (date > daysInMonth) break;
+      
+      const row = document.createElement('tr');
+      
+      // Create cells for each day of the week
+      for (let j = 0; j < 7; j++) {
+        const cell = document.createElement('td');
+        
+        // Add date numbers starting from the correct day of the week
+        if (i === 0 && j < startDay) {
+          // Empty cell before the start of the month
+          cell.innerHTML = '';
+        } else if (date > daysInMonth) {
+          // Empty cell after the end of the month
+          cell.innerHTML = '';
+        } else {
+          // Date cell
+          const cellDate = new Date(year, month, date);
+          const dateStr = cellDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+          
+          // Check if this date has a challenge
+          const hasChallenge = challenges.some(challenge => {
+            const challengeDate = convertToCT(challenge.date);
+            return challengeDate.toISOString().split('T')[0] === dateStr;
+          });
+          
+          // Add date number and styling
+          cell.innerHTML = `<span class="${hasChallenge ? 'badge bg-primary p-2' : ''}">${date}</span>`;
+          
+          if (hasChallenge) {
+            cell.classList.add('challenge-day');
+            cell.style.cursor = 'pointer';
+            
+            // Add click handler to navigate to that date's challenge
+            cell.addEventListener('click', () => {
+              const challenge = challenges.find(ch => {
+                const challengeDate = convertToCT(ch.date);
+                return challengeDate.toISOString().split('T')[0] === dateStr;
+              });
+              
+              if (challenge) {
+                openEditModal(challenge._id);
+              }
+            });
+          }
+          
+          date++;
+        }
+        
+        row.appendChild(cell);
+      }
+      
+      tbody.appendChild(row);
+    }
+    
+    calendarTable.appendChild(tbody);
+    
+    // Clear and populate the calendar container
+    calendarContainer.innerHTML = '';
+    calendarContainer.appendChild(calendarControls);
+    calendarContainer.appendChild(calendarTable);
+    
+    // Add event listeners for navigation buttons
+    document.getElementById('prevMonth').addEventListener('click', () => {
+      let newMonth = month - 1;
+      let newYear = year;
+      if (newMonth < 0) {
+        newMonth = 11;
+        newYear--;
+      }
+      currentDisplayDate = new Date(newYear, newMonth, 1);
+      renderCalendar(newYear, newMonth, challenges);
+    });
+    
+    document.getElementById('nextMonth').addEventListener('click', () => {
+      let newMonth = month + 1;
+      let newYear = year;
+      if (newMonth > 11) {
+        newMonth = 0;
+        newYear++;
+      }
+      currentDisplayDate = new Date(newYear, newMonth, 1);
+      renderCalendar(newYear, newMonth, challenges);
+    });
+  }
+
+  // Create challenge handler
+  document.getElementById('createForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!adminKey) {
+      alert('Please set your admin key first');
+      adminKeyModal.show();
+      return;
+    }
+    const dateCT = document.getElementById('date').value;
+    const imageUrlsText = document.getElementById('imageUrls').value.trim();
+    const appendImages = document.getElementById('appendImages').checked;
+    if (!dateCT || !imageUrlsText) {
+      alert('Please fill all required fields');
+      return;
+    }
+    const imageUrls = parseImageUrls(imageUrlsText);
+    if (imageUrls.length === 0) {
+      alert('No valid Wikimedia URLs found');
+      return;
+    }
+    if (imageUrls.length > 10) {
+      alert('Maximum 10 images allowed');
+      return;
+    }
+    
+    // Convert CT to UTC for API
+    const dateUTC = convertToUTC(dateCT).toISOString();
+    
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating...';
+    try {
+      const response = await fetch(`/admin/daily-challenge/create?adminKey=${adminKey}&append=${appendImages}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ date: dateUTC, imageUrls })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert(`Success: ${data.message}. Added ${data.challenge.imageCount} images.`);
+        document.getElementById('createForm').reset();
+        document.getElementById('previewGrid').innerHTML = '';
+        document.getElementById('urlCount').textContent = '0';
+        loadChallenges();
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      alert(`Request failed: ${error.message}`);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+    }
+  });
+
+  // Set initial date/time to current CT time
+  document.addEventListener('DOMContentLoaded', () => {
+    const now = new Date();
+    const ctNow = convertToCT(now);
+    document.getElementById('date').value = formatDateForInput(ctNow);
+    
+    loadChallenges();
+    
+    if (!adminKey) {
+      setTimeout(() => {
+        adminKeyModal.show();
+      }, 500);
+    }
+  });
+
+  document.getElementById('refreshBtn').addEventListener('click', loadChallenges);
   </script>
 </body>
 </html>

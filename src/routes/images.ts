@@ -145,6 +145,34 @@ function isLikelyRealPhoto(metadata: any): boolean {
   return false;
 }
 
+function setCentralTimeMidnight(date: Date): Date {
+  // Create a new date to avoid modifying the original
+  const ctDate = new Date(date);
+  
+  // Get the UTC offset for US Central Time (CT)
+  // This accounts for Daylight Saving Time automatically
+  const ctOffset = -6 * 60; // -6 hours in minutes for CST, or -5 for CDT
+  const now = new Date();
+  const isDST = (): boolean => {
+    // Simple DST detection for US Central Time
+    // DST starts on second Sunday in March and ends on first Sunday in November
+    const jan = new Date(now.getFullYear(), 0, 1);
+    const jul = new Date(now.getFullYear(), 6, 1);
+    const stdTimezoneOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+    return now.getTimezoneOffset() < stdTimezoneOffset;
+  };
+  
+  // Adjust offset for DST if needed
+  const offset = isDST() ? ctOffset + 60 : ctOffset; // +60 minutes during DST
+  
+  // Set to local midnight in CT
+  ctDate.setUTCHours(0, 0, 0, 0);
+  // Adjust for CT offset (converting UTC midnight to CT midnight)
+  ctDate.setMinutes(ctDate.getMinutes() - offset);
+  
+  return ctDate;
+}
+
 // Function to extract year from metadata with higher confidence
 function extractYearWithConfidence(metadata: any, uploadYear: number): { year: number, confidence: 'high' | 'medium' | 'low' } {
   if (!metadata) return { year: uploadYear, confidence: 'medium' }; // Changed from low to medium
@@ -870,9 +898,8 @@ router.get('/', async (req: Request, res: Response) => {
  */
 router.get('/daily-challenge', (async (req, res) => {
   try {
-    // Get today's date (start of day in UTC)
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
+    // Get today's date (start of day in CT instead of UTC)
+    const today = setCentralTimeMidnight(new Date());
     
     // Find active challenge for today
     const challenge = await DailyChallenge.findOne({
@@ -906,23 +933,18 @@ router.post('/daily-challenge/submit', (async (req, res) => {
   try {
     const { score, date } = req.body;
     
-    console.log(`Submitting score: ${score}`);
+    // ...
     
-    if (typeof score !== 'number' || score < 0) {
-      return res.status(400).json({ error: 'Valid score required' });
-    }
-    
-    // Get today's date (start of day in UTC) or use the provided date
+    // Get today's date (start of day in CT) or use the provided date
     let targetDate: Date;
     if (date) {
       targetDate = new Date(date);
       if (isNaN(targetDate.getTime())) {
         return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
       }
-      targetDate.setUTCHours(0, 0, 0, 0);
+      targetDate = setCentralTimeMidnight(targetDate);
     } else {
-      targetDate = new Date();
-      targetDate.setUTCHours(0, 0, 0, 0);
+      targetDate = setCentralTimeMidnight(new Date());
     }
     
     // Find the challenge for the target date
@@ -1028,7 +1050,8 @@ router.get(
         targetDate = new Date();
       }
       
-      targetDate.setUTCHours(0, 0, 0, 0);
+      // Set to CT midnight instead of UTC
+      targetDate = setCentralTimeMidnight(targetDate);
       const nextDay = new Date(targetDate.getTime() + 24 * 60 * 60 * 1000);
       
       // Find the challenge
@@ -1094,13 +1117,11 @@ router.get(
           res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
           return;
         }
-        dateObj.setUTCHours(0, 0, 0, 0);
-        startDate = dateObj;
-        endDate = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
+        startDate = setCentralTimeMidnight(dateObj);
+        endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
       } else {
         // Default to today if no date is provided
-        startDate = new Date();
-        startDate.setUTCHours(0, 0, 0, 0);
+        startDate = setCentralTimeMidnight(new Date());
         endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
       }
       
@@ -1142,14 +1163,14 @@ router.get(
         return;
       }
       
-      // Normalize the date to start of day in UTC
-      dateObj.setUTCHours(0, 0, 0, 0);
-      const nextDay = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
+      // Normalize the date to start of day in CT instead of UTC
+      const ctDate = setCentralTimeMidnight(dateObj);
+      const nextDay = new Date(ctDate.getTime() + 24 * 60 * 60 * 1000);
       
       // Find the challenge for that day
       const challenge = await DailyChallenge.findOne({
         date: { 
-          $gte: dateObj,
+          $gte: ctDate,
           $lt: nextDay
         },
         active: true
@@ -1283,14 +1304,14 @@ router.get(
         return;
       }
       
-      // Normalize the date to start of day in UTC
-      dateObj.setUTCHours(0, 0, 0, 0);
-      const nextDay = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
+      // Normalize the date to start of day in CT instead of UTC
+      const ctDate = setCentralTimeMidnight(dateObj);
+      const nextDay = new Date(ctDate.getTime() + 24 * 60 * 60 * 1000);
       
       // Find the challenge for that day
       const challenge = await DailyChallenge.findOne({
         date: { 
-          $gte: dateObj,
+          $gte: ctDate,
           $lt: nextDay
         },
         active: true
@@ -1408,8 +1429,8 @@ router.get('/daily-challenge/admin/list', verifyAdmin, (async (req, res) => {
 // GET /api/images/daily-challenge/today
 router.get('/daily-challenge/today', async (req: Request, res: Response): Promise<void> => {
   try {
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
+    // Use CT midnight instead of UTC
+    const today = setCentralTimeMidnight(new Date());
 
     const challenge = await DailyChallenge.findOne({
       date: {
