@@ -1219,8 +1219,7 @@ router.post('/daily-challenge/admin/create', verifyAdmin, (async (req, res) => {
     }
     
     // Parse date
-    const challengeDate = new Date(date);
-    challengeDate.setUTCHours(0, 0, 0, 0);
+    const challengeDate = setCentralTimeMidnight(new Date(date));
     
     if (isNaN(challengeDate.getTime())) {
       return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
