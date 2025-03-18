@@ -1426,18 +1426,37 @@ router.get('/daily-challenge/admin/list', verifyAdmin, (async (req, res) => {
 }) as RequestHandler);
 
 // GET /api/images/daily-challenge/today
-router.get('/daily-challenge/today', async (req: Request, res: Response): Promise<void> => {
+router.get('/daily-challenge/today', async (req, res) => {
   try {
-    // Use CT midnight instead of UTC
+    // Get today's date (start of day in CT)
     const today = setCentralTimeMidnight(new Date());
-
-    const challenge = await DailyChallenge.findOne({
-      date: {
-        $gte: today,
-        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000)
+    console.log("DEBUG - Today CT midnight:", today.toISOString());
+    
+    // Calculate tomorrow
+    const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+    console.log("DEBUG - Tomorrow CT midnight:", tomorrow.toISOString());
+    
+    // Log the query we're about to make
+    console.log("DEBUG - Query:", {
+      date: { 
+        $gte: today.toISOString(),
+        $lt: tomorrow.toISOString()
       },
       active: true
     });
+    
+    // Find active challenge for today
+    const challenge = await DailyChallenge.findOne({
+      date: { 
+        $gte: today,
+        $lt: tomorrow
+      },
+      active: true
+    });
+    
+    console.log("DEBUG - Challenge found:", challenge ? 
+      { id: challenge._id, date: challenge.date, imgCount: challenge.images.length } : 
+      "No challenge found");
 
     if (!challenge) {
       res.status(404).json({ error: 'No daily challenge available for today' });
