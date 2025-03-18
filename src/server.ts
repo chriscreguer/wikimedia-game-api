@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import dotenv from 'dotenv';
 import imagesRoutes from './routes/images';
 import mongoose from 'mongoose';
@@ -11,6 +12,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(cors({
   origin: '*',  // Allow all origins
@@ -30,6 +33,7 @@ mongoose.connect(connectionString)
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // Routes

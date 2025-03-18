@@ -4,6 +4,56 @@ import path from 'path';
 import DailyChallenge from '../models/DailyChallenge';
 import { fetchImageData, fetchMultipleImageData, extractFilenameFromUrl } from '../utils/wikimediaHelper';
 import logger from '../utils/logger';
+import multer from 'multer'; 
+import fs from 'fs';
+
+const storage = multer.diskStorage({
+  destination: function (
+    req: Express.Request, 
+    file: Express.Multer.File, 
+    cb: (error: Error | null, destination: string) => void
+  ) {
+    // Create uploads directory if it doesn't exist
+    const uploadDir = path.join(__dirname, '../../uploads');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: function (
+    req: Express.Request, 
+    file: Express.Multer.File, 
+    cb: (error: Error | null, filename: string) => void
+  ) {
+    // Generate a unique filename
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+  }
+});
+
+// File filter to only accept images
+const fileFilter = (
+  req: Express.Request, 
+  file: Express.Multer.File, 
+  cb: multer.FileFilterCallback
+) => {
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Only image files are allowed!') as any, false);
+  }
+};
+
+// Set upload limits
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB max file size
+    files: 5 // Max 5 files at once
+  },
+  fileFilter: fileFilter
+});
 
 const router = express.Router();
 
@@ -56,40 +106,100 @@ router.get('/', (req, res) => {
  * Create a daily challenge from Wikimedia URL(s)
  * POST /admin/daily-challenge/create
  */
-router.post('/daily-challenge/create', verifyAdmin, (async (req, res) => {
+router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles', 5), (async (req, res) => {
   try {
-    const { date, imageUrl, imageUrls } = req.body;
+    const { date } = req.body;
     
     if (!date) {
+      // Delete uploaded files if there's an error
+      if (req.files && Array.isArray(req.files)) {
+        req.files.forEach(file => {
+          fs.unlinkSync(file.path);
+        });
+      }
       return res.status(400).json({ error: 'Date is required' });
     }
     
-    // Parse date and reset to UTC midnight
+    // Parse date and reset to Central Time midnight
     const challengeDate = setCentralTimeMidnight(new Date(date));
     
     if (isNaN(challengeDate.getTime())) {
+      // Delete uploaded files if there's an error
+      if (req.files && Array.isArray(req.files)) {
+        req.files.forEach(file => {
+          fs.unlinkSync(file.path);
+        });
+      }
       return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
     }
     
-    // Handle multiple URLs or a single URL
+    // Handle multiple URLs if provided
     let filenames: string[] = [];
+    let imageData: any[] = [];
     
-    if (Array.isArray(imageUrls) && imageUrls.length > 0) {
-      for (const url of imageUrls) {
-        const filename = extractFilenameFromUrl(url);
-        if (filename) {
-          filenames.push(filename);
+    if (req.body.imageUrls) {
+      const imageUrls = JSON.parse(req.body.imageUrls);
+      
+      if (Array.isArray(imageUrls) && imageUrls.length > 0) {
+        for (const url of imageUrls) {
+          const filename = extractFilenameFromUrl(url);
+          if (filename) {
+            filenames.push(filename);
+          }
         }
       }
-    } else if (imageUrl) {
-      const filename = extractFilenameFromUrl(imageUrl);
-      if (filename) {
-        filenames.push(filename);
+      
+      // Fetch image data for Wikimedia URLs
+      if (filenames.length > 0) {
+        const wikimediaImageData = await fetchMultipleImageData(filenames);
+        imageData = [...imageData, ...wikimediaImageData];
       }
     }
     
-    if (filenames.length === 0) {
-      return res.status(400).json({ error: 'No valid Wikimedia URLs provided' });
+    // Handle uploaded files
+    if (req.files && Array.isArray(req.files)) {
+      const uploadedFiles = req.files as Express.Multer.File[];
+      
+      // Process each uploaded file
+      for (let i = 0; i < uploadedFiles.length; i++) {
+        const file = uploadedFiles[i];
+        
+        // Get metadata for this file from the request body
+        let year = new Date().getFullYear();
+        let description = '';
+        
+        if (req.body[`metadata_${i}`]) {
+          try {
+            const metadata = JSON.parse(req.body[`metadata_${i}`]);
+            if (metadata.year) year = parseInt(metadata.year);
+            if (metadata.description) description = metadata.description;
+          } catch (err) {
+            console.warn('Error parsing metadata for file', i, err);
+          }
+        }
+        
+        // Create an image object for this uploaded file
+        const fileUrl = `/uploads/${path.basename(file.path)}`;
+        imageData.push({
+          filename: file.originalname,
+          title: file.originalname,
+          url: fileUrl, // URL to access the file
+          year: year,
+          source: 'User Upload',
+          description: description
+        });
+      }
+    }
+    
+    // Ensure we have some images
+    if (imageData.length === 0) {
+      // Delete uploaded files if there's an error
+      if (req.files && Array.isArray(req.files)) {
+        req.files.forEach(file => {
+          fs.unlinkSync(file.path);
+        });
+      }
+      return res.status(400).json({ error: 'No valid images provided' });
     }
     
     // Check if a challenge already exists for this date
@@ -99,13 +209,6 @@ router.post('/daily-challenge/create', verifyAdmin, (async (req, res) => {
         $lt: new Date(challengeDate.getTime() + 24 * 60 * 60 * 1000)
       }
     });
-    
-    // Fetch image data for all filenames
-    const imageData = await fetchMultipleImageData(filenames);
-    
-    if (imageData.length === 0) {
-      return res.status(400).json({ error: 'Failed to fetch image data' });
-    }
     
     if (existingChallenge) {
       // Update existing challenge with new images; support append mode
@@ -150,6 +253,13 @@ router.post('/daily-challenge/create', verifyAdmin, (async (req, res) => {
       }
     });
   } catch (error) {
+    // Delete uploaded files if there's an error
+    if (req.files && Array.isArray(req.files)) {
+      req.files.forEach(file => {
+        fs.unlinkSync(file.path);
+      });
+    }
+    
     logger.error('Error creating daily challenge:', error);
     res.status(500).json({ error: 'Failed to create daily challenge' });
   }
@@ -175,14 +285,20 @@ router.get('/daily-challenges', verifyAdmin, async (req: Request, res: Response)
  * Edit a daily challenge
  * PUT /admin/daily-challenge/:id/edit
  */
-router.put('/daily-challenge/:id/edit', verifyAdmin, (async (req, res) => {
+router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles', 5), (async (req, res) => {
   try {
     const { id } = req.params;
-    const { date, keepImages, newImageUrls, imageUpdates } = req.body;
+    const { date, imageUpdates, newImageUrls } = req.body;
 
     // Find the challenge
     const challenge = await DailyChallenge.findById(id);
     if (!challenge) {
+      // Delete uploaded files if there's an error
+      if (req.files && Array.isArray(req.files)) {
+        req.files.forEach(file => {
+          fs.unlinkSync(file.path);
+        });
+      }
       return res.status(404).json({ error: 'Challenge not found' });
     }
 
@@ -191,48 +307,88 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, (async (req, res) => {
       challenge.date = setCentralTimeMidnight(new Date(date));
     }
 
-    // Filter images to keep
-    if (Array.isArray(keepImages) && keepImages.length > 0) {
-      challenge.images = keepImages.map(index => challenge.images[index]);
-    }
-
     // Apply updates to image metadata if provided
-    if (imageUpdates && typeof imageUpdates === 'object') {
-      Object.keys(imageUpdates).forEach(index => {
+    if (imageUpdates) {
+      const updates = JSON.parse(imageUpdates);
+      
+      Object.keys(updates).forEach(index => {
         const idx = parseInt(index, 10);
         if (!isNaN(idx) && idx >= 0 && idx < challenge.images.length) {
-          const updates = imageUpdates[index];
+          const update = updates[index];
           
           // Update year if provided
-          if (updates.year !== undefined) {
-            const year = parseInt(updates.year, 10);
+          if (update.year !== undefined) {
+            const year = parseInt(update.year, 10);
             if (!isNaN(year)) {
               challenge.images[idx].year = year;
             }
           }
           
           // Update description if provided
-          if (updates.description !== undefined) {
-            challenge.images[idx].description = updates.description;
+          if (update.description !== undefined) {
+            challenge.images[idx].description = update.description;
           }
         }
       });
     }
 
-    // Add new images if provided
-    if (Array.isArray(newImageUrls) && newImageUrls.length > 0) {
-      let newFilenames: string[] = [];
-      
-      for (const url of newImageUrls) {
-        const filename = extractFilenameFromUrl(url);
-        if (filename) {
-          newFilenames.push(filename);
+    // Add new images from URLs if provided
+    if (newImageUrls) {
+      try {
+        const urlsArray = JSON.parse(newImageUrls);
+        
+        if (Array.isArray(urlsArray) && urlsArray.length > 0) {
+          let newFilenames: string[] = [];
+          
+          for (const url of urlsArray) {
+            const filename = extractFilenameFromUrl(url);
+            if (filename) {
+              newFilenames.push(filename);
+            }
+          }
+          
+          if (newFilenames.length > 0) {
+            const newImageData = await fetchMultipleImageData(newFilenames);
+            challenge.images = [...challenge.images, ...newImageData];
+          }
         }
+      } catch (error) {
+        console.error('Error parsing newImageUrls', error);
       }
+    }
+    
+    // Handle uploaded files
+    if (req.files && Array.isArray(req.files)) {
+      const uploadedFiles = req.files as Express.Multer.File[];
       
-      if (newFilenames.length > 0) {
-        const newImageData = await fetchMultipleImageData(newFilenames);
-        challenge.images = [...challenge.images, ...newImageData];
+      // Process each uploaded file
+      for (let i = 0; i < uploadedFiles.length; i++) {
+        const file = uploadedFiles[i];
+        
+        // Get metadata for this file from the request body
+        let year = new Date().getFullYear();
+        let description = '';
+        
+        if (req.body[`metadata_${i}`]) {
+          try {
+            const metadata = JSON.parse(req.body[`metadata_${i}`]);
+            if (metadata.year) year = parseInt(metadata.year);
+            if (metadata.description) description = metadata.description;
+          } catch (err) {
+            console.warn('Error parsing metadata for file', i, err);
+          }
+        }
+        
+        // Create an image object for this uploaded file
+        const fileUrl = `/uploads/${path.basename(file.path)}`;
+        challenge.images.push({
+          filename: file.originalname,
+          title: file.originalname,
+          url: fileUrl, // URL to access the file
+          year: year,
+          source: 'User Upload',
+          description: description
+        });
       }
     }
 
@@ -244,6 +400,13 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, (async (req, res) => {
       challenge
     });
   } catch (error) {
+    // Delete uploaded files if there's an error
+    if (req.files && Array.isArray(req.files)) {
+      req.files.forEach(file => {
+        fs.unlinkSync(file.path);
+      });
+    }
+    
     logger.error('Error updating daily challenge:', error);
     res.status(500).json({ error: 'Failed to update daily challenge' });
   }
