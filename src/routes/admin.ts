@@ -70,31 +70,21 @@ const verifyAdmin: RequestHandler = (req, res, next) => {
 };
 
 function setCentralTimeMidnight(date: Date): Date {
-  // Create a new date to avoid modifying the original
-  const ctDate = new Date(date);
+  // Convert the input date to a string in CT timezone, keeping only the date part
+  const ctDateStr = date.toLocaleString('en-US', {
+    timeZone: 'America/Chicago',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
   
-  // Get the UTC offset for US Central Time (CT)
-  // This accounts for Daylight Saving Time automatically
-  const ctOffset = -6 * 60; // -6 hours in minutes for CST, or -5 for CDT
-  const now = new Date();
-  const isDST = (): boolean => {
-    // Simple DST detection for US Central Time
-    // DST starts on second Sunday in March and ends on first Sunday in November
-    const jan = new Date(now.getFullYear(), 0, 1);
-    const jul = new Date(now.getFullYear(), 6, 1);
-    const stdTimezoneOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-    return now.getTimezoneOffset() < stdTimezoneOffset;
-  };
+  // Parse the string back to a date object (will be in local timezone)
+  const [month, day, year] = ctDateStr.split('/').map(Number);
   
-  // Adjust offset for DST if needed
-  const offset = isDST() ? ctOffset + 60 : ctOffset; // +60 minutes during DST
+  // Create a new date with the CT date components but at UTC midnight
+  const result = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
   
-  // Set to local midnight in CT
-  ctDate.setUTCHours(0, 0, 0, 0);
-  // Adjust for CT offset (converting UTC midnight to CT midnight)
-  ctDate.setMinutes(ctDate.getMinutes() - offset);
-  
-  return ctDate;
+  return result;
 }
 
 // Serve admin dashboard
