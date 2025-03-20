@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["nodejs", "yarn"]  # Or npm if you use that
+
+[phases.install]
+cmds = ["npm ci"]  # Or yarn install
+
+[phases.build]
+cmds = ["npm run build"]  # Or yarn build
