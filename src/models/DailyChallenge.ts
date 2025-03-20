@@ -51,7 +51,8 @@ const DailyChallengeSchema: Schema = new Schema({
     url: { type: String, required: true },
     year: { type: Number, required: true },
     source: { type: String, default: 'Wikimedia Commons' },
-    description: { type: String }
+    description: { type: String },
+    revealedDescription: { type: String } // Add this new field
   }],
   stats: {
     averageScore: { type: Number, default: 0 },

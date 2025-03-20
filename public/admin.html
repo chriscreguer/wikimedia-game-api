@@ -450,45 +450,50 @@
     // ---------------------------------------------------
     // Utility to create an image card for the unified container
     // ---------------------------------------------------
-    function createImageCard(options) {
-      // options: { type: 'wikimedia'|'upload', url, fileId (for uploads) }
-      const { type, url, fileId } = options;
-      const card = document.createElement('div');
-      card.className = 'col-md-4 mb-3';
-      card.dataset.type = type;
-      if (type === 'wikimedia') {
-        card.dataset.url = url;
-      } else if (type === 'upload') {
-        card.dataset.uploadId = fileId;
-      }
-      // For new cards in create mode, no "existing" flag is set.
-      const currentYear = new Date().getFullYear();
-      card.innerHTML = `
-        <div class="card">
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <span class="drag-handle"><i class="bi bi-arrows-move"></i></span>
-            <button type="button" class="btn btn-sm btn-danger delete-image-btn">
-              <i class="bi bi-trash"></i>
-            </button>
-          </div>
-          <img src="${url}" class="challenge-image card-img-top" alt="Image" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
-          <div class="card-body">
-            <div class="mb-2">
-              <label class="form-label">Year</label>
-              <input type="number" class="form-control image-year" value="${currentYear}" min="1800" max="2025">
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Description</label>
-              <textarea class="form-control image-description" rows="2"></textarea>
-            </div>
-          </div>
+   // Updated createImageCard function to include revealedDescription field
+function createImageCard(options) {
+  // options: { type: 'wikimedia'|'upload', url, fileId (for uploads) }
+  const { type, url, fileId } = options;
+  const card = document.createElement('div');
+  card.className = 'col-md-4 mb-3';
+  card.dataset.type = type;
+  if (type === 'wikimedia') {
+    card.dataset.url = url;
+  } else if (type === 'upload') {
+    card.dataset.uploadId = fileId;
+  }
+  // For new cards in create mode, no "existing" flag is set.
+  const currentYear = new Date().getFullYear();
+  card.innerHTML = `
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="drag-handle"><i class="bi bi-arrows-move"></i></span>
+        <button type="button" class="btn btn-sm btn-danger delete-image-btn">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+      <img src="${url}" class="challenge-image card-img-top" alt="Image" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
+      <div class="card-body">
+        <div class="mb-2">
+          <label class="form-label">Year</label>
+          <input type="number" class="form-control image-year" value="${currentYear}" min="1800" max="2025">
         </div>
-      `;
-      card.querySelector('.delete-image-btn').addEventListener('click', () => {
-        card.remove();
-      });
-      return card;
-    }
+        <div class="mb-2">
+          <label class="form-label">Description (Before Guess)</label>
+          <textarea class="form-control image-description" rows="2"></textarea>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Revealed Description (After Guess)</label>
+          <textarea class="form-control image-revealed-description" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+  `;
+  card.querySelector('.delete-image-btn').addEventListener('click', () => {
+    card.remove();
+  });
+  return card;
+}
 
     // ---------------------------------------------------
     // Wikimedia Images - Create Mode
@@ -578,23 +583,38 @@
         formData.append('append', appendImages);
         // Build an ordered list of images from the unified container
         const container = document.getElementById('challengeImagesContainer');
-        const cards = container.querySelectorAll('.col-md-4');
-        let uploadIndex = 0;
-        let imagesOrder = [];
-        cards.forEach(card => {
-          const type = card.dataset.type;
-          const year = card.querySelector('.image-year').value;
-          const description = card.querySelector('.image-description').value;
-          if (type === 'wikimedia') {
-            imagesOrder.push({ type, url: card.dataset.url, year: parseInt(year, 10), description });
-          } else if (type === 'upload') {
-            imagesOrder.push({ type, uploadIndex, year: parseInt(year, 10), description });
-            // Append file from our map
-            formData.append(`uploadFiles_${uploadIndex}`, uploadFilesMap[card.dataset.uploadId]);
-            uploadIndex++;
-          }
-        });
-        formData.append('imagesOrder', JSON.stringify(imagesOrder));
+  const cards = container.querySelectorAll('.col-md-4');
+  let uploadIndex = 0;
+  let imagesOrder = [];
+  cards.forEach(card => {
+    const type = card.dataset.type;
+    const year = card.querySelector('.image-year').value;
+    const description = card.querySelector('.image-description').value;
+    const revealedDescription = card.querySelector('.image-revealed-description').value;
+    
+    if (type === 'wikimedia') {
+      imagesOrder.push({ 
+        type, 
+        url: card.dataset.url, 
+        year: parseInt(year, 10), 
+        description,
+        revealedDescription
+      });
+    } else if (type === 'upload') {
+      imagesOrder.push({ 
+        type, 
+        uploadIndex, 
+        year: parseInt(year, 10), 
+        description,
+        revealedDescription
+      });
+      // Append file from our map
+      formData.append(`uploadFiles_${uploadIndex}`, uploadFilesMap[card.dataset.uploadId]);
+      uploadIndex++;
+    }
+  });
+  formData.append('imagesOrder', JSON.stringify(imagesOrder));
+  
         const response = await fetch(`/admin/daily-challenge/create?adminKey=${adminKey}`, {
           method: 'POST',
           body: formData
@@ -680,102 +700,120 @@
     // Open Edit Challenge Modal
     // ---------------------------------------------------
     function openEditModal(challengeId) {
-      const challenge = allChallenges.find(ch => ch._id === challengeId);
-      if (!challenge) return;
-      currentEditingChallenge = challenge;
-      const dateCT = convertToCT(challenge.date);
-      document.getElementById('editChallengeId').value = challengeId;
-      document.getElementById('editChallengeDate').value = formatDateForInput(dateCT);
-      const container = document.getElementById('editImagesContainer');
-      container.innerHTML = '';
-      // Populate existing images
-      challenge.images.forEach((image, index) => {
-        const card = document.createElement('div');
-        card.className = 'col-md-4 mb-3 image-item';
-        card.dataset.existing = 'true';
-        card.dataset.originalIndex = index;
-        card.innerHTML = `
-          <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <span class="drag-handle"><i class="bi bi-arrows-move"></i></span>
-              <button type="button" class="btn btn-sm btn-danger delete-image-btn">
-                <i class="bi bi-trash"></i>
-              </button>
-            </div>
-            <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Image'}" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
-            <div class="card-body">
-              <p class="card-text text-muted small">${image.title || ''}</p>
-              <div class="mb-2">
-                <label class="form-label">Year</label>
-                <input type="number" class="form-control form-control-sm image-year" value="${image.year}" min="1800" max="2025">
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Description</label>
-                <textarea class="form-control form-control-sm image-description" rows="2">${image.description || ''}</textarea>
-              </div>
-            </div>
+  const challenge = allChallenges.find(ch => ch._id === challengeId);
+  if (!challenge) return;
+  currentEditingChallenge = challenge;
+  const dateCT = convertToCT(challenge.date);
+  document.getElementById('editChallengeId').value = challengeId;
+  document.getElementById('editChallengeDate').value = formatDateForInput(dateCT);
+  const container = document.getElementById('editImagesContainer');
+  container.innerHTML = '';
+  // Populate existing images
+  challenge.images.forEach((image, index) => {
+    const card = document.createElement('div');
+    card.className = 'col-md-4 mb-3 image-item';
+    card.dataset.existing = 'true';
+    card.dataset.originalIndex = index;
+    card.innerHTML = `
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span class="drag-handle"><i class="bi bi-arrows-move"></i></span>
+          <button type="button" class="btn btn-sm btn-danger delete-image-btn">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+        <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Image'}" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
+        <div class="card-body">
+          <p class="card-text text-muted small">${image.title || ''}</p>
+          <div class="mb-2">
+            <label class="form-label">Year</label>
+            <input type="number" class="form-control form-control-sm image-year" value="${image.year}" min="1800" max="2025">
           </div>
-        `;
-        card.querySelector('.delete-image-btn').addEventListener('click', () => {
-          card.remove();
-        });
-        container.appendChild(card);
-      });
-      // Clear new image inputs
-      document.getElementById('editNewImages').value = '';
-      document.getElementById('editImageUpload').value = '';
-      editUploadFilesMap = {};
-      // Initialize Sortable for edit container
-      new Sortable(container, {
-        animation: 150,
-        handle: '.drag-handle'
-      });
-      editChallengeModal.show();
-    }
+          <div class="mb-2">
+            <label class="form-label">Description (Before Guess)</label>
+            <textarea class="form-control form-control-sm image-description" rows="2">${image.description || ''}</textarea>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Revealed Description (After Guess)</label>
+            <textarea class="form-control form-control-sm image-revealed-description" rows="2">${image.revealedDescription || ''}</textarea>
+          </div>
+        </div>
+      </div>
+    `;
+    card.querySelector('.delete-image-btn').addEventListener('click', () => {
+      card.remove();
+    });
+    container.appendChild(card);
+  });
+  // Clear new image inputs
+  document.getElementById('editNewImages').value = '';
+  document.getElementById('editImageUpload').value = '';
+  editUploadFilesMap = {};
+  // Initialize Sortable for edit container
+  new Sortable(container, {
+    animation: 150,
+    handle: '.drag-handle'
+  });
+  editChallengeModal.show();
+}
 
     // ---------------------------------------------------
     // Save Edit Challenge Handler
     // ---------------------------------------------------
     async function handleSaveEditClick() {
-      if (!adminKey) {
-        alert('Please set your admin key first');
-        adminKeyModal.show();
-        return;
-      }
-      const challengeId = document.getElementById('editChallengeId').value;
-      const dateCT = document.getElementById('editChallengeDate').value;
-      if (!challengeId || !dateCT) {
-        alert('Missing required information');
-        return;
-      }
-      const dateUTC = convertToUTC(dateCT).toISOString();
-      const container = document.getElementById('editImagesContainer');
-      const cards = container.querySelectorAll('.col-md-4');
-      let uploadIndex = 0;
-      let imagesOrder = [];
-      cards.forEach(card => {
-        const year = card.querySelector('.image-year').value;
-        const description = card.querySelector('.image-description').value;
-        if (card.dataset.existing === 'true') {
-          imagesOrder.push({
-            type: 'existing',
-            originalIndex: card.dataset.originalIndex,
-            year: parseInt(year, 10),
-            description
-          });
-        } else {
-          const type = card.dataset.type;
-          if (type === 'wikimedia') {
-            imagesOrder.push({ type: 'wikimedia', url: card.dataset.url, year: parseInt(year, 10), description });
-          } else if (type === 'upload') {
-            imagesOrder.push({ type: 'upload', uploadIndex, year: parseInt(year, 10), description });
-            // Append file from edit upload map
-            // Use key from dataset.uploadId
-            formDataAppendFile(`uploadFiles_${uploadIndex}`, editUploadFilesMap[card.dataset.uploadId]);
-            uploadIndex++;
-          }
-        }
+  if (!adminKey) {
+    alert('Please set your admin key first');
+    adminKeyModal.show();
+    return;
+  }
+  const challengeId = document.getElementById('editChallengeId').value;
+  const dateCT = document.getElementById('editChallengeDate').value;
+  if (!challengeId || !dateCT) {
+    alert('Missing required information');
+    return;
+  }
+  const dateUTC = convertToUTC(dateCT).toISOString();
+  const container = document.getElementById('editImagesContainer');
+  const cards = container.querySelectorAll('.col-md-4');
+  let uploadIndex = 0;
+  let imagesOrder = [];
+  cards.forEach(card => {
+    const year = card.querySelector('.image-year').value;
+    const description = card.querySelector('.image-description').value;
+    const revealedDescription = card.querySelector('.image-revealed-description').value;
+    
+    if (card.dataset.existing === 'true') {
+      imagesOrder.push({
+        type: 'existing',
+        originalIndex: card.dataset.originalIndex,
+        year: parseInt(year, 10),
+        description,
+        revealedDescription
       });
+    } else {
+      const type = card.dataset.type;
+      if (type === 'wikimedia') {
+        imagesOrder.push({ 
+          type: 'wikimedia', 
+          url: card.dataset.url, 
+          year: parseInt(year, 10), 
+          description,
+          revealedDescription
+        });
+      } else if (type === 'upload') {
+        imagesOrder.push({ 
+          type: 'upload', 
+          uploadIndex, 
+          year: parseInt(year, 10), 
+          description,
+          revealedDescription
+        });
+        // Append file from edit upload map
+        formDataAppendFile(`uploadFiles_${uploadIndex}`, editUploadFilesMap[card.dataset.uploadId]);
+        uploadIndex++;
+      }
+    }
+  });
       const saveBtn = document.getElementById('saveEditBtn');
       const originalText = saveBtn.innerHTML;
       saveBtn.disabled = true;

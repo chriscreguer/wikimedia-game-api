@@ -8,6 +8,7 @@ export interface WikimediaImage {
   year: number;
   description?: string;
   filename?: string;
+  revealedDescription?: string;
 }
 
 export interface GuessHistoryItem {

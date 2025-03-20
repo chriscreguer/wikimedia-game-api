@@ -123,61 +123,51 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
       return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
     }
     
-    // Handle multiple URLs if provided
-    let filenames: string[] = [];
+    // Process imagesOrder from the request
     let imageData: any[] = [];
     
-    if (req.body.imageUrls) {
-      const imageUrls = JSON.parse(req.body.imageUrls);
+    if (req.body.imagesOrder) {
+      const imagesOrder = JSON.parse(req.body.imagesOrder);
+      const uploadedFiles = req.files as Express.Multer.File[] || [];
       
-      if (Array.isArray(imageUrls) && imageUrls.length > 0) {
-        for (const url of imageUrls) {
-          const filename = extractFilenameFromUrl(url);
+      for (const imageInfo of imagesOrder) {
+        if (imageInfo.type === 'wikimedia') {
+          // Handle Wikimedia images
+          const filename = imageInfo.url ? extractFilenameFromUrl(imageInfo.url) : '';
+          
+          // Only proceed if we have a valid filename
           if (filename) {
-            filenames.push(filename);
+            const wikimediaData = await fetchImageData(filename);
+            
+            if (wikimediaData) {
+              // Add the custom fields from the form
+              wikimediaData.year = imageInfo.year || wikimediaData.year;
+              wikimediaData.description = imageInfo.description || wikimediaData.description || '';
+              wikimediaData.revealedDescription = imageInfo.revealedDescription || imageInfo.description || '';
+              
+              imageData.push(wikimediaData);
+            }
+          }
+        } else if (imageInfo.type === 'upload') {
+          // Handle uploaded files
+          const uploadIndex = imageInfo.uploadIndex;
+          
+          if (uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
+            const file = uploadedFiles[uploadIndex];
+            
+            // Create an image object for this uploaded file
+            const fileUrl = `/uploads/${path.basename(file.path)}`;
+            imageData.push({
+              filename: file.originalname,
+              title: file.originalname,
+              url: fileUrl,
+              year: imageInfo.year || new Date().getFullYear(),
+              source: 'User Upload',
+              description: imageInfo.description || '',
+              revealedDescription: imageInfo.revealedDescription || imageInfo.description || ''
+            });
           }
         }
-      }
-      
-      // Fetch image data for Wikimedia URLs
-      if (filenames.length > 0) {
-        const wikimediaImageData = await fetchMultipleImageData(filenames);
-        imageData = [...imageData, ...wikimediaImageData];
-      }
-    }
-    
-    // Handle uploaded files
-    if (req.files && Array.isArray(req.files)) {
-      const uploadedFiles = req.files as Express.Multer.File[];
-      
-      // Process each uploaded file
-      for (let i = 0; i < uploadedFiles.length; i++) {
-        const file = uploadedFiles[i];
-        
-        // Get metadata for this file from the request body
-        let year = new Date().getFullYear();
-        let description = '';
-        
-        if (req.body[`metadata_${i}`]) {
-          try {
-            const metadata = JSON.parse(req.body[`metadata_${i}`]);
-            if (metadata.year) year = parseInt(metadata.year);
-            if (metadata.description) description = metadata.description;
-          } catch (err) {
-            console.warn('Error parsing metadata for file', i, err);
-          }
-        }
-        
-        // Create an image object for this uploaded file
-        const fileUrl = `/uploads/${path.basename(file.path)}`;
-        imageData.push({
-          filename: file.originalname,
-          title: file.originalname,
-          url: fileUrl, // URL to access the file
-          year: year,
-          source: 'User Upload',
-          description: description
-        });
       }
     }
     
@@ -192,6 +182,9 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
       return res.status(400).json({ error: 'No valid images provided' });
     }
     
+    // Check for append mode
+    const appendImages = req.body.append === 'true';
+    
     // Check if a challenge already exists for this date
     const existingChallenge = await DailyChallenge.findOne({
       date: { 
@@ -201,8 +194,8 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
     });
     
     if (existingChallenge) {
-      // Update existing challenge with new images; support append mode
-      if (req.query.append === 'true') {
+      // Update existing challenge with new images
+      if (appendImages) {
         existingChallenge.images = [...existingChallenge.images, ...imageData];
       } else {
         existingChallenge.images = imageData;
@@ -278,7 +271,7 @@ router.get('/daily-challenges', verifyAdmin, async (req: Request, res: Response)
 router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles', 5), (async (req, res) => {
   try {
     const { id } = req.params;
-    const { date, imageUpdates, newImageUrls } = req.body;
+    const { date, imagesOrder } = req.body;
 
     // Find the challenge
     const challenge = await DailyChallenge.findById(id);
@@ -297,88 +290,82 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
       challenge.date = setCentralTimeMidnight(new Date(date));
     }
 
-    // Apply updates to image metadata if provided
-    if (imageUpdates) {
-      const updates = JSON.parse(imageUpdates);
-      
-      Object.keys(updates).forEach(index => {
-        const idx = parseInt(index, 10);
-        if (!isNaN(idx) && idx >= 0 && idx < challenge.images.length) {
-          const update = updates[index];
-          
-          // Update year if provided
-          if (update.year !== undefined) {
-            const year = parseInt(update.year, 10);
-            if (!isNaN(year)) {
-              challenge.images[idx].year = year;
+    // Process image updates if provided
+    if (imagesOrder) {
+      try {
+        const orderData = JSON.parse(imagesOrder);
+        const uploadedFiles = req.files as Express.Multer.File[] || [];
+        const updatedImages: any[] = [];
+        
+        // Process each image in the order specified
+        for (const imageInfo of orderData) {
+          if (imageInfo.type === 'existing') {
+            // Keep existing image with updates
+            const index = parseInt(imageInfo.originalIndex, 10);
+            if (!isNaN(index) && index >= 0 && index < challenge.images.length) {
+              const existingImage = { ...challenge.images[index] };
+              
+              // Update specific fields
+              if (imageInfo.year !== undefined) {
+                existingImage.year = parseInt(imageInfo.year, 10);
+              }
+              
+              if (imageInfo.description !== undefined) {
+                existingImage.description = imageInfo.description;
+              }
+              
+              if (imageInfo.revealedDescription !== undefined) {
+                existingImage.revealedDescription = imageInfo.revealedDescription;
+              }
+              
+              updatedImages.push(existingImage);
             }
-          }
-          
-          // Update description if provided
-          if (update.description !== undefined) {
-            challenge.images[idx].description = update.description;
+          } else if (imageInfo.type === 'wikimedia') {
+            // Add new Wikimedia image
+            const filename = imageInfo.url ? extractFilenameFromUrl(imageInfo.url) : '';
+            
+            // Only proceed if we have a valid filename
+            if (filename) {
+              const wikimediaData = await fetchImageData(filename);
+              
+              if (wikimediaData) {
+                // Add custom fields from the form
+                wikimediaData.year = imageInfo.year || wikimediaData.year;
+                wikimediaData.description = imageInfo.description || wikimediaData.description || '';
+                wikimediaData.revealedDescription = imageInfo.revealedDescription || imageInfo.description || '';
+                
+                updatedImages.push(wikimediaData);
+              }
+            }
+          } else if (imageInfo.type === 'upload') {
+            // Add new uploaded file
+            const uploadIndex = imageInfo.uploadIndex;
+            
+            if (uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
+              const file = uploadedFiles[uploadIndex];
+              
+              // Create image object for this upload
+              const fileUrl = `/uploads/${path.basename(file.path)}`;
+              updatedImages.push({
+                filename: file.originalname,
+                title: file.originalname,
+                url: fileUrl,
+                year: imageInfo.year || new Date().getFullYear(),
+                source: 'User Upload',
+                description: imageInfo.description || '',
+                revealedDescription: imageInfo.revealedDescription || imageInfo.description || ''
+              });
+            }
           }
         }
-      });
-    }
-
-    // Add new images from URLs if provided
-    if (newImageUrls) {
-      try {
-        const urlsArray = JSON.parse(newImageUrls);
         
-        if (Array.isArray(urlsArray) && urlsArray.length > 0) {
-          let newFilenames: string[] = [];
-          
-          for (const url of urlsArray) {
-            const filename = extractFilenameFromUrl(url);
-            if (filename) {
-              newFilenames.push(filename);
-            }
-          }
-          
-          if (newFilenames.length > 0) {
-            const newImageData = await fetchMultipleImageData(newFilenames);
-            challenge.images = [...challenge.images, ...newImageData];
-          }
+        // Replace images array with the updated one
+        if (updatedImages.length > 0) {
+          challenge.images = updatedImages;
         }
       } catch (error) {
-        console.error('Error parsing newImageUrls', error);
-      }
-    }
-    
-    // Handle uploaded files
-    if (req.files && Array.isArray(req.files)) {
-      const uploadedFiles = req.files as Express.Multer.File[];
-      
-      // Process each uploaded file
-      for (let i = 0; i < uploadedFiles.length; i++) {
-        const file = uploadedFiles[i];
-        
-        // Get metadata for this file from the request body
-        let year = new Date().getFullYear();
-        let description = '';
-        
-        if (req.body[`metadata_${i}`]) {
-          try {
-            const metadata = JSON.parse(req.body[`metadata_${i}`]);
-            if (metadata.year) year = parseInt(metadata.year);
-            if (metadata.description) description = metadata.description;
-          } catch (err) {
-            console.warn('Error parsing metadata for file', i, err);
-          }
-        }
-        
-        // Create an image object for this uploaded file
-        const fileUrl = `/uploads/${path.basename(file.path)}`;
-        challenge.images.push({
-          filename: file.originalname,
-          title: file.originalname,
-          url: fileUrl, // URL to access the file
-          year: year,
-          source: 'User Upload',
-          description: description
-        });
+        console.error('Error processing image updates:', error);
+        return res.status(400).json({ error: 'Invalid image order data' });
       }
     }
 
@@ -387,7 +374,11 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
     
     res.status(200).json({ 
       message: 'Challenge updated successfully',
-      challenge
+      challenge: {
+        id: challenge._id,
+        date: challenge.date,
+        imageCount: challenge.images.length
+      }
     });
   } catch (error) {
     // Delete uploaded files if there's an error
