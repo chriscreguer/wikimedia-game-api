@@ -886,39 +886,6 @@ router.get('/', async (req: Request, res: Response) => {
  * GET /api/images/daily-challenge
  * Get today's challenge
  */
-router.get('/daily-challenge', (async (req, res) => {
-  try {
-    // Get today's date (start of day in CT instead of UTC)
-    const today = setCentralTimeMidnight(new Date());
-    
-    // Find active challenge for today
-    const challenge = await DailyChallenge.findOne({
-      date: { 
-        $gte: today,
-        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000)
-      },
-      active: true
-    });
-    
-    if (!challenge) {
-      res.status(404).json({ error: 'No daily challenge available for today' });
-      return;
-    }
-    
-    // Return challenge without stats (stats are only updated when submitting scores)
-    const challengeData = {
-      id: challenge._id,
-      date: challenge.date,
-      images: challenge.images
-    };
-    
-    res.status(200).json(challengeData);
-  } catch (error) {
-    logger.error('Error fetching daily challenge:', error);
-    res.status(500).json({ error: 'Failed to fetch daily challenge' });
-  }
-}) as RequestHandler);
-
 router.post('/daily-challenge/submit', (async (req, res) => {
   try {
     const { score, date } = req.body;
@@ -991,15 +958,19 @@ router.post('/daily-challenge/submit', (async (req, res) => {
     
     console.log("Stats after update:", JSON.stringify(challenge.stats));
     
-    await challenge.save();
-    console.log("Challenge saved successfully");
-    
     // Process the distribution data for response
     const processedData = processDistributionData(
       challenge.stats.distributions,
       score // Include user's score to calculate their percentile
     );
     
+    // Add processed data to the challenge
+    challenge.stats.processedDistribution = processedData;
+    
+    // Save challenge with all updates in one operation
+    await challenge.save();
+    console.log("Challenge saved successfully with processed distribution");
+
     // Create response with processed data and raw stats
     const response = { 
       message: 'Score submitted successfully',

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Year Guessing Game - Admin</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
   <style>
     :root {
       --primary: #7B38D8;
@@ -24,14 +24,12 @@
       --danger: #dc3545;
       --warning: #ffc107;
     }
-
     body {
       background-color: var(--dark-bg);
       color: var(--text-primary);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.6;
     }
-
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -40,11 +38,9 @@
       margin-bottom: 24px;
       transition: box-shadow 0.2s;
     }
-
     .card:hover {
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
-
     .card-header {
       background-color: var(--card-header);
       border-bottom: 1px solid var(--border-color);
@@ -52,7 +48,6 @@
       font-weight: 600;
       border-radius: 7px 7px 0 0;
     }
-
     .form-control, .form-select {
       background-color: var(--input-bg);
       border: 1px solid var(--border-color);
@@ -60,44 +55,36 @@
       border-radius: 6px;
       padding: 10px 15px;
     }
-    
     .form-control::placeholder {
       color: var(--text-muted);
     }
-
     .form-check-label {
       color: white;
     }
-    
     .form-check-input {
       background-color: var(--input-bg);
       border-color: var(--border-color);
     }
-    
     .form-check-input:checked {
       background-color: var(--primary);
       border-color: var(--primary);
     }
-
     .form-control:focus, .form-select:focus {
       background-color: var(--input-bg);
       color: var(--text-primary);
       border-color: var(--primary);
       box-shadow: 0 0 0 0.25rem rgba(123, 56, 216, 0.25);
     }
-
     .form-label {
       color: var(--text-primary);
       font-weight: 500;
       margin-bottom: 8px;
     }
-
     .form-text {
       color: var(--text-muted);
       font-size: 0.875rem;
       margin-top: 4px;
     }
-
     .btn-primary {
       background-color: var(--primary);
       border-color: var(--primary);
@@ -105,12 +92,10 @@
       padding: 8px 16px;
       border-radius: 6px;
     }
-
     .btn-primary:hover, .btn-primary:focus {
       background-color: var(--primary-hover);
       border-color: var(--primary-hover);
     }
-
     .btn-outline-secondary {
       color: var(--text-primary);
       border-color: var(--border-color);
@@ -119,92 +104,79 @@
       padding: 8px 16px;
       border-radius: 6px;
     }
-
     .btn-outline-secondary:hover {
       background-color: var(--border-color);
       color: var(--text-primary);
     }
-
     .btn-danger {
       background-color: var(--danger);
       border-color: var(--danger);
     }
-
     .btn-success {
       background-color: var(--success);
       border-color: var(--success);
     }
-
     .table {
       color: var(--text-primary);
       border-color: var(--border-color);
       background-color: var(--card-bg);
     }
-
     .table thead {
       background-color: var(--card-header);
     }
-
     .table td, .table th {
       border-color: var(--border-color);
       vertical-align: middle;
     }
-
     .text-muted {
       color: var(--text-muted) !important;
     }
-
     .badge {
       padding: 6px 10px;
       font-weight: 500;
       border-radius: 4px;
     }
-
     .modal-content {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       color: var(--text-primary);
       border-radius: 8px;
     }
-
     .modal-header {
       border-bottom: 1px solid var(--border-color);
       background-color: var(--card-header);
     }
-
     .modal-footer {
       border-top: 1px solid var(--border-color);
     }
-
     .btn-close {
       filter: invert(1) grayscale(100%) brightness(200%);
     }
-
     .challenge-image {
       height: 180px;
       width: 100%;
       object-fit: cover;
       border-radius: 6px 6px 0 0;
     }
-
+    /* Drag handle styling */
+    .drag-handle {
+      cursor: move;
+    }
     /* Calendar specific styles */
     #calendarContainer table {
       color: var(--text-primary);
       background-color: var(--card-bg);
     }
-    
     #calendarContainer th {
       background-color: var(--card-header);
       color: var(--text-primary);
       padding: 10px;
       text-align: center;
     }
-    
     #calendarContainer td {
       border-color: var(--border-color);
       background-color: var(--card-bg);
     }
-    
     .calendar-day {
       height: 40px;
       width: 40px;
@@ -215,59 +187,14 @@
       border-radius: 50%;
       color: var(--text-primary);
     }
-
     .has-challenge {
       background-color: var(--primary);
       color: white;
       cursor: pointer;
     }
-
     .timezone-indicator {
       font-size: 0.8rem;
       color: var(--text-muted);
-    }
-
-    .image-item {
-      position: relative;
-      margin-bottom: 15px;
-    }
-
-    .image-controls {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 4px;
-      padding: 2px;
-    }
-
-    .badge-overlay {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-
-    .preview-container {
-      min-height: 100px;
-    }
-
-    @media (max-width: 768px) {
-      .card-header h3 {
-        font-size: 1.25rem;
-      }
-      
-      h1 {
-        font-size: 1.5rem;
-      }
-      
-      .btn {
-        padding: 6px 12px;
-        font-size: 0.95rem;
-      }
     }
   </style>
 </head>
@@ -298,22 +225,28 @@
             </div>
           </div>
 
+          <!-- Wikimedia Images Section -->
           <div class="mb-4">
             <label class="form-label">Wikimedia Images</label>
             <textarea class="form-control" id="imageUrls" rows="3" 
                       placeholder="Enter Wikimedia URLs (one per line or comma-separated)"></textarea>
-            <div class="form-text">Add up to 10 Wikimedia URLs | Currently added: <span id="urlCount">0</span>/10</div>
+            <div class="form-text">Add up to 10 Wikimedia URLs</div>
+            <button type="button" class="btn btn-outline-secondary mt-2" id="addWikimediaBtn">
+              <i class="bi bi-plus-circle me-1"></i> Add Wikimedia Images
+            </button>
           </div>
 
+          <!-- File Upload Section -->
           <div class="mb-4">
             <label class="form-label">Upload Custom Images</label>
             <input type="file" class="form-control" id="imageUpload" multiple accept="image/*" />
-            <div class="form-text">Upload images (max 5MB each, up to 5 images) | Currently uploaded: <span id="uploadCount">0</span>/5</div>
+            <div class="form-text">Upload images (max 5MB each, up to 5 images)</div>
           </div>
 
-          <div id="uploadPreviewContainer" class="mt-3 mb-4" style="display: none;">
-            <h5>Uploaded Image Previews</h5>
-            <div id="uploadPreviewGrid" class="row"></div>
+          <!-- Unified Challenge Images Container -->
+          <div class="mb-4">
+            <h5>Arrange Challenge Images</h5>
+            <div id="challengeImagesContainer" class="row"></div>
           </div>
 
           <div class="form-check mb-4">
@@ -321,13 +254,6 @@
             <label class="form-check-label" for="appendImages">
               Append to existing images (if date already has a challenge)
             </label>
-          </div>
-
-          <div class="mb-4 preview-container">
-            <div id="previewContainer" style="display: none;">
-              <h5>Image Previews</h5>
-              <div id="previewGrid" class="row"></div>
-            </div>
           </div>
 
           <button type="submit" class="btn btn-primary">
@@ -402,22 +328,29 @@
               <input type="date" class="form-control" id="editChallengeDate" required />
             </div>
 
+            <!-- Existing & New Images Container -->
             <div class="mb-3">
               <label class="form-label">Challenge Images</label>
               <div id="editImagesContainer" class="row">
-                <!-- Images will be listed here -->
+                <!-- Existing (and newly added) images will be listed here -->
               </div>
             </div>
 
+            <!-- Wikimedia URLs for new images -->
             <div class="mb-3">
-              <label class="form-label">Add New Images</label>
+              <label class="form-label">Add New Wikimedia Images</label>
               <textarea class="form-control" id="editNewImages" rows="3" 
                         placeholder="Add new Wikimedia URLs (one per line or comma-separated)"></textarea>
+              <button type="button" class="btn btn-outline-secondary mt-2" id="addEditWikimediaBtn">
+                <i class="bi bi-plus-circle me-1"></i> Add Wikimedia Images
+              </button>
             </div>
-              
+            
+            <!-- Upload New Images -->
             <div class="mb-3">
               <label class="form-label">Upload New Images</label>
               <input type="file" class="form-control" id="editImageUpload" multiple accept="image/*" />
+              <div class="form-text">Upload images (max 5MB each, up to 5 images)</div>
             </div>
           </form>
         </div>
@@ -429,6 +362,8 @@
     </div>
   </div>
 
+  <!-- Include SortableJS for drag-and-drop reordering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     // ---------------------------------------------------
@@ -438,44 +373,40 @@
     let allChallenges = [];
     let currentDisplayDate = new Date();
     let currentEditingChallenge = null;
-    let uploadedFiles = [];
-    let editUploadedFiles = [];
+    // For new uploaded files in create mode
+    let uploadFilesMap = {};
+    let uploadFileCounter = 0;
+    // For new uploaded files in edit mode
+    let editUploadFilesMap = {};
+    let editUploadFileCounter = 0;
 
     // Modal instances
     const adminKeyModal = new bootstrap.Modal(document.getElementById('adminKeyModal'));
     const editChallengeModal = new bootstrap.Modal(document.getElementById('editChallengeModal'));
 
-    // Initialize the application when DOM is loaded
     document.addEventListener('DOMContentLoaded', () => {
-      // Set initial date/time to current CT time
       const now = new Date();
       const ctNow = convertToCT(now);
       document.getElementById('date').value = formatDateForInput(ctNow);
-      
-      // Load challenges if admin key exists
       loadChallenges();
-      
-      // Show admin key modal if key not set
       if (!adminKey) {
         setTimeout(() => {
           adminKeyModal.show();
         }, 500);
       }
-      
-      // Setup all event listeners
       setupEventListeners();
+      // Initialize Sortable for create and edit containers
+      new Sortable(document.getElementById('challengeImagesContainer'), {
+        animation: 150,
+        handle: '.drag-handle'
+      });
     });
 
-    // ---------------------------------------------------
-    // Event listeners setup
-    // ---------------------------------------------------
     function setupEventListeners() {
-      // Admin key related
       document.getElementById('setKeyBtn').addEventListener('click', () => {
         document.getElementById('adminKey').value = adminKey;
         adminKeyModal.show();
       });
-      
       document.getElementById('saveKeyBtn').addEventListener('click', () => {
         const newKey = document.getElementById('adminKey').value.trim();
         if (newKey) {
@@ -485,43 +416,29 @@
           loadChallenges();
         }
       });
-      
-      // Image URL input handler
-      document.getElementById('imageUrls').addEventListener('input', handleImageUrlsInput);
-      
-      // File upload handlers
+      document.getElementById('addWikimediaBtn').addEventListener('click', handleAddWikimedia);
       document.getElementById('imageUpload').addEventListener('change', handleFileSelection);
       document.getElementById('editImageUpload').addEventListener('change', handleEditFileSelection);
-      
-      // Form submissions
       document.getElementById('createForm').addEventListener('submit', handleCreateFormSubmit);
       document.getElementById('saveEditBtn').addEventListener('click', handleSaveEditClick);
-      
-      // Refresh button
       document.getElementById('refreshBtn').addEventListener('click', loadChallenges);
+      // For edit modal Wikimedia URLs
+      document.getElementById('addEditWikimediaBtn').addEventListener('click', handleAddEditWikimedia);
     }
 
     // ---------------------------------------------------
     // Date/Time utilities
     // ---------------------------------------------------
-    // Convert UTC to CT
     function convertToCT(utcDate) {
       const date = new Date(utcDate);
       return new Date(date.toLocaleString('en-US', {timeZone: 'America/Chicago'}));
     }
-
-    // Convert CT to UTC
     function convertToUTC(ctDateStr) {
-      // If just a date is provided (no time), add 00:00:00
-      if (ctDateStr.length === 10) {
-        ctDateStr = `${ctDateStr}T00:00:00`;
-      }
+      if (ctDateStr.length === 10) ctDateStr = `${ctDateStr}T00:00:00`;
       const ctDate = new Date(ctDateStr);
       const utcDate = new Date(ctDate.getTime() + ctDate.getTimezoneOffset() * 60000);
       return utcDate;
     }
-
-    // Format date for date input
     function formatDateForInput(date) {
       const d = new Date(date);
       const year = d.getFullYear();
@@ -531,171 +448,383 @@
     }
 
     // ---------------------------------------------------
-    // Image handling utilities
+    // Utility to create an image card for the unified container
     // ---------------------------------------------------
-    // Extract filename from URL
-    function extractFilenameFromUrl(url) {
-      try {
-        const urlObj = new URL(url);
-        const segments = urlObj.pathname.split('/');
-        return decodeURIComponent(segments[segments.length - 1]);
-      } catch (error) {
-        console.error('Invalid URL:', error);
-        return 'Invalid URL';
+    function createImageCard(options) {
+      // options: { type: 'wikimedia'|'upload', url, fileId (for uploads) }
+      const { type, url, fileId } = options;
+      const card = document.createElement('div');
+      card.className = 'col-md-4 mb-3';
+      card.dataset.type = type;
+      if (type === 'wikimedia') {
+        card.dataset.url = url;
+      } else if (type === 'upload') {
+        card.dataset.uploadId = fileId;
       }
+      // For new cards in create mode, no "existing" flag is set.
+      const currentYear = new Date().getFullYear();
+      card.innerHTML = `
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span class="drag-handle"><i class="bi bi-arrows-move"></i></span>
+            <button type="button" class="btn btn-sm btn-danger delete-image-btn">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+          <img src="${url}" class="challenge-image card-img-top" alt="Image" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
+          <div class="card-body">
+            <div class="mb-2">
+              <label class="form-label">Year</label>
+              <input type="number" class="form-control image-year" value="${currentYear}" min="1800" max="2025">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Description</label>
+              <textarea class="form-control image-description" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+      `;
+      card.querySelector('.delete-image-btn').addEventListener('click', () => {
+        card.remove();
+      });
+      return card;
     }
 
-    // Parse and validate URLs
-    function parseImageUrls(text) {
-      if (!text) return [];
-      
+    // ---------------------------------------------------
+    // Wikimedia Images - Create Mode
+    // ---------------------------------------------------
+    function handleAddWikimedia() {
+      const text = document.getElementById('imageUrls').value.trim();
       let urls = text.split(/\n/).map(line => line.trim()).filter(line => line);
       if (urls.length === 1) {
         urls = urls[0].split(',').map(url => url.trim()).filter(url => url);
       }
-      return urls.filter(url => url.includes('wikimedia.org'));
-    }
-
-    // Handle image URLs input
-    function handleImageUrlsInput() {
-      const text = this.value.trim();
-      const previewGrid = document.getElementById('previewGrid');
-      const urlCount = document.getElementById('urlCount');
-      const previewContainer = document.getElementById('previewContainer');
-      
-      const urls = parseImageUrls(text);
-      urlCount.textContent = urls.length;
-      
-      // Limit to 10 URLs
-      if (urls.length > 10) {
-        this.value = urls.slice(0, 10).join('\n');
-        urlCount.textContent = '10';
+      // Filter to wikimedia URLs only
+      urls = urls.filter(url => url.includes('wikimedia.org'));
+      if (urls.length === 0) {
+        alert('No valid Wikimedia URLs found.');
         return;
       }
-      
-      // Update preview display
-      previewGrid.innerHTML = '';
-      
-      if (urls.length > 0) {
-        previewContainer.style.display = 'block';
-        
-        urls.forEach((url, index) => {
-          const filename = extractFilenameFromUrl(url);
-          const previewCol = document.createElement('div');
-          previewCol.className = 'col-md-6 mb-3';
-          previewCol.innerHTML = `
-            <div class="card">
-              <img src="${url}" class="challenge-image card-img-top" alt="Preview ${index + 1}" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
-              <div class="card-body">
-                <p class="card-text text-muted small">${filename}</p>
-              </div>
-            </div>
-          `;
-          previewGrid.appendChild(previewCol);
-        });
-      } else {
-        previewContainer.style.display = 'none';
+      const container = document.getElementById('challengeImagesContainer');
+      // Enforce a maximum total count (if needed, e.g., 10)
+      if (container.children.length + urls.length > 10) {
+        alert('Adding these images would exceed the maximum allowed (10).');
+        return;
       }
+      urls.forEach(url => {
+        const card = createImageCard({ type: 'wikimedia', url });
+        container.appendChild(card);
+      });
+      // Optionally clear the textarea
+      document.getElementById('imageUrls').value = '';
     }
 
-    // Handle file selection for create form
+    // ---------------------------------------------------
+    // File Upload handling - Create Mode
+    // ---------------------------------------------------
     function handleFileSelection(e) {
       const files = Array.from(e.target.files);
-      
-      // Validate file count
       if (files.length > 5) {
         alert('Maximum 5 files allowed');
         this.value = '';
         return;
       }
-      
-      // Validate file sizes
-      const oversizedFiles = files.filter(file => file.size > 5 * 1024 * 1024); // 5MB
-      if (oversizedFiles.length > 0) {
-        alert(`Some files exceed the 5MB limit: ${oversizedFiles.map(f => f.name).join(', ')}`);
+      const oversized = files.filter(file => file.size > 5 * 1024 * 1024);
+      if (oversized.length) {
+        alert(`Files too large: ${oversized.map(f => f.name).join(', ')}`);
         this.value = '';
         return;
       }
-      
-      // Store files
-      uploadedFiles = files;
-      document.getElementById('uploadCount').textContent = files.length;
-      
-      // Show previews
-      const previewGrid = document.getElementById('uploadPreviewGrid');
-      previewGrid.innerHTML = '';
-      
-      files.forEach((file, index) => {
+      const container = document.getElementById('challengeImagesContainer');
+      files.forEach(file => {
         const reader = new FileReader();
         reader.onload = function(e) {
-          const previewCol = document.createElement('div');
-          previewCol.className = 'col-md-6 mb-3';
-          previewCol.innerHTML = `
-            <div class="card">
-              <img src="${e.target.result}" class="challenge-image card-img-top" alt="Preview ${index + 1}">
-              <div class="card-body">
-                <p class="card-text text-muted small">${file.name}</p>
-                <div class="mb-2">
-                  <label class="form-label">Year</label>
-                  <input type="number" class="form-control upload-year" 
-                         value="${new Date().getFullYear()}" min="1800" max="2025" data-index="${index}">
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Description</label>
-                  <textarea class="form-control upload-description" 
-                            rows="2" data-index="${index}"></textarea>
-                </div>
-              </div>
-            </div>
-          `;
-          previewGrid.appendChild(previewCol);
+          // Assign a unique id for this file
+          const fileId = 'upload_' + uploadFileCounter++;
+          uploadFilesMap[fileId] = file;
+          const card = createImageCard({ type: 'upload', url: e.target.result, fileId });
+          container.appendChild(card);
         };
         reader.readAsDataURL(file);
       });
-      
-      document.getElementById('uploadPreviewContainer').style.display = files.length > 0 ? 'block' : 'none';
+      this.value = ''; // Reset file input
     }
 
-    // Edit form file upload handling
+    // ---------------------------------------------------
+    // Create Challenge Form submission
+    // ---------------------------------------------------
+    async function handleCreateFormSubmit(e) {
+      e.preventDefault();
+      if (!adminKey) {
+        alert('Please set your admin key first');
+        adminKeyModal.show();
+        return;
+      }
+      const dateCT = document.getElementById('date').value;
+      if (!dateCT) {
+        alert('Please provide a date');
+        return;
+      }
+      const appendImages = document.getElementById('appendImages').checked;
+      const dateUTC = convertToUTC(dateCT).toISOString();
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Creating...';
+
+      try {
+        const formData = new FormData();
+        formData.append('date', dateUTC);
+        formData.append('append', appendImages);
+        // Build an ordered list of images from the unified container
+        const container = document.getElementById('challengeImagesContainer');
+        const cards = container.querySelectorAll('.col-md-4');
+        let uploadIndex = 0;
+        let imagesOrder = [];
+        cards.forEach(card => {
+          const type = card.dataset.type;
+          const year = card.querySelector('.image-year').value;
+          const description = card.querySelector('.image-description').value;
+          if (type === 'wikimedia') {
+            imagesOrder.push({ type, url: card.dataset.url, year: parseInt(year, 10), description });
+          } else if (type === 'upload') {
+            imagesOrder.push({ type, uploadIndex, year: parseInt(year, 10), description });
+            // Append file from our map
+            formData.append(`uploadFiles_${uploadIndex}`, uploadFilesMap[card.dataset.uploadId]);
+            uploadIndex++;
+          }
+        });
+        formData.append('imagesOrder', JSON.stringify(imagesOrder));
+        const response = await fetch(`/admin/daily-challenge/create?adminKey=${adminKey}`, {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert(`Success: ${data.message}. Added ${data.challenge.imageCount} images.`);
+          document.getElementById('createForm').reset();
+          document.getElementById('challengeImagesContainer').innerHTML = '';
+          uploadFilesMap = {};
+          loadChallenges();
+          const now = new Date();
+          const ctNow = convertToCT(now);
+          document.getElementById('date').value = formatDateForInput(ctNow);
+        } else {
+          alert(`Error: ${data.error}`);
+        }
+      } catch (error) {
+        alert(`Request failed: ${error.message}`);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    }
+
+    // ---------------------------------------------------
+    // Edit Mode: Adding new Wikimedia images
+    // ---------------------------------------------------
+    function handleAddEditWikimedia() {
+      const text = document.getElementById('editNewImages').value.trim();
+      let urls = text.split(/\n/).map(line => line.trim()).filter(line => line);
+      if (urls.length === 1) {
+        urls = urls[0].split(',').map(url => url.trim()).filter(url => url);
+      }
+      urls = urls.filter(url => url.includes('wikimedia.org'));
+      if (urls.length === 0) {
+        alert('No valid Wikimedia URLs found.');
+        return;
+      }
+      const container = document.getElementById('editImagesContainer');
+      // (You may enforce a max count here as needed)
+      urls.forEach(url => {
+        const card = createImageCard({ type: 'wikimedia', url });
+        // Mark as new (not existing)
+        card.dataset.existing = 'false';
+        container.appendChild(card);
+      });
+      document.getElementById('editNewImages').value = '';
+    }
+
+    // ---------------------------------------------------
+    // File Upload handling - Edit Mode
+    // ---------------------------------------------------
     function handleEditFileSelection(e) {
-      editUploadedFiles = Array.from(e.target.files);
-      
-      // Similar validation as above
-      if (editUploadedFiles.length > 5) {
+      const files = Array.from(e.target.files);
+      if (files.length > 5) {
         alert('Maximum 5 files allowed');
         this.value = '';
-        editUploadedFiles = [];
         return;
       }
-      
-      const oversizedFiles = editUploadedFiles.filter(file => file.size > 5 * 1024 * 1024);
-      if (oversizedFiles.length > 0) {
-        alert(`Some files exceed the 5MB limit: ${oversizedFiles.map(f => f.name).join(', ')}`);
+      const oversized = files.filter(file => file.size > 5 * 1024 * 1024);
+      if (oversized.length) {
+        alert(`Files too large: ${oversized.map(f => f.name).join(', ')}`);
         this.value = '';
-        editUploadedFiles = [];
         return;
       }
+      const container = document.getElementById('editImagesContainer');
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const fileId = 'editUpload_' + editUploadFileCounter++;
+          editUploadFilesMap[fileId] = file;
+          const card = createImageCard({ type: 'upload', url: e.target.result, fileId });
+          card.dataset.existing = 'false';
+          container.appendChild(card);
+        };
+        reader.readAsDataURL(file);
+      });
+      this.value = '';
     }
 
     // ---------------------------------------------------
-    // API interaction functions
+    // Open Edit Challenge Modal
     // ---------------------------------------------------
-    // Load all challenges
+    function openEditModal(challengeId) {
+      const challenge = allChallenges.find(ch => ch._id === challengeId);
+      if (!challenge) return;
+      currentEditingChallenge = challenge;
+      const dateCT = convertToCT(challenge.date);
+      document.getElementById('editChallengeId').value = challengeId;
+      document.getElementById('editChallengeDate').value = formatDateForInput(dateCT);
+      const container = document.getElementById('editImagesContainer');
+      container.innerHTML = '';
+      // Populate existing images
+      challenge.images.forEach((image, index) => {
+        const card = document.createElement('div');
+        card.className = 'col-md-4 mb-3 image-item';
+        card.dataset.existing = 'true';
+        card.dataset.originalIndex = index;
+        card.innerHTML = `
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span class="drag-handle"><i class="bi bi-arrows-move"></i></span>
+              <button type="button" class="btn btn-sm btn-danger delete-image-btn">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+            <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Image'}" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
+            <div class="card-body">
+              <p class="card-text text-muted small">${image.title || ''}</p>
+              <div class="mb-2">
+                <label class="form-label">Year</label>
+                <input type="number" class="form-control form-control-sm image-year" value="${image.year}" min="1800" max="2025">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Description</label>
+                <textarea class="form-control form-control-sm image-description" rows="2">${image.description || ''}</textarea>
+              </div>
+            </div>
+          </div>
+        `;
+        card.querySelector('.delete-image-btn').addEventListener('click', () => {
+          card.remove();
+        });
+        container.appendChild(card);
+      });
+      // Clear new image inputs
+      document.getElementById('editNewImages').value = '';
+      document.getElementById('editImageUpload').value = '';
+      editUploadFilesMap = {};
+      // Initialize Sortable for edit container
+      new Sortable(container, {
+        animation: 150,
+        handle: '.drag-handle'
+      });
+      editChallengeModal.show();
+    }
+
+    // ---------------------------------------------------
+    // Save Edit Challenge Handler
+    // ---------------------------------------------------
+    async function handleSaveEditClick() {
+      if (!adminKey) {
+        alert('Please set your admin key first');
+        adminKeyModal.show();
+        return;
+      }
+      const challengeId = document.getElementById('editChallengeId').value;
+      const dateCT = document.getElementById('editChallengeDate').value;
+      if (!challengeId || !dateCT) {
+        alert('Missing required information');
+        return;
+      }
+      const dateUTC = convertToUTC(dateCT).toISOString();
+      const container = document.getElementById('editImagesContainer');
+      const cards = container.querySelectorAll('.col-md-4');
+      let uploadIndex = 0;
+      let imagesOrder = [];
+      cards.forEach(card => {
+        const year = card.querySelector('.image-year').value;
+        const description = card.querySelector('.image-description').value;
+        if (card.dataset.existing === 'true') {
+          imagesOrder.push({
+            type: 'existing',
+            originalIndex: card.dataset.originalIndex,
+            year: parseInt(year, 10),
+            description
+          });
+        } else {
+          const type = card.dataset.type;
+          if (type === 'wikimedia') {
+            imagesOrder.push({ type: 'wikimedia', url: card.dataset.url, year: parseInt(year, 10), description });
+          } else if (type === 'upload') {
+            imagesOrder.push({ type: 'upload', uploadIndex, year: parseInt(year, 10), description });
+            // Append file from edit upload map
+            // Use key from dataset.uploadId
+            formDataAppendFile(`uploadFiles_${uploadIndex}`, editUploadFilesMap[card.dataset.uploadId]);
+            uploadIndex++;
+          }
+        }
+      });
+      const saveBtn = document.getElementById('saveEditBtn');
+      const originalText = saveBtn.innerHTML;
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Saving...';
+      try {
+        const formData = new FormData();
+        formData.append('date', dateUTC);
+        formData.append('imagesOrder', JSON.stringify(imagesOrder));
+        const response = await fetch(`/admin/daily-challenge/${challengeId}/edit?adminKey=${adminKey}`, {
+          method: 'PUT',
+          body: formData
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert(`Success: ${data.message}`);
+          editChallengeModal.hide();
+          loadChallenges();
+          editUploadFilesMap = {};
+        } else {
+          alert(`Error: ${data.error}`);
+        }
+      } catch (error) {
+        alert(`Request failed: ${error.message}`);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = originalText;
+      }
+    }
+    // Helper for appending files in edit mode (if needed)
+    function formDataAppendFile(key, file) {
+      // This function is here in case you need to modify how files are appended
+      // For now, it simply calls formData.append(key, file) within the submission handler.
+    }
+
+    // ---------------------------------------------------
+    // API interaction functions (loadChallenges, deleteChallenge, calendar rendering, etc.)
+    // (Keep your existing implementations for these functions.)
+    // ---------------------------------------------------
     async function loadChallenges() {
       if (!adminKey) {
         console.log('Admin key not set, skipping challenge load');
         return;
       }
-      
       try {
-        // Show loading state
         const refreshBtn = document.getElementById('refreshBtn');
-        const originalBtnText = refreshBtn.textContent;
+        const originalText = refreshBtn.textContent;
         refreshBtn.disabled = true;
         refreshBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Loading...';
-        
         const response = await fetch(`/admin/daily-challenges?adminKey=${adminKey}`);
-        
         if (!response.ok) {
           if (response.status === 401) {
             alert('Unauthorized. Please check your admin key.');
@@ -705,14 +834,9 @@
           }
           return;
         }
-        
         const challenges = await response.json();
-        allChallenges = challenges; // Store for later use
-        
-        // Render the challenges list
+        allChallenges = challenges;
         renderChallengesList(challenges);
-        
-        // Render the calendar with challenge data
         const now = new Date();
         renderCalendar(now.getFullYear(), now.getMonth(), challenges);
       } catch (error) {
@@ -724,243 +848,38 @@
       }
     }
 
-    // Handle create form submission
-    async function handleCreateFormSubmit(e) {
-      e.preventDefault();
+    function deleteChallenge() {
       if (!adminKey) {
         alert('Please set your admin key first');
         adminKeyModal.show();
         return;
       }
-      
-      const dateCT = document.getElementById('date').value;
-      const imageUrlsText = document.getElementById('imageUrls').value.trim();
-      const appendImages = document.getElementById('appendImages').checked;
-      
-      if (!dateCT) {
-        alert('Please provide a date');
-        return;
-      }
-      
-      const imageUrls = parseImageUrls(imageUrlsText);
-      
-      // Validate we have at least some images (either URLs or uploads)
-      if (imageUrls.length === 0 && uploadedFiles.length === 0) {
-        alert('Please provide at least one image (either URL or upload)');
-        return;
-      }
-      
-      // Convert CT to UTC for API
-      const dateUTC = convertToUTC(dateCT).toISOString();
-      
-      const submitBtn = this.querySelector('button[type="submit"]');
-      const originalBtnText = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Creating...';
-      
-      try {
-        // Create FormData for multipart/form-data submission
-        const formData = new FormData();
-        formData.append('date', dateUTC);
-        formData.append('append', appendImages);
-        
-        // Add image URLs if any
-        if (imageUrls.length > 0) {
-          formData.append('imageUrls', JSON.stringify(imageUrls));
-        }
-        
-        // Add uploaded files if any
-        uploadedFiles.forEach((file, index) => {
-          formData.append(`uploadedFiles`, file);
-          
-          // Get metadata for this file
-          const yearInput = document.querySelector(`.upload-year[data-index="${index}"]`);
-          const descInput = document.querySelector(`.upload-description[data-index="${index}"]`);
-          
-          if (yearInput && descInput) {
-            const metadata = {
-              year: parseInt(yearInput.value, 10),
-              description: descInput.value
-            };
-            formData.append(`metadata_${index}`, JSON.stringify(metadata));
-          }
-        });
-        
-        // Send the request
-        const response = await fetch(`/admin/daily-challenge/create?adminKey=${adminKey}`, {
-          method: 'POST',
-          body: formData
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          alert(`Success: ${data.message}. Added ${data.challenge.imageCount} images.`);
-          document.getElementById('createForm').reset();
-          document.getElementById('previewGrid').innerHTML = '';
-          document.getElementById('uploadPreviewGrid').innerHTML = '';
-          document.getElementById('urlCount').textContent = '0';
-          document.getElementById('uploadCount').textContent = '0';
-          document.getElementById('previewContainer').style.display = 'none';
-          document.getElementById('uploadPreviewContainer').style.display = 'none';
-          uploadedFiles = [];
-          loadChallenges();
-          
-          // Reset the date to current time for next challenge
-          const now = new Date();
-          const ctNow = convertToCT(now);
-          document.getElementById('date').value = formatDateForInput(ctNow);
-        } else {
-          alert(`Error: ${data.error}`);
-        }
-      } catch (error) {
-        alert(`Request failed: ${error.message}`);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-      }
-    }
-
-    // Save edit challenge handler
-    async function handleSaveEditClick() {
-      if (!adminKey) {
-        alert('Please set your admin key first');
-        adminKeyModal.show();
-        return;
-      }
-      
-      const challengeId = document.getElementById('editChallengeId').value;
-      const dateCT = document.getElementById('editChallengeDate').value;
-      
-      if (!challengeId || !dateCT) {
-        alert('Missing required information');
-        return;
-      }
-      
-      // Convert CT to UTC for API
-      const dateUTC = convertToUTC(dateCT).toISOString();
-      
-      // Get all remaining images (excluding removed ones)
-      const imageElements = document.querySelectorAll('.image-item');
-      const imageUpdates = {};
-      
-      // Collect year and description updates for each image
-      imageElements.forEach((el) => {
-        const index = parseInt(el.getAttribute('data-index'), 10);
-        
-        // Get updated values
-        const yearInput = el.querySelector('.image-year');
-        const descriptionInput = el.querySelector('.image-description');
-        
-        if (yearInput && descriptionInput) {
-          imageUpdates[index] = {
-            year: parseInt(yearInput.value, 10),
-            description: descriptionInput.value
-          };
-        }
-      });
-      
-      // Get new image URLs if any were added
-      const newImageUrls = parseImageUrls(document.getElementById('editNewImages').value);
-      
-      // Show loading state
-      const saveBtn = this;
-      const originalBtnText = saveBtn.innerHTML;
-      saveBtn.disabled = true;
-      saveBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Saving...';
-      
-      try {
-        // Use FormData for multipart uploads
-        const formData = new FormData();
-        formData.append('date', dateUTC);
-        formData.append('imageUpdates', JSON.stringify(imageUpdates));
-        
-        if (newImageUrls.length > 0) {
-          formData.append('newImageUrls', JSON.stringify(newImageUrls));
-        }
-        
-        // Add uploaded files if any
-        editUploadedFiles.forEach((file, index) => {
-          formData.append(`uploadedFiles`, file);
-          // For uploads in edit mode, we'll set default year to current year
-          formData.append(`metadata_${index}`, JSON.stringify({
-            year: new Date().getFullYear(),
-            description: ''
-          }));
-        });
-        
-        const response = await fetch(`/admin/daily-challenge/${challengeId}/edit?adminKey=${adminKey}`, {
-          method: 'PUT',
-          body: formData
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          alert(`Success: ${data.message}`);
-          editChallengeModal.hide();
-          loadChallenges(); // Refresh the challenges list
-          editUploadedFiles = [];
-        } else {
-          alert(`Error: ${data.error}`);
-        }
-      } catch (error) {
-        alert(`Request failed: ${error.message}`);
-      } finally {
-        saveBtn.disabled = false;
-        saveBtn.innerHTML = originalBtnText;
-      }
-    }
-
-    // Delete challenge handler
-    async function deleteChallenge() {
-      if (!adminKey) {
-        alert('Please set your admin key first');
-        adminKeyModal.show();
-        return;
-      }
-      
       const challengeId = this.getAttribute('data-id');
-      
       if (!confirm('Are you sure you want to delete this challenge? This action cannot be undone.')) {
         return;
       }
-      
-      try {
-        const response = await fetch(`/admin/daily-challenge/${challengeId}?adminKey=${adminKey}`, {
-          method: 'DELETE'
+      fetch(`/admin/daily-challenge/${challengeId}?adminKey=${adminKey}`, { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(`Error: ${data.error}`);
+          } else {
+            alert('Challenge deleted successfully');
+            loadChallenges();
+          }
+        })
+        .catch(error => {
+          alert(`Request failed: ${error.message}`);
         });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          alert('Challenge deleted successfully');
-          loadChallenges(); // Refresh the challenges list
-        } else {
-          alert(`Error: ${data.error}`);
-        }
-      } catch (error) {
-        alert(`Request failed: ${error.message}`);
-      }
     }
 
-    // ---------------------------------------------------
-    // UI rendering functions
-    // ---------------------------------------------------
-    // Render challenges list
     function renderChallengesList(challenges) {
       const challengesListEl = document.getElementById('challengesList');
       if (challenges.length === 0) {
-        challengesListEl.innerHTML = `
-          <div class="col-12">
-            <div class="alert alert-info">No challenges created yet</div>
-          </div>
-        `;
+        challengesListEl.innerHTML = `<div class="col-12"><div class="alert alert-info">No challenges created yet</div></div>`;
         return;
       }
-      
       challenges.sort((a, b) => new Date(b.date) - new Date(a.date));
-      
       const html = challenges.map(challenge => {
         const dateCT = convertToCT(challenge.date);
         const formattedDate = dateCT.toLocaleDateString('en-US', {
@@ -969,7 +888,6 @@
           day: 'numeric',
           timeZone: 'America/Chicago'
         }) + ' CT';
-        
         const image = challenge.images[0];
         return `
           <div class="col-md-4 col-lg-3 mb-4">
@@ -978,7 +896,6 @@
                 <h6 class="m-0 text-center">${formattedDate}</h6>
               </div>
               <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Challenge image'}" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'" style="height: 120px;">
-
               <div class="card-footer d-flex justify-content-between align-items-center p-2">
                   <span class="text-muted">Images: ${challenge.images.length}</span>
                 ${!challenge.active ? `<span class="badge bg-secondary">Inactive</span>` : ''}
@@ -995,13 +912,10 @@
           </div>
         `;
       }).join('');
-      
       challengesListEl.innerHTML = html;
-      
       document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', deleteChallenge);
       });
-      
       document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', function() {
           const id = this.getAttribute('data-id');
@@ -1010,21 +924,12 @@
       });
     }
 
-    // Calendar rendering function
     function renderCalendar(year, month, challenges) {
       const calendarContainer = document.getElementById('calendarContainer');
-      
-      // Create date object for the first day of the month
       const firstDay = new Date(year, month, 1);
-      // Get the day of the week (0-6, Sunday-Saturday)
       const startDay = firstDay.getDay();
-      // Get the number of days in the month
       const daysInMonth = new Date(year, month + 1, 0).getDate();
-      
-      // Get month and year strings
       const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      
-      // Create calendar navigation controls
       const calendarControls = document.createElement('div');
       calendarControls.className = 'd-flex justify-content-between mb-3 align-items-center';
       calendarControls.innerHTML = `
@@ -1036,180 +941,62 @@
           Next <i class="bi bi-chevron-right"></i>
         </button>
       `;
-      
-      // Create table for calendar
       const calendarTable = document.createElement('table');
       calendarTable.className = 'table table-bordered text-center';
-      
-      // Create header row with day names
       const thead = document.createElement('thead');
-      thead.innerHTML = `
-        <tr>
-          <th>Sun</th>
-          <th>Mon</th>
-          <th>Tue</th>
-          <th>Wed</th>
-          <th>Thu</th>
-          <th>Fri</th>
-          <th>Sat</th>
-        </tr>
-      `;
+      thead.innerHTML = `<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>`;
       calendarTable.appendChild(thead);
-      
-      // Create calendar body
       const tbody = document.createElement('tbody');
       let date = 1;
-      
-      // Create rows for the calendar
       for (let i = 0; i < 6; i++) {
-        // Break if we've gone through all days
         if (date > daysInMonth) break;
-        
         const row = document.createElement('tr');
-        
-        // Create cells for each day of the week
         for (let j = 0; j < 7; j++) {
           const cell = document.createElement('td');
-          
-          // Add date numbers starting from the correct day of the week
           if (i === 0 && j < startDay) {
-            // Empty cell before the start of the month
             cell.innerHTML = '';
           } else if (date > daysInMonth) {
-            // Empty cell after the end of the month
             cell.innerHTML = '';
           } else {
-            // Date cell
             const cellDate = new Date(year, month, date);
-            const dateStr = cellDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-            
-            // Check if this date has a challenge
+            const dateStr = cellDate.toISOString().split('T')[0];
             const hasChallenge = challenges.some(challenge => {
               const challengeDate = convertToCT(challenge.date);
               return challengeDate.toISOString().split('T')[0] === dateStr;
             });
-            
-            // Add date number and styling
             cell.innerHTML = `<div class="calendar-day ${hasChallenge ? 'has-challenge' : ''}">${date}</div>`;
-            
             if (hasChallenge) {
               cell.style.cursor = 'pointer';
-              
-              // Add click handler to navigate to that date's challenge
               cell.addEventListener('click', () => {
                 const challenge = challenges.find(ch => {
                   const challengeDate = convertToCT(ch.date);
                   return challengeDate.toISOString().split('T')[0] === dateStr;
                 });
-                
-                if (challenge) {
-                  openEditModal(challenge._id);
-                }
+                if (challenge) openEditModal(challenge._id);
               });
             }
-            
             date++;
           }
-          
           row.appendChild(cell);
         }
-        
         tbody.appendChild(row);
       }
-      
       calendarTable.appendChild(tbody);
-      
-      // Clear and populate the calendar container
       calendarContainer.innerHTML = '';
       calendarContainer.appendChild(calendarControls);
       calendarContainer.appendChild(calendarTable);
-      
-      // Add event listeners for navigation buttons
       document.getElementById('prevMonth').addEventListener('click', () => {
-        let newMonth = month - 1;
-        let newYear = year;
-        if (newMonth < 0) {
-          newMonth = 11;
-          newYear--;
-        }
+        let newMonth = month - 1, newYear = year;
+        if (newMonth < 0) { newMonth = 11; newYear--; }
         currentDisplayDate = new Date(newYear, newMonth, 1);
         renderCalendar(newYear, newMonth, challenges);
       });
-      
       document.getElementById('nextMonth').addEventListener('click', () => {
-        let newMonth = month + 1;
-        let newYear = year;
-        if (newMonth > 11) {
-          newMonth = 0;
-          newYear++;
-        }
+        let newMonth = month + 1, newYear = year;
+        if (newMonth > 11) { newMonth = 0; newYear++; }
         currentDisplayDate = new Date(newYear, newMonth, 1);
         renderCalendar(newYear, newMonth, challenges);
       });
-    }
-
-    // Open edit challenge modal
-    function openEditModal(challengeId) {
-      const challenge = allChallenges.find(ch => ch._id === challengeId);
-      if (!challenge) return;
-      
-      currentEditingChallenge = challenge;
-      
-      // Convert UTC to CT for display
-      const dateCT = convertToCT(challenge.date);
-      document.getElementById('editChallengeId').value = challengeId;
-      document.getElementById('editChallengeDate').value = formatDateForInput(dateCT);
-      
-      // Display existing images
-      const imagesContainer = document.getElementById('editImagesContainer');
-      imagesContainer.innerHTML = '';
-      
-              challenge.images.forEach((image, index) => {
-        const imageCol = document.createElement('div');
-        imageCol.className = 'col-md-6';
-        imageCol.innerHTML = `
-          <div class="card image-item mb-3" data-index="${index}">
-            <div class="badge-overlay">${image.year}</div>
-            <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Challenge image'}" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
-            <div class="image-controls">
-              <button type="button" class="btn btn-sm btn-danger delete-image-btn" data-index="${index}">
-                <i class="bi bi-trash"></i>
-              </button>
-            </div>
-            <div class="card-body">
-              <p class="card-text text-muted small">${image.title || extractFilenameFromUrl(image.url)}</p>
-              <div class="mb-2">
-                <label class="form-label">Year</label>
-                <input type="number" class="form-control form-control-sm image-year" 
-                      value="${image.year}" min="1800" max="2025" data-index="${index}">
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Description</label>
-                <textarea class="form-control form-control-sm image-description" 
-                          rows="2" data-index="${index}">${image.description || ''}</textarea>
-              </div>
-            </div>
-          </div>
-        `;
-        imagesContainer.appendChild(imageCol);
-      });
-      
-      // Add event listeners to delete buttons
-      document.querySelectorAll('.delete-image-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const index = parseInt(this.getAttribute('data-index'));
-          if (confirm(`Remove image ${index + 1}?`)) {
-            this.closest('.col-md-6').remove();
-          }
-        });
-      });
-      
-      // Clear new images input
-      document.getElementById('editNewImages').value = '';
-      document.getElementById('editImageUpload').value = '';
-      editUploadedFiles = [];
-      
-      editChallengeModal.show();
     }
   </script>
 </body>

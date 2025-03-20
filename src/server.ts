@@ -36,6 +36,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+// Debug middleware for image URL paths
+app.use('/api/images/daily-challenge', (req, res, next) => {
+  logger.info(`Requested daily challenge: ${req.url}`);
+  next();
+});
+
+app.use('/uploads', (req, res, next) => {
+  logger.info(`Requested uploaded file: ${req.url}`);
+  next();
+});
+
 // Routes
 app.use('/api/images', imagesRoutes);
 app.use('/admin', adminRoutes);
