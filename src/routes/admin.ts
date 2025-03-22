@@ -14,6 +14,7 @@ import s3Client, { s3BucketName } from '../utils/awsConfig';
 const storage = multerS3({
   s3: s3Client,
   bucket: s3BucketName,
+  acl: 'public-read',  // Add this line to make uploads publicly readable
   metadata: function (req, file, cb) {
     cb(null, { fieldName: file.fieldname });
   },
