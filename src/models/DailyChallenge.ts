@@ -80,13 +80,13 @@ const DailyChallengeSchema: Schema = new Schema({
 // Add this pre-save hook to ensure image URLs are properly formatted
 // Add this pre-save hook to ensure image URLs are properly formatted
 DailyChallengeSchema.pre<DailyChallengeDoc>('save', function(next) {
-  // Process each image to ensure URL is web-accessible
+  // Process each image to ensure URL is properly formatted
   if (this.images) {
     this.images = this.images.map((image: WikimediaImage) => {
-      // If URL is a local file path without proper prefix
-      if (image.url && image.url.includes('uploads/') && !image.url.startsWith('http') && !image.url.startsWith('/')) {
-        // Add leading slash to make it a proper URL path
-        image.url = `/${image.url}`;
+      // Ensure URL starts with a slash for uploaded images
+      if (image.url && image.url.includes('uploads/')) {
+        // Normalize the URL format to always start with a slash
+        image.url = '/' + image.url.replace(/^\/+/, '');
       }
       return image;
     });

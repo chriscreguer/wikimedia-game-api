@@ -70,21 +70,17 @@ const verifyAdmin: RequestHandler = (req, res, next) => {
 };
 
 function setCentralTimeMidnight(date: Date): Date {
-  // Convert the input date to a string in CT timezone, keeping only the date part
-  const ctDateStr = date.toLocaleString('en-US', {
-    timeZone: 'America/Chicago',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  });
+  // Get the ISO date string (YYYY-MM-DD)
+  const isoDate = date.toISOString().split('T')[0];
   
-  // Parse the string back to a date object (will be in local timezone)
-  const [month, day, year] = ctDateStr.split('/').map(Number);
+  // Create a new date at midnight UTC using the ISO date
+  const utcMidnight = new Date(`${isoDate}T00:00:00Z`);
   
-  // Create a new date with the CT date components but at UTC midnight
-  const result = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+  // Since we want Central Time, add the timezone offset (6 hours for CST)
+  const centralTimeOffset = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+  const centralMidnight = new Date(utcMidnight.getTime() + centralTimeOffset);
   
-  return result;
+  return centralMidnight;
 }
 
 // Serve admin dashboard
@@ -248,16 +244,31 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
   }
 }) as RequestHandler);
 
-/**
- * GET /admin/daily-challenges
- * List all daily challenges
- * 
- * Updated to return an array directly so that challenges.map can be used on the frontend.
- */
 router.get('/daily-challenges', verifyAdmin, async (req: Request, res: Response) => {
   try {
     const challenges = await DailyChallenge.find().sort({ date: -1 });
-    res.status(200).json(challenges);
+    
+    // Map to plain objects that can be sent to the client
+    const formattedChallenges = challenges.map(challenge => {
+      // Convert to plain object
+      const plainObj = challenge.toObject();
+      
+      // Create a new object with all the properties we need
+      return {
+        ...plainObj,
+        // Add the formatted date
+        formattedDate: challenge.date.toISOString().split('T')[0],
+        // Ensure image URLs are consistent
+        images: plainObj.images?.map((img: any) => ({
+          ...img,
+          url: img.url && img.url.includes('uploads/') 
+            ? '/' + img.url.replace(/^\/+/, '') 
+            : img.url
+        }))
+      };
+    });
+    
+    res.status(200).json(formattedChallenges);
   } catch (error) {
     logger.error('Error fetching daily challenges:', error);
     res.status(500).json({ error: 'Failed to fetch daily challenges' });
