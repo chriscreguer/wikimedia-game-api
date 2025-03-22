@@ -415,11 +415,10 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
             
             if (!isNaN(uploadIndex) && uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
               const file = uploadedFiles[uploadIndex];
-              console.log(`Found uploaded file: ${file.originalname} at path ${file.path}`);
+              console.log(`Found uploaded file: ${file.originalname}`);
               
-              // Create proper URL with leading slash
-              const fileName = path.basename(file.path);
-              const fileUrl = `/uploads/${fileName}`;
+              // Use S3 file location directly
+              const fileUrl = (file as Express.MulterS3.File).location;
               
               console.log(`Created URL for uploaded file: ${fileUrl}`);
               
