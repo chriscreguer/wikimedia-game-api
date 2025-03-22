@@ -472,7 +472,7 @@ function createImageCard(options) {
           <i class="bi bi-trash"></i>
         </button>
       </div>
-      <img src="${url}" class="challenge-image card-img-top" alt="Image" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
+      <img src="${url}" class="challenge-image card-img-top" alt="Image" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22180%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20fill%3D%22%23444%22%20width%3D%22300%22%20height%3D%22180%22%2F%3E%3Ctext%20fill%3D%22%23fff%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2212%22%20x%3D%22110%22%20y%3D%2290%22%3EImage%20Error%3C%2Ftext%3E%3C%2Fsvg%3E'">
       <div class="card-body">
         <div class="mb-2">
           <label class="form-label">Year</label>
@@ -722,7 +722,7 @@ function createImageCard(options) {
             <i class="bi bi-trash"></i>
           </button>
         </div>
-        <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Image'}" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'">
+        <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Image'}" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22180%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20fill%3D%22%23444%22%20width%3D%22300%22%20height%3D%22180%22%2F%3E%3Ctext%20fill%3D%22%23fff%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2212%22%20x%3D%22110%22%20y%3D%2290%22%3EImage%20Error%3C%2Ftext%3E%3C%2Fsvg%3E'">
         <div class="card-body">
           <p class="card-text text-muted small">${image.title || ''}</p>
           <div class="mb-2">
@@ -777,6 +777,11 @@ function createImageCard(options) {
   const cards = container.querySelectorAll('.col-md-4');
   let uploadIndex = 0;
   let imagesOrder = [];
+  
+  // Create FormData object 
+  const formData = new FormData();
+  formData.append('date', dateUTC);
+  
   cards.forEach(card => {
     const year = card.querySelector('.image-year').value;
     const description = card.querySelector('.image-description').value;
@@ -808,45 +813,52 @@ function createImageCard(options) {
           description,
           revealedDescription
         });
-        // Append file from edit upload map
-        formDataAppendFile(`uploadFiles_${uploadIndex}`, editUploadFilesMap[card.dataset.uploadId]);
-        uploadIndex++;
+        
+        // Directly append file to FormData (fix for missing files)
+        if (editUploadFilesMap[card.dataset.uploadId]) {
+          formData.append(`uploadedFiles`, editUploadFilesMap[card.dataset.uploadId]);
+          uploadIndex++;
+        }
       }
     }
   });
-      const saveBtn = document.getElementById('saveEditBtn');
-      const originalText = saveBtn.innerHTML;
-      saveBtn.disabled = true;
-      saveBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Saving...';
-      try {
-        const formData = new FormData();
-        formData.append('date', dateUTC);
-        formData.append('imagesOrder', JSON.stringify(imagesOrder));
-        const response = await fetch(`/admin/daily-challenge/${challengeId}/edit?adminKey=${adminKey}`, {
-          method: 'PUT',
-          body: formData
-        });
-        const data = await response.json();
-        if (response.ok) {
-          alert(`Success: ${data.message}`);
-          editChallengeModal.hide();
-          loadChallenges();
-          editUploadFilesMap = {};
-        } else {
-          alert(`Error: ${data.error}`);
-        }
-      } catch (error) {
-        alert(`Request failed: ${error.message}`);
-      } finally {
-        saveBtn.disabled = false;
-        saveBtn.innerHTML = originalText;
-      }
+  
+  // Add imagesOrder to FormData
+  formData.append('imagesOrder', JSON.stringify(imagesOrder));
+  
+  const saveBtn = document.getElementById('saveEditBtn');
+  const originalText = saveBtn.innerHTML;
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Saving...';
+  
+  try {
+    const response = await fetch(`/admin/daily-challenge/${challengeId}/edit?adminKey=${adminKey}`, {
+      method: 'PUT',
+      body: formData
+    });
+    
+    const data = await response.json();
+    if (response.ok) {
+      alert(`Success: ${data.message}`);
+      editChallengeModal.hide();
+      loadChallenges();
+      editUploadFilesMap = {};
+    } else {
+      alert(`Error: ${data.error}`);
     }
-    // Helper for appending files in edit mode (if needed)
-    function formDataAppendFile(key, file) {
+  } catch (error) {
+    alert(`Request failed: ${error.message}`);
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = originalText;
+  }
+}
+
+
+
       // This function is here in case you need to modify how files are appended
       // For now, it simply calls formData.append(key, file) within the submission handler.
-    }
+
 
     // ---------------------------------------------------
     // API interaction functions (loadChallenges, deleteChallenge, calendar rendering, etc.)
@@ -933,7 +945,7 @@ function createImageCard(options) {
               <div class="card-header p-2">
                 <h6 class="m-0 text-center">${formattedDate}</h6>
               </div>
-              <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Challenge image'}" onerror="this.src='https://via.placeholder.com/300x180?text=Image+Error'" style="height: 120px;">
+              <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Challenge image'}" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22180%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20fill%3D%22%23444%22%20width%3D%22300%22%20height%3D%22180%22%2F%3E%3Ctext%20fill%3D%22%23fff%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2212%22%20x%3D%22110%22%20y%3D%2290%22%3EImage%20Error%3C%2Ftext%3E%3C%2Fsvg%3E'" style="height: 120px;">
               <div class="card-footer d-flex justify-content-between align-items-center p-2">
                   <span class="text-muted">Images: ${challenge.images.length}</span>
                 ${!challenge.active ? `<span class="badge bg-secondary">Inactive</span>` : ''}

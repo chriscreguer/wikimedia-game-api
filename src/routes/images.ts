@@ -146,17 +146,16 @@ function isLikelyRealPhoto(metadata: any): boolean {
 }
 
 function setCentralTimeMidnight(date: Date): Date {
-  // Get the ISO date string (YYYY-MM-DD)
-  const isoDate = date.toISOString().split('T')[0];
+  // First convert the date to a string in Central Time
+  const ctDateStr = date.toLocaleString('en-US', { timeZone: 'America/Chicago' });
   
-  // Create a new date at midnight UTC using the ISO date
-  const utcMidnight = new Date(`${isoDate}T00:00:00Z`);
+  // Parse the CT date string back to a Date object
+  const ctDate = new Date(ctDateStr);
   
-  // Since we want Central Time, add the timezone offset (6 hours for CST)
-  const centralTimeOffset = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
-  const centralMidnight = new Date(utcMidnight.getTime() + centralTimeOffset);
+  // Set to midnight
+  ctDate.setHours(0, 0, 0, 0);
   
-  return centralMidnight;
+  return ctDate;
 }
 
 // Function to extract year from metadata with higher confidence
