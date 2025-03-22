@@ -6,25 +6,21 @@ import { fetchImageData, fetchMultipleImageData, extractFilenameFromUrl } from '
 import logger from '../utils/logger';
 import multer from 'multer'; 
 import fs from 'fs';
+import { PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import multerS3 from 'multer-s3';
+import s3Client, { s3BucketName } from '../utils/awsConfig';
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    // Use process.cwd() to get the root of the project consistently
-    const uploadDir = path.resolve(process.cwd(), 'uploads');
-    console.log('Saving uploaded file to:', uploadDir);
-    
-    // Create directory if it doesn't exist
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-    cb(null, uploadDir);
+const storage = multerS3({
+  s3: s3Client,
+  bucket: s3BucketName,
+  metadata: function (req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
   },
-  filename: function (req, file, cb) {
-    // Generate a unique filename
+  key: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const ext = path.extname(file.originalname);
     const filename = file.fieldname + '-' + uniqueSuffix + ext;
-    console.log('Generated filename:', filename);
     cb(null, filename);
   }
 });
@@ -52,6 +48,22 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
+async function getS3Url(key: string): Promise<string> {
+  const command = new PutObjectCommand({
+    Bucket: s3BucketName,
+    Key: key
+  });
+  
+  try {
+    // This URL will be valid for 1 week (604800 seconds)
+    const url = await getSignedUrl(s3Client, command, { expiresIn: 604800 });
+    return url;
+  } catch (error) {
+    logger.error('Error generating S3 URL:', error);
+    return '';
+  }
+}
+
 const router = express.Router();
 
 // Admin authentication middleware - using the same key as in images.ts
@@ -69,13 +81,18 @@ const verifyAdmin: RequestHandler = (req, res, next) => {
 function normalizeImageUrl(url: string): string {
   if (!url) return '';
   
-  // If it's an uploaded image URL
+  // If it's an S3 URL
+  if (url.includes('amazonaws.com')) {
+    return url; // No need to modify S3 URLs
+  }
+  
+  // If it's an old uploaded image URL that hasn't been migrated
   if (url.includes('uploads')) {
     // Extract the filename
     const parts = url.split('/');
     const filename = parts[parts.length - 1];
-    // Recreate with consistent format
-    return `/uploads/${filename}`;
+    // Create S3 URL format
+    return `https://${s3BucketName}.s3.amazonaws.com/${filename}`;
   }
   
   return url;
@@ -179,8 +196,8 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
           if (uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
             const file = uploadedFiles[uploadIndex];
             
-            // Create an image object for this uploaded file
-            const fileUrl = `/uploads/${path.basename(file.path)}`;
+            // For S3 uploads, the file object from multer-s3 includes location (the S3 URL)
+            const fileUrl = (file as Express.MulterS3.File).location;
             imageData.push({
               filename: file.originalname,
               title: file.originalname,
@@ -456,13 +473,16 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
     
     // Clean up uploaded files on error
     if (req.files && Array.isArray(req.files)) {
-      req.files.forEach(file => {
+      for (const file of req.files as Express.MulterS3.File[]) {
         try {
-          fs.unlinkSync(file.path);
-        } catch (e) {
-          console.error(`Failed to delete file ${file.path}:`, e);
+          await s3Client.send(new DeleteObjectCommand({
+            Bucket: s3BucketName,
+            Key: file.key
+          }));
+        } catch (deleteErr) {
+          logger.error(`Failed to delete file ${file.key} from S3:`, deleteErr);
         }
-      });
+      }
     }
     
     res.status(500).json({ 

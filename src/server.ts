@@ -42,53 +42,7 @@ mongoose.connect(connectionString)
   .then(() => logger.info('MongoDB connected successfully'))
   .catch(err => logger.error('MongoDB connection error:', err));
 
-// Debug middleware for upload paths - put this BEFORE static middleware
-app.use('/uploads', (req, res, next) => {
-  // Clean the path by removing any leading slashes
-  const cleanPath = req.path.startsWith('/') ? req.path.substring(1) : req.path;
-  
-  logger.info(`Upload request path: ${req.path}`);
-  logger.info(`Full URL: ${req.originalUrl}`);
-  
-  // Use the clean path when joining
-  const filePath = path.join(uploadsPath, cleanPath);
-  logger.info(`Looking in: ${filePath}`);
 
-  // Check if file exists using the correct uploads path
-  fs.access(filePath, fs.constants.F_OK, (err) => {
-    if (err) {
-      logger.error(`File not found: ${filePath}`);
-    } else {
-      logger.info(`File exists: ${filePath}`);
-    }
-    next();
-  });
-});
-
-// Add the static middleware AFTER the logging middleware
-app.use('/uploads', express.static(uploadsPath));
-
-// Add a test endpoint to help debug path issues
-app.get('/test-uploads', (req, res) => {
-  try {
-    const files = fs.readdirSync(uploadsPath);
-    res.json({
-      uploadsPath,
-      exists: fs.existsSync(uploadsPath),
-      files,
-      cwd: process.cwd(),
-      dirname: __dirname
-    });
-  } catch (error) {
-    res.status(500).json({
-      error: 'Failed to read uploads directory',
-      message: (error as Error).message,
-      uploadsPath,
-      cwd: process.cwd(),
-      dirname: __dirname
-    });
-  }
-});
 
 // Other middleware
 app.use(express.json());

@@ -1,5 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { WikimediaImage } from '../types/wikimedia';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Interface for score distribution
 interface ScoreDistribution {
@@ -83,8 +85,14 @@ DailyChallengeSchema.pre<DailyChallengeDoc>('save', function(next) {
   // Normalize image URLs
   if (this.images && Array.isArray(this.images)) {
     this.images = this.images.map((image: any) => {
+      // Don't modify URLs that are already S3 URLs
+      if (typeof image.url === 'string' && image.url.includes('amazonaws.com')) {
+        return image;
+      }
+      
+      // For uploads that still use the old format
       if (typeof image.url === 'string' && image.url.includes('uploads')) {
-        // Extract the filename - handle both format variations
+        // Extract the filename
         let filename;
         if (image.url.includes('/uploads/')) {
           filename = image.url.split('/uploads/').pop();
@@ -92,8 +100,10 @@ DailyChallengeSchema.pre<DailyChallengeDoc>('save', function(next) {
           filename = image.url.split('/').pop();
         }
         
-        // Ensure the URL is properly formatted with a leading slash
-        image.url = `/uploads/${filename}`;
+        // Format as S3 URL instead of local path
+        if (filename) {
+          image.url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/${filename}`;
+        }
       }
       return image;
     });
