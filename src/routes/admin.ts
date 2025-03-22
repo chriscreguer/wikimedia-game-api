@@ -103,18 +103,14 @@ router.get('/test-uploads', verifyAdmin, (req, res) => {
 });
 
 function setCentralTimeMidnight(date: Date): Date {
-  // First convert the date to a string in Central Time
-  const ctDateStr = date.toLocaleString('en-US', { timeZone: 'America/Chicago' });
+  // Create a new date object to avoid modifying the input
+  const newDate = new Date(date);
   
-  // Parse the CT date string back to a Date object
-  const ctDate = new Date(ctDateStr);
+  // Set to midnight in UTC
+  newDate.setUTCHours(0, 0, 0, 0);
   
-  // Set to midnight
-  ctDate.setHours(0, 0, 0, 0);
-  
-  return ctDate;
+  return newDate;
 }
-
 // Serve admin dashboard
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public/admin.html'));
