@@ -239,7 +239,7 @@
           <!-- File Upload Section -->
           <div class="mb-4">
             <label class="form-label">Upload Custom Images</label>
-            <input type="file" class="form-control" id="imageUpload" multiple accept="image/*" />
+            <input type="file" class="form-control" id="imageUpload" multiple accept="image/*,video/*" />
             <div class="form-text">Upload images (max 5MB each, up to 5 images)</div>
           </div>
 
@@ -349,7 +349,7 @@
             <!-- Upload New Images -->
             <div class="mb-3">
               <label class="form-label">Upload New Images</label>
-              <input type="file" class="form-control" id="editImageUpload" multiple accept="image/*" />
+              <input type="file" class="form-control" id="editImageUpload" multiple accept="image/*,video/*" />
               <div class="form-text">Upload images (max 5MB each, up to 5 images)</div>
             </div>
           </form>
@@ -453,7 +453,7 @@
     // Utility to create an image card for the unified container
     // ---------------------------------------------------
    // Updated createImageCard function to include revealedDescription field
-function createImageCard(options) {
+   function createImageCard(options) {
   // options: { type: 'wikimedia'|'upload', url, fileId (for uploads) }
   const { type, url, fileId } = options;
   const card = document.createElement('div');
@@ -464,8 +464,15 @@ function createImageCard(options) {
   } else if (type === 'upload') {
     card.dataset.uploadId = fileId;
   }
-  // For new cards in create mode, no "existing" flag is set.
-  const currentYear = new Date().getFullYear();
+  // Detect if the media is a video or a GIF
+  const isVideo = /\.(mp4|webm)$/i.test(url);
+  const isGif = /\.gif$/i.test(url);
+  let mediaPreview = '';
+  if (isVideo) {
+    mediaPreview = `<video src="${url}" loop autoplay muted playsinline class="challenge-image card-img-top" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%22300%22%20height%3D%22180%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20fill%3D%22%23444%22%20width%3D%22300%22%20height%3D%22180%22/%3E%3Ctext%20fill%3D%22%23fff%22%20font-family%3D%22Arial,%20sans-serif%22%20font-size%3D%2212%22%20x%3D%22110%22%20y%3D%2290%22%3EImage%20Error%3C/text%3E%3C/svg%3E'"></video>`;
+  } else {
+    mediaPreview = `<img src="${url}" class="challenge-image card-img-top" alt="Image" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%22300%22%20height%3D%22180%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20fill%3D%22%23444%22%20width%3D%22300%22%20height%3D%22180%22/%3E%3Ctext%20fill%3D%22%23fff%22%20font-family%3D%22Arial,%20sans-serif%22%20font-size%3D%2212%22%20x%3D%22110%22%20y%3D%2290%22%3EImage%20Error%3C/text%3E%3C/svg%3E'">`;
+  }
   card.innerHTML = `
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
@@ -474,11 +481,11 @@ function createImageCard(options) {
           <i class="bi bi-trash"></i>
         </button>
       </div>
-      <img src="${url}" class="challenge-image card-img-top" alt="Image" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22180%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20fill%3D%22%23444%22%20width%3D%22300%22%20height%3D%22180%22%2F%3E%3Ctext%20fill%3D%22%23fff%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2212%22%20x%3D%22110%22%20y%3D%2290%22%3EImage%20Error%3C%2Ftext%3E%3C%2Fsvg%3E'">
+      ${mediaPreview}
       <div class="card-body">
         <div class="mb-2">
           <label class="form-label">Year</label>
-          <input type="number" class="form-control image-year" value="${currentYear}" min="1800" max="2025">
+          <input type="number" class="form-control image-year" value="${new Date().getFullYear()}" min="1800" max="2025">
         </div>
         <div class="mb-2">
           <label class="form-label">Description (Before Guess)</label>
@@ -496,6 +503,7 @@ function createImageCard(options) {
   });
   return card;
 }
+
 
     // ---------------------------------------------------
     // Wikimedia Images - Create Mode

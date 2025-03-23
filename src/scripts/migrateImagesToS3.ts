@@ -31,7 +31,6 @@ async function uploadFileToS3(filePath: string, fileName: string) {
 
 function getContentType(fileName: string): string {
   const ext = path.extname(fileName).toLowerCase();
-  
   switch (ext) {
     case '.jpg':
     case '.jpeg':
@@ -40,10 +39,15 @@ function getContentType(fileName: string): string {
       return 'image/png';
     case '.gif':
       return 'image/gif';
+    case '.mp4':
+      return 'video/mp4';
+    case '.webm':
+      return 'video/webm';
     default:
       return 'application/octet-stream';
   }
 }
+
 
 async function migrateImagesToS3() {
   try {
