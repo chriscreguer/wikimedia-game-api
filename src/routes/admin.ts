@@ -124,7 +124,7 @@ function setCentralTimeMidnight(date: Date): Date {
   // Create a new date object to avoid modifying the input
   const newDate = new Date(date);
   
-  // Set to midnight in UTC
+  // Just set to midnight UTC without additional timezone conversion
   newDate.setUTCHours(0, 0, 0, 0);
   
   return newDate;

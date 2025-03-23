@@ -434,11 +434,11 @@
       return new Date(date.toLocaleString('en-US', {timeZone: 'America/Chicago'}));
     }
     function convertToUTC(ctDateStr) {
-  // Parse the date parts
+  // Parse the date parts (YYYY-MM-DD)
   const [year, month, day] = ctDateStr.split('-').map(Number);
   
-  // Create a Date object at midnight UTC on the same date
-  // Month is 0-indexed in JavaScript
+  // Create a date at midnight UTC on the intended day
+  // This preserves the exact date without timezone shifts
   return new Date(Date.UTC(year, month - 1, day));
 }
     function formatDateForInput(date) {
@@ -705,9 +705,11 @@ function createImageCard(options) {
   const challenge = allChallenges.find(ch => ch._id === challengeId);
   if (!challenge) return;
   currentEditingChallenge = challenge;
-  const dateCT = convertToCT(challenge.date);
+  
+  // Use the plainDate directly from the challenge object
+  // The server already provides this in the correct format
   document.getElementById('editChallengeId').value = challengeId;
-  document.getElementById('editChallengeDate').value = formatDateForInput(dateCT);
+  document.getElementById('editChallengeDate').value = challenge.plainDate;
   const container = document.getElementById('editImagesContainer');
   container.innerHTML = '';
   // Populate existing images
@@ -932,20 +934,25 @@ function createImageCard(options) {
         return;
       }
       challenges.sort((a, b) => new Date(b.date) - new Date(a.date));
-      const html = challenges.map(challenge => {
-        const dateCT = convertToCT(challenge.date);
-        const formattedDate = dateCT.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          timeZone: 'America/Chicago'
-        }) + ' CT';
+  const html = challenges.map(challenge => {
+    // Use the plainDate property which is already in YYYY-MM-DD format
+    // This avoids any timezone conversions that could shift the date
+    const formattedDate = challenge.plainDate || 
+      new Date(challenge.date).toISOString().split('T')[0]; 
+    
+    // Format for display (without timezone conversion)
+    const displayDate = new Date(formattedDate + 'T12:00:00Z')
+      .toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }) + ' CT';
         const image = challenge.images[0];
         return `
           <div class="col-md-4 col-lg-3 mb-4">
             <div class="card h-100">
               <div class="card-header p-2">
-                <h6 class="m-0 text-center">${formattedDate}</h6>
+                 <h6 class="m-0 text-center">${displayDate}</h6>
               </div>
               <img src="${image.url}" class="challenge-image card-img-top" alt="${image.title || 'Challenge image'}" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22180%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20fill%3D%22%23444%22%20width%3D%22300%22%20height%3D%22180%22%2F%3E%3Ctext%20fill%3D%22%23fff%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2212%22%20x%3D%22110%22%20y%3D%2290%22%3EImage%20Error%3C%2Ftext%3E%3C%2Fsvg%3E'" style="height: 120px;">
               <div class="card-footer d-flex justify-content-between align-items-center p-2">
@@ -1013,9 +1020,12 @@ function createImageCard(options) {
             const cellDate = new Date(year, month, date);
             const dateStr = cellDate.toISOString().split('T')[0];
             const hasChallenge = challenges.some(challenge => {
-              const challengeDate = convertToCT(challenge.date);
-              return challengeDate.toISOString().split('T')[0] === dateStr;
-            });
+    // Use plainDate property or extract from ISO string without timezone conversion
+    const challengeDateStr = challenge.plainDate || 
+      new Date(challenge.date).toISOString().split('T')[0];
+    return challengeDateStr === dateStr;
+  });
+  
             cell.innerHTML = `<div class="calendar-day ${hasChallenge ? 'has-challenge' : ''}">${date}</div>`;
             if (hasChallenge) {
               cell.style.cursor = 'pointer';
