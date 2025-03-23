@@ -434,13 +434,12 @@
       return new Date(date.toLocaleString('en-US', {timeZone: 'America/Chicago'}));
     }
     function convertToUTC(ctDateStr) {
-  // If date string doesn't have time, add noon time to avoid date boundary issues
-  if (ctDateStr.length === 10) {
-    ctDateStr = `${ctDateStr}T12:00:00`;
-  }
+  // Parse the date parts
+  const [year, month, day] = ctDateStr.split('-').map(Number);
   
-  // Just create a regular Date object from the string without timezone manipulations
-  return new Date(ctDateStr);
+  // Create a Date object at midnight UTC on the same date
+  // Month is 0-indexed in JavaScript
+  return new Date(Date.UTC(year, month - 1, day));
 }
     function formatDateForInput(date) {
       const d = new Date(date);
