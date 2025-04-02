@@ -203,7 +203,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
       <h1 class="mb-3 mb-md-0">Year Guessing Game - Admin</h1>
       <div>
-        <span class="timezone-indicator me-3">All times in Central Time (CT)</span>
+        <span class="timezone-indicator me-3">All times in Eastern Time (ET)</span>
         <button class="btn btn-outline-secondary" id="setKeyBtn">
           <i class="bi bi-key-fill me-1"></i> Set Admin Key
         </button>
@@ -219,7 +219,7 @@
         <form id="createForm">
           <div class="row mb-3">
             <div class="col-md-6">
-              <label for="date" class="form-label">Challenge Date (CT)</label>
+              <label for="date" class="form-label">Challenge Date (ET)</label>
               <input type="date" class="form-control" id="date" required />
               <div class="form-text">Set which day this challenge should be available</div>
             </div>
@@ -324,7 +324,7 @@
           <form id="editChallengeForm">
             <input type="hidden" id="editChallengeId">
             <div class="mb-3">
-              <label for="editChallengeDate" class="form-label">Challenge Date (CT)</label>
+              <label for="editChallengeDate" class="form-label">Challenge Date (ET)</label>
               <input type="date" class="form-control" id="editChallengeDate" required />
             </div>
 
@@ -386,8 +386,8 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       const now = new Date();
-      const ctNow = convertToCT(now);
-      document.getElementById('date').value = formatDateForInput(ctNow);
+      const etNow = convertToET(now);
+      document.getElementById('date').value = formatDateForInput(etNow);
       loadChallenges();
       if (!adminKey) {
         setTimeout(() => {
@@ -429,18 +429,18 @@
     // ---------------------------------------------------
     // Date/Time utilities
     // ---------------------------------------------------
-    function convertToCT(utcDate) {
+    function convertToET(utcDate) {
       const date = new Date(utcDate);
-      return new Date(date.toLocaleString('en-US', {timeZone: 'America/Chicago'}));
+      return new Date(date.toLocaleString('en-US', {timeZone: 'America/New_York'}));
     }
-    function convertToUTC(ctDateStr) {
-  // Parse the date parts (YYYY-MM-DD)
-  const [year, month, day] = ctDateStr.split('-').map(Number);
-  
-  // Create a date at midnight UTC on the intended day
-  // This preserves the exact date without timezone shifts
-  return new Date(Date.UTC(year, month - 1, day));
-}
+    function convertToUTC(etDateStr) {
+      // Parse the date parts (YYYY-MM-DD)
+      const [year, month, day] = etDateStr.split('-').map(Number);
+      
+      // Create a date at midnight UTC on the intended day
+      // This preserves the exact date without timezone shifts
+      return new Date(Date.UTC(year, month - 1, day));
+    }
     function formatDateForInput(date) {
       const d = new Date(date);
       const year = d.getFullYear();
@@ -575,13 +575,13 @@
         adminKeyModal.show();
         return;
       }
-      const dateCT = document.getElementById('date').value;
-      if (!dateCT) {
+      const dateET = document.getElementById('date').value;
+      if (!dateET) {
         alert('Please provide a date');
         return;
       }
       const appendImages = document.getElementById('appendImages').checked;
-      const dateUTC = convertToUTC(dateCT).toISOString();
+      const dateUTC = convertToUTC(dateET).toISOString();
       const submitBtn = this.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
@@ -637,8 +637,8 @@
           uploadFilesMap = {};
           loadChallenges();
           const now = new Date();
-          const ctNow = convertToCT(now);
-          document.getElementById('date').value = formatDateForInput(ctNow);
+          const etNow = convertToET(now);
+          document.getElementById('date').value = formatDateForInput(etNow);
         } else {
           alert(`Error: ${data.error}`);
         }
@@ -779,12 +779,12 @@
     return;
   }
   const challengeId = document.getElementById('editChallengeId').value;
-  const dateCT = document.getElementById('editChallengeDate').value;
-  if (!challengeId || !dateCT) {
+  const dateET = document.getElementById('editChallengeDate').value;
+  if (!challengeId || !dateET) {
     alert('Missing required information');
     return;
   }
-  const dateUTC = convertToUTC(dateCT).toISOString();
+  const dateUTC = convertToUTC(dateET).toISOString();
   const container = document.getElementById('editImagesContainer');
   const cards = container.querySelectorAll('.col-md-4');
   let uploadIndex = 0;
@@ -1039,7 +1039,7 @@
               cell.style.cursor = 'pointer';
               cell.addEventListener('click', () => {
                 const challenge = challenges.find(ch => {
-                  const challengeDate = convertToCT(ch.date);
+                  const challengeDate = convertToET(ch.date);
                   return challengeDate.toISOString().split('T')[0] === dateStr;
                 });
                 if (challenge) openEditModal(challenge._id);

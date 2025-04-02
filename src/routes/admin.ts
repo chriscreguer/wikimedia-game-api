@@ -120,15 +120,16 @@ router.get('/test-uploads', verifyAdmin, (req, res) => {
   });
 });
 
-function setCentralTimeMidnight(date: Date): Date {
+function setEasternTimeMidnight(date: Date): Date {
   // Create a new date object to avoid modifying the input
   const newDate = new Date(date);
   
-  // Just set to midnight UTC without additional timezone conversion
-  newDate.setUTCHours(0, 0, 0, 0);
+  // Set to midnight Eastern Time
+  newDate.setUTCHours(4, 0, 0, 0); // 4 UTC = midnight ET
   
   return newDate;
 }
+
 // Serve admin dashboard
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public/admin.html'));
@@ -152,8 +153,8 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
       return res.status(400).json({ error: 'Date is required' });
     }
     
-    // Parse date and reset to Central Time midnight
-    const challengeDate = setCentralTimeMidnight(new Date(date));
+    // Parse date and reset to Eastern Time midnight
+    const challengeDate = setEasternTimeMidnight(new Date(date));
     
     if (isNaN(challengeDate.getTime())) {
       // Delete uploaded files if there's an error
@@ -342,7 +343,7 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
 
     // Update date if provided
     if (date) {
-      challenge.date = setCentralTimeMidnight(new Date(date));
+      challenge.date = setEasternTimeMidnight(new Date(date));
     }
 
     // Log existing images for debugging

@@ -145,12 +145,12 @@ function isLikelyRealPhoto(metadata: any): boolean {
   return false;
 }
 
-function setCentralTimeMidnight(date: Date): Date {
+function setEasternTimeMidnight(date: Date): Date {
   // Create a new date object to avoid modifying the input
   const newDate = new Date(date);
   
-  // Just set to midnight UTC without additional timezone conversion
-  newDate.setUTCHours(0, 0, 0, 0);
+  // Set to midnight Eastern Time
+  newDate.setUTCHours(4, 0, 0, 0); // 4 UTC = midnight ET
   
   return newDate;
 }
@@ -882,18 +882,16 @@ router.post('/daily-challenge/submit', (async (req, res) => {
   try {
     const { score, date } = req.body;
     
-    // ...
-    
-    // Get today's date (start of day in CT) or use the provided date
+    // Get today's date (start of day in ET) or use the provided date
     let targetDate: Date;
     if (date) {
       targetDate = new Date(date);
       if (isNaN(targetDate.getTime())) {
         return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
       }
-      targetDate = setCentralTimeMidnight(targetDate);
+      targetDate = setEasternTimeMidnight(targetDate);
     } else {
-      targetDate = setCentralTimeMidnight(new Date());
+      targetDate = setEasternTimeMidnight(new Date());
     }
     
     // Find the challenge for the target date
@@ -1003,8 +1001,8 @@ router.get(
         targetDate = new Date();
       }
       
-      // Set to CT midnight instead of UTC
-      targetDate = setCentralTimeMidnight(targetDate);
+      // Set to ET midnight instead of UTC
+      targetDate = setEasternTimeMidnight(targetDate);
       const nextDay = new Date(targetDate.getTime() + 24 * 60 * 60 * 1000);
       
       // Find the challenge
@@ -1070,11 +1068,11 @@ router.get(
           res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
           return;
         }
-        startDate = setCentralTimeMidnight(dateObj);
+        startDate = setEasternTimeMidnight(dateObj);
         endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
       } else {
         // Default to today if no date is provided
-        startDate = setCentralTimeMidnight(new Date());
+        startDate = setEasternTimeMidnight(new Date());
         endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
       }
       
@@ -1116,14 +1114,14 @@ router.get(
         return;
       }
       
-      // Normalize the date to start of day in CT instead of UTC
-      const ctDate = setCentralTimeMidnight(dateObj);
-      const nextDay = new Date(ctDate.getTime() + 24 * 60 * 60 * 1000);
+      // Normalize the date to start of day in ET instead of UTC
+      const etDate = setEasternTimeMidnight(dateObj);
+      const nextDay = new Date(etDate.getTime() + 24 * 60 * 60 * 1000);
       
       // Find the challenge for that day
       const challenge = await DailyChallenge.findOne({
         date: { 
-          $gte: ctDate,
+          $gte: etDate,
           $lt: nextDay
         },
         active: true
@@ -1172,7 +1170,7 @@ router.post('/daily-challenge/admin/create', verifyAdmin, (async (req, res) => {
     }
     
     // Parse date
-    const challengeDate = setCentralTimeMidnight(new Date(date));
+    const challengeDate = setEasternTimeMidnight(new Date(date));
     
     if (isNaN(challengeDate.getTime())) {
       return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
@@ -1256,14 +1254,14 @@ router.get(
         return;
       }
       
-      // Normalize the date to start of day in CT instead of UTC
-      const ctDate = setCentralTimeMidnight(dateObj);
-      const nextDay = new Date(ctDate.getTime() + 24 * 60 * 60 * 1000);
+      // Normalize the date to start of day in ET instead of UTC
+      const etDate = setEasternTimeMidnight(dateObj);
+      const nextDay = new Date(etDate.getTime() + 24 * 60 * 60 * 1000);
       
       // Find the challenge for that day
       const challenge = await DailyChallenge.findOne({
         date: { 
-          $gte: ctDate,
+          $gte: etDate,
           $lt: nextDay
         },
         active: true
@@ -1381,13 +1379,13 @@ router.get('/daily-challenge/admin/list', verifyAdmin, (async (req, res) => {
 // GET /api/images/daily-challenge/today
 router.get('/daily-challenge/today', async (req, res) => {
   try {
-    // Get today's date (start of day in CT)
-    const today = setCentralTimeMidnight(new Date());
-    console.log("DEBUG - Today CT midnight:", today.toISOString());
+    // Get today's date (start of day in ET)
+    const today = setEasternTimeMidnight(new Date());
+    console.log("DEBUG - Today ET midnight:", today.toISOString());
     
     // Calculate tomorrow
     const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
-    console.log("DEBUG - Tomorrow CT midnight:", tomorrow.toISOString());
+    console.log("DEBUG - Tomorrow ET midnight:", tomorrow.toISOString());
     
     // Log the query we're about to make
     console.log("DEBUG - Query:", {
