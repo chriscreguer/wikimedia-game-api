@@ -14,7 +14,7 @@ import s3Client, { s3BucketName } from '../utils/awsConfig';
 const storage = multerS3({
   s3: s3Client,
   bucket: s3BucketName,
-  acl: 'public-read',  // Add this line to make uploads publicly readable
+  contentType: multerS3.AUTO_CONTENT_TYPE,
   metadata: function (req, file, cb) {
     cb(null, { fieldName: file.fieldname });
   },
@@ -26,16 +26,16 @@ const storage = multerS3({
   }
 });
 
-// File filter to only accept images
+// File filter to accept images and videos
 const fileFilter = (
   req: Express.Request, 
   file: Express.Multer.File, 
   cb: multer.FileFilterCallback
 ) => {
-  if (file.mimetype.startsWith('image/')) {
+  if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/')) {
     cb(null, true);
   } else {
-    cb(new Error('Only image files are allowed!') as any, false);
+    cb(new Error('Only image and video files are allowed!') as any, false);
   }
 };
 
@@ -48,6 +48,27 @@ const upload = multer({
   },
   fileFilter: fileFilter
 });
+
+// Wrap multer in error handling middleware
+const uploadWithErrorHandling = (req: Request, res: Response, next: Function) => {
+  upload.array('uploadedFiles', 5)(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      logger.error('Multer error:', err);
+      return res.status(400).json({ 
+        error: 'File upload error',
+        details: err.message,
+        code: err.code
+      });
+    } else if (err) {
+      logger.error('Upload error:', err);
+      return res.status(400).json({ 
+        error: 'File upload error',
+        details: err.message
+      });
+    }
+    next();
+  });
+};
 
 async function getS3Url(key: string): Promise<string> {
   const command = new PutObjectCommand({
@@ -319,25 +340,18 @@ router.get('/daily-challenges', verifyAdmin, async (req: Request, res: Response)
  * Edit a daily challenge
  * PUT /admin/daily-challenge/:id/edit
  */
-router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles', 5), (async (req, res, next) => {
+router.put('/daily-challenge/:id/edit', verifyAdmin, uploadWithErrorHandling, (async (req, res) => {
   try {
     const { id } = req.params;
     const { date, imagesOrder } = req.body;
     
-    console.log(`Editing challenge ${id}`);
+    logger.info(`Editing challenge ${id}`);
     const uploadedFiles = req.files as Express.Multer.File[] || [];
-    console.log(`Received ${uploadedFiles.length} uploaded files`);
-    uploadedFiles.forEach((file, index) => {
-      console.log(`File ${index}: ${file.originalname}, size: ${file.size}, path: ${file.path}`);
-    });
-    console.log(`Received ${req.files?.length || 0} uploaded files`);
-    
-    console.log(`Editing challenge ${id}`);
+    logger.info(`Received ${uploadedFiles.length} uploaded files`);
     
     // Find the challenge
     const challenge = await DailyChallenge.findById(id);
     if (!challenge) {
-      // Handle error case
       return res.status(404).json({ error: 'Challenge not found' });
     }
 
@@ -346,26 +360,16 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
       challenge.date = setEasternTimeMidnight(new Date(date));
     }
 
-    // Log existing images for debugging
-    console.log('Existing images before update:');
-    challenge.images.forEach((img, i) => {
-      console.log(`[${i}] ${img.url} (${img.source || 'Unknown'})`);
-    });
-
     // Process image updates if provided
     if (imagesOrder) {
       try {
         const orderData = typeof imagesOrder === 'string' ? JSON.parse(imagesOrder) : imagesOrder;
-        const uploadedFiles = req.files as Express.Multer.File[] || [];
-        
-        console.log(`Processing ${orderData.length} images from imagesOrder`);
-        console.log(`Received ${uploadedFiles.length} new uploaded files`);
-        
+        logger.info(`Processing ${orderData.length} images`);
         const updatedImages: any[] = [];
         
         // Process each image
         for (const imageInfo of orderData) {
-          console.log(`Processing image of type: ${imageInfo.type}`);
+          logger.info(`Processing image of type: ${imageInfo.type}`);
           
           if (imageInfo.type === 'existing') {
             // Handle existing image
@@ -393,11 +397,13 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
                 existingImage.revealedDescription = imageInfo.revealedDescription;
               }
               
-              console.log(`Adding existing image: ${existingImage.url}`);
+              logger.info(`Adding existing image: ${existingImage.url}`);
               updatedImages.push(existingImage);
+            } else {
+              logger.warn(`Invalid existing image index: ${imageInfo.originalIndex}`);
             }
           } else if (imageInfo.type === 'wikimedia') {
-            // Handle Wikimedia image (existing code)
+            // Handle Wikimedia image
             const filename = imageInfo.url ? extractFilenameFromUrl(imageInfo.url) : '';
             if (filename) {
               const wikimediaData = await fetchImageData(filename);
@@ -406,23 +412,27 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
                 wikimediaData.description = imageInfo.description || wikimediaData.description || '';
                 wikimediaData.revealedDescription = imageInfo.revealedDescription || imageInfo.description || '';
                 
-                console.log(`Adding Wikimedia image: ${wikimediaData.url}`);
+                logger.info(`Adding Wikimedia image: ${wikimediaData.url}`);
                 updatedImages.push(wikimediaData);
+              } else {
+                logger.warn(`Failed to fetch Wikimedia data for: ${filename}`);
               }
+            } else {
+              logger.warn(`Invalid Wikimedia URL: ${imageInfo.url}`);
             }
           } else if (imageInfo.type === 'upload') {
             // Handle new upload
             const uploadIndex = parseInt(imageInfo.uploadIndex, 10);
-            console.log(`Processing upload index: ${uploadIndex} (of ${uploadedFiles.length} files)`);
+            logger.info(`Processing upload index: ${uploadIndex} (of ${uploadedFiles.length} files)`);
             
             if (!isNaN(uploadIndex) && uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
               const file = uploadedFiles[uploadIndex];
-              console.log(`Found uploaded file: ${file.originalname}`);
+              logger.info(`Found uploaded file: ${file.originalname}`);
               
               // Use S3 file location directly
               const fileUrl = (file as Express.MulterS3.File).location;
               
-              console.log(`Created URL for uploaded file: ${fileUrl}`);
+              logger.info(`Created URL for uploaded file: ${fileUrl}`);
               
               updatedImages.push({
                 filename: file.originalname,
@@ -434,32 +444,34 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
                 revealedDescription: imageInfo.revealedDescription || imageInfo.description || ''
               });
               
-              console.log(`Added uploaded image: ${fileUrl}`);
+              logger.info(`Added uploaded image: ${fileUrl}`);
+            } else {
+              logger.warn(`Invalid upload index: ${uploadIndex}`);
             }
           }
         }
         
         // Replace images if we have new ones
         if (updatedImages.length > 0) {
-          console.log(`Replacing challenge images with ${updatedImages.length} updated images`);
+          logger.info(`Replacing challenge images with ${updatedImages.length} updated images`);
           challenge.images = updatedImages;
+        } else {
+          logger.warn('No valid images to update');
+          return res.status(400).json({ error: 'No valid images to update' });
         }
       } catch (error) {
-        console.error('Error processing image updates:', error);
-        return res.status(400).json({ error: 'Invalid image order data' });
+        logger.error('Error processing image updates:', error);
+        return res.status(400).json({ 
+          error: 'Invalid image order data',
+          details: error instanceof Error ? error.message : 'Unknown error'
+        });
       }
     }
-
-    // Log images before saving
-    console.log('Images to be saved:');
-    challenge.images.forEach((img, i) => {
-      console.log(`[${i}] ${img.url} (${img.source || 'Unknown'})`);
-    });
 
     // Save the updated challenge
     await challenge.save();
     
-    console.log(`Challenge ${id} updated successfully with ${challenge.images.length} images`);
+    logger.info(`Challenge ${id} updated successfully with ${challenge.images.length} images`);
     
     res.status(200).json({ 
       message: 'Challenge updated successfully',
@@ -470,16 +482,19 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
       }
     });
   } catch (error) {
-    console.error('Error updating challenge:', error);
+    logger.error('Error updating challenge:', error);
     
     // Clean up uploaded files on error
     if (req.files && Array.isArray(req.files)) {
       for (const file of req.files as Express.MulterS3.File[]) {
         try {
-          await s3Client.send(new DeleteObjectCommand({
-            Bucket: s3BucketName,
-            Key: file.key
-          }));
+          if (file.key) {  // Only try to delete if the file was actually uploaded to S3
+            await s3Client.send(new DeleteObjectCommand({
+              Bucket: s3BucketName,
+              Key: file.key
+            }));
+            logger.info(`Cleaned up S3 file: ${file.key}`);
+          }
         } catch (deleteErr) {
           logger.error(`Failed to delete file ${file.key} from S3:`, deleteErr);
         }
@@ -487,8 +502,8 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
     }
     
     res.status(500).json({ 
-      error: 'Failed to update daily challenge', 
-
+      error: 'Failed to update daily challenge',
+      details: error instanceof Error ? error.message : 'Unknown error'
     });
   }
 }) as RequestHandler);

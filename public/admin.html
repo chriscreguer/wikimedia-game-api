@@ -539,30 +539,37 @@
     // ---------------------------------------------------
     function handleFileSelection(e) {
       const files = Array.from(e.target.files);
-      if (files.length > 5) {
-        alert('Maximum 5 files allowed');
-        this.value = '';
-        return;
-      }
-      const oversized = files.filter(file => file.size > 5 * 1024 * 1024);
-      if (oversized.length) {
-        alert(`Files too large: ${oversized.map(f => f.name).join(', ')}`);
-        this.value = '';
-        return;
-      }
       const container = document.getElementById('challengeImagesContainer');
-      files.forEach(file => {
+      const currentImageCount = container.querySelectorAll('.col-md-4').length;
+      
+      if (currentImageCount + files.length > 5) {
+        alert('You can only have a maximum of 5 images in a challenge. Please remove some images first.');
+        e.target.value = '';
+        return;
+      }
+      
+      files.forEach((file, index) => {
+        if (currentImageCount + index + 1 > 5) {
+          alert('Maximum of 5 images reached. Additional files will be ignored.');
+          return;
+        }
+        
+        const fileId = `upload_${uploadFileCounter++}`;
+        uploadFilesMap[fileId] = file;
+        
         const reader = new FileReader();
         reader.onload = function(e) {
-          // Assign a unique id for this file
-          const fileId = 'upload_' + uploadFileCounter++;
-          uploadFilesMap[fileId] = file;
-          const card = createImageCard({ type: 'upload', url: e.target.result, fileId });
+          const card = createImageCard({
+            type: 'upload',
+            url: e.target.result,
+            fileId: fileId
+          });
           container.appendChild(card);
         };
         reader.readAsDataURL(file);
       });
-      this.value = ''; // Reset file input
+      
+      e.target.value = '';
     }
 
     // ---------------------------------------------------
@@ -575,11 +582,26 @@
         adminKeyModal.show();
         return;
       }
+      
+      const container = document.getElementById('challengeImagesContainer');
+      const imageCount = container.querySelectorAll('.col-md-4').length;
+      
+      if (imageCount === 0) {
+        alert('Please add at least one image to the challenge');
+        return;
+      }
+      
+      if (imageCount > 5) {
+        alert('A challenge cannot have more than 5 images');
+        return;
+      }
+      
       const dateET = document.getElementById('date').value;
       if (!dateET) {
         alert('Please provide a date');
         return;
       }
+      
       const appendImages = document.getElementById('appendImages').checked;
       const dateUTC = convertToUTC(dateET).toISOString();
       const submitBtn = this.querySelector('button[type="submit"]');
@@ -591,44 +613,49 @@
         const formData = new FormData();
         formData.append('date', dateUTC);
         formData.append('append', appendImages);
+        
         // Build an ordered list of images from the unified container
-        const container = document.getElementById('challengeImagesContainer');
-  const cards = container.querySelectorAll('.col-md-4');
-  let uploadIndex = 0;
-  let imagesOrder = [];
-  cards.forEach(card => {
-    const type = card.dataset.type;
-    const year = card.querySelector('.image-year').value;
-    const description = card.querySelector('.image-description').value;
-    const revealedDescription = card.querySelector('.image-revealed-description').value;
-    
-    if (type === 'wikimedia') {
-      imagesOrder.push({ 
-        type, 
-        url: card.dataset.url, 
-        year: parseInt(year, 10), 
-        description,
-        revealedDescription
-      });
-    } else if (type === 'upload') {
-      imagesOrder.push({ 
-        type, 
-        uploadIndex, 
-        year: parseInt(year, 10), 
-        description,
-        revealedDescription
-      });
-      // Append file from our map
-      formData.append(`uploadFiles_${uploadIndex}`, uploadFilesMap[card.dataset.uploadId]);
-      uploadIndex++;
-    }
-  });
-  formData.append('imagesOrder', JSON.stringify(imagesOrder));
-  
+        const cards = container.querySelectorAll('.col-md-4');
+        let uploadIndex = 0;
+        let imagesOrder = [];
+        
+        cards.forEach(card => {
+          const type = card.dataset.type;
+          const year = card.querySelector('.image-year').value;
+          const description = card.querySelector('.image-description').value;
+          const revealedDescription = card.querySelector('.image-revealed-description').value;
+          
+          if (type === 'wikimedia') {
+            imagesOrder.push({ 
+              type, 
+              url: card.dataset.url, 
+              year: parseInt(year, 10), 
+              description,
+              revealedDescription
+            });
+          } else if (type === 'upload') {
+            const fileId = card.dataset.uploadId;
+            if (uploadFilesMap[fileId]) {
+              formData.append(`uploadedFiles`, uploadFilesMap[fileId]);
+              imagesOrder.push({ 
+                type, 
+                uploadIndex, 
+                year: parseInt(year, 10), 
+                description,
+                revealedDescription
+              });
+              uploadIndex++;
+            }
+          }
+        });
+        
+        formData.append('imagesOrder', JSON.stringify(imagesOrder));
+        
         const response = await fetch(`/admin/daily-challenge/create?adminKey=${adminKey}`, {
           method: 'POST',
           body: formData
         });
+        
         const data = await response.json();
         if (response.ok) {
           alert(`Success: ${data.message}. Added ${data.challenge.imageCount} images.`);
@@ -680,30 +707,50 @@
     // ---------------------------------------------------
     function handleEditFileSelection(e) {
       const files = Array.from(e.target.files);
-      if (files.length > 5) {
-        alert('Maximum 5 files allowed');
-        this.value = '';
-        return;
-      }
-      const oversized = files.filter(file => file.size > 5 * 1024 * 1024);
-      if (oversized.length) {
-        alert(`Files too large: ${oversized.map(f => f.name).join(', ')}`);
-        this.value = '';
-        return;
-      }
       const container = document.getElementById('editImagesContainer');
-      files.forEach(file => {
+      const currentImageCount = container.querySelectorAll('.col-md-4').length;
+      
+      if (currentImageCount + files.length > 5) {
+        alert('You can only have a maximum of 5 images in a challenge. Please remove some images first.');
+        e.target.value = '';
+        return;
+      }
+      
+      files.forEach((file, index) => {
+        if (currentImageCount + index + 1 > 5) {
+          alert('Maximum of 5 images reached. Additional files will be ignored.');
+          return;
+        }
+        
+        // Check file type
+        if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) {
+          alert(`File ${file.name} is not an image or video. Please select only image or video files.`);
+          return;
+        }
+        
+        // Check file size (5MB limit)
+        if (file.size > 5 * 1024 * 1024) {
+          alert(`File ${file.name} is too large. Maximum file size is 5MB.`);
+          return;
+        }
+        
+        const fileId = `edit_upload_${editUploadFileCounter++}`;
+        editUploadFilesMap[fileId] = file;
+        
         const reader = new FileReader();
         reader.onload = function(e) {
-          const fileId = 'editUpload_' + editUploadFileCounter++;
-          editUploadFilesMap[fileId] = file;
-          const card = createImageCard({ type: 'upload', url: e.target.result, fileId });
+          const card = createImageCard({
+            type: 'upload',
+            url: e.target.result,
+            fileId: fileId
+          });
           card.dataset.existing = 'false';
           container.appendChild(card);
         };
         reader.readAsDataURL(file);
       });
-      this.value = '';
+      
+      e.target.value = '';
     }
 
     // ---------------------------------------------------
@@ -778,22 +825,36 @@
     adminKeyModal.show();
     return;
   }
+  
+  const container = document.getElementById('editImagesContainer');
+  const imageCount = container.querySelectorAll('.col-md-4').length;
+  
+  if (imageCount === 0) {
+    alert('Please add at least one image to the challenge');
+    return;
+  }
+  
+  if (imageCount > 5) {
+    alert('A challenge cannot have more than 5 images');
+    return;
+  }
+  
   const challengeId = document.getElementById('editChallengeId').value;
   const dateET = document.getElementById('editChallengeDate').value;
   if (!challengeId || !dateET) {
     alert('Missing required information');
     return;
   }
+  
   const dateUTC = convertToUTC(dateET).toISOString();
-  const container = document.getElementById('editImagesContainer');
+  const formData = new FormData();
+  formData.append('date', dateUTC);
+  
   const cards = container.querySelectorAll('.col-md-4');
   let uploadIndex = 0;
   let imagesOrder = [];
   
-  // Create FormData object 
-  const formData = new FormData();
-  formData.append('date', dateUTC);
-  
+  // First, collect all the image data
   cards.forEach(card => {
     const year = card.querySelector('.image-year').value;
     const description = card.querySelector('.image-description').value;
@@ -818,24 +879,34 @@
           revealedDescription
         });
       } else if (type === 'upload') {
-        imagesOrder.push({ 
-          type: 'upload', 
-          uploadIndex, 
-          year: parseInt(year, 10), 
-          description,
-          revealedDescription
-        });
-        
-        // Directly append file to FormData (fix for missing files)
-        if (editUploadFilesMap[card.dataset.uploadId]) {
-          formData.append(`uploadedFiles`, editUploadFilesMap[card.dataset.uploadId]);
+        const fileId = card.dataset.uploadId;
+        if (editUploadFilesMap[fileId]) {
+          imagesOrder.push({ 
+            type: 'upload', 
+            uploadIndex, 
+            year: parseInt(year, 10), 
+            description,
+            revealedDescription
+          });
           uploadIndex++;
         }
       }
     }
   });
   
-  // Add imagesOrder to FormData
+  // Then, append the files in the correct order
+  uploadIndex = 0;
+  cards.forEach(card => {
+    if (card.dataset.existing !== 'true' && card.dataset.type === 'upload') {
+      const fileId = card.dataset.uploadId;
+      if (editUploadFilesMap[fileId]) {
+        formData.append('uploadedFiles', editUploadFilesMap[fileId]);
+        uploadIndex++;
+      }
+    }
+  });
+  
+  // Finally, append the imagesOrder
   formData.append('imagesOrder', JSON.stringify(imagesOrder));
   
   const saveBtn = document.getElementById('saveEditBtn');
@@ -850,14 +921,15 @@
     });
     
     const data = await response.json();
-    if (response.ok) {
-      alert(`Success: ${data.message}`);
-      editChallengeModal.hide();
-      loadChallenges();
-      editUploadFilesMap = {};
-    } else {
-      alert(`Error: ${data.error}`);
+    
+    if (!response.ok) {
+      throw new Error(data.error + (data.details ? `: ${data.details}` : ''));
     }
+    
+    alert(`Success: ${data.message}`);
+    editChallengeModal.hide();
+    loadChallenges();
+    editUploadFilesMap = {};
   } catch (error) {
     alert(`Request failed: ${error.message}`);
   } finally {
