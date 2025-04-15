@@ -149,8 +149,8 @@ function setEasternTimeMidnight(date: Date): Date {
   // Create a new date object to avoid modifying the input
   const newDate = new Date(date);
   
-  // Set to midnight Eastern Time
-  newDate.setUTCHours(4, 0, 0, 0); // 4 UTC = midnight ET
+  // Set to midnight Eastern Time (UTC-5)
+  newDate.setUTCHours(5, 0, 0, 0); // 5 UTC = midnight ET
   
   return newDate;
 }
