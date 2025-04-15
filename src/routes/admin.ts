@@ -166,7 +166,7 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
     }
     
     // Parse date and reset to Eastern Time midnight
-    const challengeDate = setEasternTimeMidnight(new Date(date));
+    const challengeDate = new Date(date + 'T00:00:00.000Z'); // Use UTC directly
     
     if (isNaN(challengeDate.getTime())) {
       // Delete uploaded files if there's an error
@@ -241,10 +241,13 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
     const appendImages = req.body.append === 'true';
     
     // Check if a challenge already exists for this date
+    const startDate = new Date(date + 'T00:00:00.000Z');
+    const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+    
     const existingChallenge = await DailyChallenge.findOne({
       date: { 
-        $gte: challengeDate,
-        $lt: new Date(challengeDate.getTime() + 24 * 60 * 60 * 1000)
+        $gte: startDate,
+        $lt: endDate
       }
     });
     
@@ -348,7 +351,7 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, uploadWithErrorHandling, (a
 
     // Update date if provided
     if (date) {
-      challenge.date = setEasternTimeMidnight(new Date(date));
+      challenge.date = new Date(date + 'T00:00:00.000Z'); // Use UTC directly
     }
 
     // Process image updates if provided
