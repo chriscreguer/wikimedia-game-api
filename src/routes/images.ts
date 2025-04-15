@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import DailyChallenge from '../models/DailyChallenge';
 import { fetchImageData, fetchMultipleImageData } from '../utils/wikimediaHelper';
 import logger from '../utils/logger';
+import { setEasternTimeMidnight } from '../utils/dateUtils';
 
 dotenv.config();
 
@@ -143,16 +144,6 @@ function isLikelyRealPhoto(metadata: any): boolean {
   }
   
   return false;
-}
-
-function setEasternTimeMidnight(date: Date): Date {
-  // Create a new date object to avoid modifying the input
-  const newDate = new Date(date);
-  
-  // Set to midnight Eastern Time (UTC-5)
-  newDate.setUTCHours(5, 0, 0, 0); // 5 UTC = midnight ET
-  
-  return newDate;
 }
 
 // Function to extract year from metadata with higher confidence

@@ -10,6 +10,7 @@ import { PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import multerS3 from 'multer-s3';
 import s3Client, { s3BucketName } from '../utils/awsConfig';
+import { setEasternTimeMidnight } from '../utils/dateUtils';
 
 const storage = multerS3({
   s3: s3Client,
@@ -140,16 +141,6 @@ router.get('/test-uploads', verifyAdmin, (req, res) => {
     });
   });
 });
-
-function setEasternTimeMidnight(date: Date): Date {
-  // Create a new date object to avoid modifying the input
-  const newDate = new Date(date);
-  
-  // Set to midnight Eastern Time
-  newDate.setUTCHours(4, 0, 0, 0); // 4 UTC = midnight ET
-  
-  return newDate;
-}
 
 // Serve admin dashboard
 router.get('/', (req, res) => {
