@@ -10,7 +10,6 @@ import { PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import multerS3 from 'multer-s3';
 import s3Client, { s3BucketName } from '../utils/awsConfig';
-import { setEasternTimeMidnight } from '../utils/dateUtils';
 
 const storage = multerS3({
   s3: s3Client,
