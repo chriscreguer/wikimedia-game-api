@@ -351,7 +351,15 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, uploadWithErrorHandling, (a
 
     // Update date if provided
     if (date) {
-      challenge.date = new Date(date + 'T00:00:00.000Z'); // Use UTC directly
+      // Assuming 'date' from req.body is the full ISO string like "YYYY-MM-DDTHH:00:00.000Z" sent by frontend
+      const parsedDate = new Date(date);
+      if (isNaN(parsedDate.getTime())) {
+        logger.error(`Admin Edit: Received invalid date string in body: ${date}`);
+        // Optionally return a 400 error here if date is mandatory on edit and invalid
+      } else {
+        challenge.date = parsedDate; // Assign the parsed UTC date object
+        logger.info(`Admin Edit: Updating challenge ${id} date to ${challenge.date.toISOString()}`);
+      }
     }
 
     // Process image updates if provided
