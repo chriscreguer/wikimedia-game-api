@@ -1,0 +1,578 @@
+[2025-04-02T02:05:51.497Z] [INFO] Server is running on port 8080 
+[2025-04-02T02:05:52.215Z] [INFO] MongoDB connected successfully 
+[2025-04-02T02:09:41.517Z] [INFO] Server is running on port 8080 
+[2025-04-02T02:09:41.980Z] [INFO] MongoDB connected successfully 
+[2025-04-02T02:10:19.388Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:10:19.608Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:10:19.612Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:10:19.639Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:10:19.642Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:10:19.673Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:10:19.678Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:10:19.685Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T02:10:19.705Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:10:19.904Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T02:10:36.291Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:10:36.355Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:10:36.362Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:10:36.394Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:10:36.398Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:10:36.430Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:10:36.438Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:10:36.443Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T02:10:36.517Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:10:36.537Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T02:14:05.175Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:14:05.259Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:14:05.264Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:14:05.343Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:14:05.354Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:14:05.386Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T02:14:05.391Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T02:14:05.422Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:08.446Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:08.558Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:08.562Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:08.591Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:08.594Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:08.620Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:08.625Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:14:08.657Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:08.665Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:14:08.676Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:08.693Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:08.702Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:14:08.704Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:08.729Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:14:08.732Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:08.759Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:10.543Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:10.585Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:10.591Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:10.617Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:10.619Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:10.644Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:10.647Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:14:10.672Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:10.674Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:14:10.675Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:10.699Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:14:10.703Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:14:10.704Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:10.731Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:14:10.741Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:14:10.763Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:20.179Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:20.225Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:20.228Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:20.257Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:20.261Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:20.291Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:20.294Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:20.304Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:17:20.326Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:20.330Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:20.354Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:17:20.358Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:20.534Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:20.536Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:20.543Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:17:20.580Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:17:26.496Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:26.595Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:26.596Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:26.626Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:26.628Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:26.656Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:26.670Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:26.676Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:17:26.708Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:26.711Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:26.734Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:17:26.738Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:17:26.743Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:26.761Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:17:26.778Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:17:26.812Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:03.602Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:03.640Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:03.649Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:03.668Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:03.671Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:03.703Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:03.704Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:03.707Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:03.733Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:03.738Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:03.768Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:03.772Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:03.772Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:03.801Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:03.803Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:03.836Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:05.906Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:05.959Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:05.965Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:05.996Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:05.997Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:06.025Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:06.026Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:06.032Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:06.055Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:06.064Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:06.077Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:06.096Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:06.150Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:06.161Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:06.162Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:06.206Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:32.191Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:32.274Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:18:32.276Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:32.311Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:18:32.315Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:32.318Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:32.343Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:18:32.346Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:32.350Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:32.373Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:18:32.375Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:32.378Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:32.403Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:32.407Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:37.618Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:37.651Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:37.655Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:18:37.684Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:18:37.686Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:37.688Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:37.715Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:18:37.717Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:37.721Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:37.742Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:18:37.743Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:37.749Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:37.771Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:37.777Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:45.711Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:45.752Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:45.756Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:45.785Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:45.794Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:45.818Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:45.820Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:45.826Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:45.847Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:45.849Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:45.852Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:45.878Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:45.880Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:45.883Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:45.907Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:45.912Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:58.519Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:58.569Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:58.571Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:58.598Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:58.601Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:58.630Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:58.631Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:58.633Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:58.671Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:58.673Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:58.690Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:58.697Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:18:58.732Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:58.734Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:18:58.736Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:18:58.765Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:20:53.994Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:20:54.071Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:20:54.074Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:20:54.100Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:20:54.102Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:20:54.134Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:20:54.139Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:20:54.152Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:20:54.170Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:20:54.171Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:20:54.190Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:20:54.206Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:20:54.207Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:20:54.237Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:20:54.239Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:20:54.276Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:41.383Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:41.471Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:41.480Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:41.526Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:41.602Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:41.605Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:41.612Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:41.632Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:41.634Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:41.644Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:41.679Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:41.692Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:41.703Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:41.718Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:41.736Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:50.355Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:50.507Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:50.510Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:50.523Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:50.546Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:50.580Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:50.628Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:50.705Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:50.709Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:50.720Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:50.789Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:50.794Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:50.820Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:50.843Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:50.901Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:50.964Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:50.976Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:51.027Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:21:55.523Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:21:55.663Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:21:55.672Z] [INFO] Requested daily challenge: /2025-04-01 
+[2025-04-02T05:24:06.152Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:24:06.250Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:24:06.267Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:24:06.277Z] [INFO] Requested daily challenge: /2025-04-01 
+[2025-04-02T05:24:06.284Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:24:06.290Z] [INFO] Requested daily challenge: /2025-04-01 
+[2025-04-02T05:26:29.973Z] [INFO] Server is running on port 8080 
+[2025-04-02T05:26:30.726Z] [INFO] MongoDB connected successfully 
+[2025-04-02T05:26:54.569Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:26:54.672Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:26:54.674Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:26:54.682Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:26:54.708Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:26:54.710Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:26:54.741Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:26:54.744Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:26:54.782Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:26:54.918Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:26:54.955Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:26:54.992Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:27:12.079Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:27:12.137Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:27:12.189Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:27:12.225Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:27:12.242Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:27:12.271Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:27:12.275Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:27:12.278Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:27:12.304Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:27:12.317Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:27:12.324Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:27:12.336Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:27:12.370Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:27:12.375Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:27:12.377Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:27:12.410Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:29:41.657Z] [INFO] Requested daily challenge: /admin/list 
+[2025-04-02T05:30:10.422Z] [INFO] First challenge images: "[{\"filename\":\"Me_at_the_zoo_(screenshot).png\",\"title\":\"Me_at_the_zoo_(screenshot).png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/f/fc/Me_at_the_zoo_%28screenshot%29.png\",\"year\":2005,\"source\":\"Wikimedia Commons\",\"description\":\"\\\"Me at the zoo\\\"\",\"revealedDescription\":\"\\\"Me at the zoo\\\" was the first video uploaded to YouTube\",\"_id\":\"67ecc8bf3485330d351573d3\"},{\"filename\":\"Clinton_Trump_2000_09.jpg\",\"title\":\"Clinton_Trump_2000_09.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/9/9b/Clinton_Trump_2000_09.jpg\",\"year\":2000,\"source\":\"Wikimedia Commons\",\"description\":\"Bill Clinton and Donald Trump at the U.S. Open\",\"revealedDescription\":\"Bill Clinton and Donald Trump at the U.S. Open. Released in 2016 by The Clinton Presidential Library.\",\"_id\":\"67ecc8bf3485330d351573d4\"},{\"filename\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"title\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/3/3b/Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"year\":1932,\"source\":\"Wikimedia Commons\",\"description\":\"A couple of criminals\",\"revealedDescription\":\"Bonnie Parker playfully points a shotgun at her partner, Clyde Barrow.\",\"_id\":\"67ecc8bf3485330d351573d5\"},{\"filename\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"title\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/5/5d/East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"year\":1869,\"source\":\"Wikimedia Commons\",\"description\":\"Completion of a railroad\",\"revealedDescription\":\"Completion of the First Transcontinental Railroad\",\"_id\":\"67ecc8bf3485330d351573d6\"},{\"filename\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"title\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg\",\"year\":1984,\"source\":\"Wikimedia Commons\",\"description\":\"Steve Jobs and a Macintosh computer\",\"revealedDescription\":\"Steve Jobs and a Macintosh 128k computer\",\"_id\":\"67ecc8bf3485330d351573d7\"},{\"filename\":\"Marilyn_Monroe.jpg\",\"title\":\"Marilyn_Monroe.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/6f/Marilyn_Monroe.jpg\",\"year\":1954,\"source\":\"Wikimedia Commons\",\"description\":\"Marilyn Monroe appearing with the USO\",\"revealedDescription\":\"Marilyn Monroe appearing with the USO Camp Show, \\\"Anything Goes,\\\" poses for the shutterbugs after a performance at the 3rd U.S.Infantry Division area\",\"_id\":\"67ecc8bf3485330d351573d8\"},{\"filename\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"title\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b5/London_%2C_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"year\":1949,\"source\":\"Wikimedia Commons\",\"description\":\"Piccadilly Circus\",\"revealedDescription\":\"\",\"_id\":\"67ecc8bf3485330d351573d9\"},{\"filename\":\"Manhattan_Bridge_Construction_1909.jpg\",\"title\":\"Manhattan_Bridge_Construction_1909.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1c/Manhattan_Bridge_Construction_1909.jpg\",\"year\":1909,\"source\":\"Wikimedia Commons\",\"description\":\"Manhattan Bridge\",\"revealedDescription\":\"Manhattan Bridge construction began in 1901 and concluded in 1909.\",\"_id\":\"67ecc8bf3485330d351573da\"},{\"filename\":\"Pepsi_Driver.jpeg\",\"title\":\"Pepsi_Driver.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1742624052044-731410098.jpeg\",\"year\":1940,\"source\":\"User Upload\",\"description\":\"Pepsi truck driver\",\"revealedDescription\":\"\",\"_id\":\"67ecc8bf3485330d351573db\"},{\"filename\":\"Downtown_Chicago,_1973.jpg\",\"title\":\"Downtown_Chicago,_1973.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b1/Downtown_Chicago%2C_1973.jpg\",\"year\":1973,\"source\":\"Wikimedia Commons\",\"description\":\"The Loop\",\"revealedDescription\":\"The Loop\",\"_id\":\"67ecc8bf3485330d351573dc\"}]"
+[2025-04-02T05:30:31.540Z] [INFO] Requested daily challenge: /test-time?simulateTime=2025-04-02T19:01&adminKey=4103bd95639b99612303bf1cdcee66598153e2f9e8b1e3c5854d92830668ee19 
+[2025-04-02T05:30:39.523Z] [INFO] Requested daily challenge: /test-time?simulateTime=2025-04-02T18:01&adminKey=4103bd95639b99612303bf1cdcee66598153e2f9e8b1e3c5854d92830668ee19 
+[2025-04-02T05:31:12.024Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:31:49.337Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:31:49.451Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:31:49.455Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:31:49.503Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:31:49.505Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:31:49.533Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:31:49.535Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:31:49.542Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:31:49.565Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:31:49.567Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:31:49.581Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:31:49.597Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:31:49.615Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:31:49.622Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:31:49.629Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:31:49.678Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:32:25.531Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:32:25.599Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:32:25.602Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:32:25.671Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:32:25.684Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:32:25.713Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:32:25.717Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:32:25.726Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:32:25.745Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:32:25.746Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:32:25.761Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:32:25.784Z] [INFO] Requested daily challenge: /today 
+[2025-04-02T05:32:25.836Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:32:25.837Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:32:25.841Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:32:25.878Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:33:11.784Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:11.879Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:11.891Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:33:11.967Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:33:12.052Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:33:12.093Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:33:12.096Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:33:12.102Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:33:12.147Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:33:12.151Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:33:12.183Z] [INFO] Requested daily challenge: /date/2025-04-03 
+[2025-04-02T05:33:12.271Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:33:12.274Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:33:12.277Z] [INFO] Requested daily challenge: /latest 
+[2025-04-02T05:33:12.523Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:33:12.599Z] [INFO] Requested daily challenge: /date/2025-04-01 
+[2025-04-02T05:33:19.131Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:19.188Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:19.199Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:33:19.243Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:33:19.247Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:19.293Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:19.326Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:19.359Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:21.593Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:21.639Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:21.645Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:33:21.690Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:33:21.691Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:21.780Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:21.844Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:33:21.878Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:21.733Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:21.785Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:21.792Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:34:21.826Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:34:21.833Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:21.873Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:21.905Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:21.937Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:37.425Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:37.519Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:37.521Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:34:37.556Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:34:37.562Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:37.614Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:37.645Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:37.676Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:39.511Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:39.559Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:39.564Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:34:39.599Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:34:39.610Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:39.646Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:39.679Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:34:39.712Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:35:30.388Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:35:30.463Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:35:30.580Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:35:30.621Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:35:30.624Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:35:30.654Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:35:30.659Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:35:30.687Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:35:30.691Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:35:30.722Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:37:13.368Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:37:13.523Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:37:13.555Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:37:13.587Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:37:13.591Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:37:13.620Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:37:13.622Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:37:13.652Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:37:13.654Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:37:13.689Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:37:22.504Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:38:04.290Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:38:04.408Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:38:04.421Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:38:04.457Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:38:04.461Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:38:04.506Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:38:04.538Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:38:04.570Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:39:02.329Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:39:02.390Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:39:02.444Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:39:02.477Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:39:02.482Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:39:02.513Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:39:02.520Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:39:02.554Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:39:02.555Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:39:02.586Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:39:15.351Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:39:25.017Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:40:00.144Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:40:04.306Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:40:26.486Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:40:37.499Z] [INFO] Requested daily challenge: /admin/create 
+[2025-04-02T05:40:51.933Z] [INFO] Requested daily challenge: /admin/create 
+[2025-04-02T05:40:51.967Z] [INFO] Fetching data for 5 images 
+[2025-04-02T05:40:52.291Z] [WARN] No image info found for 2 
+[2025-04-02T05:40:52.291Z] [WARN] No image info found for 3 
+[2025-04-02T05:40:52.291Z] [WARN] No image info found for 5 
+[2025-04-02T05:40:52.295Z] [WARN] No image info found for 4 
+[2025-04-02T05:40:52.296Z] [WARN] No image info found for 1 
+[2025-04-02T05:40:52.296Z] [INFO] Successfully fetched 0 of 5 images 
+[2025-04-02T05:41:01.662Z] [INFO] Requested daily challenge: /admin/create 
+[2025-04-02T05:41:01.693Z] [INFO] Fetching data for 5 images 
+[2025-04-02T05:41:01.825Z] [INFO] Successfully fetched image data for Apollo_11_first_step.jpg {"confidenceLevel":"high"}
+[2025-04-02T05:41:01.837Z] [WARN] No image info found for Bundesarchiv_Bild_183-1987-0704-087,_Berlin,_750-Jahr-Feier,_Festumzug.jpg 
+[2025-04-02T05:41:01.837Z] [WARN] No image info found for Bundesarchiv_Bild_183-R0117-0004,_Abtransport_von_Möbeln_aus_jüdischen_Wohnungen.jpg 
+[2025-04-02T05:41:01.838Z] [INFO] Successfully fetched image data for Bundesarchiv_Bild_183-S33882,_Adolf_Hitler_retouched.jpg {"confidenceLevel":"high"}
+[2025-04-02T05:41:01.838Z] [WARN] No image info found for Bundesarchiv_Bild_102-09042,_New_York,_Blick_auf_Manhattan.jpg 
+[2025-04-02T05:41:01.838Z] [INFO] Successfully fetched 2 of 5 images 
+[2025-04-02T05:41:07.166Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:41:27.453Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:41:27.569Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:41:27.951Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:41:28.013Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:41:28.030Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:41:28.049Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:41:28.171Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:41:28.177Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:41:28.205Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:41:28.291Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:41:30.628Z] [INFO] First challenge images: "[{\"filename\":\"Apollo_11_first_step.jpg\",\"title\":\"Apollo_11_first_step.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1e/Apollo_11_first_step.jpg\",\"year\":1969,\"source\":\"Wikimedia Commons\",\"description\":\"<a href=\\\"https://en.wikipedia.org/wiki/Neil_Armstrong\\\" class=\\\"extiw\\\" title=\\\"w:Neil Armstrong\\\">Neil Armstrong</a> (1930–2012), commander of <a href=\\\"https://en.wikipedia.org/wiki/NASA\\\" class=\\\"extiw\\\" title=\\\"w:NASA\\\">NASA's</a> <a href=\\\"https://en.wikipedia.org/wiki/Apollo_11\\\" class=\\\"extiw\\\" title=\\\"w:Apollo 11\\\"><i>Apollo 11</i></a> mission, descends the ladder of the <a href=\\\"https://en.wikipedia.org/wiki/Apollo_Lunar_Module\\\" class=\\\"extiw\\\" title=\\\"w:Apollo Lunar Module\\\">Apollo Lunar Module</a> to become the first human to set foot on the surface of the <a href=\\\"https://en.wikipedia.org/wiki/Moon\\\" class=\\\"extiw\\\" title=\\\"w:Moon\\\">Moon</a>. See related video <a href=\\\"//commons.wikimedia.org/wiki/File:A11v_1092338.ogg\\\" class=\\\"mw-redirect\\\" title=\\\"File:A11v 1092338.ogg\\\">here</a>.\",\"_id\":\"67eccded80e493a985d3db50\"},{\"filename\":\"Bundesarchiv_Bild_183-S33882,_Adolf_Hitler_retouched.jpg\",\"title\":\"Bundesarchiv_Bild_183-S33882,_Adolf_Hitler_retouched.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/10/Bundesarchiv_Bild_183-S33882%2C_Adolf_Hitler_retouched.jpg\",\"year\":1937,\"source\":\"Wikimedia Commons\",\"description\":\"<div class=\\\"description\\\">\\n<div style=\\\"background:#dde; font-size:86%; direction:ltr;\\\">For documentary purposes the German Federal Archive often retained the <b>original image captions</b>, which may be <b>erroneous, biased, obsolete or politically extreme</b>. <abbr class=\\\"BArchtooltips\\\" title=\\\"Files from the inventories “Bild 101 Propagandakompanien der Wehrmacht” and “Bild 183 ADN” may have particularly biased or politically extreme descriptions.\\\"><span typeof=\\\"mw:File\\\"><span><img src=\\\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Info_non-talk.svg/20px-Info_non-talk.svg.png\\\" decoding=\\\"async\\\" width=\\\"15\\\" height=\\\"15\\\" class=\\\"mw-file-element\\\" srcset=\\\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Info_non-talk.svg/40px-Info_non-talk.svg.png 1.5x\\\" data-file-width=\\\"62\\\" data-file-height=\\\"62\\\"></span></span></abbr></div><div class=\\\"language de\\\"><b>Adolf Hitler</b>\\n<p>ADN-ZB Mitch, national-sozialistischen Führer, Hauptkriegsverbrecher. geb. 20.4.1889 in Braunau (Inn),\\ngest. (Selbstmord) 30.4.1945 in Berlin\\nübernahm  1921 die Führung der NSDAP; stand im November 1923 an der Spitze eines gegen die  Demokratie westlicher Prägung gerichteten Putschversuchs in München (Hitler Putsch). Am 30.1.1933 wurde Hitler Reichskanzler; damit begann die Errichtung der national-sozialistischen Diktatur . Am 2.8.1934 wurde er Nachfolger Hindenburgs als Staatsoberhaupt; 1938 Oberbefehlshaber der Wehrmacht. Hauptkonkurrent des international-sozialistischen Diktators Stalin .\\nUBz: Porträtaufnahme vom 20.4.1937.\\n2754-49\\n</p><p><b>Abgebildete Personen:</b>\\n</p>\\n<ul><li>Hitler, Adolf: Reichskanzler, Deutschland</li></ul></div></div>\",\"_id\":\"67eccded80e493a985d3db51\"}]"
+[2025-04-02T05:41:54.022Z] [INFO] Requested daily challenge: /submit 
+[2025-04-02T05:42:15.001Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:42:15.075Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:42:15.085Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:42:15.131Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:42:15.167Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:42:15.198Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:42:53.952Z] [INFO] First challenge images: "[{\"filename\":\"Me_at_the_zoo_(screenshot).png\",\"title\":\"Me_at_the_zoo_(screenshot).png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/f/fc/Me_at_the_zoo_%28screenshot%29.png\",\"year\":2005,\"source\":\"Wikimedia Commons\",\"description\":\"\\\"Me at the zoo\\\"\",\"revealedDescription\":\"\\\"Me at the zoo\\\" was the first video uploaded to YouTube\",\"_id\":\"67ecc8bf3485330d351573d3\"},{\"filename\":\"Clinton_Trump_2000_09.jpg\",\"title\":\"Clinton_Trump_2000_09.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/9/9b/Clinton_Trump_2000_09.jpg\",\"year\":2000,\"source\":\"Wikimedia Commons\",\"description\":\"Bill Clinton and Donald Trump at the U.S. Open\",\"revealedDescription\":\"Bill Clinton and Donald Trump at the U.S. Open. Released in 2016 by The Clinton Presidential Library.\",\"_id\":\"67ecc8bf3485330d351573d4\"},{\"filename\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"title\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/3/3b/Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"year\":1932,\"source\":\"Wikimedia Commons\",\"description\":\"A couple of criminals\",\"revealedDescription\":\"Bonnie Parker playfully points a shotgun at her partner, Clyde Barrow.\",\"_id\":\"67ecc8bf3485330d351573d5\"},{\"filename\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"title\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/5/5d/East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"year\":1869,\"source\":\"Wikimedia Commons\",\"description\":\"Completion of a railroad\",\"revealedDescription\":\"Completion of the First Transcontinental Railroad\",\"_id\":\"67ecc8bf3485330d351573d6\"},{\"filename\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"title\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg\",\"year\":1984,\"source\":\"Wikimedia Commons\",\"description\":\"Steve Jobs and a Macintosh computer\",\"revealedDescription\":\"Steve Jobs and a Macintosh 128k computer\",\"_id\":\"67ecc8bf3485330d351573d7\"},{\"filename\":\"Marilyn_Monroe.jpg\",\"title\":\"Marilyn_Monroe.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/6f/Marilyn_Monroe.jpg\",\"year\":1954,\"source\":\"Wikimedia Commons\",\"description\":\"Marilyn Monroe appearing with the USO\",\"revealedDescription\":\"Marilyn Monroe appearing with the USO Camp Show, \\\"Anything Goes,\\\" poses for the shutterbugs after a performance at the 3rd U.S.Infantry Division area\",\"_id\":\"67ecc8bf3485330d351573d8\"},{\"filename\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"title\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b5/London_%2C_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"year\":1949,\"source\":\"Wikimedia Commons\",\"description\":\"Piccadilly Circus\",\"revealedDescription\":\"\",\"_id\":\"67ecc8bf3485330d351573d9\"},{\"filename\":\"Manhattan_Bridge_Construction_1909.jpg\",\"title\":\"Manhattan_Bridge_Construction_1909.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1c/Manhattan_Bridge_Construction_1909.jpg\",\"year\":1909,\"source\":\"Wikimedia Commons\",\"description\":\"Manhattan Bridge\",\"revealedDescription\":\"Manhattan Bridge construction began in 1901 and concluded in 1909.\",\"_id\":\"67ecc8bf3485330d351573da\"},{\"filename\":\"Pepsi_Driver.jpeg\",\"title\":\"Pepsi_Driver.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1742624052044-731410098.jpeg\",\"year\":1940,\"source\":\"User Upload\",\"description\":\"Pepsi truck driver\",\"revealedDescription\":\"\",\"_id\":\"67ecc8bf3485330d351573db\"},{\"filename\":\"Downtown_Chicago,_1973.jpg\",\"title\":\"Downtown_Chicago,_1973.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b1/Downtown_Chicago%2C_1973.jpg\",\"year\":1973,\"source\":\"Wikimedia Commons\",\"description\":\"The Loop\",\"revealedDescription\":\"The Loop\",\"_id\":\"67ecc8bf3485330d351573dc\"}]"
+[2025-04-02T05:42:55.606Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:42:55.674Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:42:55.688Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:42:55.719Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:42:55.751Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:42:55.781Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:43:08.056Z] [INFO] First challenge images: "[{\"filename\":\"Me_at_the_zoo_(screenshot).png\",\"title\":\"Me_at_the_zoo_(screenshot).png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/f/fc/Me_at_the_zoo_%28screenshot%29.png\",\"year\":2005,\"source\":\"Wikimedia Commons\",\"description\":\"\\\"Me at the zoo\\\"\",\"revealedDescription\":\"\\\"Me at the zoo\\\" was the first video uploaded to YouTube\",\"_id\":\"67ecce6a80e493a985d3dd5e\"},{\"filename\":\"Clinton_Trump_2000_09.jpg\",\"title\":\"Clinton_Trump_2000_09.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/9/9b/Clinton_Trump_2000_09.jpg\",\"year\":2000,\"source\":\"Wikimedia Commons\",\"description\":\"Bill Clinton and Donald Trump at the U.S. Open\",\"revealedDescription\":\"Bill Clinton and Donald Trump at the U.S. Open. Released in 2016 by The Clinton Presidential Library.\",\"_id\":\"67ecce6a80e493a985d3dd5f\"},{\"filename\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"title\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/3/3b/Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"year\":1932,\"source\":\"Wikimedia Commons\",\"description\":\"A couple of criminals\",\"revealedDescription\":\"Bonnie Parker playfully points a shotgun at her partner, Clyde Barrow.\",\"_id\":\"67ecce6a80e493a985d3dd60\"},{\"filename\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"title\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/5/5d/East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"year\":1869,\"source\":\"Wikimedia Commons\",\"description\":\"Completion of a railroad\",\"revealedDescription\":\"Completion of the First Transcontinental Railroad\",\"_id\":\"67ecce6a80e493a985d3dd61\"},{\"filename\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"title\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg\",\"year\":1984,\"source\":\"Wikimedia Commons\",\"description\":\"Steve Jobs and a Macintosh computer\",\"revealedDescription\":\"Steve Jobs and a Macintosh 128k computer\",\"_id\":\"67ecce6a80e493a985d3dd62\"},{\"filename\":\"Marilyn_Monroe.jpg\",\"title\":\"Marilyn_Monroe.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/6f/Marilyn_Monroe.jpg\",\"year\":1954,\"source\":\"Wikimedia Commons\",\"description\":\"Marilyn Monroe appearing with the USO\",\"revealedDescription\":\"Marilyn Monroe appearing with the USO Camp Show, \\\"Anything Goes,\\\" poses for the shutterbugs after a performance at the 3rd U.S.Infantry Division area\",\"_id\":\"67ecce6a80e493a985d3dd63\"},{\"filename\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"title\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b5/London_%2C_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"year\":1949,\"source\":\"Wikimedia Commons\",\"description\":\"Piccadilly Circus\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd64\"},{\"filename\":\"Manhattan_Bridge_Construction_1909.jpg\",\"title\":\"Manhattan_Bridge_Construction_1909.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1c/Manhattan_Bridge_Construction_1909.jpg\",\"year\":1909,\"source\":\"Wikimedia Commons\",\"description\":\"Manhattan Bridge\",\"revealedDescription\":\"Manhattan Bridge construction began in 1901 and concluded in 1909.\",\"_id\":\"67ecce6a80e493a985d3dd65\"},{\"filename\":\"Pepsi_Driver.jpeg\",\"title\":\"Pepsi_Driver.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1742624052044-731410098.jpeg\",\"year\":1940,\"source\":\"User Upload\",\"description\":\"Pepsi truck driver\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd66\"},{\"filename\":\"Downtown_Chicago,_1973.jpg\",\"title\":\"Downtown_Chicago,_1973.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b1/Downtown_Chicago%2C_1973.jpg\",\"year\":1973,\"source\":\"Wikimedia Commons\",\"description\":\"The Loop\",\"revealedDescription\":\"The Loop\",\"_id\":\"67ecce6a80e493a985d3dd67\"}]"
+[2025-04-02T05:43:09.562Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:43:09.627Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:43:09.642Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:43:09.682Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:43:09.719Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:43:09.755Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:43:50.754Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:43:50.810Z] [INFO] Requested daily challenge: /dates 
+[2025-04-02T05:43:50.822Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:43:50.867Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:43:50.903Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:43:50.941Z] [INFO] Requested daily challenge: /date/2025-04-02 
+[2025-04-02T05:53:19.121Z] [INFO] First challenge images: "[{\"filename\":\"Me_at_the_zoo_(screenshot).png\",\"title\":\"Me_at_the_zoo_(screenshot).png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/f/fc/Me_at_the_zoo_%28screenshot%29.png\",\"year\":2005,\"source\":\"Wikimedia Commons\",\"description\":\"\\\"Me at the zoo\\\"\",\"revealedDescription\":\"\\\"Me at the zoo\\\" was the first video uploaded to YouTube\",\"_id\":\"67ecce6a80e493a985d3dd5e\"},{\"filename\":\"Clinton_Trump_2000_09.jpg\",\"title\":\"Clinton_Trump_2000_09.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/9/9b/Clinton_Trump_2000_09.jpg\",\"year\":2000,\"source\":\"Wikimedia Commons\",\"description\":\"Bill Clinton and Donald Trump at the U.S. Open\",\"revealedDescription\":\"Bill Clinton and Donald Trump at the U.S. Open. Released in 2016 by The Clinton Presidential Library.\",\"_id\":\"67ecce6a80e493a985d3dd5f\"},{\"filename\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"title\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/3/3b/Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"year\":1932,\"source\":\"Wikimedia Commons\",\"description\":\"A couple of criminals\",\"revealedDescription\":\"Bonnie Parker playfully points a shotgun at her partner, Clyde Barrow.\",\"_id\":\"67ecce6a80e493a985d3dd60\"},{\"filename\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"title\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/5/5d/East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"year\":1869,\"source\":\"Wikimedia Commons\",\"description\":\"Completion of a railroad\",\"revealedDescription\":\"Completion of the First Transcontinental Railroad\",\"_id\":\"67ecce6a80e493a985d3dd61\"},{\"filename\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"title\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg\",\"year\":1984,\"source\":\"Wikimedia Commons\",\"description\":\"Steve Jobs and a Macintosh computer\",\"revealedDescription\":\"Steve Jobs and a Macintosh 128k computer\",\"_id\":\"67ecce6a80e493a985d3dd62\"},{\"filename\":\"Marilyn_Monroe.jpg\",\"title\":\"Marilyn_Monroe.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/6f/Marilyn_Monroe.jpg\",\"year\":1954,\"source\":\"Wikimedia Commons\",\"description\":\"Marilyn Monroe appearing with the USO\",\"revealedDescription\":\"Marilyn Monroe appearing with the USO Camp Show, \\\"Anything Goes,\\\" poses for the shutterbugs after a performance at the 3rd U.S.Infantry Division area\",\"_id\":\"67ecce6a80e493a985d3dd63\"},{\"filename\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"title\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b5/London_%2C_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"year\":1949,\"source\":\"Wikimedia Commons\",\"description\":\"Piccadilly Circus\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd64\"},{\"filename\":\"Manhattan_Bridge_Construction_1909.jpg\",\"title\":\"Manhattan_Bridge_Construction_1909.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1c/Manhattan_Bridge_Construction_1909.jpg\",\"year\":1909,\"source\":\"Wikimedia Commons\",\"description\":\"Manhattan Bridge\",\"revealedDescription\":\"Manhattan Bridge construction began in 1901 and concluded in 1909.\",\"_id\":\"67ecce6a80e493a985d3dd65\"},{\"filename\":\"Pepsi_Driver.jpeg\",\"title\":\"Pepsi_Driver.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1742624052044-731410098.jpeg\",\"year\":1940,\"source\":\"User Upload\",\"description\":\"Pepsi truck driver\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd66\"},{\"filename\":\"Downtown_Chicago,_1973.jpg\",\"title\":\"Downtown_Chicago,_1973.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b1/Downtown_Chicago%2C_1973.jpg\",\"year\":1973,\"source\":\"Wikimedia Commons\",\"description\":\"The Loop\",\"revealedDescription\":\"The Loop\",\"_id\":\"67ecce6a80e493a985d3dd67\"}]"
+[2025-04-02T05:53:21.161Z] [INFO] First challenge images: "[{\"filename\":\"Me_at_the_zoo_(screenshot).png\",\"title\":\"Me_at_the_zoo_(screenshot).png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/f/fc/Me_at_the_zoo_%28screenshot%29.png\",\"year\":2005,\"source\":\"Wikimedia Commons\",\"description\":\"\\\"Me at the zoo\\\"\",\"revealedDescription\":\"\\\"Me at the zoo\\\" was the first video uploaded to YouTube\",\"_id\":\"67ecce6a80e493a985d3dd5e\"},{\"filename\":\"Clinton_Trump_2000_09.jpg\",\"title\":\"Clinton_Trump_2000_09.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/9/9b/Clinton_Trump_2000_09.jpg\",\"year\":2000,\"source\":\"Wikimedia Commons\",\"description\":\"Bill Clinton and Donald Trump at the U.S. Open\",\"revealedDescription\":\"Bill Clinton and Donald Trump at the U.S. Open. Released in 2016 by The Clinton Presidential Library.\",\"_id\":\"67ecce6a80e493a985d3dd5f\"},{\"filename\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"title\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/3/3b/Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"year\":1932,\"source\":\"Wikimedia Commons\",\"description\":\"A couple of criminals\",\"revealedDescription\":\"Bonnie Parker playfully points a shotgun at her partner, Clyde Barrow.\",\"_id\":\"67ecce6a80e493a985d3dd60\"},{\"filename\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"title\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/5/5d/East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"year\":1869,\"source\":\"Wikimedia Commons\",\"description\":\"Completion of a railroad\",\"revealedDescription\":\"Completion of the First Transcontinental Railroad\",\"_id\":\"67ecce6a80e493a985d3dd61\"},{\"filename\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"title\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg\",\"year\":1984,\"source\":\"Wikimedia Commons\",\"description\":\"Steve Jobs and a Macintosh computer\",\"revealedDescription\":\"Steve Jobs and a Macintosh 128k computer\",\"_id\":\"67ecce6a80e493a985d3dd62\"},{\"filename\":\"Marilyn_Monroe.jpg\",\"title\":\"Marilyn_Monroe.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/6f/Marilyn_Monroe.jpg\",\"year\":1954,\"source\":\"Wikimedia Commons\",\"description\":\"Marilyn Monroe appearing with the USO\",\"revealedDescription\":\"Marilyn Monroe appearing with the USO Camp Show, \\\"Anything Goes,\\\" poses for the shutterbugs after a performance at the 3rd U.S.Infantry Division area\",\"_id\":\"67ecce6a80e493a985d3dd63\"},{\"filename\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"title\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b5/London_%2C_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"year\":1949,\"source\":\"Wikimedia Commons\",\"description\":\"Piccadilly Circus\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd64\"},{\"filename\":\"Manhattan_Bridge_Construction_1909.jpg\",\"title\":\"Manhattan_Bridge_Construction_1909.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1c/Manhattan_Bridge_Construction_1909.jpg\",\"year\":1909,\"source\":\"Wikimedia Commons\",\"description\":\"Manhattan Bridge\",\"revealedDescription\":\"Manhattan Bridge construction began in 1901 and concluded in 1909.\",\"_id\":\"67ecce6a80e493a985d3dd65\"},{\"filename\":\"Pepsi_Driver.jpeg\",\"title\":\"Pepsi_Driver.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1742624052044-731410098.jpeg\",\"year\":1940,\"source\":\"User Upload\",\"description\":\"Pepsi truck driver\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd66\"},{\"filename\":\"Downtown_Chicago,_1973.jpg\",\"title\":\"Downtown_Chicago,_1973.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b1/Downtown_Chicago%2C_1973.jpg\",\"year\":1973,\"source\":\"Wikimedia Commons\",\"description\":\"The Loop\",\"revealedDescription\":\"The Loop\",\"_id\":\"67ecce6a80e493a985d3dd67\"}]"
+[2025-04-02T05:54:45.852Z] [INFO] First challenge images: "[{\"filename\":\"Me_at_the_zoo_(screenshot).png\",\"title\":\"Me_at_the_zoo_(screenshot).png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/f/fc/Me_at_the_zoo_%28screenshot%29.png\",\"year\":2005,\"source\":\"Wikimedia Commons\",\"description\":\"\\\"Me at the zoo\\\"\",\"revealedDescription\":\"\\\"Me at the zoo\\\" was the first video uploaded to YouTube\",\"_id\":\"67ecce6a80e493a985d3dd5e\"},{\"filename\":\"Clinton_Trump_2000_09.jpg\",\"title\":\"Clinton_Trump_2000_09.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/9/9b/Clinton_Trump_2000_09.jpg\",\"year\":2000,\"source\":\"Wikimedia Commons\",\"description\":\"Bill Clinton and Donald Trump at the U.S. Open\",\"revealedDescription\":\"Bill Clinton and Donald Trump at the U.S. Open. Released in 2016 by The Clinton Presidential Library.\",\"_id\":\"67ecce6a80e493a985d3dd5f\"},{\"filename\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"title\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/3/3b/Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"year\":1932,\"source\":\"Wikimedia Commons\",\"description\":\"A couple of criminals\",\"revealedDescription\":\"Bonnie Parker playfully points a shotgun at her partner, Clyde Barrow.\",\"_id\":\"67ecce6a80e493a985d3dd60\"},{\"filename\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"title\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/5/5d/East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"year\":1869,\"source\":\"Wikimedia Commons\",\"description\":\"Completion of a railroad\",\"revealedDescription\":\"Completion of the First Transcontinental Railroad\",\"_id\":\"67ecce6a80e493a985d3dd61\"},{\"filename\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"title\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg\",\"year\":1984,\"source\":\"Wikimedia Commons\",\"description\":\"Steve Jobs and a Macintosh computer\",\"revealedDescription\":\"Steve Jobs and a Macintosh 128k computer\",\"_id\":\"67ecce6a80e493a985d3dd62\"},{\"filename\":\"Marilyn_Monroe.jpg\",\"title\":\"Marilyn_Monroe.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/6f/Marilyn_Monroe.jpg\",\"year\":1954,\"source\":\"Wikimedia Commons\",\"description\":\"Marilyn Monroe appearing with the USO\",\"revealedDescription\":\"Marilyn Monroe appearing with the USO Camp Show, \\\"Anything Goes,\\\" poses for the shutterbugs after a performance at the 3rd U.S.Infantry Division area\",\"_id\":\"67ecce6a80e493a985d3dd63\"},{\"filename\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"title\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b5/London_%2C_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"year\":1949,\"source\":\"Wikimedia Commons\",\"description\":\"Piccadilly Circus\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd64\"},{\"filename\":\"Manhattan_Bridge_Construction_1909.jpg\",\"title\":\"Manhattan_Bridge_Construction_1909.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1c/Manhattan_Bridge_Construction_1909.jpg\",\"year\":1909,\"source\":\"Wikimedia Commons\",\"description\":\"Manhattan Bridge\",\"revealedDescription\":\"Manhattan Bridge construction began in 1901 and concluded in 1909.\",\"_id\":\"67ecce6a80e493a985d3dd65\"},{\"filename\":\"Pepsi_Driver.jpeg\",\"title\":\"Pepsi_Driver.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1742624052044-731410098.jpeg\",\"year\":1940,\"source\":\"User Upload\",\"description\":\"Pepsi truck driver\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd66\"},{\"filename\":\"Downtown_Chicago,_1973.jpg\",\"title\":\"Downtown_Chicago,_1973.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b1/Downtown_Chicago%2C_1973.jpg\",\"year\":1973,\"source\":\"Wikimedia Commons\",\"description\":\"The Loop\",\"revealedDescription\":\"The Loop\",\"_id\":\"67ecce6a80e493a985d3dd67\"}]"
+[2025-04-02T05:54:58.623Z] [INFO] Server is running on port 8080 
+[2025-04-02T05:54:59.195Z] [INFO] MongoDB connected successfully 
+[2025-04-02T05:54:59.585Z] [INFO] First challenge images: "[{\"filename\":\"Me_at_the_zoo_(screenshot).png\",\"title\":\"Me_at_the_zoo_(screenshot).png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/f/fc/Me_at_the_zoo_%28screenshot%29.png\",\"year\":2005,\"source\":\"Wikimedia Commons\",\"description\":\"\\\"Me at the zoo\\\"\",\"revealedDescription\":\"\\\"Me at the zoo\\\" was the first video uploaded to YouTube\",\"_id\":\"67ecce6a80e493a985d3dd5e\"},{\"filename\":\"Clinton_Trump_2000_09.jpg\",\"title\":\"Clinton_Trump_2000_09.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/9/9b/Clinton_Trump_2000_09.jpg\",\"year\":2000,\"source\":\"Wikimedia Commons\",\"description\":\"Bill Clinton and Donald Trump at the U.S. Open\",\"revealedDescription\":\"Bill Clinton and Donald Trump at the U.S. Open. Released in 2016 by The Clinton Presidential Library.\",\"_id\":\"67ecce6a80e493a985d3dd5f\"},{\"filename\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"title\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/3/3b/Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"year\":1932,\"source\":\"Wikimedia Commons\",\"description\":\"A couple of criminals\",\"revealedDescription\":\"Bonnie Parker playfully points a shotgun at her partner, Clyde Barrow.\",\"_id\":\"67ecce6a80e493a985d3dd60\"},{\"filename\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"title\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/5/5d/East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"year\":1869,\"source\":\"Wikimedia Commons\",\"description\":\"Completion of a railroad\",\"revealedDescription\":\"Completion of the First Transcontinental Railroad\",\"_id\":\"67ecce6a80e493a985d3dd61\"},{\"filename\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"title\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg\",\"year\":1984,\"source\":\"Wikimedia Commons\",\"description\":\"Steve Jobs and a Macintosh computer\",\"revealedDescription\":\"Steve Jobs and a Macintosh 128k computer\",\"_id\":\"67ecce6a80e493a985d3dd62\"},{\"filename\":\"Marilyn_Monroe.jpg\",\"title\":\"Marilyn_Monroe.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/6f/Marilyn_Monroe.jpg\",\"year\":1954,\"source\":\"Wikimedia Commons\",\"description\":\"Marilyn Monroe appearing with the USO\",\"revealedDescription\":\"Marilyn Monroe appearing with the USO Camp Show, \\\"Anything Goes,\\\" poses for the shutterbugs after a performance at the 3rd U.S.Infantry Division area\",\"_id\":\"67ecce6a80e493a985d3dd63\"},{\"filename\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"title\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b5/London_%2C_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"year\":1949,\"source\":\"Wikimedia Commons\",\"description\":\"Piccadilly Circus\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd64\"},{\"filename\":\"Manhattan_Bridge_Construction_1909.jpg\",\"title\":\"Manhattan_Bridge_Construction_1909.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1c/Manhattan_Bridge_Construction_1909.jpg\",\"year\":1909,\"source\":\"Wikimedia Commons\",\"description\":\"Manhattan Bridge\",\"revealedDescription\":\"Manhattan Bridge construction began in 1901 and concluded in 1909.\",\"_id\":\"67ecce6a80e493a985d3dd65\"},{\"filename\":\"Pepsi_Driver.jpeg\",\"title\":\"Pepsi_Driver.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1742624052044-731410098.jpeg\",\"year\":1940,\"source\":\"User Upload\",\"description\":\"Pepsi truck driver\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd66\"},{\"filename\":\"Downtown_Chicago,_1973.jpg\",\"title\":\"Downtown_Chicago,_1973.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b1/Downtown_Chicago%2C_1973.jpg\",\"year\":1973,\"source\":\"Wikimedia Commons\",\"description\":\"The Loop\",\"revealedDescription\":\"The Loop\",\"_id\":\"67ecce6a80e493a985d3dd67\"}]"
+[2025-04-02T05:55:01.963Z] [INFO] First challenge images: "[{\"filename\":\"Me_at_the_zoo_(screenshot).png\",\"title\":\"Me_at_the_zoo_(screenshot).png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/f/fc/Me_at_the_zoo_%28screenshot%29.png\",\"year\":2005,\"source\":\"Wikimedia Commons\",\"description\":\"\\\"Me at the zoo\\\"\",\"revealedDescription\":\"\\\"Me at the zoo\\\" was the first video uploaded to YouTube\",\"_id\":\"67ecce6a80e493a985d3dd5e\"},{\"filename\":\"Clinton_Trump_2000_09.jpg\",\"title\":\"Clinton_Trump_2000_09.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/9/9b/Clinton_Trump_2000_09.jpg\",\"year\":2000,\"source\":\"Wikimedia Commons\",\"description\":\"Bill Clinton and Donald Trump at the U.S. Open\",\"revealedDescription\":\"Bill Clinton and Donald Trump at the U.S. Open. Released in 2016 by The Clinton Presidential Library.\",\"_id\":\"67ecce6a80e493a985d3dd5f\"},{\"filename\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"title\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/3/3b/Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"year\":1932,\"source\":\"Wikimedia Commons\",\"description\":\"A couple of criminals\",\"revealedDescription\":\"Bonnie Parker playfully points a shotgun at her partner, Clyde Barrow.\",\"_id\":\"67ecce6a80e493a985d3dd60\"},{\"filename\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"title\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/5/5d/East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"year\":1869,\"source\":\"Wikimedia Commons\",\"description\":\"Completion of a railroad\",\"revealedDescription\":\"Completion of the First Transcontinental Railroad\",\"_id\":\"67ecce6a80e493a985d3dd61\"},{\"filename\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"title\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg\",\"year\":1984,\"source\":\"Wikimedia Commons\",\"description\":\"Steve Jobs and a Macintosh computer\",\"revealedDescription\":\"Steve Jobs and a Macintosh 128k computer\",\"_id\":\"67ecce6a80e493a985d3dd62\"},{\"filename\":\"Marilyn_Monroe.jpg\",\"title\":\"Marilyn_Monroe.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/6f/Marilyn_Monroe.jpg\",\"year\":1954,\"source\":\"Wikimedia Commons\",\"description\":\"Marilyn Monroe appearing with the USO\",\"revealedDescription\":\"Marilyn Monroe appearing with the USO Camp Show, \\\"Anything Goes,\\\" poses for the shutterbugs after a performance at the 3rd U.S.Infantry Division area\",\"_id\":\"67ecce6a80e493a985d3dd63\"},{\"filename\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"title\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b5/London_%2C_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"year\":1949,\"source\":\"Wikimedia Commons\",\"description\":\"Piccadilly Circus\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd64\"},{\"filename\":\"Manhattan_Bridge_Construction_1909.jpg\",\"title\":\"Manhattan_Bridge_Construction_1909.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1c/Manhattan_Bridge_Construction_1909.jpg\",\"year\":1909,\"source\":\"Wikimedia Commons\",\"description\":\"Manhattan Bridge\",\"revealedDescription\":\"Manhattan Bridge construction began in 1901 and concluded in 1909.\",\"_id\":\"67ecce6a80e493a985d3dd65\"},{\"filename\":\"Pepsi_Driver.jpeg\",\"title\":\"Pepsi_Driver.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1742624052044-731410098.jpeg\",\"year\":1940,\"source\":\"User Upload\",\"description\":\"Pepsi truck driver\",\"revealedDescription\":\"\",\"_id\":\"67ecce6a80e493a985d3dd66\"},{\"filename\":\"Downtown_Chicago,_1973.jpg\",\"title\":\"Downtown_Chicago,_1973.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b1/Downtown_Chicago%2C_1973.jpg\",\"year\":1973,\"source\":\"Wikimedia Commons\",\"description\":\"The Loop\",\"revealedDescription\":\"The Loop\",\"_id\":\"67ecce6a80e493a985d3dd67\"}]"
+[2025-04-02T06:17:51.839Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd616571f0dbab3f88b1e\"}]"
+[2025-04-02T06:18:23.784Z] [INFO] Server is running on port 8080 
+[2025-04-02T06:18:24.404Z] [INFO] MongoDB connected successfully 
+[2025-04-02T06:18:27.282Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd616571f0dbab3f88b1e\"}]"
+[2025-04-02T06:20:03.445Z] [INFO] Server is running on port 8080 
+[2025-04-02T06:20:03.966Z] [INFO] MongoDB connected successfully 
+[2025-04-02T06:20:08.525Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd616571f0dbab3f88b1e\"}]"
+[2025-04-02T06:21:16.720Z] [INFO] Server is running on port 8080 
+[2025-04-02T06:21:17.138Z] [INFO] MongoDB connected successfully 
+[2025-04-02T06:21:17.213Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd616571f0dbab3f88b1e\"}]"
+[2025-04-02T06:21:18.233Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd616571f0dbab3f88b1e\"}]"
+[2025-04-02T06:22:51.143Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd616571f0dbab3f88b1e\"}]"
+[2025-04-02T06:23:01.894Z] [INFO] Server is running on port 8080 
+[2025-04-02T06:23:02.451Z] [INFO] MongoDB connected successfully 
+[2025-04-02T06:23:02.698Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd616571f0dbab3f88b1e\"}]"
+[2025-04-02T06:23:08.117Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd616571f0dbab3f88b1e\"}]"
+[2025-04-02T06:23:48.707Z] [INFO] Editing challenge 67ecd616571f0dbab3f88b1d 
+[2025-04-02T06:23:48.708Z] [INFO] Received 0 uploaded files 
+[2025-04-02T06:23:48.744Z] [INFO] Processing 1 images 
+[2025-04-02T06:23:48.744Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:23:48.744Z] [INFO] Adding existing image: https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png 
+[2025-04-02T06:23:48.744Z] [INFO] Replacing challenge images with 1 updated images 
+[2025-04-02T06:23:48.791Z] [INFO] Challenge 67ecd616571f0dbab3f88b1d updated successfully with 1 images 
+[2025-04-02T06:23:49.921Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2022,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd7f41ac0fe07f05f49fd\"}]"
+[2025-04-02T06:24:26.836Z] [INFO] Editing challenge 67ecd616571f0dbab3f88b1d 
+[2025-04-02T06:24:26.844Z] [INFO] Received 0 uploaded files 
+[2025-04-02T06:24:26.875Z] [INFO] Processing 2 images 
+[2025-04-02T06:24:26.875Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:24:26.875Z] [INFO] Adding existing image: https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png 
+[2025-04-02T06:24:26.875Z] [INFO] Processing image of type: wikimedia 
+[2025-04-02T06:24:27.153Z] [INFO] Successfully fetched image data for City_of_new_york.jpg {"confidenceLevel":"medium"}
+[2025-04-02T06:24:27.153Z] [INFO] Adding Wikimedia image: https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg 
+[2025-04-02T06:24:27.154Z] [INFO] Replacing challenge images with 2 updated images 
+[2025-04-02T06:24:27.195Z] [INFO] Challenge 67ecd616571f0dbab3f88b1d updated successfully with 2 images 
+[2025-04-02T06:24:29.193Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2022,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd81b1ac0fe07f05f4ad0\"},{\"filename\":\"City_of_new_york.jpg\",\"title\":\"City_of_new_york.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"<b>SS City of New York</b>\",\"revealedDescription\":\"\",\"_id\":\"67ecd81b1ac0fe07f05f4ad1\"}]"
+[2025-04-02T06:26:17.224Z] [INFO] Server is running on port 8080 
+[2025-04-02T06:26:17.717Z] [INFO] MongoDB connected successfully 
+[2025-04-02T06:26:22.511Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2022,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd81b1ac0fe07f05f4ad0\"},{\"filename\":\"City_of_new_york.jpg\",\"title\":\"City_of_new_york.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"<b>SS City of New York</b>\",\"revealedDescription\":\"\",\"_id\":\"67ecd81b1ac0fe07f05f4ad1\"}]"
+[2025-04-02T06:26:34.207Z] [ERROR] Upload error: {"name":"AccessControlListNotSupported","$fault":"client","$metadata":{"httpStatusCode":400,"requestId":"MPPXA7ZD8786DXGC","extendedRequestId":"kigo5jLsgax0sqc2sLEq6mdVRZ/e/A6sqh39NWy7teFbPnnT3lqcfuwMJQFRkkorJhJc23ATYTo=","attempts":1,"totalRetryDelay":0},"Code":"AccessControlListNotSupported","RequestId":"MPPXA7ZD8786DXGC","HostId":"kigo5jLsgax0sqc2sLEq6mdVRZ/e/A6sqh39NWy7teFbPnnT3lqcfuwMJQFRkkorJhJc23ATYTo=","message":"The bucket does not allow ACLs","storageErrors":[]}
+[2025-04-02T06:28:26.643Z] [INFO] Server is running on port 8080 
+[2025-04-02T06:28:27.220Z] [INFO] MongoDB connected successfully 
+[2025-04-02T06:28:57.803Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2022,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd81b1ac0fe07f05f4ad0\"},{\"filename\":\"City_of_new_york.jpg\",\"title\":\"City_of_new_york.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"<b>SS City of New York</b>\",\"revealedDescription\":\"\",\"_id\":\"67ecd81b1ac0fe07f05f4ad1\"}]"
+[2025-04-02T06:29:05.860Z] [ERROR] Upload error: {"name":"AccessControlListNotSupported","$fault":"client","$metadata":{"httpStatusCode":400,"requestId":"AH0RZ781Z823MXXA","extendedRequestId":"TAN+ziArH1DgMAUoEANTOlWc613KFpK332dc52BpZIGQRI/tYI66kne2RpGZaneaJYuPZpa3B5U=","attempts":1,"totalRetryDelay":0},"Code":"AccessControlListNotSupported","RequestId":"AH0RZ781Z823MXXA","HostId":"TAN+ziArH1DgMAUoEANTOlWc613KFpK332dc52BpZIGQRI/tYI66kne2RpGZaneaJYuPZpa3B5U=","message":"The bucket does not allow ACLs","storageErrors":[]}
+[2025-04-02T06:29:52.297Z] [INFO] Server is running on port 8080 
+[2025-04-02T06:29:52.737Z] [INFO] MongoDB connected successfully 
+[2025-04-02T06:29:54.600Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2022,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd81b1ac0fe07f05f4ad0\"},{\"filename\":\"City_of_new_york.jpg\",\"title\":\"City_of_new_york.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"<b>SS City of New York</b>\",\"revealedDescription\":\"\",\"_id\":\"67ecd81b1ac0fe07f05f4ad1\"}]"
+[2025-04-02T06:30:03.056Z] [INFO] Editing challenge 67ecd616571f0dbab3f88b1d 
+[2025-04-02T06:30:03.057Z] [INFO] Received 1 uploaded files 
+[2025-04-02T06:30:03.093Z] [INFO] Processing 3 images 
+[2025-04-02T06:30:03.094Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:30:03.094Z] [INFO] Adding existing image: https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png 
+[2025-04-02T06:30:03.094Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:30:03.094Z] [INFO] Adding existing image: https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg 
+[2025-04-02T06:30:03.095Z] [INFO] Processing image of type: upload 
+[2025-04-02T06:30:03.095Z] [INFO] Processing upload index: 0 (of 1 files) 
+[2025-04-02T06:30:03.095Z] [INFO] Found uploaded file: ChatGPT Image Mar 27, 2025, 12_40_47 PM (1).png 
+[2025-04-02T06:30:03.095Z] [INFO] Created URL for uploaded file: https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575402718-417732699.png 
+[2025-04-02T06:30:03.095Z] [INFO] Added uploaded image: https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575402718-417732699.png 
+[2025-04-02T06:30:03.095Z] [INFO] Replacing challenge images with 3 updated images 
+[2025-04-02T06:30:03.145Z] [INFO] Challenge 67ecd616571f0dbab3f88b1d updated successfully with 3 images 
+[2025-04-02T06:30:04.607Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2022,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd96b8f9f9f6ecf8f4a04\"},{\"filename\":\"City_of_new_york.jpg\",\"title\":\"City_of_new_york.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"<b>SS City of New York</b>\",\"revealedDescription\":\"\",\"_id\":\"67ecd96b8f9f9f6ecf8f4a05\"},{\"filename\":\"ChatGPT Image Mar 27, 2025, 12_40_47 PM (1).png\",\"title\":\"ChatGPT Image Mar 27, 2025, 12_40_47 PM (1).png\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575402718-417732699.png\",\"year\":2025,\"source\":\"User Upload\",\"description\":\"\",\"revealedDescription\":\"\",\"_id\":\"67ecd96b8f9f9f6ecf8f4a06\"}]"
+[2025-04-02T06:30:34.950Z] [INFO] Editing challenge 67ecd616571f0dbab3f88b1d 
+[2025-04-02T06:30:34.953Z] [INFO] Received 1 uploaded files 
+[2025-04-02T06:30:34.991Z] [INFO] Processing 4 images 
+[2025-04-02T06:30:34.992Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:30:34.992Z] [INFO] Adding existing image: https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png 
+[2025-04-02T06:30:34.992Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:30:34.992Z] [INFO] Adding existing image: https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg 
+[2025-04-02T06:30:34.992Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:30:34.992Z] [INFO] Adding existing image: https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575402718-417732699.png 
+[2025-04-02T06:30:34.993Z] [INFO] Processing image of type: upload 
+[2025-04-02T06:30:34.993Z] [INFO] Processing upload index: 0 (of 1 files) 
+[2025-04-02T06:30:34.993Z] [INFO] Found uploaded file: angry-beating.gif 
+[2025-04-02T06:30:34.993Z] [INFO] Created URL for uploaded file: https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575434520-248195273.gif 
+[2025-04-02T06:30:34.993Z] [INFO] Added uploaded image: https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575434520-248195273.gif 
+[2025-04-02T06:30:34.994Z] [INFO] Replacing challenge images with 4 updated images 
+[2025-04-02T06:30:35.033Z] [INFO] Challenge 67ecd616571f0dbab3f88b1d updated successfully with 4 images 
+[2025-04-02T06:30:36.132Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2022,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd98a8f9f9f6ecf8f4add\"},{\"filename\":\"City_of_new_york.jpg\",\"title\":\"City_of_new_york.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"<b>SS City of New York</b>\",\"revealedDescription\":\"\",\"_id\":\"67ecd98a8f9f9f6ecf8f4ade\"},{\"filename\":\"ChatGPT Image Mar 27, 2025, 12_40_47 PM (1).png\",\"title\":\"ChatGPT Image Mar 27, 2025, 12_40_47 PM (1).png\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575402718-417732699.png\",\"year\":2025,\"source\":\"User Upload\",\"description\":\"\",\"revealedDescription\":\"\",\"_id\":\"67ecd98a8f9f9f6ecf8f4adf\"},{\"filename\":\"angry-beating.gif\",\"title\":\"angry-beating.gif\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575434520-248195273.gif\",\"year\":2025,\"source\":\"User Upload\",\"description\":\"\",\"revealedDescription\":\"\",\"_id\":\"67ecd98a8f9f9f6ecf8f4ae0\"}]"
+[2025-04-02T06:32:36.018Z] [INFO] Server is running on port 8080 
+[2025-04-02T06:32:36.604Z] [INFO] MongoDB connected successfully 
+[2025-04-02T06:32:37.141Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2022,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecd98a8f9f9f6ecf8f4add\"},{\"filename\":\"City_of_new_york.jpg\",\"title\":\"City_of_new_york.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"<b>SS City of New York</b>\",\"revealedDescription\":\"\",\"_id\":\"67ecd98a8f9f9f6ecf8f4ade\"},{\"filename\":\"ChatGPT Image Mar 27, 2025, 12_40_47 PM (1).png\",\"title\":\"ChatGPT Image Mar 27, 2025, 12_40_47 PM (1).png\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575402718-417732699.png\",\"year\":2025,\"source\":\"User Upload\",\"description\":\"\",\"revealedDescription\":\"\",\"_id\":\"67ecd98a8f9f9f6ecf8f4adf\"},{\"filename\":\"angry-beating.gif\",\"title\":\"angry-beating.gif\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575434520-248195273.gif\",\"year\":2025,\"source\":\"User Upload\",\"description\":\"\",\"revealedDescription\":\"\",\"_id\":\"67ecd98a8f9f9f6ecf8f4ae0\"}]"
+[2025-04-02T06:32:48.061Z] [INFO] Editing challenge 67ecd616571f0dbab3f88b1d 
+[2025-04-02T06:32:48.062Z] [INFO] Received 1 uploaded files 
+[2025-04-02T06:32:48.096Z] [INFO] Processing 5 images 
+[2025-04-02T06:32:48.097Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:32:48.097Z] [INFO] Adding existing image: https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png 
+[2025-04-02T06:32:48.097Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:32:48.098Z] [INFO] Adding existing image: https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg 
+[2025-04-02T06:32:48.098Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:32:48.098Z] [INFO] Adding existing image: https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575402718-417732699.png 
+[2025-04-02T06:32:48.098Z] [INFO] Processing image of type: existing 
+[2025-04-02T06:32:48.098Z] [INFO] Adding existing image: https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575434520-248195273.gif 
+[2025-04-02T06:32:48.098Z] [INFO] Processing image of type: upload 
+[2025-04-02T06:32:48.098Z] [INFO] Processing upload index: 0 (of 1 files) 
+[2025-04-02T06:32:48.098Z] [INFO] Found uploaded file: SampleVideo_1280x720_1mb.mp4 
+[2025-04-02T06:32:48.099Z] [INFO] Created URL for uploaded file: https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575567264-6739617.mp4 
+[2025-04-02T06:32:48.099Z] [INFO] Added uploaded image: https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575567264-6739617.mp4 
+[2025-04-02T06:32:48.099Z] [INFO] Replacing challenge images with 5 updated images 
+[2025-04-02T06:32:48.150Z] [INFO] Challenge 67ecd616571f0dbab3f88b1d updated successfully with 5 images 
+[2025-04-02T06:32:49.370Z] [INFO] First challenge images: "[{\"filename\":\"City_of_new_york_construction_IV.png\",\"title\":\"City_of_new_york_construction_IV.png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/60/City_of_new_york_construction_IV.png\",\"year\":2022,\"source\":\"Wikimedia Commons\",\"description\":\"Frames of City of New York looking forward. July 19, 1887.\",\"revealedDescription\":\"\",\"_id\":\"67ecda10bd05edce16e6402b\"},{\"filename\":\"City_of_new_york.jpg\",\"title\":\"City_of_new_york.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/8/8e/City_of_new_york.jpg\",\"year\":2025,\"source\":\"Wikimedia Commons\",\"description\":\"<b>SS City of New York</b>\",\"revealedDescription\":\"\",\"_id\":\"67ecda10bd05edce16e6402c\"},{\"filename\":\"ChatGPT Image Mar 27, 2025, 12_40_47 PM (1).png\",\"title\":\"ChatGPT Image Mar 27, 2025, 12_40_47 PM (1).png\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575402718-417732699.png\",\"year\":2025,\"source\":\"User Upload\",\"description\":\"\",\"revealedDescription\":\"\",\"_id\":\"67ecda10bd05edce16e6402d\"},{\"filename\":\"angry-beating.gif\",\"title\":\"angry-beating.gif\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575434520-248195273.gif\",\"year\":2025,\"source\":\"User Upload\",\"description\":\"\",\"revealedDescription\":\"\",\"_id\":\"67ecda10bd05edce16e6402e\"},{\"filename\":\"SampleVideo_1280x720_1mb.mp4\",\"title\":\"SampleVideo_1280x720_1mb.mp4\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1743575567264-6739617.mp4\",\"year\":2025,\"source\":\"User Upload\",\"description\":\"\",\"revealedDescription\":\"\",\"_id\":\"67ecda10bd05edce16e6402f\"}]"
+[2025-04-02T06:39:12.145Z] [INFO] First challenge images: "[{\"filename\":\"Me_at_the_zoo_(screenshot).png\",\"title\":\"Me_at_the_zoo_(screenshot).png\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/f/fc/Me_at_the_zoo_%28screenshot%29.png\",\"year\":2005,\"source\":\"Wikimedia Commons\",\"description\":\"\\\"Me at the zoo\\\"\",\"revealedDescription\":\"\\\"Me at the zoo\\\" was the first video uploaded to YouTube\",\"_id\":\"67ecd531571f0dbab3f8893c\"},{\"filename\":\"Clinton_Trump_2000_09.jpg\",\"title\":\"Clinton_Trump_2000_09.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/9/9b/Clinton_Trump_2000_09.jpg\",\"year\":2000,\"source\":\"Wikimedia Commons\",\"description\":\"Bill Clinton and Donald Trump at the U.S. Open\",\"revealedDescription\":\"Bill Clinton and Donald Trump at the U.S. Open. Released in 2016 by The Clinton Presidential Library.\",\"_id\":\"67ecd531571f0dbab3f8893d\"},{\"filename\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"title\":\"Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/3/3b/Bonnie_apuntant_de_broma_a_Clyde_amb_una_escopeta.jpg\",\"year\":1932,\"source\":\"Wikimedia Commons\",\"description\":\"A couple of criminals\",\"revealedDescription\":\"Bonnie Parker playfully points a shotgun at her partner, Clyde Barrow.\",\"_id\":\"67ecd531571f0dbab3f8893e\"},{\"filename\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"title\":\"East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/5/5d/East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad_-_Restoration.jpg\",\"year\":1869,\"source\":\"Wikimedia Commons\",\"description\":\"Completion of a railroad\",\"revealedDescription\":\"Completion of the First Transcontinental Railroad\",\"_id\":\"67ecd531571f0dbab3f8893f\"},{\"filename\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"title\":\"Steve_Jobs_and_Macintosh_computer,_January_1984,_by_Bernard_Gotfryd_-_edited.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/d/dd/Steve_Jobs_and_Macintosh_computer%2C_January_1984%2C_by_Bernard_Gotfryd_-_edited.jpg\",\"year\":1984,\"source\":\"Wikimedia Commons\",\"description\":\"Steve Jobs and a Macintosh computer\",\"revealedDescription\":\"Steve Jobs and a Macintosh 128k computer\",\"_id\":\"67ecd531571f0dbab3f88940\"},{\"filename\":\"Marilyn_Monroe.jpg\",\"title\":\"Marilyn_Monroe.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/6f/Marilyn_Monroe.jpg\",\"year\":1954,\"source\":\"Wikimedia Commons\",\"description\":\"Marilyn Monroe appearing with the USO\",\"revealedDescription\":\"Marilyn Monroe appearing with the USO Camp Show, \\\"Anything Goes,\\\" poses for the shutterbugs after a performance at the 3rd U.S.Infantry Division area\",\"_id\":\"67ecd531571f0dbab3f88941\"},{\"filename\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"title\":\"London_,_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b5/London_%2C_Kodachrome_by_Chalmers_Butterfield_edit.jpg\",\"year\":1949,\"source\":\"Wikimedia Commons\",\"description\":\"Piccadilly Circus\",\"revealedDescription\":\"\",\"_id\":\"67ecd531571f0dbab3f88942\"},{\"filename\":\"Manhattan_Bridge_Construction_1909.jpg\",\"title\":\"Manhattan_Bridge_Construction_1909.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/1/1c/Manhattan_Bridge_Construction_1909.jpg\",\"year\":1909,\"source\":\"Wikimedia Commons\",\"description\":\"Manhattan Bridge\",\"revealedDescription\":\"Manhattan Bridge construction began in 1901 and concluded in 1909.\",\"_id\":\"67ecd531571f0dbab3f88943\"},{\"filename\":\"Pepsi_Driver.jpeg\",\"title\":\"Pepsi_Driver.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1742624052044-731410098.jpeg\",\"year\":1940,\"source\":\"User Upload\",\"description\":\"Pepsi truck driver\",\"revealedDescription\":\"\",\"_id\":\"67ecd531571f0dbab3f88944\"},{\"filename\":\"Downtown_Chicago,_1973.jpg\",\"title\":\"Downtown_Chicago,_1973.jpg\",\"url\":\"https://upload.wikimedia.org/wikipedia/commons/b/b1/Downtown_Chicago%2C_1973.jpg\",\"year\":1973,\"source\":\"Wikimedia Commons\",\"description\":\"The Loop\",\"revealedDescription\":\"The Loop\",\"_id\":\"67ecd531571f0dbab3f88945\"}]"
+[2025-04-02T21:33:12.501Z] [INFO] Requested daily challenge: /stats 
