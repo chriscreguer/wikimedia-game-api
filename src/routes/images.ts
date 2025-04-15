@@ -1109,6 +1109,13 @@ router.get(
       const etDate = setEasternTimeMidnight(dateObj);
       const nextDay = new Date(etDate.getTime() + 24 * 60 * 60 * 1000);
       
+      // Add detailed logging
+      console.log(`--- Backend Request for Date: ${req.params.date} ---`);
+      console.log(`Parsed Date Object: ${dateObj.toISOString()}`); // See initial parsing
+      console.log(`ET Midnight Start Date (etDate): ${etDate.toISOString()}`);
+      console.log(`ET Midnight End Date (nextDay): ${nextDay.toISOString()}`);
+      console.log(`Querying MongoDB with: date: { $gte: ${etDate.toISOString()}, $lt: ${nextDay.toISOString()} }, active: true`);
+      
       // Find the challenge for that day
       const challenge = await DailyChallenge.findOne({
         date: { 
@@ -1118,7 +1125,11 @@ router.get(
         active: true
       });
       
+      // Log the result of the query
+      console.log(`MongoDB Query Result (challenge): ${challenge ? `Found challenge with _id: ${challenge._id}` : 'null'}`);
+
       if (!challenge) {
+        console.log(`--> Entering 404 block because challenge was null.`); // Confirm why 404 is sent
         res.status(404).json({ error: 'No daily challenge available for this date' });
         return;
       }
@@ -1249,6 +1260,13 @@ router.get(
       const etDate = setEasternTimeMidnight(dateObj);
       const nextDay = new Date(etDate.getTime() + 24 * 60 * 60 * 1000);
       
+      // Add detailed logging
+      console.log(`--- Backend Request for Date: ${req.params.date} ---`);
+      console.log(`Parsed Date Object: ${dateObj.toISOString()}`); // See initial parsing
+      console.log(`ET Midnight Start Date (etDate): ${etDate.toISOString()}`);
+      console.log(`ET Midnight End Date (nextDay): ${nextDay.toISOString()}`);
+      console.log(`Querying MongoDB with: date: { $gte: ${etDate.toISOString()}, $lt: ${nextDay.toISOString()} }, active: true`);
+      
       // Find the challenge for that day
       const challenge = await DailyChallenge.findOne({
         date: { 
@@ -1258,7 +1276,11 @@ router.get(
         active: true
       });
       
+      // Log the result of the query
+      console.log(`MongoDB Query Result (challenge): ${challenge ? `Found challenge with _id: ${challenge._id}` : 'null'}`);
+
       if (!challenge) {
+        console.log(`--> Entering 404 block because challenge was null.`); // Confirm why 404 is sent
         res.status(404).json({ error: 'No daily challenge available for this date' });
         return;
       }
@@ -1267,7 +1289,6 @@ router.get(
     } catch (error) {
       console.error('Error fetching daily challenge by date:', error);
       res.status(500).json({ error: 'Server error fetching daily challenge' });
-      return;
     }
   }) as RequestHandler
 );
