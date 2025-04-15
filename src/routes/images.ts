@@ -1096,48 +1096,42 @@ router.get(
   '/daily-challenge/date/:date',
   (async (req: Request, res: Response): Promise<void> => {
     try {
-      const { date } = req.params;
-      const dateObj = new Date(date);
+      const { date } = req.params; // e.g., "2025-04-05"
 
-      // Validate date format
-      if (isNaN(dateObj.getTime())) {
+      // --- USE UTC BOUNDARIES ---
+      const startDate = new Date(date + 'T00:00:00.000Z');
+      const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // Start of next day UTC
+
+      if (isNaN(startDate.getTime())) {
+        console.log(`Backend: Invalid date format received: ${date}`);
         res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
         return;
       }
-      
-      // Normalize the date to start of day in ET instead of UTC
-      const etDate = setEasternTimeMidnight(dateObj);
-      const nextDay = new Date(etDate.getTime() + 24 * 60 * 60 * 1000);
-      
-      // Add detailed logging
-      console.log(`--- Backend Request for Date: ${req.params.date} ---`);
-      console.log(`Parsed Date Object: ${dateObj.toISOString()}`); // See initial parsing
-      console.log(`ET Midnight Start Date (etDate): ${etDate.toISOString()}`);
-      console.log(`ET Midnight End Date (nextDay): ${nextDay.toISOString()}`);
-      console.log(`Querying MongoDB with: date: { $gte: ${etDate.toISOString()}, $lt: ${nextDay.toISOString()} }, active: true`);
-      
-      // Find the challenge for that day
+      // --- END USE UTC BOUNDARIES ---
+
+      console.log(`Backend: Querying for challenge >= ${startDate.toISOString()} and < ${endDate.toISOString()} (UTC)`); // Updated log
+
       const challenge = await DailyChallenge.findOne({
-        date: { 
-          $gte: etDate,
-          $lt: nextDay
+        date: {
+          $gte: startDate, // Use UTC start date
+          $lt: endDate     // Use UTC end date (exclusive)
         },
         active: true
       });
-      
-      // Log the result of the query
-      console.log(`MongoDB Query Result (challenge): ${challenge ? `Found challenge with _id: ${challenge._id}` : 'null'}`);
+
+      console.log(`Backend: MongoDB Query Result (challenge): ${challenge ? `Found _id: ${challenge._id}` : 'null'}`); // Updated log
 
       if (!challenge) {
-        console.log(`--> Entering 404 block because challenge was null.`); // Confirm why 404 is sent
+        console.log(`Backend: --> Entering 404 block because challenge was null for date ${date} (UTC Query).`); // Updated log
         res.status(404).json({ error: 'No daily challenge available for this date' });
         return;
       }
-      
+
       res.status(200).json(challenge);
     } catch (error) {
       console.error('Error fetching daily challenge by date:', error);
       res.status(500).json({ error: 'Server error fetching daily challenge' });
+      return;
     }
   }) as RequestHandler
 );
@@ -1242,58 +1236,6 @@ router.get('/daily-challenge/dates', async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Failed to fetch challenge dates' });
   }
 });
-
-router.get(
-  '/daily-challenge/date/:date',
-  (async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { date } = req.params;
-      const dateObj = new Date(date);
-
-      // Validate date format
-      if (isNaN(dateObj.getTime())) {
-        res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
-        return;
-      }
-      
-      // Normalize the date to start of day in ET instead of UTC
-      const etDate = setEasternTimeMidnight(dateObj);
-      const nextDay = new Date(etDate.getTime() + 24 * 60 * 60 * 1000);
-      
-      // Add detailed logging
-      console.log(`--- Backend Request for Date: ${req.params.date} ---`);
-      console.log(`Parsed Date Object: ${dateObj.toISOString()}`); // See initial parsing
-      console.log(`ET Midnight Start Date (etDate): ${etDate.toISOString()}`);
-      console.log(`ET Midnight End Date (nextDay): ${nextDay.toISOString()}`);
-      console.log(`Querying MongoDB with: date: { $gte: ${etDate.toISOString()}, $lt: ${nextDay.toISOString()} }, active: true`);
-      
-      // Find the challenge for that day
-      const challenge = await DailyChallenge.findOne({
-        date: { 
-          $gte: etDate,
-          $lt: nextDay
-        },
-        active: true
-      });
-      
-      // Log the result of the query
-      console.log(`MongoDB Query Result (challenge): ${challenge ? `Found challenge with _id: ${challenge._id}` : 'null'}`);
-
-      if (!challenge) {
-        console.log(`--> Entering 404 block because challenge was null.`); // Confirm why 404 is sent
-        res.status(404).json({ error: 'No daily challenge available for this date' });
-        return;
-      }
-      
-      res.status(200).json(challenge);
-    } catch (error) {
-      console.error('Error fetching daily challenge by date:', error);
-      res.status(500).json({ error: 'Server error fetching daily challenge' });
-    }
-  }) as RequestHandler
-);
-
-
 
 /**
  * PUT /api/images/daily-challenge/admin/:id
