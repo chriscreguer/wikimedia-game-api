@@ -905,8 +905,44 @@ router.post('/daily-challenge/submit', async (req, res) => {
       return;
     }
 
-    // ... rest of submit logic ...
-    res.json({ success: true });
+    // Update challenge stats
+    challenge.stats.completions += 1;
+    challenge.stats.averageScore = ((challenge.stats.averageScore * (challenge.stats.completions - 1)) + score) / challenge.stats.completions;
+    
+    // Add score to distributions
+    const existingScore = challenge.stats.distributions.find(d => d.score === score);
+    if (existingScore) {
+      existingScore.count += 1;
+    } else {
+      challenge.stats.distributions.push({ score, count: 1 });
+    }
+    
+    // Process the distribution data
+    const processedData = processDistributionData(
+      challenge.stats.distributions,
+      score,
+      25
+    );
+    
+    // Update the processed distribution in the challenge
+    challenge.stats.processedDistribution = processedData;
+    
+    // Save the updated challenge
+    await challenge.save();
+    logger.info(`[Submit Endpoint] Challenge ${challenge._id} stats updated and saved.`);
+
+    // Create the response object matching frontend expectations
+    const responseData = {
+      message: 'Score submitted successfully',
+      stats: {
+        averageScore: challenge.stats.averageScore,
+        completions: challenge.stats.completions,
+        processedDistribution: processedData
+      }
+    };
+    console.log("[Submit Endpoint] Sending response:", JSON.stringify(responseData));
+    res.status(200).json(responseData);
+
   } catch (err) {
     console.error('[Submit Endpoint] Error:', err);
     res.status(500).json({ error: 'Internal server error' });
