@@ -5,6 +5,7 @@ import DailyChallenge from '../models/DailyChallenge';
 import { fetchImageData, fetchMultipleImageData } from '../utils/wikimediaHelper';
 import logger from '../utils/logger';
 import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
+import rateLimit from 'express-rate-limit';
 
 dotenv.config();
 
@@ -74,6 +75,26 @@ const photoCategories = [
 // Maximum number of API retries
 const MAX_RETRIES = 3;
 const IMAGES_PER_REQUEST = 100;
+
+// --- Rate Limiter Configuration ---
+const submitLimiter = rateLimit({
+    windowMs: 24 * 60 * 60 * 1000, // 24 hours
+    max: 15, // Limit each IP to 15 submit requests per 24 hours
+    message: { error: 'Too many submission attempts from this IP, please try again after 24 hours' },
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    keyGenerator: (req: Request): string => {
+        // Use 'x-forwarded-for' if behind a proxy, otherwise fallback
+        const ip = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress;
+        return ip || 'unknown-ip'; // Provide a fallback key
+    },
+    handler: (req: Request, res: Response, next: NextFunction, options: any) => {
+        const ip = options.keyGenerator(req);
+        logger.warn(`[Rate Limit Blocked] IP: ${ip} exceeded submit limit for date: ${req.body.date || 'N/A'}`);
+        res.status(options.statusCode).send(options.message);
+    }
+});
+// --- End Rate Limiter Configuration ---
 
 // Helper function to check if a file is a photograph by its extension
 function isPhotoFile(filename: string): boolean {
@@ -867,86 +888,121 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 /**
- * GET /api/images/daily-challenge
- * Get today's challenge
+ * POST /api/images/daily-challenge/submit
+ * Submit a score for today's challenge
  */
-router.post('/daily-challenge/submit', async (req, res) => {
-  try {
+router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: Response): Promise<void> => {
+    const sourceIp = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress || 'unknown-ip';
+    const userAgent = req.headers['user-agent'] || 'Unknown';
     const { score, date } = req.body;
-    let startDate: Date, endDate: Date;
-    let queryDateString: string;
 
-    if (date) {
-      queryDateString = date as string;
-      // Use UTC boundaries for specific date query
-      startDate = new Date(queryDateString + 'T00:00:00.000Z');
-      endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-      if (isNaN(startDate.getTime())) {
-        res.status(400).json({ error: 'Invalid date format' });
+    // --- STEP 1.1: INPUT VALIDATION ---
+    const numericScore = Number(score); // Convert score to number
+    
+    if (score === undefined || score === null || isNaN(numericScore) || numericScore < 0 || numericScore > 5000) {
+        logger.warn(`[Submit Invalid Score] IP: ${sourceIp}, UA: "${userAgent}", Received invalid score: "${score}", Date: ${date}`);
+        res.status(400).json({ error: `Invalid score value submitted. Score must be a number between 0 and 5000.` });
         return;
-      }
-      console.log(`[Submit Endpoint] Finding challenge for specific date ${queryDateString} (UTC)`);
-    } else {
-      // Use CT logic to find 'today's' date if no date query param
-      const now = new Date();
-      queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
-      startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
-      endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-      console.log(`[Submit Endpoint] Finding challenge for current CT date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
     }
+    // --- END VALIDATION ---
 
-    const challenge = await DailyChallenge.findOne({
-      date: { $gte: startDate, $lt: endDate },
-      active: true
-    });
+    // Log the validated request
+    logger.info(`[Submit Received Validated] IP: ${sourceIp}, UA: "${userAgent}", Score: ${numericScore}, Date: ${date}`);
 
-    if (!challenge) {
-      res.status(404).json({ error: 'No challenge found for this date' });
-      return;
+    try {
+        let startDate: Date, endDate: Date;
+        let queryDateString: string;
+
+        if (date) {
+            queryDateString = date as string;
+            startDate = new Date(queryDateString + 'T00:00:00.000Z');
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+            if (isNaN(startDate.getTime())) {
+                logger.warn(`[Submit Invalid Date] IP: ${sourceIp}, Invalid date format: ${date}`);
+                res.status(400).json({ error: 'Invalid date format' });
+                return;
+            }
+            logger.info(`[Submit] Processing for specific date ${queryDateString} (UTC)`);
+        } else {
+            const now = new Date();
+            queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
+            startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+            logger.info(`[Submit] Processing for current CT date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
+        }
+
+        // --- STEP 1.4: Use Atomic Increment for Completions ---
+        // Find and atomically increment completions count first
+        const updatedChallenge = await DailyChallenge.findOneAndUpdate(
+            {
+                date: { $gte: startDate, $lt: endDate },
+                active: true
+            },
+            { $inc: { 'stats.completions': 1 } },
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedChallenge) {
+            logger.warn(`[Submit Not Found] Challenge not found for date: ${queryDateString}, IP: ${sourceIp}`);
+            res.status(404).json({ error: 'No challenge found for this date' });
+            return;
+        }
+
+        // --- Now update distributions and average score (Non-atomic part) ---
+        const existingScoreIndex = updatedChallenge.stats.distributions.findIndex(d => d.score === numericScore);
+        if (existingScoreIndex > -1) {
+            // Atomically increment count for existing score distribution entry
+            await DailyChallenge.updateOne(
+                { _id: updatedChallenge._id, 'stats.distributions.score': numericScore },
+                { $inc: { 'stats.distributions.$.count': 1 } }
+            );
+            // Fetch again to get the updated count for avg score calculation
+            const refreshedChallengeForAvg = await DailyChallenge.findById(updatedChallenge._id);
+            if(refreshedChallengeForAvg) updatedChallenge.stats = refreshedChallengeForAvg.stats;
+        } else {
+            // Atomically add the new score distribution entry
+            await DailyChallenge.updateOne(
+                { _id: updatedChallenge._id },
+                { $push: { 'stats.distributions': { score: numericScore, count: 1 } } }
+            );
+            // Fetch again to get the updated distribution for avg score calculation
+            const refreshedChallengeForAvg = await DailyChallenge.findById(updatedChallenge._id);
+            if(refreshedChallengeForAvg) updatedChallenge.stats = refreshedChallengeForAvg.stats;
+        }
+
+        // Recalculate average score using the correct total completions
+        const totalScoreSum = updatedChallenge.stats.distributions.reduce((sum, dist) => sum + (dist.score * dist.count), 0);
+        const totalCompletions = updatedChallenge.stats.completions; // Use the already incremented value
+        updatedChallenge.stats.averageScore = totalCompletions > 0 ? totalScoreSum / totalCompletions : 0;
+
+        // Recalculate processed distribution
+        const processedData = processDistributionData(
+            updatedChallenge.stats.distributions,
+            numericScore,
+            25
+        );
+        updatedChallenge.stats.processedDistribution = processedData;
+
+        // Save the non-atomic updates (averageScore, processedDistribution)
+        await updatedChallenge.save();
+        logger.info(`[Submit Success] Challenge ${updatedChallenge._id} stats updated for IP: ${sourceIp}. Completions: ${updatedChallenge.stats.completions}`);
+
+        // Create the response object matching frontend expectations
+        const responseData = {
+            message: 'Score submitted successfully',
+            stats: {
+                averageScore: updatedChallenge.stats.averageScore,
+                completions: updatedChallenge.stats.completions,
+                processedDistribution: processedData
+            }
+        };
+        logger.info(`[Submit Response] Sending response for IP: ${sourceIp}, Score: ${numericScore}`);
+        res.status(200).json(responseData);
+
+    } catch (err) {
+        logger.error(`[Submit Error] IP: ${sourceIp}, Score: ${score}, Date: ${date}`, err);
+        res.status(500).json({ error: 'Internal server error during score update' });
     }
-
-    // Update challenge stats
-    challenge.stats.completions += 1;
-    challenge.stats.averageScore = ((challenge.stats.averageScore * (challenge.stats.completions - 1)) + score) / challenge.stats.completions;
-    
-    // Add score to distributions
-    const existingScore = challenge.stats.distributions.find(d => d.score === score);
-    if (existingScore) {
-      existingScore.count += 1;
-    } else {
-      challenge.stats.distributions.push({ score, count: 1 });
-    }
-    
-    // Process the distribution data
-    const processedData = processDistributionData(
-      challenge.stats.distributions,
-      score,
-      25
-    );
-    
-    // Update the processed distribution in the challenge
-    challenge.stats.processedDistribution = processedData;
-    
-    // Save the updated challenge
-    await challenge.save();
-    logger.info(`[Submit Endpoint] Challenge ${challenge._id} stats updated and saved.`);
-
-    // Create the response object matching frontend expectations
-    const responseData = {
-      message: 'Score submitted successfully',
-      stats: {
-        averageScore: challenge.stats.averageScore,
-        completions: challenge.stats.completions,
-        processedDistribution: processedData
-      }
-    };
-    console.log("[Submit Endpoint] Sending response:", JSON.stringify(responseData));
-    res.status(200).json(responseData);
-
-  } catch (err) {
-    console.error('[Submit Endpoint] Error:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
 });
 
 /**
@@ -1067,49 +1123,47 @@ router.get('/daily-challenge/stats', async (req, res) => {
   }
 });
 
-router.get(
-  '/daily-challenge/date/:date',
-  (async (req: Request, res: Response): Promise<void> => {
+/**
+ * GET /api/images/daily-challenge/date/:date
+ * Get the daily challenge for a specific date
+ */
+router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): Promise<void> => {
     try {
-      const { date } = req.params; // e.g., "2025-04-05"
+        const { date } = req.params;
+        const startDate = new Date(date + 'T00:00:00.000Z');
+        const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+        if (isNaN(startDate.getTime())) {
+            console.log(`Backend: Invalid date format received: ${date}`);
+            res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+            return;
+        }
 
-      // --- USE UTC BOUNDARIES ---
-      const startDate = new Date(date + 'T00:00:00.000Z');
-      const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // Start of next day UTC
+        console.log(`Backend: Querying for challenge >= ${startDate.toISOString()} and < ${endDate.toISOString()} (UTC)`);
 
-      if (isNaN(startDate.getTime())) {
-        console.log(`Backend: Invalid date format received: ${date}`);
-        res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
-        return;
-      }
-      // --- END USE UTC BOUNDARIES ---
+        // Only fetch the fields needed for playing the game
+        const challenge = await DailyChallenge.findOne({
+            date: { $gte: startDate, $lt: endDate },
+            active: true
+        })
+        .select('images date active _id stats.processedDistribution'); // Added back processedDistribution
 
-      console.log(`Backend: Querying for challenge >= ${startDate.toISOString()} and < ${endDate.toISOString()} (UTC)`); // Updated log
+        console.log(`Backend: MongoDB Query Result (challenge): ${challenge ? `Found _id: ${challenge._id}, Image count: ${challenge.images?.length}` : 'null'}`);
 
-      const challenge = await DailyChallenge.findOne({
-        date: {
-          $gte: startDate, // Use UTC start date
-          $lt: endDate     // Use UTC end date (exclusive)
-        },
-        active: true
-      });
+        if (!challenge) {
+            console.log(`Backend: --> Entering 404 block because challenge was null for date ${date} (UTC Query).`);
+            res.status(404).json({ error: 'No daily challenge available for this date' });
+            return;
+        }
 
-      console.log(`Backend: MongoDB Query Result (challenge): ${challenge ? `Found _id: ${challenge._id}` : 'null'}`); // Updated log
+        // Send only the minimal data needed for playing the game
+        res.status(200).json(challenge);
 
-      if (!challenge) {
-        console.log(`Backend: --> Entering 404 block because challenge was null for date ${date} (UTC Query).`); // Updated log
-        res.status(404).json({ error: 'No daily challenge available for this date' });
-        return;
-      }
-
-      res.status(200).json(challenge);
     } catch (error) {
-      console.error('Error fetching daily challenge by date:', error);
-      res.status(500).json({ error: 'Server error fetching daily challenge' });
-      return;
+        console.error('Error fetching daily challenge by date:', error);
+        res.status(500).json({ error: 'Server error fetching daily challenge' });
+        return;
     }
-  }) as RequestHandler
-);
+}) as RequestHandler);
 
 // ADMIN ROUTES
 
