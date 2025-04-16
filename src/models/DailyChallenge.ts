@@ -13,7 +13,7 @@ interface ProcessedDistribution {
   percentileRank?: number;
   curvePoints: Array<{
     score: number;
-    density: number;
+    count: number;
     percentile: number;
   }>;
   totalParticipants: number;
@@ -67,7 +67,7 @@ const DailyChallengeSchema: Schema = new Schema({
       percentileRank: { type: Number },
       curvePoints: [{
         score: { type: Number },
-        density: { type: Number },
+        count: { type: Number },
         percentile: { type: Number }
       }],
       totalParticipants: { type: Number },
