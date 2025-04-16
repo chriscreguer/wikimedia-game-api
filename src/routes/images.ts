@@ -1,7 +1,8 @@
 import express, { Request, Response, NextFunction, RequestHandler } from 'express';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
-import DailyChallenge from '../models/DailyChallenge';
+import DailyChallengeDoc from '../models/DailyChallenge';
+import { ProcessedDistribution, ProcessedDistributionPoint } from '../types/types';
 import { fetchImageData, fetchMultipleImageData } from '../utils/wikimediaHelper';
 import logger from '../utils/logger';
 import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
@@ -75,6 +76,10 @@ const photoCategories = [
 // Maximum number of API retries
 const MAX_RETRIES = 3;
 const IMAGES_PER_REQUEST = 100;
+
+// Constants for KDE calculation
+const KDE_BANDWIDTH = 175; // Tunable parameter for smoothness
+const KDE_STEP = 25; // Step size for density points
 
 // --- Rate Limiter Configuration ---
 const submitLimiter = rateLimit({
@@ -253,31 +258,18 @@ function extractYearWithConfidence(metadata: any, uploadYear: number): { year: n
   return { year: Math.floor(Math.random() * (CURRENT_YEAR - MIN_YEAR + 1)) + MIN_YEAR, confidence: 'low' };
 }
 
-
 /**
- * Process distribution data to generate percentile ranks and curve points
- * @param distributions Raw distribution data with individual score entries
- * @param userScore Optional user score to calculate specific percentile for
- * @param pointCount Number of points to generate for the curve (default 25)
- * @returns Processed distribution data with percentiles and curve points
+ * Process raw distribution data into a format suitable for the frontend chart
+ * Uses Kernel Density Estimation (KDE) with Gaussian kernel for smooth curve
  */
-function processDistributionData(
-  distributions: Array<{score: number, count: number}>,
+const processDistributionData = (
+    distributions: Array<{ score: number; count: number }>,
   userScore?: number,
-  pointCount: number = 25
-): {
-  percentileRank?: number;
-  curvePoints: Array<{score: number, count: number, percentile: number}>;
-  totalParticipants: number;
-  minScore: number;
-  maxScore: number;
-  medianScore: number;
-} {
-  
-  // Return empty data if no distributions
+    step: number = KDE_STEP
+): ProcessedDistribution => {
+    // Step 1: Handle Edge Cases
   if (!distributions || distributions.length === 0) {
     return {
-      percentileRank: undefined,
       curvePoints: [],
       totalParticipants: 0,
       minScore: 0,
@@ -286,15 +278,9 @@ function processDistributionData(
     };
   }
 
-  // Sort distributions by score (ascending)
-  const sortedDistributions = [...distributions].sort((a, b) => a.score - b.score);
-  
-  // Calculate total participants and cumulative counts
-  const totalParticipants = sortedDistributions.reduce((sum, item) => sum + item.count, 0);
-  
+    const totalParticipants = distributions.reduce((sum, item) => sum + item.count, 0);
   if (totalParticipants === 0) {
     return {
-      percentileRank: undefined,
       curvePoints: [],
       totalParticipants: 0,
       minScore: 0,
@@ -303,211 +289,95 @@ function processDistributionData(
     };
   }
   
-  // Calculate cumulative counts and percentiles
-  let cumulativeCount = 0;
-  const distributionsWithPercentiles = sortedDistributions.map(item => {
-    cumulativeCount += item.count;
-    return {
-      score: item.score,
-      count: item.count,
-      cumulativeCount,
-      percentile: Math.round((cumulativeCount / totalParticipants) * 100)
-    };
-  });
-  
-  // Min, max scores
-  const minScore = sortedDistributions[0].score;
-  const maxScore = sortedDistributions[sortedDistributions.length - 1].score;
-  
-  // Calculate median score
-  let medianScore = 0;
-  const medianIndex = Math.floor(totalParticipants / 2);
-  for (const item of distributionsWithPercentiles) {
-    if (item.cumulativeCount >= medianIndex) {
-      medianScore = item.score;
-      break;
-    }
-  }
-  
-  // Calculate user's percentile rank if a score is provided
-  let percentileRank: number | undefined = undefined;
-  if (userScore !== undefined) {
-    // Count scores below user's score AND scores equal to user's score
-    let scoresBelow = 0;
-    let scoresEqual = 0;
-    
-    for (const item of sortedDistributions) {
-      if (item.score < userScore) {
-        scoresBelow += item.count;
-      } else if (item.score === userScore) {
-        scoresEqual += item.count;
-      }
-    }
- 
-
-  // Calculate percentile using the "mid-point" approach for ties
-  // This puts the user in the middle of the tied scores
-  if (totalParticipants > 0) {
-    // First calculate the raw percentile (including half of the ties)
-    const rawPercentile = Math.round(((scoresBelow + (scoresEqual / 2)) / totalParticipants) * 100);
-    
-    // Convert to top X% format (e.g., top 25%)
-    percentileRank = 100 - rawPercentile;
-    
-    // We want the top X% format, but we only want to highlight truly exceptional scores
-    // Only highlight if in the top half of users
-    if (percentileRank > 50) {
-      percentileRank = undefined;
-    }
-  }
-}
-  
-  // Generate curve points by taking a subset of the distribution
- // Generate curve points with fixed count
-const targetPointCount = 15; // Lower this from 25 to 15
-let curvePoints: Array<{score: number, count: number, percentile: number}> = [];
-
-if (distributionsWithPercentiles.length <= targetPointCount) {
-  // If we have fewer data points than requested, use all of them
-  curvePoints = distributionsWithPercentiles.map(item => ({
-    score: item.score,
-    count: item.count,
-    percentile: item.percentile
-  }));
-} else {
-  // Always include first and last points
-  const first = distributionsWithPercentiles[0];
-  const last = distributionsWithPercentiles[distributionsWithPercentiles.length - 1];
-  
-  // Find points at specific percentile intervals
-  const percentileSteps = Math.floor(100 / (targetPointCount - 1));
-  const percentiles = [];
-  
-  // Create array of target percentiles
-  for (let p = 0; p <= 100; p += percentileSteps) {
-    if (percentiles.length < targetPointCount - 1) {
-      percentiles.push(p);
-    }
-  }
-  // Ensure 100th percentile is included
-  if (percentiles[percentiles.length - 1] !== 100) {
-    percentiles.push(100);
-  }
-  
-  // Find the closest point for each percentile
-  for (const targetPercentile of percentiles) {
-    let closest = distributionsWithPercentiles[0];
-    let minDiff = Math.abs(closest.percentile - targetPercentile);
-    
-    for (const point of distributionsWithPercentiles) {
-      const diff = Math.abs(point.percentile - targetPercentile);
-      if (diff < minDiff) {
-        closest = point;
-        minDiff = diff;
-      }
-    }
-    
-    // Add this point if not already included
-    if (!curvePoints.some(p => p.score === closest.score)) {
-      curvePoints.push({
-        score: closest.score,
-        count: closest.count,
-        percentile: closest.percentile
-      });
-    }
-  }
-  
-  // Sort by score
-  curvePoints.sort((a, b) => a.score - b.score);
-  
-  // Ensure we have exactly targetPointCount points by adding or removing as needed
-  if (curvePoints.length < targetPointCount) {
-    // Find the largest gaps and add points there
-    while (curvePoints.length < targetPointCount) {
-      let maxGapIndex = 0;
-      let maxGapSize = 0;
-      
-      for (let i = 0; i < curvePoints.length - 1; i++) {
-        const gap = curvePoints[i + 1].score - curvePoints[i].score;
-        if (gap > maxGapSize) {
-          maxGapSize = gap;
-          maxGapIndex = i;
+    // Step 2: Flatten Raw Scores
+    const allScores: number[] = [];
+    distributions.forEach(dist => {
+        const count = Math.max(0, Math.floor(dist.count || 0));
+        for (let i = 0; i < count; i++) {
+            allScores.push(dist.score);
         }
-      }
-      
-      // Find a point between the two points with largest gap
-      const leftScore = curvePoints[maxGapIndex].score;
-      const rightScore = curvePoints[maxGapIndex + 1].score;
-      const midScore = Math.floor((leftScore + rightScore) / 2);
-      
-      // Find the closest existing point to this score
-      let closestPoint = distributionsWithPercentiles[0];
-      let minDiff = Math.abs(closestPoint.score - midScore);
-      
-      for (const point of distributionsWithPercentiles) {
-        const diff = Math.abs(point.score - midScore);
-        if (diff < minDiff) {
-          closestPoint = point;
-          minDiff = diff;
-        }
-      }
-      
-      // Insert this point
-      if (!curvePoints.some(p => p.score === closestPoint.score)) {
-        curvePoints.splice(maxGapIndex + 1, 0, {
-          score: closestPoint.score,
-          count: closestPoint.count,
-          percentile: closestPoint.percentile
-        });
-      } else {
-        // If we can't add more unique points, break to avoid infinite loop
-        break;
-      }
-    }
-  } else if (curvePoints.length > targetPointCount) {
-    // Remove points, but keep first and last
-    const pointsToRemove = curvePoints.length - targetPointCount;
-    
-    // Calculate importance of each point (except first and last)
-    const pointsWithImportance = curvePoints.slice(1, -1).map((point, idx) => {
-      const actualIdx = idx + 1;
-      const prev = curvePoints[actualIdx - 1];
-      const next = curvePoints[actualIdx + 1];
-      
-      // Linear interpolation between prev and next
-      const ratio = (point.score - prev.score) / (next.score - prev.score);
-      const expectedCount = prev.count + ratio * (next.count - prev.count);
-      
-      // Importance is how much this point deviates from linear interpolation
-      const importance = Math.abs(point.count - expectedCount);
-      
-      return { point, importance, index: actualIdx };
     });
-    
-    // Sort by importance (ascending, less important first)
-    pointsWithImportance.sort((a, b) => a.importance - b.importance);
-    
-    // Remove least important points
-    const indexesToRemove = pointsWithImportance
-      .slice(0, pointsToRemove)
-      .map(p => p.index)
-      .sort((a, b) => b - a); // Sort descending to remove from end first
-    
-    for (const idx of indexesToRemove) {
-      curvePoints.splice(idx, 1);
-    }
-  }
-}
+    const n = allScores.length; // Should equal totalParticipants
 
+    // Step 3: Define KDE Parameters
+    const bandwidth = KDE_BANDWIDTH;
+    const minScoreDomain = 0;
+    const maxScoreDomain = 5000;
+
+    // Step 4: Gaussian Kernel Function
+    const gaussianKernel = (u: number): number => {
+        return (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * u * u);
+    };
+
+    // Step 5: Calculate Density Points
+    const kdePointsRaw: Array<{ score: number, density: number }> = [];
+    for (let x = minScoreDomain; x <= maxScoreDomain; x += step) {
+        let densitySum = 0;
+        for (const s of allScores) {
+            const u = (x - s) / bandwidth;
+            densitySum += gaussianKernel(u);
+        }
+        const density = (n > 0 && bandwidth > 0) ? densitySum / (n * bandwidth) : 0;
+        kdePointsRaw.push({ score: x, density });
+    }
+
+    // Step 6: Normalize Density
+    let maxDensity = 0;
+    kdePointsRaw.forEach(p => {
+        if (p.density > maxDensity) {
+            maxDensity = p.density;
+        }
+    });
+
+    if (maxDensity > 0) {
+        kdePointsRaw.forEach(p => {
+            p.density = p.density / maxDensity;
+        });
+    }
+
+    // Step 7: Calculate Percentiles for KDE Points
+    const finalCurvePoints: ProcessedDistributionPoint[] = [];
+    let cumulativeCount = 0;
+    let distIndex = 0;
+    const sortedDistributions = [...distributions].sort((a, b) => a.score - b.score);
+
+    for (const kdePoint of kdePointsRaw) {
+        while (distIndex < sortedDistributions.length && sortedDistributions[distIndex].score <= kdePoint.score) {
+            cumulativeCount += sortedDistributions[distIndex].count;
+            distIndex++;
+        }
+        const percentile = totalParticipants > 0 ? Math.round((cumulativeCount / totalParticipants) * 100) : 0;
+        finalCurvePoints.push({
+            score: kdePoint.score,
+            density: kdePoint.density,
+            percentile
+        });
+    }
+
+    // Calculate min, max, and median scores
+    const scores = allScores.sort((a, b) => a - b);
+    const minScore = scores[0];
+    const maxScore = scores[scores.length - 1];
+    const medianScore = scores[Math.floor(scores.length / 2)];
+
+    // Calculate user's percentile rank if provided
+    let percentileRank: number | undefined = undefined;
+    if (userScore !== undefined) {
+        const scoresBelowUser = allScores.filter(s => s < userScore).length;
+        const scoresEqual = allScores.filter(s => s === userScore).length;
+        percentileRank = Math.round(((scoresBelowUser + (scoresEqual / 2)) / totalParticipants) * 100);
+    }
+
+    // Step 8: Return Final Object
 return {
   percentileRank,
-  curvePoints,
+        curvePoints: finalCurvePoints,
   totalParticipants,
   minScore,
   maxScore,
   medianScore
 };
-}
+};
 
 // Function to fetch images from a specific category
 async function getImagesFromCategory(category: string, decadeRange: { start: number, end: number }): Promise<CachedImage[]> {
@@ -895,7 +765,7 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
     const sourceIp = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress || 'unknown-ip';
     const userAgent = req.headers['user-agent'] || 'Unknown';
     const { score, date } = req.body;
-
+    
     // --- STEP 1.1: INPUT VALIDATION ---
     const numericScore = Number(score); // Convert score to number
     
@@ -913,7 +783,7 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
         let startDate: Date, endDate: Date;
         let queryDateString: string;
 
-        if (date) {
+    if (date) {
             queryDateString = date as string;
             startDate = new Date(queryDateString + 'T00:00:00.000Z');
             endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
@@ -923,7 +793,7 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
                 return;
             }
             logger.info(`[Submit] Processing for specific date ${queryDateString} (UTC)`);
-        } else {
+    } else {
             const now = new Date();
             queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
             startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
@@ -933,10 +803,10 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
 
         // --- STEP 1.4: Use Atomic Increment for Completions ---
         // Find and atomically increment completions count first
-        const updatedChallenge = await DailyChallenge.findOneAndUpdate(
+        const updatedChallenge = await DailyChallengeDoc.findOneAndUpdate(
             {
                 date: { $gte: startDate, $lt: endDate },
-                active: true
+      active: true
             },
             { $inc: { 'stats.completions': 1 } },
             { new: true } // Return the updated document
@@ -952,21 +822,21 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
         const existingScoreIndex = updatedChallenge.stats.distributions.findIndex(d => d.score === numericScore);
         if (existingScoreIndex > -1) {
             // Atomically increment count for existing score distribution entry
-            await DailyChallenge.updateOne(
+            await DailyChallengeDoc.updateOne(
                 { _id: updatedChallenge._id, 'stats.distributions.score': numericScore },
                 { $inc: { 'stats.distributions.$.count': 1 } }
             );
             // Fetch again to get the updated count for avg score calculation
-            const refreshedChallengeForAvg = await DailyChallenge.findById(updatedChallenge._id);
+            const refreshedChallengeForAvg = await DailyChallengeDoc.findById(updatedChallenge._id);
             if(refreshedChallengeForAvg) updatedChallenge.stats = refreshedChallengeForAvg.stats;
-        } else {
+    } else {
             // Atomically add the new score distribution entry
-            await DailyChallenge.updateOne(
+            await DailyChallengeDoc.updateOne(
                 { _id: updatedChallenge._id },
                 { $push: { 'stats.distributions': { score: numericScore, count: 1 } } }
             );
             // Fetch again to get the updated distribution for avg score calculation
-            const refreshedChallengeForAvg = await DailyChallenge.findById(updatedChallenge._id);
+            const refreshedChallengeForAvg = await DailyChallengeDoc.findById(updatedChallenge._id);
             if(refreshedChallengeForAvg) updatedChallenge.stats = refreshedChallengeForAvg.stats;
         }
 
@@ -976,7 +846,7 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
         updatedChallenge.stats.averageScore = totalCompletions > 0 ? totalScoreSum / totalCompletions : 0;
 
         // Recalculate processed distribution
-        const processedData = processDistributionData(
+    const processedData = processDistributionData(
             updatedChallenge.stats.distributions,
             numericScore,
             25
@@ -989,13 +859,13 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
 
         // Create the response object matching frontend expectations
         const responseData = {
-            message: 'Score submitted successfully',
-            stats: {
+      message: 'Score submitted successfully',
+      stats: {
                 averageScore: updatedChallenge.stats.averageScore,
                 completions: updatedChallenge.stats.completions,
-                processedDistribution: processedData
-            }
-        };
+        processedDistribution: processedData
+      }
+    };
         logger.info(`[Submit Response] Sending response for IP: ${sourceIp}, Score: ${numericScore}`);
         res.status(200).json(responseData);
 
@@ -1032,15 +902,16 @@ router.get(
       const nextDay = new Date(targetDate.getTime() + 24 * 60 * 60 * 1000);
       
       // Find the challenge
-      const challenge = await DailyChallenge.findOne({
+      const challenge = await DailyChallengeDoc.findOne({
         date: { 
           $gte: targetDate,
           $lt: nextDay
         },
         active: true
-      });
+      })
+      .select('-stats.distributions'); // Exclude raw distributions
       
-      if (!challenge || !challenge.stats || !challenge.stats.distributions) {
+      if (!challenge) {
         return res.status(404).json({ 
           error: 'No distribution data available for this date' 
         });
@@ -1082,39 +953,40 @@ router.get(
  * Get stats for today's challenge
  */
 router.get('/daily-challenge/stats', async (req, res) => {
-  try {
-    let startDate: Date, endDate: Date;
+    try {
+      let startDate: Date, endDate: Date;
     let queryDateString: string;
 
-    if (req.query.date) {
+      if (req.query.date) {
       queryDateString = req.query.date as string;
       // Use UTC boundaries for specific date query
       startDate = new Date(queryDateString + 'T00:00:00.000Z');
       endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
       if (isNaN(startDate.getTime())) {
         res.status(400).json({ error: 'Invalid date format' });
-        return;
-      }
+          return;
+        }
       console.log(`[Stats Endpoint] Querying for specific date ${queryDateString} (UTC)`);
-    } else {
+      } else {
       // Use CT logic to find 'today's' date if no date query param
       const now = new Date();
       queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
       startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
-      endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+        endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
       console.log(`[Stats Endpoint] Querying for current CT date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
     }
 
-    const challenge = await DailyChallenge.findOne({
+    const challenge = await DailyChallengeDoc.findOne({
       date: { $gte: startDate, $lt: endDate },
-      active: true
-    });
-
+        active: true
+      })
+      .select('-stats.distributions'); // Exclude raw distributions
+      
     if (!challenge) {
       res.status(404).json({ error: 'No challenge found for this date' });
-      return;
-    }
-
+        return;
+      }
+      
     // ... rest of stats logic ...
     res.json(challenge);
   } catch (err) {
@@ -1129,38 +1001,38 @@ router.get('/daily-challenge/stats', async (req, res) => {
  */
 router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): Promise<void> => {
     try {
-        const { date } = req.params;
+      const { date } = req.params;
         const startDate = new Date(date + 'T00:00:00.000Z');
         const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
         if (isNaN(startDate.getTime())) {
             console.log(`Backend: Invalid date format received: ${date}`);
-            res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
-            return;
-        }
-
+        res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+        return;
+      }
+      
         console.log(`Backend: Querying for challenge >= ${startDate.toISOString()} and < ${endDate.toISOString()} (UTC)`);
 
-        // Only fetch the fields needed for playing the game
-        const challenge = await DailyChallenge.findOne({
+        // Find the challenge for the specified date
+        const challenge = await DailyChallengeDoc.findOne({
             date: { $gte: startDate, $lt: endDate },
-            active: true
+        active: true
         })
-        .select('images date active _id stats.processedDistribution'); // Added back processedDistribution
+        .select('images date active _id stats.averageScore stats.completions stats.processedDistribution'); // Explicitly select only needed fields
 
         console.log(`Backend: MongoDB Query Result (challenge): ${challenge ? `Found _id: ${challenge._id}, Image count: ${challenge.images?.length}` : 'null'}`);
-
-        if (!challenge) {
+      
+      if (!challenge) {
             console.log(`Backend: --> Entering 404 block because challenge was null for date ${date} (UTC Query).`);
-            res.status(404).json({ error: 'No daily challenge available for this date' });
-            return;
-        }
-
+        res.status(404).json({ error: 'No daily challenge available for this date' });
+        return;
+      }
+      
         // Send only the minimal data needed for playing the game
-        res.status(200).json(challenge);
+      res.status(200).json(challenge);
 
     } catch (error) {
-        console.error('Error fetching daily challenge by date:', error);
-        res.status(500).json({ error: 'Server error fetching daily challenge' });
+      console.error('Error fetching daily challenge by date:', error);
+      res.status(500).json({ error: 'Server error fetching daily challenge' });
         return;
     }
 }) as RequestHandler);
@@ -1202,7 +1074,7 @@ router.post('/daily-challenge/admin/create', verifyAdmin, (async (req, res) => {
     }
     
     // Check if a challenge already exists for this date
-    const existingChallenge = await DailyChallenge.findOne({
+    const existingChallenge = await DailyChallengeDoc.findOne({
       date: challengeDate
     });
     
@@ -1223,7 +1095,7 @@ router.post('/daily-challenge/admin/create', verifyAdmin, (async (req, res) => {
     }
     
     // Create new challenge
-    const newChallenge = new DailyChallenge({
+    const newChallenge = new DailyChallengeDoc({
       date: challengeDate,
       images: imageData,
       stats: {
@@ -1254,7 +1126,7 @@ router.post('/daily-challenge/admin/create', verifyAdmin, (async (req, res) => {
 router.get('/daily-challenge/dates', async (req: Request, res: Response) => {
   try {
     // Optionally, you can restrict this to active challenges only
-    const challenges = await DailyChallenge.find({ active: true }, { date: 1 }).sort({ date: 1 });
+    const challenges = await DailyChallengeDoc.find({ active: true }, { date: 1 }).sort({ date: 1 });
     // Normalize each date to YYYY-MM-DD format
     const dates = challenges.map(challenge => 
       new Date(challenge.date).toISOString().split('T')[0]
@@ -1276,7 +1148,7 @@ router.put('/daily-challenge/admin/:id', verifyAdmin, (async (req, res) => {
     const { date, filenames, active } = req.body;
     
     // Find the challenge
-    const challenge = await DailyChallenge.findById(id);
+    const challenge = await DailyChallengeDoc.findById(id);
     
     if (!challenge) {
       return res.status(404).json({ error: 'Challenge not found' });
@@ -1340,13 +1212,13 @@ router.get('/daily-challenge/admin/list', verifyAdmin, (async (req, res) => {
     const pageNumber = parseInt(page as string, 10);
     const limitNumber = parseInt(limit as string, 10);
     
-    const challenges = await DailyChallenge.find()
+    const challenges = await DailyChallengeDoc.find()
       .sort({ date: -1 })
       .skip((pageNumber - 1) * limitNumber)
       .limit(limitNumber)
       .select('date active stats.completions _id');
     
-    const total = await DailyChallenge.countDocuments();
+    const total = await DailyChallengeDoc.countDocuments();
     
     res.status(200).json({
       challenges,
@@ -1375,13 +1247,14 @@ router.get('/daily-challenge/today', async (req, res) => {
     console.log(`[Today Endpoint] Querying for challenge >= ${startDate.toISOString()} and < ${endDate.toISOString()} (based on CT date)`);
 
     // 3. Query using UTC boundaries
-    const challenge = await DailyChallenge.findOne({
-      date: {
+    const challenge = await DailyChallengeDoc.findOne({
+      date: { 
         $gte: startDate,
         $lt: endDate
       },
       active: true
-    });
+    })
+    .select('-stats.distributions'); // Exclude raw distributions
 
     if (!challenge) {
       console.log(`[Today Endpoint] No challenge found for CT date ${todayDateStringCT}`);
