@@ -1060,6 +1060,13 @@ router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): 
             return;
         }
 
+        // Add detailed logging of the challenge object
+        logger.info('Challenge object keys:', Object.keys(challenge.toObject ? challenge.toObject() : challenge));
+        if (challenge.stats) {
+            logger.info('Stats object keys:', Object.keys(challenge.stats));
+        }
+        logger.info('Challenge object sample:', JSON.stringify(challenge.toObject ? challenge.toObject() : challenge).substring(0, 500));
+
         // Send only the minimal data needed for playing the game
         res.status(200).json(challenge);
 
