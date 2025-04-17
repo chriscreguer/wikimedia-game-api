@@ -1050,7 +1050,7 @@ router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): 
             date: { $gte: startDate, $lt: endDate },
             active: true
         })
-        .select('images date active _id stats.processedDistribution'); // Added back processedDistribution
+        .select('_id images date active stats.processedDistribution -stats.distributions -stats.averageScore -stats.completions');
 
         console.log(`Backend: MongoDB Query Result (challenge): ${challenge ? `Found _id: ${challenge._id}, Image count: ${challenge.images?.length}` : 'null'}`);
 
