@@ -26,5 +26,3 @@ Dockerfile
 .dockerignore
 nixpacks.toml
 
-# TS Config (usually not needed in runtime image)
-tsconfig.json
