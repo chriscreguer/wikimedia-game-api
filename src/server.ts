@@ -77,7 +77,7 @@ app.use('/api/images/daily-challenge', (req, res, next) => {
 
 // ***** ADD BUILD INFO ENDPOINT *****
 // Define a unique timestamp string for this specific deployment attempt
-const BUILD_TIMESTAMP = "2025-04-17_0144_CDT"; // <-- UPDATE THIS VALUE before deploying!
+const BUILD_TIMESTAMP = "2025-04-17_1116_CDT"; // <-- UPDATE THIS VALUE before deploying!
 
 app.get('/api/build-info', (req, res) => {
     console.log(`[CONSOLE] Request received for /api/build-info`); // Add console log here too
