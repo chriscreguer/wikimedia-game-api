@@ -1,0 +1,30 @@
+# .dockerignore
+
+# Node
+node_modules
+npm-debug.log*
+*.log
+logs
+
+# Build output (we generate this IN the Dockerfile)
+dist
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Env files
+.env*
+!env.example
+
+# Docker / Nixpacks config (we won't need nixpacks.toml anymore)
+Dockerfile
+.dockerignore
+nixpacks.toml
+
+# TS Config (usually not needed in runtime image)
+tsconfig.json
