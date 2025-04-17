@@ -6,3 +6,6 @@ cmds = ["npm ci"]  # Or yarn install
 
 [phases.build]
 cmds = ["npm run build"]  # Or yarn build
+
+[phases.start]
+cmds = ["node dist/server.js"]
