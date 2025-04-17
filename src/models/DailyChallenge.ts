@@ -32,21 +32,21 @@ const DailyChallengeSchema: Schema = new Schema({
   stats: {
     averageScore: { type: Number, default: 0 },
     completions: { type: Number, default: 0 },
-    distributions: [{
-      score: { type: Number },
-      count: { type: Number, default: 0 }
+    distributions: [{ // Raw score counts
+      score: { type: Number, required: true },
+      count: { type: Number, required: true, default: 0 }
     }],
-    processedDistribution: {
-      percentileRank: { type: Number },
+    processedDistribution: { // Processed KDE results
+      percentileRank: { type: Number }, // Optional, might be null
       curvePoints: [{
-        score: { type: Number },
-        density: { type: Number },
-        percentile: { type: Number }
+        score: { type: Number, required: true },
+        density: { type: Number, required: true }, // Required density field
+        percentile: { type: Number, required: true }
       }],
-      totalParticipants: { type: Number },
-      minScore: { type: Number },
-      maxScore: { type: Number },
-      medianScore: { type: Number }
+      totalParticipants: { type: Number, required: true },
+      minScore: { type: Number, required: true },
+      maxScore: { type: Number, required: true },
+      medianScore: { type: Number, required: true }
     }
   },
   active: { type: Boolean, default: true }
@@ -81,6 +81,38 @@ DailyChallengeSchema.pre<DailyChallengeDoc>('save', function(next) {
       return image;
     });
   }
+  next();
+});
+
+// Pre-save hook to ensure processedDistribution is valid
+DailyChallengeSchema.pre('save', function(this: mongoose.Document & { stats: { processedDistribution?: ProcessedDistribution } }, next) {
+  // Validate processedDistribution if it exists
+  if (this.stats.processedDistribution) {
+    const { curvePoints, totalParticipants, minScore, maxScore, medianScore } = this.stats.processedDistribution;
+    
+    // Ensure all required fields are present
+    if (!curvePoints || !Array.isArray(curvePoints) || curvePoints.length === 0) {
+      return next(new Error('processedDistribution.curvePoints must be a non-empty array'));
+    }
+    
+    // Validate each curve point
+    for (const point of curvePoints) {
+      if (typeof point.score !== 'number' || 
+          typeof point.density !== 'number' || 
+          typeof point.percentile !== 'number') {
+        return next(new Error('Each curve point must have valid score, density, and percentile values'));
+      }
+    }
+    
+    // Validate summary statistics
+    if (typeof totalParticipants !== 'number' || 
+        typeof minScore !== 'number' || 
+        typeof maxScore !== 'number' || 
+        typeof medianScore !== 'number') {
+      return next(new Error('processedDistribution must have valid totalParticipants, minScore, maxScore, and medianScore'));
+    }
+  }
+  
   next();
 });
 

@@ -264,64 +264,89 @@ function extractYearWithConfidence(metadata: any, uploadYear: number): { year: n
  */
 function processDistributionData(
     distributions: Array<{ score: number; count: number }>,
-    userScore?: number, // Make userScore optional as it's only for percentileRank
-    step: number = 25 // Density calculation step size (TUNABLE)
-): ProcessedDistribution { // Return the imported type
-
-    // === Step 1: Handle Edge Cases ===
-    if (!distributions || distributions.length === 0) {
-        return { percentileRank: undefined, curvePoints: [], totalParticipants: 0, minScore: 0, maxScore: 0, medianScore: 0 };
+    userScore?: number,
+    step: number = 25
+): ProcessedDistribution {
+    // Handle empty/null distributions
+    if (!distributions) {
+        console.warn("[processDistributionData] Received null/undefined distributions array.");
+        return {
+            percentileRank: undefined,
+            curvePoints: [
+                { score: 0, density: 0, percentile: 0 },
+                { score: 5000, density: 0, percentile: 100 }
+            ],
+            totalParticipants: 0,
+            minScore: 0,
+            maxScore: 0,
+            medianScore: 0
+        };
     }
+
     const totalParticipants = distributions.reduce((sum, item) => sum + (item.count || 0), 0);
+
+    // Handle 0 participants
     if (totalParticipants === 0) {
-        return { percentileRank: undefined, curvePoints: [], totalParticipants: 0, minScore: 0, maxScore: 0, medianScore: 0 };
+        console.log("[processDistributionData] 0 participants, returning default structure.");
+        return {
+            percentileRank: undefined,
+            curvePoints: [
+                { score: 0, density: 0, percentile: 0 },
+                { score: 5000, density: 0, percentile: 100 }
+            ],
+            totalParticipants: 0,
+            minScore: 0,
+            maxScore: 0,
+            medianScore: 0
+        };
     }
 
-    // === Step 2: Flatten Raw Scores ===
+    // Flatten scores for KDE calculation
     const allScores: number[] = [];
     distributions.forEach(dist => {
-        const count = Math.max(0, Math.floor(dist.count || 0));
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < (dist.count || 0); i++) {
             allScores.push(dist.score);
         }
     });
-    const n = allScores.length;
 
-    // === Step 3: Define KDE Parameters ===
-    const bandwidth = 175; // Bandwidth (TUNABLE)
+    const n = allScores.length;
+    const bandwidth = 175;
     const minScoreDomain = 0;
     const maxScoreDomain = 5000;
 
-    // === Step 4: Gaussian Kernel Function ===
+    // Gaussian kernel function
     const gaussianKernel = (u: number): number => (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * u * u);
 
-    // === Step 5: Calculate Density Points ===
+    // Calculate KDE points
     const kdePointsRaw: Array<{ score: number, density: number }> = [];
     for (let x = minScoreDomain; x <= maxScoreDomain; x += step) {
-        let densitySum = 0;
-        for (const s of allScores) {
-            const u = (x - s) / bandwidth;
-            densitySum += gaussianKernel(u);
+        let density = 0;
+        for (const score of allScores) {
+            const u = (x - score) / bandwidth;
+            density += gaussianKernel(u);
         }
-        const density = (n > 0 && bandwidth > 0) ? densitySum / (n * bandwidth) : 0;
+        density /= (n * bandwidth);
         kdePointsRaw.push({ score: x, density });
     }
 
-    // === Step 6: Normalize Density ===
+    // Normalize densities
     let maxDensity = 0;
-    kdePointsRaw.forEach(p => { if (p.density > maxDensity) maxDensity = p.density; });
+    kdePointsRaw.forEach(p => {
+        if (p.density > maxDensity) maxDensity = p.density;
+    });
     if (maxDensity > 0) {
-        kdePointsRaw.forEach(p => { p.density /= maxDensity; });
+        kdePointsRaw.forEach(p => {
+            p.density /= maxDensity;
+        });
     }
 
-    // === Step 7: Calculate Percentiles for KDE Points ===
+    // Calculate percentiles and create final curve points
     const finalCurvePoints: ProcessedDistributionPoint[] = [];
     let cumulativeCount = 0;
     let distIndex = 0;
     const sortedDistributions = [...distributions].sort((a, b) => a.score - b.score);
 
     for (const kdePoint of kdePointsRaw) {
-         // Ensure comparison uses sortedDistributions items which have .count
         while (distIndex < sortedDistributions.length && sortedDistributions[distIndex].score <= kdePoint.score) {
             cumulativeCount += sortedDistributions[distIndex].count || 0;
             distIndex++;
@@ -334,52 +359,54 @@ function processDistributionData(
         });
     }
 
-    // === Calculate Overall Stats ===
-    const scoresFromDist = allScores; // Use the flattened array
-    scoresFromDist.sort((a, b) => a - b);
+    // Ensure we have points at domain boundaries
+    if (finalCurvePoints.length === 0) {
+        finalCurvePoints.push(
+            { score: 0, density: 0, percentile: 0 },
+            { score: 5000, density: 0, percentile: 100 }
+        );
+    }
+
+    // Calculate summary statistics
+    const scoresFromDist = [...allScores].sort((a, b) => a - b);
     const minScore = scoresFromDist[0] ?? 0;
     const maxScore = scoresFromDist[scoresFromDist.length - 1] ?? 0;
-
-    // Calculate Median more accurately from sorted flattened scores
     let medianScore: number;
     const mid = Math.floor(n / 2);
     if (n === 0) {
-         medianScore = 0;
+        medianScore = 0;
     } else if (n % 2 === 0) {
-         medianScore = Math.round((scoresFromDist[mid - 1] + scoresFromDist[mid]) / 2);
+        medianScore = Math.round((scoresFromDist[mid - 1] + scoresFromDist[mid]) / 2);
     } else {
-         medianScore = scoresFromDist[mid];
+        medianScore = scoresFromDist[mid];
     }
 
-
-    // === Calculate User Percentile Rank (Midpoint Method) ===
+    // Calculate user percentile rank (only if in top 50%)
     let percentileRank: number | undefined = undefined;
     if (userScore !== undefined && n > 0) {
         let scoresBelow = 0;
         let scoresEqual = 0;
-        for (const s of scoresFromDist) { // Use flattened array
-            if (s < userScore) {
-                scoresBelow++;
-            } else if (s === userScore) {
-                scoresEqual++;
-            } else {
-                // Since scoresFromDist is sorted, we can break early
-                break;
-            }
+        const sortedScores = [...allScores].sort((a, b) => a - b);
+        for (const s of sortedScores) {
+            if (s < userScore) scoresBelow++;
+            else if (s === userScore) scoresEqual++;
+            else break;
         }
         const rawPercentile = ((scoresBelow + (scoresEqual / 2)) / n) * 100;
-        // Convert to "Top X%" format, only show if better than median (top 50%)
         const topPercent = 100 - rawPercentile;
         if (topPercent <= 50) {
-             percentileRank = Math.round(topPercent);
+            percentileRank = Math.round(topPercent);
         }
-
     }
 
-    // === Step 8: Return Final Object ===
+    // Return final object with explicitly mapped curve points
     return {
         percentileRank,
-        curvePoints: finalCurvePoints, // Contains density
+        curvePoints: finalCurvePoints.map(p => ({
+            score: p.score,
+            density: p.density,
+            percentile: p.percentile
+        })),
         totalParticipants,
         minScore,
         maxScore,
