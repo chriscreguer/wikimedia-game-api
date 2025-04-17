@@ -1029,35 +1029,59 @@ router.get('/daily-challenge/stats', async (req, res) => {
 });
 
 // src/routes/images.ts
-// Still use console.log for this test
+// import logger from '../utils/logger'; // Temporarily comment out or remove if not used elsewhere in file after changes
 
 router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): Promise<void> => {
-  // ***** ABSOLUTE FIRST LINE *****
-  console.log(`[DATE HANDLER ENTERED] Request received for date: ${req.params.date}`);
-  // ***** END FIRST LINE *****
+  // ***** SIMPLE CONSOLE LOG AT START *****
+  console.log(`[DATE ROUTE - CONSOLE] Request received for date: ${req.params.date}`);
+  // ***** END SIMPLE CONSOLE LOG *****
 
-  // ***** TEMPORARILY COMMENT OUT ALL LOGIC *****
-  /*
   try {
       const { date } = req.params;
       const startDate = new Date(date + 'T00:00:00.000Z');
-      // ... rest of the try block ...
+      const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+      if (isNaN(startDate.getTime())) {
+          console.error(`[DATE ROUTE - CONSOLE] Invalid date format: ${date}`); // Use console.error
+          res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+          return;
+      }
 
-      console.log(`[DATE ROUTE - CONSOLE] Preparing to send response for date: ${date}`);
+      console.log(`[DATE ROUTE - CONSOLE] Querying MongoDB for date: ${date}`); // Use console.log
+
+      const challenge = await DailyChallenge.findOne({
+          date: { $gte: startDate, $lt: endDate },
+          active: true
+      })
+      .select('_id images date active stats.processedDistribution -stats.distributions -stats.averageScore -stats.completions');
+
+      if (challenge) {
+           console.log(`[DATE ROUTE - CONSOLE] Found challenge _id: ${challenge._id}`); // Use console.log
+           // Add a simple check for stats presence
+           if(challenge.stats) {
+               console.log(`[DATE ROUTE - CONSOLE] challenge.stats object exists.`);
+               if (challenge.stats.distributions !== undefined) {
+                  console.warn(`[DATE ROUTE - CONSOLE] UNEXPECTED: challenge.stats.distributions exists.`);
+               } else {
+                  console.log(`[DATE ROUTE - CONSOLE] OK: challenge.stats.distributions is undefined.`);
+               }
+           } else {
+               console.warn(`[DATE ROUTE - CONSOLE] challenge.stats is missing.`);
+           }
+      } else {
+          console.warn(`[DATE ROUTE - CONSOLE] Challenge not found for date: ${date}`); // Use console.warn
+          res.status(404).json({ error: 'No daily challenge available for this date' });
+          return;
+      }
+
+      console.log(`[DATE ROUTE - CONSOLE] Preparing to send response for date: ${date}`); // Use console.log
       res.status(200).json(challenge);
 
   } catch (error) {
+      // ***** USE CONSOLE.ERROR IN CATCH *****
       console.error(`[DATE ROUTE - CONSOLE] Error fetching challenge for date ${req.params.date}:`, error);
+      // ***** END CONSOLE.ERROR *****
       res.status(500).json({ error: 'Server error fetching daily challenge' });
   }
-  */
-  // ***** END COMMENT OUT *****
-
-  // ***** ADD TEMPORARY RESPONSE *****
-  // Send a simple response to prevent the request from hanging
-  res.status(501).send(`Handler for date ${req.params.date} entered but logic is commented out.`);
-  // ***** END TEMP RESPONSE *****
-
 }) as RequestHandler);
 
 // ADMIN ROUTES
