@@ -814,6 +814,9 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
     // Log the validated request
     logger.info(`[Submit Received Validated] IP: ${sourceIp}, UA: "${userAgent}", Score: ${numericScore}, Date: ${date}`);
 
+    // Add aggressive logging after validation
+    logger.info(`[Submit Processing] IP: ${sourceIp}, Score: ${numericScore}, Date: ${date}. Validation passed. Proceeding to update DB.`);
+
     try {
         let startDate: Date, endDate: Date;
         let queryDateString: string;
@@ -852,6 +855,9 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
             res.status(404).json({ error: 'No challenge found for this date' });
             return;
         }
+
+        // Add logging before distribution update
+        logger.info(`[Submit DB Update] Challenge ID: ${updatedChallenge._id}, About to update distribution for score: ${numericScore}`);
 
         // --- Now update distributions and average score (Non-atomic part) ---
         const existingScoreIndex = updatedChallenge.stats.distributions.findIndex(d => d.score === numericScore);
@@ -1052,7 +1058,7 @@ router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): 
           date: { $gte: startDate, $lt: endDate },
           active: true
       })
-      .select('_id images date active stats.processedDistribution -stats.distributions -stats.averageScore -stats.completions');
+      .select('_id images date active stats.processedDistribution');
 
       if (challenge) {
            console.log(`[DATE ROUTE - CONSOLE] Found challenge _id: ${challenge._id}`); // Use console.log
