@@ -1033,47 +1033,61 @@ router.get('/daily-challenge/stats', async (req, res) => {
  * Get the daily challenge for a specific date
  */
 router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): Promise<void> => {
+    const { date } = req.params;
+    logger.info(`[DATE ROUTE START] Request received for date: ${date}`);
+
     try {
-        const { date } = req.params;
         const startDate = new Date(date + 'T00:00:00.000Z');
         const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
         if (isNaN(startDate.getTime())) {
-            console.log(`Backend: Invalid date format received: ${date}`);
+            logger.error(`[DATE ROUTE] Invalid date format received: ${date}`);
             res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
             return;
         }
 
-        console.log(`Backend: Querying for challenge >= ${startDate.toISOString()} and < ${endDate.toISOString()} (UTC)`);
+        logger.info(`[DATE ROUTE] Querying MongoDB for date: ${date}`);
 
-        // Only fetch the fields needed for playing the game
         const challenge = await DailyChallenge.findOne({
             date: { $gte: startDate, $lt: endDate },
             active: true
         })
         .select('_id images date active stats.processedDistribution -stats.distributions -stats.averageScore -stats.completions');
 
-        console.log(`Backend: MongoDB Query Result (challenge): ${challenge ? `Found _id: ${challenge._id}, Image count: ${challenge.images?.length}` : 'null'}`);
-
-        if (!challenge) {
-            console.log(`Backend: --> Entering 404 block because challenge was null for date ${date} (UTC Query).`);
+        // Immediate logging after query
+        if (challenge) {
+            logger.info(`[DATE ROUTE] Found challenge _id: ${challenge._id} for date: ${date}`);
+            try {
+                logger.info(`[DATE ROUTE] Mongoose doc keys: ${Object.keys(challenge)}`);
+                if (challenge.stats) {
+                    logger.info(`[DATE ROUTE] Mongoose doc stats keys: ${Object.keys(challenge.stats)}`);
+                    if (challenge.stats.distributions !== undefined) {
+                        logger.warn(`[DATE ROUTE] UNEXPECTED: challenge.stats.distributions exists on Mongoose doc for date: ${date}`);
+                    } else {
+                        logger.info(`[DATE ROUTE] OK: challenge.stats.distributions is undefined on Mongoose doc for date: ${date}`);
+                    }
+                    if (challenge.stats.processedDistribution !== undefined) {
+                        logger.info(`[DATE ROUTE] OK: challenge.stats.processedDistribution exists on Mongoose doc for date: ${date}`);
+                    } else {
+                        logger.warn(`[DATE ROUTE] UNEXPECTED: challenge.stats.processedDistribution is undefined on Mongoose doc for date: ${date}`);
+                    }
+                } else {
+                    logger.warn(`[DATE ROUTE] challenge.stats is missing on Mongoose doc for date: ${date}`);
+                }
+            } catch (e) {
+                logger.error("[DATE ROUTE] Error logging keys from Mongoose doc", e);
+            }
+        } else {
+            logger.warn(`[DATE ROUTE] Challenge not found in DB for date: ${date}`);
             res.status(404).json({ error: 'No daily challenge available for this date' });
             return;
         }
 
-        // Add detailed logging of the challenge object
-        logger.info('Challenge object keys:', Object.keys(challenge.toObject ? challenge.toObject() : challenge));
-        if (challenge.stats) {
-            logger.info('Stats object keys:', Object.keys(challenge.stats));
-        }
-        logger.info('Challenge object sample:', JSON.stringify(challenge.toObject ? challenge.toObject() : challenge).substring(0, 500));
-
-        // Send only the minimal data needed for playing the game
+        logger.info(`[DATE ROUTE] Preparing to send response for date: ${date}`);
         res.status(200).json(challenge);
 
     } catch (error) {
-        console.error('Error fetching daily challenge by date:', error);
+        logger.error(`[DATE ROUTE] Error fetching challenge for date ${date}:`, error);
         res.status(500).json({ error: 'Server error fetching daily challenge' });
-        return;
     }
 }) as RequestHandler);
 
