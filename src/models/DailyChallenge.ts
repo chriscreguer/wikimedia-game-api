@@ -1,35 +1,8 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { WikimediaImage } from '../types/wikimedia';
+import { ScoreDistribution, ProcessedDistribution, ChallengeStats } from '../types/types';
 import dotenv from 'dotenv';
 dotenv.config();
-
-// Interface for score distribution
-interface ScoreDistribution {
-  score: number;
-  count: number;
-}
-
-interface ProcessedDistribution {
-  percentileRank?: number;
-  curvePoints: Array<{
-    score: number;
-    count: number;
-    percentile: number;
-  }>;
-  totalParticipants: number;
-  minScore: number;
-  maxScore: number;
-  medianScore: number;
-}
-
-
-// Interface for daily challenge stats
-interface ChallengeStats {
-  averageScore: number;
-  completions: number;
-  distributions: ScoreDistribution[];
-  processedDistribution?: ProcessedDistribution;
-}
 
 // Interface for daily challenge document
 export interface DailyChallengeDoc extends Document {
@@ -54,7 +27,7 @@ const DailyChallengeSchema: Schema = new Schema({
     year: { type: Number, required: true },
     source: { type: String, default: 'Wikimedia Commons' },
     description: { type: String },
-    revealedDescription: { type: String } // Add this new field
+    revealedDescription: { type: String }
   }],
   stats: {
     averageScore: { type: Number, default: 0 },
@@ -67,7 +40,7 @@ const DailyChallengeSchema: Schema = new Schema({
       percentileRank: { type: Number },
       curvePoints: [{
         score: { type: Number },
-        count: { type: Number },
+        density: { type: Number },
         percentile: { type: Number }
       }],
       totalParticipants: { type: Number },
