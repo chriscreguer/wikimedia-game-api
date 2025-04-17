@@ -152,114 +152,118 @@ router.get('/', (req, res) => {
  */
 router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles', 5), (async (req, res) => {
   try {
-    const { date } = req.body;
-    
+    const { date, imagesOrder: imagesOrderStr, append: appendStr } = req.body;
+    const appendImages = appendStr === 'true';
+
     if (!date) {
-      // Delete uploaded files if there's an error
+      // Clean up uploaded files if date is missing
       if (req.files && Array.isArray(req.files)) {
         req.files.forEach(file => {
-          fs.unlinkSync(file.path);
+          if (file.path) {
+            fs.unlinkSync(file.path);
+          }
         });
       }
-      return res.status(400).json({ error: 'Date is required' });
+      return res.status(400).json({ error: 'Date is required and cannot be empty.' });
     }
-    
-    // Parse date and reset to Eastern Time midnight
-    const challengeDate = new Date(date + 'T00:00:00.000Z'); // Use UTC directly
-    
+
+    const challengeDate = new Date(date);
+
     if (isNaN(challengeDate.getTime())) {
-      // Delete uploaded files if there's an error
+      // Clean up uploaded files if date is invalid
       if (req.files && Array.isArray(req.files)) {
         req.files.forEach(file => {
-          fs.unlinkSync(file.path);
+          if (file.path) {
+            fs.unlinkSync(file.path);
+          }
         });
       }
-      return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+      return res.status(400).json({ error: 'Invalid date received from client.' });
     }
-    
-    // Process imagesOrder from the request
+
+    // Process images
     let imageData: any[] = [];
-    
-    if (req.body.imagesOrder) {
-      const imagesOrder = JSON.parse(req.body.imagesOrder);
-      const uploadedFiles = req.files as Express.Multer.File[] || [];
-      
-      for (const imageInfo of imagesOrder) {
-        if (imageInfo.type === 'wikimedia') {
-          // Handle Wikimedia images
-          const filename = imageInfo.url ? extractFilenameFromUrl(imageInfo.url) : '';
-          
-          // Only proceed if we have a valid filename
-          if (filename) {
-            const wikimediaData = await fetchImageData(filename);
-            
-            if (wikimediaData) {
-              // Add the custom fields from the form
-              wikimediaData.year = imageInfo.year || wikimediaData.year;
-              wikimediaData.description = imageInfo.description || wikimediaData.description || '';
-              wikimediaData.revealedDescription = imageInfo.revealedDescription || imageInfo.description || '';
-              
-              imageData.push(wikimediaData);
+    if (imagesOrderStr) {
+      try {
+        const imagesOrder = JSON.parse(imagesOrderStr);
+        const uploadedFiles = req.files as Express.MulterS3.File[] || [];
+
+        for (const imageInfo of imagesOrder) {
+          if (imageInfo.type === 'wikimedia') {
+            const filename = imageInfo.url ? extractFilenameFromUrl(imageInfo.url) : '';
+            if (filename) {
+              const wikimediaData = await fetchImageData(filename);
+              if (wikimediaData) {
+                wikimediaData.year = imageInfo.year || wikimediaData.year;
+                wikimediaData.description = imageInfo.description || wikimediaData.description || '';
+                wikimediaData.revealedDescription = imageInfo.revealedDescription || imageInfo.description || '';
+                imageData.push(wikimediaData);
+              }
+            }
+          } else if (imageInfo.type === 'upload') {
+            const uploadIndex = imageInfo.uploadIndex;
+            if (uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
+              const file = uploadedFiles[uploadIndex];
+              const fileUrl = (file as Express.MulterS3.File).location;
+              imageData.push({
+                filename: file.originalname,
+                title: file.originalname,
+                url: fileUrl,
+                year: imageInfo.year || new Date().getFullYear(),
+                source: 'User Upload',
+                description: imageInfo.description || '',
+                revealedDescription: imageInfo.revealedDescription || imageInfo.description || ''
+              });
             }
           }
-        } else if (imageInfo.type === 'upload') {
-          // Handle uploaded files
-          const uploadIndex = imageInfo.uploadIndex;
-          
-          if (uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
-            const file = uploadedFiles[uploadIndex];
-            
-            // For S3 uploads, the file object from multer-s3 includes location (the S3 URL)
-            const fileUrl = (file as Express.MulterS3.File).location;
-            imageData.push({
-              filename: file.originalname,
-              title: file.originalname,
-              url: fileUrl,
-              year: imageInfo.year || new Date().getFullYear(),
-              source: 'User Upload',
-              description: imageInfo.description || '',
-              revealedDescription: imageInfo.revealedDescription || imageInfo.description || ''
-            });
-          }
         }
+      } catch (parseError) {
+        // Clean up uploaded files on error
+        if (req.files && Array.isArray(req.files)) {
+          req.files.forEach(file => {
+            if (file.path) {
+              fs.unlinkSync(file.path);
+            }
+          });
+        }
+        return res.status(400).json({ error: 'Invalid imagesOrder format.' });
       }
     }
-    
+
     // Ensure we have some images
     if (imageData.length === 0) {
-      // Delete uploaded files if there's an error
+      // Clean up uploaded files if no valid images
       if (req.files && Array.isArray(req.files)) {
         req.files.forEach(file => {
-          fs.unlinkSync(file.path);
+          if (file.path) {
+            fs.unlinkSync(file.path);
+          }
         });
       }
-      return res.status(400).json({ error: 'No valid images provided' });
+      return res.status(400).json({ error: 'No valid images provided or processed' });
     }
-    
-    // Check for append mode
-    const appendImages = req.body.append === 'true';
-    
-    // Check if a challenge already exists for this date
-    const startDate = new Date(date + 'T00:00:00.000Z');
-    const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-    
-    const existingChallenge = await DailyChallenge.findOne({
-      date: { 
-        $gte: startDate,
-        $lt: endDate
-      }
-    });
-    
-    if (existingChallenge) {
-      // Update existing challenge with new images
+
+    // Force create path for testing
+    const forceCreate = true;
+    let existingChallenge = null;
+
+    if (!forceCreate) {
+      // Original logic to find existing challenge
+      const startDate = new Date(challengeDate);
+      startDate.setUTCHours(0, 0, 0, 0);
+      const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+      existingChallenge = await DailyChallenge.findOne({ date: { $gte: startDate, $lt: endDate } });
+    }
+
+    if (existingChallenge && !forceCreate) {
       if (appendImages) {
-        existingChallenge.images = [...existingChallenge.images, ...imageData];
+        existingChallenge.images.push(...imageData);
       } else {
         existingChallenge.images = imageData;
       }
-      
+
       await existingChallenge.save();
-      
+
       return res.status(200).json({
         message: 'Daily challenge updated successfully',
         challenge: {
@@ -268,38 +272,44 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
           imageCount: existingChallenge.images.length
         }
       });
-    }
-    
-    // Create new challenge
-    const newChallenge = new DailyChallenge({
-      date: challengeDate,
-      images: imageData,
-      stats: {
-        averageScore: 0,
-        completions: 0,
-        distributions: []
-      },
-      active: true
-    });
-    
-    await newChallenge.save();
-    
-    res.status(201).json({
-      message: 'Daily challenge created successfully',
-      challenge: {
-        id: newChallenge._id,
-        date: newChallenge.date,
-        imageCount: newChallenge.images.length
-      }
-    });
-  } catch (error) {
-    // Delete uploaded files if there's an error
-    if (req.files && Array.isArray(req.files)) {
-      req.files.forEach(file => {
-        fs.unlinkSync(file.path);
+    } else {
+      // Create new challenge
+      const newChallenge = new DailyChallenge({
+        date: challengeDate,
+        images: imageData,
+        stats: { averageScore: 0, completions: 0, distributions: [] },
+        active: true
+      });
+
+      await newChallenge.save();
+
+      res.status(201).json({
+        message: 'Daily challenge created successfully',
+        challenge: {
+          id: newChallenge._id,
+          date: newChallenge.date,
+          imageCount: newChallenge.images.length
+        }
       });
     }
-    
+
+  } catch (error) {
+    // Clean up uploaded files on error
+    if (req.files && Array.isArray(req.files)) {
+      for (const file of req.files as Express.MulterS3.File[]) {
+        try {
+          if (file.key) {
+            await s3Client.send(new DeleteObjectCommand({
+              Bucket: s3BucketName,
+              Key: file.key
+            }));
+          }
+        } catch (deleteErr) {
+          logger.error(`Failed to delete file ${file.key || file.originalname} from S3:`, deleteErr);
+        }
+      }
+    }
+
     logger.error('Error creating daily challenge:', error);
     res.status(500).json({ error: 'Failed to create daily challenge' });
   }

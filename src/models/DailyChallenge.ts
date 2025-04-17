@@ -21,32 +21,33 @@ const DailyChallengeSchema: Schema = new Schema({
     index: true
   },
   images: [{
-    filename: { type: String },
+    filename: { type: String, required: true },
     title: { type: String, required: true },
     url: { type: String, required: true },
     year: { type: Number, required: true },
-    source: { type: String, default: 'Wikimedia Commons' },
-    description: { type: String },
-    revealedDescription: { type: String }
+    source: { type: String, required: true },
+    description: { type: String, default: '' },
+    revealedDescription: { type: String, default: '' }
   }],
   stats: {
     averageScore: { type: Number, default: 0 },
     completions: { type: Number, default: 0 },
     distributions: [{ // Raw score counts
       score: { type: Number, required: true },
-      count: { type: Number, required: true, default: 0 }
+      count: { type: Number, required: true }
     }],
     processedDistribution: { // Processed KDE results
       percentileRank: { type: Number }, // Optional, might be null
       curvePoints: [{
         score: { type: Number, required: true },
-        density: { type: Number, required: true }, // Required density field
+        density: { type: Number, required: true },
         percentile: { type: Number, required: true }
       }],
-      totalParticipants: { type: Number, required: true },
-      minScore: { type: Number, required: true },
-      maxScore: { type: Number, required: true },
-      medianScore: { type: Number, required: true }
+      // These fields are only populated after scores are submitted and processed
+      totalParticipants: { type: Number, required: false },
+      minScore: { type: Number, required: false },
+      maxScore: { type: Number, required: false },
+      medianScore: { type: Number, required: false }
     }
   },
   active: { type: Boolean, default: true }
@@ -86,33 +87,29 @@ DailyChallengeSchema.pre<DailyChallengeDoc>('save', function(next) {
 
 // Pre-save hook to ensure processedDistribution is valid
 DailyChallengeSchema.pre('save', function(this: mongoose.Document & { stats: { processedDistribution?: ProcessedDistribution } }, next) {
-  // Validate processedDistribution if it exists
-  if (this.stats.processedDistribution) {
+  // Only validate if processedDistribution AND curvePoints actually exist and have data
+  if (this.stats.processedDistribution && Array.isArray(this.stats.processedDistribution.curvePoints) && this.stats.processedDistribution.curvePoints.length > 0) {
     const { curvePoints, totalParticipants, minScore, maxScore, medianScore } = this.stats.processedDistribution;
-    
-    // Ensure all required fields are present
-    if (!curvePoints || !Array.isArray(curvePoints) || curvePoints.length === 0) {
-      return next(new Error('processedDistribution.curvePoints must be a non-empty array'));
-    }
-    
+
     // Validate each curve point
     for (const point of curvePoints) {
-      if (typeof point.score !== 'number' || 
-          typeof point.density !== 'number' || 
+      if (typeof point.score !== 'number' ||
+          typeof point.density !== 'number' ||
           typeof point.percentile !== 'number') {
         return next(new Error('Each curve point must have valid score, density, and percentile values'));
       }
     }
-    
-    // Validate summary statistics
-    if (typeof totalParticipants !== 'number' || 
-        typeof minScore !== 'number' || 
-        typeof maxScore !== 'number' || 
-        typeof medianScore !== 'number') {
-      return next(new Error('processedDistribution must have valid totalParticipants, minScore, maxScore, and medianScore'));
+
+    // Validate summary statistics ONLY if they exist (since they are optional now)
+    if (totalParticipants === undefined || typeof totalParticipants !== 'number' ||
+        minScore === undefined || typeof minScore !== 'number' ||
+        maxScore === undefined || typeof maxScore !== 'number' ||
+        medianScore === undefined || typeof medianScore !== 'number') {
+      return next(new Error('If curvePoints exist, processedDistribution must also have valid totalParticipants, minScore, maxScore, and medianScore'));
     }
   }
-  
+
+  // If processedDistribution or curvePoints don't exist or are empty, validation passes for this hook
   next();
 });
 
