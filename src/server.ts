@@ -1,6 +1,19 @@
-import { readdirSync } from "fs";
-import { join } from "path";
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import dotenv from 'dotenv';
+import imagesRoutes from './routes/images';
+import mongoose from 'mongoose';
+import logger from './utils/logger';
+import fs from 'fs';
+import adminRoutes from './routes/admin';
 
+// Diagnostic logging
+console.log("🔖 SERVER.TS TOP LEVEL REACHED");
+console.log("🔖 GIT COMMIT SHA:", process.env.RAILWAY_GIT_COMMIT_SHA || "Not Set in Environment");
+
+// Temporarily comment out directory listing
+/*
 try {
     const distPath = path.join(process.cwd(), 'dist');
     console.log(`📂 Checking dist contents at startup in: ${distPath}`);
@@ -16,18 +29,7 @@ try {
 } catch (err) {
     console.error("🚨 Error listing dist contents at startup:", err);
 }
-console.log("🔖 GIT COMMIT SHA:", process.env.RAILWAY_GIT_COMMIT_SHA || "Not Set in Environment");
-
-
-import express from 'express';
-import cors from 'cors';
-import path from 'path';
-import dotenv from 'dotenv';
-import imagesRoutes from './routes/images';
-import mongoose from 'mongoose';
-import logger from './utils/logger';
-import fs from 'fs';
-import adminRoutes from './routes/admin';
+*/
 
 // Load environment variables
 dotenv.config();
