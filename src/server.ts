@@ -1,3 +1,24 @@
+import { readdirSync } from "fs";
+import { join } from "path";
+
+try {
+    const distPath = path.join(process.cwd(), 'dist');
+    console.log(`📂 Checking dist contents at startup in: ${distPath}`);
+    const contents = fs.readdirSync(distPath);
+    console.log("📂 dist contents:", contents);
+    // Optionally list deeper structure if needed, e.g., routes
+    const routesPath = path.join(distPath, 'routes');
+    if (fs.existsSync(routesPath)) {
+        console.log("📂 dist/routes contents:", fs.readdirSync(routesPath));
+    } else {
+         console.log("📂 dist/routes directory not found.");
+    }
+} catch (err) {
+    console.error("🚨 Error listing dist contents at startup:", err);
+}
+console.log("🔖 GIT COMMIT SHA:", process.env.RAILWAY_GIT_COMMIT_SHA || "Not Set in Environment");
+
+
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
