@@ -254,52 +254,12 @@ function extractYearWithConfidence(metadata: any, uploadYear: number): { year: n
   return { year: Math.floor(Math.random() * (CURRENT_YEAR - MIN_YEAR + 1)) + MIN_YEAR, confidence: 'low' };
 }
 
-
-/**
- * Process distribution data to generate percentile ranks and curve points
- * @param distributions Raw distribution data with individual score entries
- * @param userScore Optional user score to calculate specific percentile for
- * @param pointCount Number of points to generate for the curve (default 25)
- * @returns Processed distribution data with percentiles and curve points
- */
-function processDistributionData(
-    distributions: Array<{ score: number; count: number }>,
-    userScore?: number,
-    step: number = 25
-): ProcessedDistribution {
-    // Handle empty/null distributions
-    if (!distributions) {
-        console.warn("[processDistributionData] Received null/undefined distributions array.");
-        return {
-            percentileRank: undefined,
-            curvePoints: [
-                { score: 0, density: 0, percentile: 0 },
-                { score: 5000, density: 0, percentile: 100 }
-            ],
-            totalParticipants: 0,
-            minScore: 0,
-            maxScore: 0,
-            medianScore: 0
-        };
-    }
-
-    const totalParticipants = distributions.reduce((sum, item) => sum + (item.count || 0), 0);
-
-    // Handle 0 participants
-    if (totalParticipants === 0) {
-        console.log("[processDistributionData] 0 participants, returning default structure.");
-        return {
-            percentileRank: undefined,
-            curvePoints: [
-                { score: 0, density: 0, percentile: 0 },
-                { score: 5000, density: 0, percentile: 100 }
-            ],
-            totalParticipants: 0,
-            minScore: 0,
-            maxScore: 0,
-            medianScore: 0
-        };
-    }
+// Helper function to generate curve points
+function generateCurvePoints(distributions: { score: number; count: number }[], n: number): ProcessedDistributionPoint[] {
+    const step = 25;
+    const bandwidth = 175;
+    const minScoreDomain = 0;
+    const maxScoreDomain = 5000;
 
     // Flatten scores for KDE calculation
     const allScores: number[] = [];
@@ -308,19 +268,6 @@ function processDistributionData(
             allScores.push(dist.score);
         }
     });
-
-    const n = allScores.length;
-
-    // *** ADDED LOGGING ***
-    console.log(`[processDistributionData] INPUT: n=${n}, userScore=${userScore}, distributions length=${distributions?.length}`);
-    if (n > 0 && n < 5) { // Log details for small counts
-        console.log(`[processDistributionData] INPUT allScores (small n): ${JSON.stringify(allScores)}`);
-    }
-    // *** END LOGGING ***
-
-    const bandwidth = 175;
-    const minScoreDomain = 0;
-    const maxScoreDomain = 5000;
 
     // Gaussian kernel function
     const gaussianKernel = (u: number): number => (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * u * u);
@@ -359,7 +306,7 @@ function processDistributionData(
             cumulativeCount += sortedDistributions[distIndex].count || 0;
             distIndex++;
         }
-        const percentile = totalParticipants > 0 ? Math.round((cumulativeCount / totalParticipants) * 100) : 0;
+        const percentile = n > 0 ? Math.round((cumulativeCount / n) * 100) : 0;
         finalCurvePoints.push({
             score: kdePoint.score,
             density: kdePoint.density,
@@ -375,26 +322,30 @@ function processDistributionData(
         );
     }
 
-    // Calculate summary statistics
-    const scoresFromDist = [...allScores].sort((a, b) => a - b);
-    const minScore = scoresFromDist[0] ?? 0;
-    const maxScore = scoresFromDist[scoresFromDist.length - 1] ?? 0;
-    let medianScore: number;
-    const mid = Math.floor(n / 2);
-    if (n === 0) {
-        medianScore = 0;
-    } else if (n % 2 === 0) {
-        medianScore = Math.round((scoresFromDist[mid - 1] + scoresFromDist[mid]) / 2);
-    } else {
-        medianScore = scoresFromDist[mid];
+    return finalCurvePoints;
+}
+
+export function processDistributionData(
+    distributions: { score: number; count: number }[],
+    n: number,
+    userScore?: number
+): ProcessedDistribution {
+    // *** ADDED LOGGING ***
+    console.log(`[processDistributionData] Input: n=${n}, userScore=${userScore}, distributions.length=${distributions.length}`);
+    if (n < 5) {
+        console.log(`[processDistributionData] Small dataset (n=${n}):`, distributions);
     }
+    // *** END LOGGING ***
+
+    // Calculate total participants
+    const totalParticipants = n;
 
     // Calculate user percentile rank (only if in top 50%)
     let percentileRank: number | undefined = undefined;
     if (userScore !== undefined && n > 0) {
         let scoresBelow = 0;
         let scoresEqual = 0;
-        const sortedScores = [...allScores].sort((a, b) => a - b);
+        const sortedScores = [...distributions.map(d => d.score)].sort((a, b) => a - b);
         for (const s of sortedScores) {
             if (s < userScore) scoresBelow++;
             else if (s === userScore) scoresEqual++;
@@ -407,19 +358,31 @@ function processDistributionData(
         }
     }
 
-    // *** ADDED LOGGING BEFORE RETURN ***
-    console.log(`[processDistributionData] OUTPUT: totalParticipants=${totalParticipants}, calculatedPercentileRank (for input userScore)=${percentileRank}, curvePoints length=${finalCurvePoints.length}`);
+    // Generate curve points
+    const curvePoints = generateCurvePoints(distributions, n);
+
+    // Calculate summary statistics
+    const scoresFromDist = distributions.map(d => d.score).sort((a, b) => a - b);
+    const minScore = scoresFromDist[0] ?? 0;
+    const maxScore = scoresFromDist[scoresFromDist.length - 1] ?? 0;
+    let medianScore: number;
+    const mid = Math.floor(n / 2);
+    if (n === 0) {
+        medianScore = 0;
+    } else if (n % 2 === 0) {
+        medianScore = Math.round((scoresFromDist[mid - 1] + scoresFromDist[mid]) / 2);
+    } else {
+        medianScore = scoresFromDist[mid];
+    }
+
+    // *** ADDED LOGGING ***
+    console.log(`[processDistributionData] Output: totalParticipants=${totalParticipants}, percentileRank=${percentileRank}, curvePoints.length=${curvePoints.length}`);
     // *** END LOGGING ***
 
-    // Return final object with explicitly mapped curve points
+    // Return only the data needed for global storage
     return {
-        percentileRank,
-        curvePoints: finalCurvePoints.map(p => ({
-            score: p.score,
-            density: p.density,
-            percentile: p.percentile
-        })),
         totalParticipants,
+        curvePoints,
         minScore,
         maxScore,
         medianScore
@@ -919,8 +882,8 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
                 logger.info(`[Submit] Calling processDistributionData for challenge ${refreshedChallenge._id}.`);
                 const newlyProcessedData = processDistributionData(
                     refreshedChallenge.stats.distributions,
-                    undefined, // No specific user score needed for global recalc
-                    25 // Point density setting
+                    newCompletions,
+                    undefined // No specific user score needed for global recalc
                 );
 
                 // Update the challenge document in the DB with the NEW processed distribution
@@ -955,12 +918,18 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
             stats: {
                 averageScore: newAverageScore,
                 completions: newCompletions,
-                processedDistribution: processedDataForResponse
+                processedDistribution: processedDataForResponse ? {
+                    totalParticipants: processedDataForResponse.totalParticipants,
+                    curvePoints: processedDataForResponse.curvePoints,
+                    minScore: processedDataForResponse.minScore,
+                    maxScore: processedDataForResponse.maxScore,
+                    medianScore: processedDataForResponse.medianScore
+                } : undefined
             }
         };
 
         // *** ADDED LOGGING ***
-        console.log(`[Submit Response] Sending: completions=${newCompletions}, avgScore=${newAverageScore?.toFixed(2)}, processedDataAvailable=${!!processedDataForResponse}, percentileRank=${processedDataForResponse?.percentileRank}, totalParticipants=${processedDataForResponse?.totalParticipants}`);
+        console.log(`[Submit Response] Sending: completions=${newCompletions}, avgScore=${newAverageScore?.toFixed(2)}, processedDataAvailable=${!!processedDataForResponse}, totalParticipants=${processedDataForResponse?.totalParticipants}`);
         // *** END LOGGING ***
 
         logger.info(`[Submit Response] Sending response for IP: ${sourceIp}, Score: ${numericScore}`);
@@ -1026,8 +995,8 @@ router.get(
       // Process the distribution data
       const processedData = processDistributionData(
         challenge.stats.distributions,
-        userScore,
-        pointCount
+        challenge.stats.completions,
+        userScore
       );
       
       // Return the processed data
@@ -1070,11 +1039,13 @@ router.get('/daily-challenge/stats', async (req, res) => {
             console.log(`[Stats Endpoint] Querying for current CT date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
         }
 
+        console.time('findOne-stats');
         const challenge = await DailyChallenge.findOne({
             date: { $gte: startDate, $lt: endDate },
             active: true
         })
         .select('_id date active stats.averageScore stats.completions stats.processedDistribution');
+        console.timeEnd('findOne-stats');
 
         if (!challenge) {
             res.status(404).json({ error: 'No challenge found for this date' });
@@ -1103,12 +1074,13 @@ router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): 
         }
 
         console.log(`[DATE ROUTE - CONSOLE] Querying MongoDB for date: ${date}`);
-
+        console.time('findOne-date');
         const challenge = await DailyChallenge.findOne({
             date: { $gte: startDate, $lt: endDate },
             active: true
         })
         .select('_id images date active stats.averageScore stats.completions stats.processedDistribution');
+        console.timeEnd('findOne-date');
 
         if (!challenge) {
             console.warn(`[DATE ROUTE - CONSOLE] Challenge not found for date: ${date}`);
