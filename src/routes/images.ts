@@ -2,11 +2,12 @@ import express, { Request, Response, NextFunction, RequestHandler } from 'expres
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import DailyChallenge from '../models/DailyChallenge';
-import { fetchImageData, fetchMultipleImageData } from '../utils/wikimediaHelper';
+import { fetchImageData, fetchMultipleImageData, extractYearWithConfidence } from '../utils/wikimediaHelper';
 import logger from '../utils/logger';
 import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import rateLimit from 'express-rate-limit';
 import { ProcessedDistribution, ProcessedDistributionPoint } from '../types/types';
+import UnlimitedImage from '../models/UnlimitedImage';
 
 dotenv.config();
 
@@ -74,8 +75,8 @@ const photoCategories = [
 ];
 
 // Maximum number of API retries
-const MAX_RETRIES = 3;
-const IMAGES_PER_REQUEST = 100;
+const MAX_RETRIES = 2;
+const IMAGES_PER_REQUEST = 20;
 
 // --- Rate Limiter Configuration ---
 const submitLimiter = rateLimit({
@@ -167,91 +168,6 @@ function isLikelyRealPhoto(metadata: any): boolean {
   }
   
   return false;
-}
-
-// Function to extract year from metadata with higher confidence
-function extractYearWithConfidence(metadata: any, uploadYear: number): { year: number, confidence: 'high' | 'medium' | 'low' } {
-  if (!metadata) return { year: uploadYear, confidence: 'medium' }; // Changed from low to medium
-  
-  // Try to get year from DateTimeOriginal with highest confidence
-  if (metadata.DateTimeOriginal) {
-    const dateString = metadata.DateTimeOriginal.value;
-    // Match a year between 1800 and current year
-    const yearMatch = dateString.match(/\b(18\d{2}|19\d{2}|20\d{2})\b/);
-    if (yearMatch) {
-      const year = parseInt(yearMatch[0]);
-      if (year >= MIN_YEAR && year <= CURRENT_YEAR) {
-        return { year, confidence: 'high' };
-      }
-    }
-  }
-  
-  // Try other date fields with medium confidence
-  const dateFields = ['DateTime', 'DateTimeDigitized', 'MetadataDate', 'CreateDate', 'ModifyDate'];
-  for (const field of dateFields) {
-    if (metadata[field]) {
-      const dateString = metadata[field].value;
-      const yearMatch = dateString.match(/\b(18\d{2}|19\d{2}|20\d{2})\b/);
-      if (yearMatch) {
-        const year = parseInt(yearMatch[0]);
-        if (year >= MIN_YEAR && year <= CURRENT_YEAR) {
-          return { year, confidence: 'medium' };
-        }
-      }
-    }
-  }
-  
-  // Look for year in title or description with medium confidence
-  if (metadata.ObjectName || metadata.ImageDescription) {
-    const textToSearch = (metadata.ObjectName?.value || '') + ' ' + (metadata.ImageDescription?.value || '');
-    const yearMatches = textToSearch.match(/\b(18\d{2}|19\d{2}|20\d{2})\b/g);
-    
-    if (yearMatches && yearMatches.length > 0) {
-      // If same year appears multiple times, it's more likely to be correct
-      const yearCounts = new Map<number, number>();
-      yearMatches.forEach(match => {
-        const year = parseInt(match);
-        if (year >= MIN_YEAR && year <= CURRENT_YEAR) {
-          yearCounts.set(year, (yearCounts.get(year) || 0) + 1);
-        }
-      });
-      
-      if (yearCounts.size > 0) {
-        // Find the year that appears most frequently
-        let maxYear = MIN_YEAR;
-        let maxCount = 0;
-        
-        for (const [year, count] of yearCounts.entries()) {
-          if (count > maxCount) {
-            maxYear = year;
-            maxCount = count;
-          }
-        }
-        
-        return { year: maxYear, confidence: 'medium' };
-      }
-    }
-  }
-  
-  // Use upload year but with medium confidence (not low)
-  if (uploadYear >= MIN_YEAR && uploadYear <= CURRENT_YEAR) {
-    return { year: uploadYear, confidence: 'medium' };
-  }
-
-  // Accept years from other metadata fields
-  if (metadata.DateCreated) {
-    const dateString = metadata.DateCreated.value;
-    const yearMatch = dateString.match(/\b(18\d{2}|19\d{2}|20\d{2})\b/);
-    if (yearMatch) {
-      const year = parseInt(yearMatch[0]);
-      if (year >= MIN_YEAR && year <= CURRENT_YEAR) {
-        return { year, confidence: 'medium' };
-      }
-    }
-  }
-  
-  // If all else fails but we need a year within our range
-  return { year: Math.floor(Math.random() * (CURRENT_YEAR - MIN_YEAR + 1)) + MIN_YEAR, confidence: 'low' };
 }
 
 // Helper function to generate curve points
@@ -724,48 +640,99 @@ async function getRandomImageWithYear(targetDecade?: { start: number, end: numbe
 
 }
 
-// Route to get a random image with year information
-router.get('/', async (req: Request, res: Response) => {
-  try {
-    // Check for refresh parameter
-    const forceRefresh = req.query.refresh === 'true';
-    
-    // Check for decade parameter
-    let targetDecade: { start: number, end: number } | undefined;
-    if (req.query.decade) {
-      const decadeString = req.query.decade as string;
-      const [start, end] = decadeString.split('-').map(Number);
-      if (!isNaN(start) && !isNaN(end) && start <= end) {
-        targetDecade = { start, end };
-      }
-    }
-    
-    // Clear cache if forced refresh
-    if (forceRefresh) {
-      if (targetDecade) {
-        const decadeKey = `${targetDecade.start}-${targetDecade.end}`;
-        imageCacheByDecade[decadeKey] = [];
-      } else {
-        Object.keys(imageCacheByDecade).forEach(key => {
-          imageCacheByDecade[key] = [];
-        });
-      }
-    }
-    
-    const image = await getRandomImageWithYear(targetDecade);
-    res.json(image);
-  } catch (error) {
-    console.error('Error processing request:', error);
-    // Even in case of error, we should return something
-    const fallbackImage = {
-      title: "Historical photograph",
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Apollo_11_first_step.jpg/800px-Apollo_11_first_step.jpg",
-      source: "Wikimedia Commons",
-      year: 1969
-    };
-    res.json(fallbackImage);
-  }
-});
+/**
+ * GET /api/images
+ * Fetches a random image from Wikimedia Commons Featured Pictures category.
+ */
+router.get('/', (async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    logger.info('[Random Featured] Request received.');
+    let attempts = 0;
+
+    while (attempts < MAX_RETRIES) {
+        attempts++;
+        logger.info(`[Random Featured] Attempt ${attempts}/${MAX_RETRIES} to fetch and validate featured image.`);
+        try {
+            const category = 'Category:Featured_pictures_on_Wikimedia_Commons';
+            // Fetch a larger batch using the generator
+            const limit = 50; // Fetch up to 50 potential candidates
+            const wikimediaApiUrl = `https://commons.wikimedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=${encodeURIComponent(category)}&gcmlimit=${limit}&gcmtype=file&prop=imageinfo&iiprop=url|extmetadata|timestamp|mime|mediatype&format=json`;
+
+            const response = await fetch(wikimediaApiUrl, {
+                headers: { 'User-Agent': 'WhichYearGame/1.0 (YourContactInfo)' }
+            });
+
+            if (!response.ok) throw new Error(`Wikimedia API request failed with status ${response.status}`);
+
+            const data: any = await response.json();
+
+            if (!data.query || !data.query.pages) {
+                logger.warn('[Random Featured] Unexpected API response structure:', data);
+                await new Promise(resolve => setTimeout(resolve, 200)); // Delay before retry
+                continue;
+            }
+
+            const pages = data.query.pages;
+            const pageIds = Object.keys(pages);
+            const validImages = []; // Store all valid images found in this batch
+
+            for (const pageId of pageIds) {
+                const page = pages[pageId];
+                if (!page.imageinfo || !page.imageinfo[0]) continue;
+
+                const imageInfo = page.imageinfo[0];
+                const filename = page.title.replace(/^File:/, '');
+
+                // Validation checks
+                if (!imageInfo.mime || !imageInfo.mime.startsWith('image/')) continue;
+                if (imageInfo.mediatype && imageInfo.mediatype !== 'BITMAP') continue;
+
+                const uploadTimestamp = imageInfo.timestamp ? new Date(imageInfo.timestamp).getFullYear() : CURRENT_YEAR;
+                const { year } = extractYearWithConfidence(imageInfo.extmetadata, uploadTimestamp); // Ignoring confidence for now
+
+                if (year < MIN_YEAR || year > CURRENT_YEAR) continue;
+
+                // If checks pass, add to valid list
+                validImages.push({
+                    url: imageInfo.url,
+                    year: year,
+                    title: filename,
+                    description: imageInfo.extmetadata?.ImageDescription?.value || '',
+                    source: 'Wikimedia Commons (Featured)',
+                    filename: filename,
+                    _id: `wikimedia-${pageId}`
+                });
+            }
+
+            if (validImages.length > 0) {
+                // Randomly select from the valid images found
+                const randomIndex = Math.floor(Math.random() * validImages.length);
+                const selectedImage = validImages[randomIndex];
+                logger.info(`[Random Featured] Found ${validImages.length} valid images. Selected: ${selectedImage.filename}, Year: ${selectedImage.year}`);
+                res.json(selectedImage); // Send the randomly selected valid image
+                return;
+            }
+
+            // If no valid images were found in this batch
+            logger.warn(`[Random Featured] No valid images found in the fetched batch of ${pageIds.length}. Retrying...`);
+            await new Promise(resolve => setTimeout(resolve, 200)); // Delay before retry
+
+        } catch (error) {
+            logger.error(`[Random Featured] Attempt ${attempts} failed:`, error);
+            if (attempts >= MAX_RETRIES) {
+                next(error);
+                return;
+            }
+            await new Promise(resolve => setTimeout(resolve, 300)); // Wait before retry
+        }
+    } // End while loop
+
+    // If loop finishes after max retries without success
+    logger.error(`[Random Featured] Failed to fetch a valid image after ${MAX_RETRIES} attempts.`);
+    // Use next(error) pattern for consistency
+    const finalError = new Error('Failed to retrieve a suitable image from Wikimedia Commons after multiple attempts.');
+    (finalError as any).status = 503; // Add status code for error handler
+    next(finalError);
+}) as RequestHandler); // End route handler
 
 /**
  * POST /api/images/daily-challenge/submit
@@ -1327,5 +1294,32 @@ router.get('/daily-challenge/today', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+router.get('/unlimited/random', (async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const randomImageData = await UnlimitedImage.aggregate([
+            { $sample: { size: 1 } }
+        ]);
+
+        if (!randomImageData || randomImageData.length === 0) {
+            logger.warn('[Unlimited Random] No images found in the admin-managed unlimited pool.');
+            return res.status(404).json({ error: 'No images available for unlimited mode.' });
+        }
+
+        const image = randomImageData[0];
+        res.json({
+            _id: image._id,
+            url: image.url,
+            year: image.year,
+            description: image.description || '',
+            title: 'Unlimited Mode Image',
+            source: image.source || 'Admin Upload',
+            filename: image.url.substring(image.url.lastIndexOf('/') + 1)
+        });
+    } catch (error) {
+        logger.error('[Unlimited Random] Error fetching random unlimited image:', error);
+        next(error);
+    }
+}) as RequestHandler);
 
 export default router;

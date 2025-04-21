@@ -131,3 +131,36 @@ export function extractFilenameFromUrl(url: string): string | null {
       return null;
     }
   }
+
+export interface YearExtractionResult {
+    year: number;
+    confidence: 'high' | 'medium' | 'low';
+}
+
+export function extractYearWithConfidence(extmetadata: any, uploadYear: number): YearExtractionResult {
+    // Try to extract year from various metadata fields
+    const possibleYearFields = [
+        'DateTimeOriginal',
+        'DateTimeDigitized',
+        'DateTime',
+        'DateCreated',
+        'CreationDate'
+    ];
+
+    for (const field of possibleYearFields) {
+        const value = extmetadata?.[field]?.value;
+        if (value) {
+            // Try to extract year from various date formats
+            const yearMatch = value.match(/\b(19|20)\d{2}\b/);
+            if (yearMatch) {
+                const year = parseInt(yearMatch[0]);
+                if (year >= 1850 && year <= new Date().getFullYear()) {
+                    return { year, confidence: 'high' };
+                }
+            }
+        }
+    }
+
+    // If no year found in metadata, use upload year with medium confidence
+    return { year: uploadYear, confidence: 'medium' };
+}

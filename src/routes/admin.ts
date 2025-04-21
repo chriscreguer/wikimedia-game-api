@@ -1,5 +1,5 @@
 // src/routes/admin.ts
-import express, { Request, Response, RequestHandler } from 'express';
+import express, { Request, Response, RequestHandler, NextFunction } from 'express';
 import path from 'path';
 import DailyChallenge from '../models/DailyChallenge';
 import { fetchImageData, fetchMultipleImageData, extractFilenameFromUrl } from '../utils/wikimediaHelper';
@@ -10,6 +10,7 @@ import { PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import multerS3 from 'multer-s3';
 import s3Client, { s3BucketName } from '../utils/awsConfig';
+import UnlimitedImage from '../models/UnlimitedImage';
 
 const storage = multerS3({
   s3: s3Client,
@@ -538,6 +539,57 @@ router.delete('/daily-challenge/:id', verifyAdmin, (async (req, res) => {
     logger.error('Error deleting daily challenge:', error);
     res.status(500).json({ error: 'Failed to delete daily challenge' });
   }
+}) as RequestHandler);
+
+// Unlimited Image Management Routes
+router.post('/unlimited-image/upload', verifyAdmin, upload.single('image'), (async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No image file provided' });
+        }
+
+        const { year, description } = req.body;
+        if (!year) {
+            return res.status(400).json({ error: 'Year is required' });
+        }
+
+        const imageUrl = `/uploads/${req.file.filename}`;
+        const unlimitedImage = new UnlimitedImage({
+            url: imageUrl,
+            year: parseInt(year),
+            description,
+            source: 'admin_upload'
+        });
+
+        await unlimitedImage.save();
+        res.json({ message: 'Image uploaded successfully', image: unlimitedImage });
+    } catch (error) {
+        logger.error('[Admin] Error uploading unlimited image:', error);
+        next(error);
+    }
+}) as RequestHandler);
+
+router.get('/unlimited-images', verifyAdmin, (async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const images = await UnlimitedImage.find().sort({ createdAt: -1 });
+        res.json(images);
+    } catch (error) {
+        logger.error('[Admin] Error fetching unlimited images:', error);
+        next(error);
+    }
+}) as RequestHandler);
+
+router.delete('/unlimited-image/:id', verifyAdmin, (async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const image = await UnlimitedImage.findByIdAndDelete(req.params.id);
+        if (!image) {
+            return res.status(404).json({ error: 'Image not found' });
+        }
+        res.json({ message: 'Image deleted successfully' });
+    } catch (error) {
+        logger.error('[Admin] Error deleting unlimited image:', error);
+        next(error);
+    }
 }) as RequestHandler);
 
 export default router;
