@@ -11,6 +11,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import multerS3 from 'multer-s3';
 import s3Client, { s3BucketName } from '../utils/awsConfig';
 import UnlimitedImage from '../models/UnlimitedImage';
+import { PracticeImage } from '../models/PracticeImage';
 
 const storage = multerS3({
   s3: s3Client,
@@ -590,6 +591,110 @@ router.delete('/unlimited-image/:id', verifyAdmin, (async (req: Request, res: Re
         logger.error('[Admin] Error deleting unlimited image:', error);
         next(error);
     }
+}) as RequestHandler);
+
+/**
+ * Add practice images from Wikimedia URLs or file uploads
+ * POST /admin/practice-images/add
+ */
+router.post('/practice-images/add', verifyAdmin, uploadWithErrorHandling, (async (req: Request, res: Response) => {
+  try {
+    const { wikimediaUrls: wikimediaUrlsJson, uploadYears: uploadYearsJson } = req.body;
+    const uploadedFiles = req.files as Express.MulterS3.File[] || [];
+
+    // Parse and validate wikimedia URLs
+    let wikimediaEntries: { url: string, year: number }[] = [];
+    if (wikimediaUrlsJson) {
+      try {
+        wikimediaEntries = JSON.parse(wikimediaUrlsJson);
+        if (!Array.isArray(wikimediaEntries)) throw new Error('wikimediaUrls is not an array');
+      } catch (e) {
+        logger.error('Failed to parse wikimediaUrls JSON:', e);
+        return res.status(400).json({ error: 'Invalid wikimediaUrls format' });
+      }
+    }
+
+    // Parse and validate upload years
+    let uploadYears: number[] = [];
+    if (uploadYearsJson) {
+      try {
+        uploadYears = JSON.parse(uploadYearsJson);
+        if (!Array.isArray(uploadYears)) throw new Error('uploadYears is not an array');
+      } catch (e) {
+        logger.error('Failed to parse uploadYears JSON:', e);
+        return res.status(400).json({ error: 'Invalid uploadYears format' });
+      }
+    }
+
+    // Validate file count matches year count
+    if (uploadedFiles.length !== uploadYears.length) {
+      return res.status(400).json({ 
+        error: `Mismatch between uploaded files (${uploadedFiles.length}) and provided years for uploads (${uploadYears.length})` 
+      });
+    }
+
+    let addedCount = 0;
+
+    // Process uploaded files
+    for (let index = 0; index < uploadedFiles.length; index++) {
+      const file = uploadedFiles[index];
+      const imageYear = uploadYears[index];
+
+      if (imageYear === undefined || typeof imageYear !== 'number' || isNaN(imageYear)) {
+        logger.warn(`Invalid or missing year for uploaded file: ${file.originalname}`);
+        continue;
+      }
+
+      const practiceImage = new PracticeImage({
+        url: file.location,
+        year: imageYear,
+        source: 'User Upload',
+        title: file.originalname
+      });
+
+      await practiceImage.save();
+      addedCount++;
+    }
+
+    // Process Wikimedia URLs
+    for (const entry of wikimediaEntries) {
+      const imageYear = entry.year;
+
+      if (imageYear === undefined || typeof imageYear !== 'number' || isNaN(imageYear)) {
+        logger.warn(`Invalid or missing year for Wikimedia URL: ${entry.url}`);
+        continue;
+      }
+
+      const filename = extractFilenameFromUrl(entry.url);
+      if (!filename) continue;
+
+      const imageData = await fetchImageData(filename);
+      if (imageData) {
+        const practiceImage = new PracticeImage({
+          url: imageData.url,
+          year: imageYear,
+          source: 'Wikimedia Commons',
+          title: imageData.title || filename,
+          description: imageData.description
+        });
+
+        await practiceImage.save();
+        addedCount++;
+      }
+    }
+
+    res.status(200).json({ 
+      message: `Successfully added ${addedCount} practice images`,
+      count: addedCount
+    });
+
+  } catch (error) {
+    logger.error('Error adding practice images:', error);
+    res.status(500).json({ 
+      error: 'Failed to add practice images',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
 }) as RequestHandler);
 
 export default router;

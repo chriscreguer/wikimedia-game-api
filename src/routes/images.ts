@@ -8,6 +8,8 @@ import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import rateLimit from 'express-rate-limit';
 import { ProcessedDistribution, ProcessedDistributionPoint } from '../types/types';
 import UnlimitedImage from '../models/UnlimitedImage';
+import { PracticeImage } from '../models/PracticeImage';
+import { Types } from 'mongoose';
 
 dotenv.config();
 
@@ -1320,6 +1322,71 @@ router.get('/unlimited/random', (async (req: Request, res: Response, next: NextF
         logger.error('[Unlimited Random] Error fetching random unlimited image:', error);
         next(error);
     }
+}) as RequestHandler);
+
+/**
+ * Get a random practice image that hasn't been seen before
+ * GET /api/images/practice/random
+ */
+router.get('/practice/random', (async (req: Request<{}, {}, {}, { seenIds?: string }>, res: Response) => {
+  try {
+    const { seenIds } = req.query;
+    let seenObjectIds: Types.ObjectId[] = [];
+
+    // Parse seenIds if provided
+    if (seenIds) {
+      try {
+        const ids = seenIds.split(',');
+        seenObjectIds = ids.map(id => new Types.ObjectId(id));
+      } catch (error) {
+        logger.error('Error parsing seenIds:', error);
+        res.status(400).json({ error: 'Invalid seenIds format' });
+        return;
+      }
+    }
+
+    // Build aggregation pipeline
+    const pipeline: any[] = [];
+    
+    // Add $match stage only if there are seenIds
+    if (seenObjectIds.length > 0) {
+      pipeline.push({
+        $match: {
+          _id: { $nin: seenObjectIds }
+        }
+      });
+    }
+
+    // Add $sample stage
+    pipeline.push({
+      $sample: { size: 1 }
+    });
+
+    // Execute aggregation
+    const result = await PracticeImage.aggregate(pipeline);
+
+    if (result.length === 0) {
+      res.status(404).json({ error: 'No more practice images available' });
+      return;
+    }
+
+    const image = result[0];
+    res.status(200).json({
+      _id: image._id,
+      url: image.url,
+      year: image.year,
+      title: image.title,
+      source: image.source,
+      description: image.description
+    });
+
+  } catch (error) {
+    logger.error('Error fetching practice image:', error);
+    res.status(500).json({ 
+      error: 'Failed to fetch practice image',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
 }) as RequestHandler);
 
 export default router;
