@@ -1,0 +1,1470 @@
+[2025-04-21T00:27:01.035Z] [INFO] Server is running on port 8080 
+[2025-04-21T00:27:01.703Z] [INFO] MongoDB connected successfully 
+[2025-04-21T00:27:25.248Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:27:25.327Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:27:25.343Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:25.859Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:26.180Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:26.480Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:38.510Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:27:38.629Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:27:38.638Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:38.893Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:39.116Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:39.334Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:47.131Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:27:47.176Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:27:47.194Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:47.483Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:47.699Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:47.973Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:27:58.807Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T00:27:58.810Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3979, Date: 2025-04-20 
+[2025-04-21T00:27:58.810Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T00:28:00.830Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 3979 
+[2025-04-21T00:28:02.849Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T00:28:02.889Z] [INFO] [Submit] Saved updated average score (5065.202136481147) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T00:28:02.889Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3979 
+[2025-04-21T00:28:11.972Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:28:12.078Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:28:12.083Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:28:12.329Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:28:12.607Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:28:12.819Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:32:38.334Z] [INFO] Server is running on port 8080 
+[2025-04-21T00:32:39.009Z] [INFO] MongoDB connected successfully 
+[2025-04-21T00:32:40.919Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:32:41.044Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:32:41.051Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:32:41.612Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:32:41.831Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:32:42.101Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:32:44.252Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:32:44.326Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:32:44.330Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:32:44.572Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:32:44.787Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:32:45.002Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:32:54.293Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T00:32:54.295Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3280, Date: 2025-04-20 
+[2025-04-21T00:32:54.295Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T00:32:56.391Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 3280 
+[2025-04-21T00:32:58.517Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T00:32:58.557Z] [INFO] [Submit] Saved updated average score (5069.172015779477) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T00:32:58.557Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3280 
+[2025-04-21T00:33:33.360Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:33:33.497Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:33:33.505Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:33.751Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:34.017Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:34.246Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:38.215Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:33:38.266Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:33:38.271Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:38.514Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:38.725Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:38.939Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:50.892Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:33:50.948Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:33:50.961Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:51.305Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:51.521Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:51.824Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:56.330Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:33:56.383Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:33:56.388Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:56.635Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:56.843Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:33:57.063Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:34:01.903Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:34:01.952Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:34:01.958Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:34:02.203Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:34:02.534Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:34:02.834Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:35:44.711Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:35:44.814Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:35:44.818Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:35:45.091Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:35:45.308Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:35:45.597Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:42:29.785Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:42:29.875Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:42:29.885Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:42:30.130Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:42:30.570Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:42:30.880Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:42:36.245Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:42:36.302Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:42:36.306Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:42:36.645Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:42:36.850Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:42:37.058Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:43:13.761Z] [INFO] Server is running on port 8080 
+[2025-04-21T00:43:14.492Z] [INFO] MongoDB connected successfully 
+[2025-04-21T00:44:03.259Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:44:03.338Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:44:03.341Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:44:03.787Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:44:04.010Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:44:04.244Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:44:35.748Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T00:44:35.750Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 1982, Date: 2025-04-20 
+[2025-04-21T00:44:35.750Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T00:44:37.896Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 1982 
+[2025-04-21T00:44:39.959Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T00:44:40.000Z] [INFO] [Submit] Saved updated average score (5079.760502571068) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T00:44:40.000Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 1982 
+[2025-04-21T00:45:10.147Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:45:10.275Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:45:10.284Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:45:10.531Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:45:10.594Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T00:45:10.776Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:45:11.003Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:46:03.350Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:46:03.484Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:46:03.500Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:46:03.769Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:46:03.981Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:46:04.253Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:46:18.564Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T00:46:18.568Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3486, Date: 2025-04-20 
+[2025-04-21T00:46:18.568Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T00:46:20.637Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 3486 
+[2025-04-21T00:46:22.749Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T00:46:22.792Z] [INFO] [Submit] Saved updated average score (5081.157591039131) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T00:46:22.792Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3486 
+[2025-04-21T00:56:15.868Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:56:15.976Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:56:15.996Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:56:16.326Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:56:16.420Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T00:56:16.625Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:56:16.837Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:56:18.644Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:56:18.752Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T00:56:18.756Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:56:18.994Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:56:19.059Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T00:56:19.242Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T00:56:19.459Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:11.405Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:04:11.545Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:04:11.553Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:11.833Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:11.884Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:04:12.046Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:12.318Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:18.241Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:04:18.343Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:04:18.362Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:18.631Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:18.843Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:19.130Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:28.878Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T01:04:28.880Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3499, Date: 2025-04-20 
+[2025-04-21T01:04:28.881Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T01:04:30.928Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 3499 
+[2025-04-21T01:04:32.957Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:04:33.000Z] [INFO] [Submit] Saved updated average score (5093.603152414923) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:04:33.001Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3499 
+[2025-04-21T01:04:38.023Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:04:38.077Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:04:38.088Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:38.328Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:38.379Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:04:38.540Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:04:38.775Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:05:13.435Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:05:13.500Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:05:13.506Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:05:13.750Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:05:13.966Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:05:14.181Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:05:26.647Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T01:05:26.652Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3283, Date: 2025-04-20 
+[2025-04-21T01:05:26.653Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T01:05:28.754Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 3283 
+[2025-04-21T01:05:30.998Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:05:31.040Z] [INFO] [Submit] Saved updated average score (5093.545599075011) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:05:31.040Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3283 
+[2025-04-21T01:07:02.508Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:07:02.744Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:07:02.757Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:07:02.999Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:07:03.046Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:07:03.244Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:07:03.459Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:10:14.034Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:10:14.129Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:10:14.146Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:10:14.382Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:10:14.599Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:10:14.826Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:10:33.483Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T01:10:33.491Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3673, Date: 2025-04-20 
+[2025-04-21T01:10:33.491Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T01:10:35.657Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 3673 
+[2025-04-21T01:10:37.803Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:10:37.843Z] [INFO] [Submit] Saved updated average score (5099.097643097643) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:10:37.843Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3673 
+[2025-04-21T01:10:47.820Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:10:47.876Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:10:47.887Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:10:48.179Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:10:48.238Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:10:48.388Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:10:48.689Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:07.084Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:11:07.150Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:11:07.159Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:07.401Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:07.452Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:11:07.620Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:07.832Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:09.177Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:11:09.220Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:11:09.237Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:09.488Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:09.544Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:11:09.705Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:09.920Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:10.668Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:11:10.721Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:11:10.725Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:10.965Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:11.030Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:11:11.222Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:11:11.440Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:12:34.620Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:12:34.702Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:12:34.713Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:12:34.950Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:12:35.160Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:12:35.372Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:12:48.801Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T01:12:48.806Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3797, Date: 2025-04-20 
+[2025-04-21T01:12:48.806Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T01:12:50.926Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 3797 
+[2025-04-21T01:12:53.024Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:12:53.064Z] [INFO] [Submit] Saved updated average score (5099.654973570398) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:12:53.065Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3797 
+[2025-04-21T01:12:56.466Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:12:56.599Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:12:56.614Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:12:56.856Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:12:56.870Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:12:57.126Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:12:57.340Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:13:43.686Z] [INFO] Server is running on port 8080 
+[2025-04-21T01:13:44.645Z] [INFO] MongoDB connected successfully 
+[2025-04-21T01:13:51.137Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:13:51.222Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:13:51.228Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:13:51.698Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:13:51.930Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:13:52.178Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:14:07.529Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T01:14:07.537Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3305, Date: 2025-04-20 
+[2025-04-21T01:14:07.538Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T01:14:09.626Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 3305 
+[2025-04-21T01:14:11.702Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:14:11.743Z] [INFO] [Submit] Saved updated average score (5101.6467819404415) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:14:11.743Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3305 
+[2025-04-21T01:15:14.630Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:14.695Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:14.700Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:14.947Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:15.252Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:15.470Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:19.044Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:19.096Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:19.098Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:19.337Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:19.552Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:19.766Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:21.317Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:21.361Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:21.366Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:21.604Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:21.858Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:22.069Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:23.756Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:23.795Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:23.800Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:24.034Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:24.248Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:24.483Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:41.353Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:41.409Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:41.414Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:41.659Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:41.869Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:42.078Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:46.486Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:46.548Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:46.553Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:46.807Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:47.037Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:47.249Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:49.945Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:49.994Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:50.000Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:50.230Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:50.440Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:50.716Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:52.780Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:52.826Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:52.831Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:53.072Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:53.332Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:53.547Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:56.836Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:56.877Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:15:56.883Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:57.111Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:57.319Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:15:57.524Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:05.695Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:16:05.738Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:16:05.747Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:06.002Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:06.216Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:06.440Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:14.920Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T01:16:14.923Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 4054, Date: 2025-04-20 
+[2025-04-21T01:16:14.924Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T01:16:17.094Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 4054 
+[2025-04-21T01:16:19.242Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:16:19.282Z] [INFO] [Submit] Saved updated average score (5104.80149776775) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:16:19.283Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 4054 
+[2025-04-21T01:16:27.814Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:16:27.928Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:16:27.934Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:28.166Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:28.228Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:16:28.465Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:28.687Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:30.034Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:16:30.073Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:16:30.077Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:30.315Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:30.353Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:16:30.559Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:30.769Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:32.116Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:16:32.157Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:16:32.160Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:32.388Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:32.404Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:16:32.654Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:16:32.862Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:18:28.251Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:18:31.345Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:25:51.981Z] [INFO] Server is running on port 8080 
+[2025-04-21T01:25:52.645Z] [INFO] MongoDB connected successfully 
+[2025-04-21T01:26:06.923Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:26:07.006Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:26:07.014Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:26:07.555Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:26:07.834Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:26:08.047Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:26:18.510Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T01:26:18.512Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3378, Date: 2025-04-20 
+[2025-04-21T01:26:18.512Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T01:26:20.592Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 3378 
+[2025-04-21T01:26:22.702Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:26:22.743Z] [INFO] [Submit] Saved updated average score (5110.724037311648) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:26:22.743Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3378 
+[2025-04-21T01:27:17.426Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:27:17.583Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:27:17.592Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:27:17.834Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:27:18.083Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:27:18.317Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:27:30.445Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:27:30.548Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:27:30.554Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:27:30.799Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:27:31.012Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:27:31.224Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:27:41.584Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T01:27:41.585Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 2580, Date: 2025-04-20 
+[2025-04-21T01:27:41.585Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T01:27:43.704Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 2580 
+[2025-04-21T01:27:46.061Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:27:46.102Z] [INFO] [Submit] Saved updated average score (5111.935829388419) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T01:27:46.102Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 2580 
+[2025-04-21T01:52:29.469Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:52:29.699Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T01:52:29.702Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:52:29.947Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:52:30.035Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T01:52:30.155Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T01:52:30.364Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:03:32.652Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:03:32.736Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:03:32.739Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:03:32.979Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:03:33.046Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T02:03:33.191Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:03:33.403Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:07:56.250Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:07:56.305Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:07:56.317Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:07:56.635Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:07:56.716Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T02:07:56.841Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:07:57.109Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:07:59.964Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:08:00.011Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:08:00.017Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:08:00.282Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:08:00.448Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T02:08:00.492Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:08:00.780Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:09.657Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:09:09.746Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:09:09.756Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:10.006Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:10.216Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:10.512Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:13.603Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:09:13.675Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:09:13.681Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:13.928Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:14.184Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:14.397Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:17.279Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:09:17.348Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:09:17.353Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:17.589Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:17.848Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:18.056Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:44.557Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:09:44.647Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:09:44.663Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:44.913Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:45.126Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:45.338Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:09:56.948Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T02:09:56.952Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 2525, Date: 2025-04-20 
+[2025-04-21T02:09:56.952Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T02:09:58.551Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T02:09:58.770Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T02:09:58.963Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 2525 
+[2025-04-21T02:10:01.093Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T02:10:01.148Z] [INFO] [Submit] Saved updated average score (5140.175396375991) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T02:10:01.149Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 2525 
+[2025-04-21T02:12:31.074Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:12:31.144Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T02:12:31.156Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:12:31.393Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:12:31.621Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T02:12:31.841Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:17:46.459Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:17:46.575Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:17:46.584Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:17:46.870Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:17:47.113Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:17:47.327Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:53:18.497Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:53:18.611Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:53:18.626Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:53:18.881Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:53:19.100Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:53:19.313Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:55:41.582Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:55:41.938Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:55:41.956Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T03:56:14.479Z] [INFO] Server is running on port 8080 
+[2025-04-21T03:56:15.058Z] [INFO] MongoDB connected successfully 
+[2025-04-21T03:57:14.741Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:57:14.829Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:57:14.856Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:15.434Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:15.456Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T03:57:15.766Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:16.068Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:22.288Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:57:22.423Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:57:22.435Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:22.686Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:22.962Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:23.193Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:33.780Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T03:57:33.782Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 4191, Date: 2025-04-20 
+[2025-04-21T03:57:33.783Z] [INFO] [Submit] Processing for specific date 2025-04-20 (UTC) 
+[2025-04-21T03:57:35.884Z] [INFO] [Submit DB Update] Challenge ID: 6803f93925173186e621a92b, About to update distribution for score: 4191 
+[2025-04-21T03:57:38.163Z] [INFO] [Submit] Recalculating average score for challenge 6803f93925173186e621a92b. 
+[2025-04-21T03:57:38.202Z] [INFO] [Submit] Saved updated average score (5140.454511970534) for challenge 6803f93925173186e621a92b. 
+[2025-04-21T03:57:38.203Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 4191 
+[2025-04-21T03:57:41.661Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:57:41.773Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:57:41.778Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:42.034Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:42.085Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T03:57:42.276Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:42.493Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:49.915Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:57:49.977Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T03:57:49.987Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:50.242Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:50.277Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T03:57:50.451Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:57:50.665Z] [INFO] Requested daily challenge: /date/2025-04-20 
+[2025-04-21T03:59:52.478Z] [INFO] Requested daily challenge: /stats?date=2025-04-20 
+[2025-04-21T04:02:11.492Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:11.561Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:11.563Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:11.805Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:11.870Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:02:12.020Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:12.287Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:18.398Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:18.448Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:18.455Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:18.703Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:18.756Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:02:18.940Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:19.151Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:22.347Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:22.413Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:22.436Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:22.785Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:23.002Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:23.298Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:29.132Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:29.192Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:29.198Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:29.440Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:29.654Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:29.869Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:32.234Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:32.281Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:32.286Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:32.542Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:32.757Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:32.970Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:35.999Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:36.047Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:36.062Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:36.296Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:36.505Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:36.715Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:39.398Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:39.463Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:39.464Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:39.787Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:40.078Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:40.293Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:41.577Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:02:41.854Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:02:43.674Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:43.776Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:43.783Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:44.041Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:44.274Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:44.487Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:48.644Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:48.705Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:48.712Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:49.026Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:49.240Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:49.517Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:52.130Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:52.214Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:52.230Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:52.491Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:52.720Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:52.926Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:59.329Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:59.470Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:02:59.474Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:02:59.719Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:03:00.006Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:03:00.245Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:03:01.297Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T04:03:01.297Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 4702, Date: 2025-04-21 
+[2025-04-21T04:03:01.297Z] [INFO] [Submit] Processing for specific date 2025-04-21 (UTC) 
+[2025-04-21T04:03:01.601Z] [INFO] [Submit DB Update] Challenge ID: 6805178825173186e6505a5a, About to update distribution for score: 4702 
+[2025-04-21T04:03:01.873Z] [INFO] [Submit] Completions (12) <= 1000. Recalculating curve for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:03:01.873Z] [INFO] [Submit] Calling processDistributionData for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:03:02.091Z] [INFO] [Submit] Saved updated processedDistribution to DB for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:03:02.092Z] [INFO] [Submit] Recalculating average score for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:03:02.133Z] [INFO] [Submit] Saved updated average score (3593.25) for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:03:02.134Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 4702 
+[2025-04-21T04:06:04.969Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:06:05.105Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:06:05.116Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:06:05.371Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:06:05.478Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:06:05.599Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:06:05.814Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:06:08.796Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:06:08.871Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:06:08.876Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:06:09.119Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:06:09.341Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:06:09.558Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:36.642Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:21:36.763Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:21:36.774Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:37.006Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:37.069Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:21:37.212Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:37.428Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:41.827Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:21:41.914Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:21:41.926Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:42.180Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:42.247Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:21:42.412Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:42.627Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:45.333Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:21:45.401Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:21:45.424Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:45.667Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:45.877Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:46.082Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:21:58.952Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T04:21:58.957Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 2673, Date: 2025-04-21 
+[2025-04-21T04:21:58.959Z] [INFO] [Submit] Processing for specific date 2025-04-21 (UTC) 
+[2025-04-21T04:21:59.280Z] [INFO] [Submit DB Update] Challenge ID: 6805178825173186e6505a5a, About to update distribution for score: 2673 
+[2025-04-21T04:21:59.716Z] [INFO] [Submit] Completions (135) <= 1000. Recalculating curve for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:21:59.716Z] [INFO] [Submit] Calling processDistributionData for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:21:59.931Z] [INFO] [Submit] Saved updated processedDistribution to DB for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:21:59.931Z] [INFO] [Submit] Recalculating average score for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:21:59.966Z] [INFO] [Submit] Saved updated average score (3654.948148148148) for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:21:59.967Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 2673 
+[2025-04-21T04:22:01.892Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:22:01.933Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:22:01.941Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:22:02.181Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:22:02.197Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:22:02.408Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:22:02.610Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:22:04.385Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:22:04.451Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:22:04.462Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:22:04.701Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:22:04.716Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:22:04.987Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:22:05.188Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:15.260Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:23:15.324Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:23:15.335Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:15.597Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:15.652Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:23:15.820Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:16.030Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:17.995Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:23:18.085Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:23:18.151Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:18.413Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:18.637Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:18.876Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:31.588Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T04:23:31.592Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3436, Date: 2025-04-21 
+[2025-04-21T04:23:31.592Z] [INFO] [Submit] Processing for specific date 2025-04-21 (UTC) 
+[2025-04-21T04:23:31.998Z] [INFO] [Submit DB Update] Challenge ID: 6805178825173186e6505a5a, About to update distribution for score: 3436 
+[2025-04-21T04:23:32.340Z] [INFO] [Submit] Completions (145) <= 1000. Recalculating curve for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:23:32.340Z] [INFO] [Submit] Calling processDistributionData for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:23:32.541Z] [INFO] [Submit] Saved updated processedDistribution to DB for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:23:32.541Z] [INFO] [Submit] Recalculating average score for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:23:32.577Z] [INFO] [Submit] Saved updated average score (3634.6689655172413) for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:23:32.577Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3436 
+[2025-04-21T04:23:34.895Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:23:34.945Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:23:34.965Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:35.191Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:35.240Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:23:35.394Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:23:35.936Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:39.319Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:24:39.368Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:24:39.373Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:39.647Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:39.697Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:24:39.865Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:40.147Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:41.221Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:24:41.263Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:24:41.274Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:41.503Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:41.541Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:24:41.718Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:41.927Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:43.883Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:24:43.926Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:24:43.942Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:44.223Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:44.432Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:44.639Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:24:52.958Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T04:24:52.960Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 2855, Date: 2025-04-21 
+[2025-04-21T04:24:52.960Z] [INFO] [Submit] Processing for specific date 2025-04-21 (UTC) 
+[2025-04-21T04:24:53.298Z] [INFO] [Submit DB Update] Challenge ID: 6805178825173186e6505a5a, About to update distribution for score: 2855 
+[2025-04-21T04:24:53.648Z] [INFO] [Submit] Completions (157) <= 1000. Recalculating curve for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:24:53.648Z] [INFO] [Submit] Calling processDistributionData for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:24:53.852Z] [INFO] [Submit] Saved updated processedDistribution to DB for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:24:53.852Z] [INFO] [Submit] Recalculating average score for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:24:53.890Z] [INFO] [Submit] Saved updated average score (3593.0509554140126) for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:24:53.890Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 2855 
+[2025-04-21T04:26:38.143Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:26:38.230Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:26:38.258Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:26:38.503Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:26:38.712Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:26:38.922Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:26:57.179Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T04:26:57.181Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 2333, Date: 2025-04-21 
+[2025-04-21T04:26:57.182Z] [INFO] [Submit] Processing for specific date 2025-04-21 (UTC) 
+[2025-04-21T04:26:57.533Z] [INFO] [Submit DB Update] Challenge ID: 6805178825173186e6505a5a, About to update distribution for score: 2333 
+[2025-04-21T04:26:57.890Z] [INFO] [Submit] Completions (164) <= 1000. Recalculating curve for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:26:57.891Z] [INFO] [Submit] Calling processDistributionData for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:26:58.089Z] [INFO] [Submit] Saved updated processedDistribution to DB for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:26:58.089Z] [INFO] [Submit] Recalculating average score for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:26:58.126Z] [INFO] [Submit] Saved updated average score (3603.993902439024) for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:26:58.127Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 2333 
+[2025-04-21T04:29:48.872Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:29:48.985Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:29:48.986Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:29:49.222Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:29:49.310Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:29:49.470Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:29:49.682Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:29:52.139Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:29:52.183Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:29:52.187Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:29:52.424Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:29:52.631Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:29:52.840Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:30:02.795Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T04:30:02.800Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 3078, Date: 2025-04-21 
+[2025-04-21T04:30:02.801Z] [INFO] [Submit] Processing for specific date 2025-04-21 (UTC) 
+[2025-04-21T04:30:03.137Z] [INFO] [Submit DB Update] Challenge ID: 6805178825173186e6505a5a, About to update distribution for score: 3078 
+[2025-04-21T04:30:03.498Z] [INFO] [Submit] Completions (182) <= 1000. Recalculating curve for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:30:03.498Z] [INFO] [Submit] Calling processDistributionData for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:30:03.698Z] [INFO] [Submit] Saved updated processedDistribution to DB for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:30:03.699Z] [INFO] [Submit] Recalculating average score for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:30:03.734Z] [INFO] [Submit] Saved updated average score (3648.087912087912) for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:30:03.735Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3078 
+[2025-04-21T04:30:07.325Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:30:07.363Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:30:07.367Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:30:07.608Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:30:07.678Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:30:07.824Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:30:08.036Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:38:03.137Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:38:03.206Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:38:03.208Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:38:03.433Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:38:03.467Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:38:03.634Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:38:03.867Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:38:10.411Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:38:10.466Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:38:10.471Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:38:10.702Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:38:10.730Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:38:10.906Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:38:11.204Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:09.546Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:42:09.618Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:42:09.624Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:09.872Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:09.959Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:42:10.092Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:10.310Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:13.696Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:14.111Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:14.129Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:42:14.346Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:14.437Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:14.442Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:15.066Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:42:17.411Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:42:17.451Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:42:17.483Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:17.719Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:17.953Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:18.182Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:42:29.169Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T04:42:29.173Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 2890, Date: 2025-04-21 
+[2025-04-21T04:42:29.173Z] [INFO] [Submit] Processing for specific date 2025-04-21 (UTC) 
+[2025-04-21T04:42:29.750Z] [INFO] [Submit DB Update] Challenge ID: 6805178825173186e6505a5a, About to update distribution for score: 2890 
+[2025-04-21T04:42:30.223Z] [INFO] [Submit] Completions (259) <= 1000. Recalculating curve for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:42:30.223Z] [INFO] [Submit] Calling processDistributionData for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:42:30.429Z] [INFO] [Submit] Saved updated processedDistribution to DB for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:42:30.430Z] [INFO] [Submit] Recalculating average score for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:42:30.465Z] [INFO] [Submit] Saved updated average score (3670.4555984555986) for challenge 6805178825173186e6505a5a. 
+[2025-04-21T04:42:30.466Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 2890 
+[2025-04-21T04:44:51.784Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:44:51.855Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:44:51.860Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:44:52.098Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:44:52.319Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:44:52.535Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:44:55.653Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:44:55.694Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T04:44:55.702Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:44:55.979Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:44:56.203Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:44:56.478Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T04:48:44.957Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T04:48:45.272Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T05:16:23.519Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T05:54:16.005Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:08:41.220Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:08:48.472Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:09:25.688Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:09:31.409Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:10:44.335Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:15:22.313Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:21:17.246Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:21:27.479Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:21:30.115Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:25:06.513Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:37:22.315Z] [INFO] Server is running on port 8080 
+[2025-04-21T06:37:23.064Z] [INFO] MongoDB connected successfully 
+[2025-04-21T06:37:24.302Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:37:24.405Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:37:24.408Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:37:24.907Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:37:25.146Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:37:25.415Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:37:29.133Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:37:29.363Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:37:39.537Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T06:37:39.543Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 4296, Date: 2025-04-21 
+[2025-04-21T06:37:39.543Z] [INFO] [Submit] Processing for specific date 2025-04-21 (UTC) 
+[2025-04-21T06:37:40.278Z] [INFO] [Submit DB Update] Challenge ID: 6805178825173186e6505a5a, About to update distribution for score: 4296 
+[2025-04-21T06:37:41.171Z] [INFO] [Submit] Recalculating average score for challenge 6805178825173186e6505a5a. 
+[2025-04-21T06:37:41.205Z] [INFO] [Submit] Saved updated average score (3635.158878504673) for challenge 6805178825173186e6505a5a. 
+[2025-04-21T06:37:41.205Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 4296 
+[2025-04-21T06:37:43.804Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:37:43.843Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:37:43.847Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:37:44.090Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:37:44.165Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:37:44.332Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:37:44.548Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:46:00.782Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:46:00.854Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:46:00.863Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:46:01.112Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:46:01.198Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:46:01.328Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:46:01.539Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:46:34.546Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:46:34.565Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:46:34.974Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T06:47:33.515Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:47:33.563Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:47:33.630Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:47:33.829Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:47:49.597Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:47:49.649Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:47:49.898Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:47:50.102Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:47:50.385Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:49:15.095Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:49:15.202Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:49:15.447Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:49:15.655Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:49:15.867Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:49:29.138Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:49:29.490Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:53:02.637Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:53:02.716Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T06:53:02.721Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:53:02.958Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:53:03.170Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T06:53:03.394Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:09:05.550Z] [INFO] Server is running on port 8080 
+[2025-04-21T07:09:06.241Z] [INFO] MongoDB connected successfully 
+[2025-04-21T07:09:09.344Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:09:09.411Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:09:09.419Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:09:09.717Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:09:09.934Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:09:10.229Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:09:14.758Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T07:09:14.794Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T07:10:37.629Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:10:37.761Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:10:38.856Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-04-21T07:10:39.115Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-04-21T07:10:41.151Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:10:41.192Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:10:41.979Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-04-21T07:10:42.228Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-04-21T07:11:00.041Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:00.085Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:01.223Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:11:01.470Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:11:10.563Z] [INFO] Requested daily challenge: /submit 
+[2025-04-21T07:11:10.586Z] [INFO] [Submit Received Validated] IP: ::1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 2179, Date: 2025-04-21 
+[2025-04-21T07:11:10.587Z] [INFO] [Submit] Processing for specific date 2025-04-21 (UTC) 
+[2025-04-21T07:11:11.409Z] [INFO] [Submit DB Update] Challenge ID: 6805178825173186e6505a5a, About to update distribution for score: 2179 
+[2025-04-21T07:11:12.248Z] [INFO] [Submit] Recalculating average score for challenge 6805178825173186e6505a5a. 
+[2025-04-21T07:11:12.351Z] [INFO] [Submit] Saved updated average score (3618.895400593472) for challenge 6805178825173186e6505a5a. 
+[2025-04-21T07:11:12.351Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 2179 
+[2025-04-21T07:11:18.356Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:18.397Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:19.349Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-04-21T07:11:19.718Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-04-21T07:11:20.900Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:20.942Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:20.952Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:11:21.284Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:11:21.403Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:11:21.496Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:11:21.793Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:11:23.140Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:23.178Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:25.954Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:26.012Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:26.818Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-04-21T07:11:27.087Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-04-21T07:11:32.852Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:11:32.895Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:13:13.526Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:13:13.591Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:13:13.839Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:13:14.083Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:13:14.098Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:13:14.301Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:03.187Z] [INFO] Server is running on port 8080 
+[2025-04-21T07:15:03.844Z] [INFO] MongoDB connected successfully 
+[2025-04-21T07:15:06.087Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:15:06.224Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:15:06.232Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:06.495Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:06.601Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:15:06.748Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:06.972Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:48.155Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:15:48.210Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:15:48.234Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:48.480Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:48.540Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:15:48.702Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:48.914Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:59.513Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:59.807Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:15:59.841Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:16:00.073Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:16:00.284Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:17:26.351Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:17:26.353Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:17:26.782Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:17:26.784Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:17:26.784Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:17:27.086Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:17:27.089Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:17:27.090Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:17:27.372Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:17:27.373Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:17:27.373Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:17:27.592Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:17:35.662Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:17:35.989Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:17:36.008Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:17:36.206Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:17:36.423Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:17:37.697Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:17:37.697Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:17:37.740Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T07:17:37.781Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T07:17:38.028Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:17:38.030Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:17:38.030Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:17:38.239Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:17:44.692Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:17:44.693Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:17:45.081Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:17:48.521Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:17:48.522Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:17:48.743Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:17:51.629Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:17:51.631Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:17:51.922Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:18:04.199Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:18:04.509Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:18:04.568Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:18:04.724Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:18:04.995Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:18:06.463Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:18:06.464Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:18:06.823Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:18:06.825Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:18:06.826Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:18:07.076Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:18:07.078Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:18:07.078Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:18:07.304Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:18:07.306Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:18:07.306Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:18:07.896Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:18:51.692Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:18:51.958Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:18:52.014Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:18:52.170Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:18:52.386Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:20:16.679Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:20:16.685Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:20:17.127Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:20:17.149Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:20:17.149Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:20:17.451Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:20:17.453Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:20:17.453Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:20:17.705Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:20:17.707Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:20:17.708Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:20:17.928Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:20:22.989Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:20:23.275Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:20:23.337Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:20:23.492Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:20:23.709Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:20:25.736Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:20:25.737Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:20:26.079Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:20:26.081Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:20:26.082Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:20:26.302Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:20:26.304Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:20:26.304Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:20:26.629Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:20:26.632Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:20:26.634Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:20:26.876Z] [INFO] [Random Featured] Valid image found: "The School of Athens" by Raffaello Sanzio da Urbino.jpg, Year: 2013, Confidence: high 
+[2025-04-21T07:29:37.122Z] [INFO] Server is running on port 8080 
+[2025-04-21T07:29:37.749Z] [INFO] MongoDB connected successfully 
+[2025-04-21T07:31:12.881Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:31:13.239Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:31:13.329Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:31:13.540Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:31:13.790Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:31:14.577Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:31:14.625Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:31:17.067Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:31:17.067Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:31:17.170Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T07:31:17.224Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T07:31:17.704Z] [INFO] [Random Featured] Found 49 valid images. Selected: 010 Greater flamingos male and female in the Camargue during mating season Photo by Giles Laurent.jpg, Year: 2024 
+[2025-04-21T07:31:17.710Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:31:17.711Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:31:17.954Z] [INFO] [Random Featured] Found 49 valid images. Selected: (Orgueil) - L'Église Saint-Ferréol - Voute du choeur.jpg, Year: 2021 
+[2025-04-21T07:31:30.873Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:31:30.880Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:31:31.194Z] [INFO] [Random Featured] Found 49 valid images. Selected: 006 Giraffe portrait in the Lake Manyara National Park Photo by Giles Laurent.jpg, Year: 2020 
+[2025-04-21T07:31:35.657Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:31:35.659Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:31:36.041Z] [INFO] [Random Featured] Found 49 valid images. Selected: 011218-N-9769P-047 F-A-18 With Weapons Ready for Mission.jpg, Year: 2001 
+[2025-04-21T07:31:40.940Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:31:40.941Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:31:41.263Z] [INFO] [Random Featured] Found 49 valid images. Selected: 010 Greater flamingos male and female in the Camargue during mating season Photo by Giles Laurent.jpg, Year: 2024 
+[2025-04-21T07:31:45.659Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:31:45.675Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:31:46.135Z] [INFO] [Random Featured] Found 49 valid images. Selected: (Castres) Notre-Dame-de-la-Platé - L'orgue de tribune.jpg, Year: 2024 
+[2025-04-21T07:36:16.476Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:16.757Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:16.821Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T07:36:17.043Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:17.266Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:18.049Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:36:18.118Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:36:19.956Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:36:19.957Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:36:20.305Z] [INFO] [Random Featured] Found 49 valid images. Selected: 008 Black-headed heron from up close in the Tarangire National Park Photo by Giles Laurent.jpg, Year: 2020 
+[2025-04-21T07:36:20.309Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:36:20.309Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:36:20.535Z] [INFO] [Random Featured] Found 49 valid images. Selected: "Wind Mountain" Columbia R - NARA - 102278851 (page 1).png, Year: 2023 
+[2025-04-21T07:36:20.540Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:36:20.540Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:36:20.848Z] [INFO] [Random Featured] Found 49 valid images. Selected: 008 Black-headed heron from up close in the Tarangire National Park Photo by Giles Laurent.jpg, Year: 2020 
+[2025-04-21T07:36:20.854Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:36:20.854Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:36:21.119Z] [INFO] [Random Featured] Found 49 valid images. Selected: 013 Black-backed jackal in the Ngorongoro Crater Photo by Giles Laurent.jpg, Year: 2020 
+[2025-04-21T07:36:21.336Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:36:21.336Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:36:21.366Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T07:36:21.403Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T07:36:21.526Z] [INFO] [Random Featured] Found 49 valid images. Selected: 01 Gorges du Tarn Roc des Hourtous.jpg, Year: 2013 
+[2025-04-21T07:36:21.529Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:36:21.529Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:36:21.758Z] [INFO] [Random Featured] Found 49 valid images. Selected: 002 Black-headed weaver building its nest at Kibale forest National Park Photo by Giles Laurent.jpg, Year: 2022 
+[2025-04-21T07:36:26.072Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T07:36:26.073Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T07:36:26.283Z] [INFO] [Random Featured] Found 49 valid images. Selected: "Wind Mountain" Columbia R - NARA - 102278851 (page 1).png, Year: 2023 
+[2025-04-21T07:36:36.488Z] [INFO] Server is running on port 8080 
+[2025-04-21T07:36:37.062Z] [INFO] MongoDB connected successfully 
+[2025-04-21T07:36:38.247Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:38.262Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:38.270Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:38.273Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:38.909Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:38.913Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:38.918Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:38.926Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:59.527Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:59.539Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:59.552Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:36:59.558Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:37:07.960Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:37:07.963Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:37:08.100Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:37:08.122Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:37:08.189Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:37:08.205Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:37:08.314Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T07:37:08.320Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:37:08.361Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:37:11.286Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:40:18.880Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:40:18.900Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:40:18.908Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T07:40:18.964Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T14:37:31.887Z] [INFO] Server is running on port 8080 
+[2025-04-21T14:37:32.567Z] [INFO] MongoDB connected successfully 
+[2025-04-21T14:37:35.361Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T14:37:35.629Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T14:37:35.864Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T14:37:35.915Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T14:37:36.068Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T14:37:39.247Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T14:37:39.250Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T14:37:39.797Z] [INFO] [Random Featured] Found 49 valid images. Selected: 012 Wild Chamois Riederalp Photo by Giles Laurent.jpg, Year: 2021 
+[2025-04-21T14:37:39.800Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T14:37:39.800Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T14:37:40.057Z] [INFO] [Random Featured] Found 49 valid images. Selected: 010d Wild Bearded Vulture in flight at Pfyn-Finges (Switzerland) Photo by Giles Laurent.jpg, Year: 2021 
+[2025-04-21T14:37:40.068Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T14:37:40.069Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T14:37:40.292Z] [INFO] [Random Featured] Found 49 valid images. Selected: 011 The lion king Tryggve in the Serengeti National Park Photo by Giles Laurent.jpg, Year: 2020 
+[2025-04-21T14:37:40.295Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T14:37:40.300Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T14:37:40.637Z] [INFO] [Random Featured] Found 49 valid images. Selected: 013 Black-backed jackal in the Ngorongoro Crater Photo by Giles Laurent.jpg, Year: 2020 
+[2025-04-21T14:37:42.891Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T14:37:43.177Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T14:37:43.379Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T14:37:43.426Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T14:37:43.648Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T14:37:48.188Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T14:37:48.198Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T14:37:48.346Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T14:37:48.436Z] [WARN] [Unlimited Random] No images found in the admin-managed unlimited pool. 
+[2025-04-21T14:37:48.697Z] [INFO] [Random Featured] Found 49 valid images. Selected: 015 Chimpanzee at Kibale forest National Park Photo by Giles Laurent.jpg, Year: 2022 
+[2025-04-21T14:37:48.699Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T14:37:48.700Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T14:37:49.000Z] [INFO] [Random Featured] Found 49 valid images. Selected: 013 Black-backed jackal in the Ngorongoro Crater Photo by Giles Laurent.jpg, Year: 2020 
+[2025-04-21T14:37:55.835Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T14:37:55.840Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T14:37:56.120Z] [INFO] [Random Featured] Found 49 valid images. Selected: 'One of the wards in the hospital at Scutari'. Wellcome M0007724 - restoration, cropped.jpg, Year: 2015 
+[2025-04-21T15:13:08.945Z] [INFO] Server is running on port 8080 
+[2025-04-21T15:13:09.565Z] [INFO] MongoDB connected successfully 
+[2025-04-21T15:50:26.691Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T15:50:26.853Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T15:50:26.861Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:27.136Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:27.465Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:27.735Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:29.318Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T15:50:40.529Z] [INFO] Server is running on port 8080 
+[2025-04-21T15:50:41.118Z] [INFO] MongoDB connected successfully 
+[2025-04-21T15:50:53.308Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T15:50:53.395Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T15:50:53.415Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:53.678Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:53.780Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T15:50:53.895Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:54.108Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:57.300Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:57.495Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:50:57.495Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:50:57.546Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:57.613Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T15:50:57.761Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:57.975Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:50:58.371Z] [INFO] [Random Featured] Found 49 valid images. Selected: 002 Black-headed weaver building its nest at Kibale forest National Park Photo by Giles Laurent.jpg, Year: 2022 
+[2025-04-21T15:50:58.373Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:50:58.374Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:50:58.664Z] [INFO] [Random Featured] Found 49 valid images. Selected: 013 Alpha male chimpanzee at Kibale forest National Park Photo by Giles Laurent.jpg, Year: 2022 
+[2025-04-21T15:50:58.667Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:50:58.667Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:50:58.940Z] [INFO] [Random Featured] Found 49 valid images. Selected: 002 Black-headed weaver building its nest at Kibale forest National Park Photo by Giles Laurent.jpg, Year: 2022 
+[2025-04-21T15:50:58.942Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:50:58.942Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:50:59.193Z] [INFO] [Random Featured] Found 49 valid images. Selected: "Wind Mountain" Columbia R - NARA - 102278851 (page 1).png, Year: 2023 
+[2025-04-21T15:51:57.678Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:51:57.958Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:51:58.006Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T15:53:51.577Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:53:51.700Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:53:51.703Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:53:51.848Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:53:52.023Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T15:53:52.059Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:53:52.193Z] [INFO] [Random Featured] Found 49 valid images. Selected: 01 Calanche Piana.jpg, Year: 2013 
+[2025-04-21T15:53:52.195Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:53:52.196Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:53:52.270Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:53:52.436Z] [INFO] [Random Featured] Found 49 valid images. Selected: 010 Greater flamingos male and female in the Camargue during mating season Photo by Giles Laurent.jpg, Year: 2024 
+[2025-04-21T15:53:52.438Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:53:52.438Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:53:52.767Z] [INFO] [Random Featured] Found 49 valid images. Selected: (Castres) Notre-Dame-de-la-Platé - L'orgue de tribune.jpg, Year: 2024 
+[2025-04-21T15:53:52.780Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:53:52.780Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:53:53.036Z] [INFO] [Random Featured] Found 49 valid images. Selected: 002 Greater flamingo taking off in the Camargue Photo by Giles Laurent.jpg, Year: 2024 
+[2025-04-21T15:53:56.234Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T15:53:56.329Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T15:53:56.335Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:53:56.579Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:53:56.642Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T15:53:56.785Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:53:56.996Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:54:20.956Z] [INFO] First challenge images: "[{\"filename\":\"Screenshot 2025-04-20 at 10.38.jpeg\",\"title\":\"Screenshot 2025-04-20 at 10.38.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745164167113-726829165.jpeg\",\"year\":1987,\"source\":\"User Upload\",\"description\":\"Riot police officers use tear gas to disperse protestors\",\"revealedDescription\":\"Riot police officers use tear gas to disperse protesting students at Yonsei University in Seoul during the June Uprising\",\"_id\":\"6805bff525173186e6fd35a3\"},{\"filename\":\"Screenshot 2025-04-20 at 10.42.jpeg\",\"title\":\"Screenshot 2025-04-20 at 10.42.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745164167143-347249568.jpeg\",\"year\":1988,\"source\":\"User Upload\",\"description\":\"Partygoers flood the streets\",\"revealedDescription\":\"Partygoers flood the streets outside a UK acid house venue\",\"_id\":\"6805bff525173186e6fd35a4\"},{\"filename\":\"1599_Detroit-Citizens-Prohibition.jpg\",\"title\":\"1599_Detroit-Citizens-Prohibition.jpg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745207283455-314276421.jpg\",\"year\":1920,\"source\":\"User Upload\",\"description\":\"Detroit\",\"revealedDescription\":\"Detroit, the day before Prohibition\",\"_id\":\"6805bff525173186e6fd35a5\"},{\"filename\":\"4178770467_07b5d5416d_o.jpg\",\"title\":\"4178770467_07b5d5416d_o.jpg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745207283663-5102520.jpg\",\"year\":1965,\"source\":\"User Upload\",\"description\":\"Reeperbahn, Hamburg\",\"revealedDescription\":\"Reeperbahn, Hamburg’s iconic red-light and nightlife district\",\"_id\":\"6805bff525173186e6fd35a6\"},{\"filename\":\"Screenshot 2025-04-20 at 10.29.40â¯PM.jpg\",\"title\":\"Screenshot 2025-04-20 at 10.29.40â¯PM.jpg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745207283827-848140303.jpg\",\"year\":1959,\"source\":\"User Upload\",\"description\":\"Street celebration\",\"revealedDescription\":\"Alaska statehood celebration\",\"_id\":\"6805bff525173186e6fd35a7\"}]"
+[2025-04-21T15:55:57.550Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T15:55:57.602Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T15:55:57.611Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:55:57.843Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:55:57.930Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T15:55:58.051Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:55:58.282Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:55:59.391Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:55:59.586Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:55:59.587Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:55:59.630Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:55:59.675Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T15:55:59.840Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:55:59.959Z] [INFO] [Random Featured] Found 49 valid images. Selected: 01 Calanche Piana.jpg, Year: 2013 
+[2025-04-21T15:55:59.961Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:55:59.961Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:56:00.050Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T15:56:00.239Z] [INFO] [Random Featured] Found 49 valid images. Selected: 011218-N-9769P-047 F-A-18 With Weapons Ready for Mission.jpg, Year: 2001 
+[2025-04-21T15:56:00.241Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:56:00.241Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:56:00.442Z] [INFO] [Random Featured] Found 49 valid images. Selected: 005b Greater flamingos courtship display in the Camargue during mating season Photo by Giles Laurent.jpg, Year: 2024 
+[2025-04-21T15:56:00.444Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T15:56:00.444Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T15:56:00.640Z] [INFO] [Random Featured] Found 49 valid images. Selected: (Venice) Bocca di Leone in the Doge's Palace.jpg, Year: 2019 
+[2025-04-21T16:08:13.330Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:08:13.405Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:08:13.410Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:08:13.665Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:08:13.769Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:08:13.885Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:08:14.093Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:08:15.594Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:08:15.794Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T16:08:15.795Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T16:08:15.827Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:08:15.863Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:08:16.037Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:08:16.248Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:08:16.380Z] [INFO] [Random Featured] Found 49 valid images. Selected: 006 Wild Baby Alpine Chamois Creux du Van and Swiss Alps Sunset colors Photo by Giles Laurent.jpg, Year: 2021 
+[2025-04-21T16:08:16.383Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T16:08:16.383Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T16:08:16.594Z] [INFO] [Random Featured] Found 49 valid images. Selected: 002 Wild Alpine Ibex Swiss Alps and Creux du Van Photo by Giles Laurent.jpg, Year: 2021 
+[2025-04-21T16:08:16.596Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T16:08:16.596Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T16:08:16.911Z] [INFO] [Random Featured] Found 49 valid images. Selected: 015 Chimpanzee at Kibale forest National Park Photo by Giles Laurent.jpg, Year: 2022 
+[2025-04-21T16:08:16.915Z] [INFO] [Random Featured] Request received. 
+[2025-04-21T16:08:16.915Z] [INFO] [Random Featured] Attempt 1/2 to fetch and validate featured image. 
+[2025-04-21T16:08:17.264Z] [INFO] [Random Featured] Found 49 valid images. Selected: 013 Wild Alpine chough in flight at Pfyn-Finges (Switzerland) Photo by Giles Laurent.jpg, Year: 2021 
+[2025-04-21T16:11:28.395Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:11:28.468Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:11:28.727Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:11:28.769Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:11:28.931Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:11:29.135Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:11:36.923Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:11:36.976Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:11:37.204Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:11:37.254Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:11:37.408Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:11:37.613Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:12:32.671Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:12:32.781Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:12:33.038Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:12:33.126Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:12:33.289Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:12:33.491Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:15:43.155Z] [INFO] Server is running on port 8080 
+[2025-04-21T16:15:43.844Z] [INFO] MongoDB connected successfully 
+[2025-04-21T16:15:59.332Z] [INFO] First challenge images: "[{\"filename\":\"Screenshot 2025-04-20 at 10.38.jpeg\",\"title\":\"Screenshot 2025-04-20 at 10.38.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745164167113-726829165.jpeg\",\"year\":1987,\"source\":\"User Upload\",\"description\":\"Riot police officers use tear gas to disperse protestors\",\"revealedDescription\":\"Riot police officers use tear gas to disperse protesting students at Yonsei University in Seoul during the June Uprising\",\"_id\":\"6805bff525173186e6fd35a3\"},{\"filename\":\"Screenshot 2025-04-20 at 10.42.jpeg\",\"title\":\"Screenshot 2025-04-20 at 10.42.jpeg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745164167143-347249568.jpeg\",\"year\":1988,\"source\":\"User Upload\",\"description\":\"Partygoers flood the streets\",\"revealedDescription\":\"Partygoers flood the streets outside a UK acid house venue\",\"_id\":\"6805bff525173186e6fd35a4\"},{\"filename\":\"1599_Detroit-Citizens-Prohibition.jpg\",\"title\":\"1599_Detroit-Citizens-Prohibition.jpg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745207283455-314276421.jpg\",\"year\":1920,\"source\":\"User Upload\",\"description\":\"Detroit\",\"revealedDescription\":\"Detroit, the day before Prohibition\",\"_id\":\"6805bff525173186e6fd35a5\"},{\"filename\":\"4178770467_07b5d5416d_o.jpg\",\"title\":\"4178770467_07b5d5416d_o.jpg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745207283663-5102520.jpg\",\"year\":1965,\"source\":\"User Upload\",\"description\":\"Reeperbahn, Hamburg\",\"revealedDescription\":\"Reeperbahn, Hamburg’s iconic red-light and nightlife district\",\"_id\":\"6805bff525173186e6fd35a6\"},{\"filename\":\"Screenshot 2025-04-20 at 10.29.40â¯PM.jpg\",\"title\":\"Screenshot 2025-04-20 at 10.29.40â¯PM.jpg\",\"url\":\"https://year-guessing-game-images.s3.us-east-2.amazonaws.com/uploadedFiles-1745207283827-848140303.jpg\",\"year\":1959,\"source\":\"User Upload\",\"description\":\"Street celebration\",\"revealedDescription\":\"Alaska statehood celebration\",\"_id\":\"6805bff525173186e6fd35a7\"}]"
+[2025-04-21T16:19:18.666Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:19:18.938Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:19:18.987Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:20:58.865Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:20:58.922Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:20:58.928Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:20:59.166Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:20:59.261Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:20:59.370Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:20:59.578Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:22:22.684Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:22:22.750Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:22:22.760Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:22:23.005Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:22:23.055Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:22:23.218Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:22:23.429Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:22:53.168Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:22:53.242Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:22:53.256Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:22:53.503Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:22:53.913Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:22:53.952Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:22:54.197Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:23:49.398Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:23:49.445Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:23:49.463Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:23:49.699Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:23:49.795Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:23:49.906Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:23:50.115Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:24:16.668Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:24:16.721Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:24:16.729Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:24:16.969Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:24:16.983Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:24:17.179Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:24:17.387Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:24:28.824Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:24:28.873Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:24:28.884Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:24:29.114Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:24:29.178Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:24:29.321Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:24:29.528Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:26:33.239Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:26:33.302Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:26:33.305Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:26:33.557Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:26:33.624Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:26:33.768Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:26:33.983Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:27:38.676Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:27:38.729Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:27:38.735Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:27:38.992Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:27:39.079Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:27:39.218Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:27:39.419Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:27:43.701Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:27:43.925Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:29:53.684Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:29:53.738Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:29:53.748Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:29:54.007Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:29:54.039Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:29:54.215Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:29:54.426Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:30:24.722Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:30:24.795Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:30:24.801Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:30:25.056Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:30:25.106Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:30:25.275Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:30:25.483Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:33:01.844Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:33:01.892Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:33:01.898Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:33:02.159Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:33:02.241Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:33:02.387Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:33:02.594Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:33:52.801Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:33:53.126Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:33:53.132Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:33:53.371Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:33:53.428Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:33:53.581Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:33:53.798Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:36:41.285Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:36:41.347Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:36:41.354Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:36:41.604Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:36:41.667Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:36:41.819Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:36:42.037Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:44.686Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:41:44.737Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:41:44.742Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:44.975Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:44.997Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:41:45.183Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:45.392Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:48.517Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:41:48.565Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:41:48.582Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:48.835Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:48.948Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:41:49.054Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:49.284Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:56.468Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:41:56.527Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:41:56.532Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:56.887Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:56.925Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:41:57.135Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:41:57.345Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:42:05.649Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:42:05.700Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:42:05.712Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:42:05.964Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:42:05.980Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:42:06.181Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:42:06.395Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:47:49.681Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:47:49.772Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:47:49.780Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:47:50.040Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:47:50.137Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:47:50.322Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:47:50.549Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:48:00.351Z] [ERROR] Error parsing seenIds: {}
+[2025-04-21T16:48:41.866Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:48:41.922Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:48:41.941Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:48:42.197Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:48:42.244Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:48:42.414Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:48:42.633Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:48:48.879Z] [ERROR] Error parsing seenIds: {}
+[2025-04-21T16:48:51.115Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:48:51.197Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:48:51.199Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:48:51.437Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:48:51.472Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:48:51.643Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:48:51.865Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:55:47.163Z] [ERROR] Error parsing seenIds: {}
+[2025-04-21T16:57:28.025Z] [ERROR] Error parsing seenIds: {}
+[2025-04-21T16:57:29.039Z] [ERROR] Error parsing seenIds: {}
+[2025-04-21T16:57:31.231Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:57:31.280Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T16:57:31.291Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:57:31.542Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:57:31.646Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T16:57:31.770Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:57:31.985Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T16:57:36.193Z] [ERROR] Error parsing seenIds: {}
+[2025-04-21T17:00:35.503Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T17:00:35.769Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T17:00:35.848Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T17:00:35.983Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T17:00:36.211Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T17:03:46.014Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T17:03:46.072Z] [INFO] Requested daily challenge: /dates 
+[2025-04-21T17:03:46.079Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T17:03:46.312Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T17:03:46.391Z] [INFO] Requested daily challenge: /stats?date=2025-04-21 
+[2025-04-21T17:03:46.518Z] [INFO] Requested daily challenge: /date/2025-04-21 
+[2025-04-21T17:03:46.726Z] [INFO] Requested daily challenge: /date/2025-04-21 
