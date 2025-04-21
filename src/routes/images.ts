@@ -310,6 +310,14 @@ function processDistributionData(
     });
 
     const n = allScores.length;
+
+    // *** ADDED LOGGING ***
+    console.log(`[processDistributionData] INPUT: n=${n}, userScore=${userScore}, distributions length=${distributions?.length}`);
+    if (n > 0 && n < 5) { // Log details for small counts
+        console.log(`[processDistributionData] INPUT allScores (small n): ${JSON.stringify(allScores)}`);
+    }
+    // *** END LOGGING ***
+
     const bandwidth = 175;
     const minScoreDomain = 0;
     const maxScoreDomain = 5000;
@@ -398,6 +406,10 @@ function processDistributionData(
             percentileRank = Math.round(topPercent);
         }
     }
+
+    // *** ADDED LOGGING BEFORE RETURN ***
+    console.log(`[processDistributionData] OUTPUT: totalParticipants=${totalParticipants}, calculatedPercentileRank (for input userScore)=${percentileRank}, curvePoints length=${finalCurvePoints.length}`);
+    // *** END LOGGING ***
 
     // Return final object with explicitly mapped curve points
     return {
@@ -814,9 +826,6 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
     // Log the validated request
     logger.info(`[Submit Received Validated] IP: ${sourceIp}, UA: "${userAgent}", Score: ${numericScore}, Date: ${date}`);
 
-    // Add aggressive logging after validation
-    logger.info(`[Submit Processing] IP: ${sourceIp}, Score: ${numericScore}, Date: ${date}. Validation passed. Proceeding to update DB.`);
-
     try {
         let startDate: Date, endDate: Date;
         let queryDateString: string;
@@ -867,46 +876,93 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
                 { _id: updatedChallenge._id, 'stats.distributions.score': numericScore },
                 { $inc: { 'stats.distributions.$.count': 1 } }
             );
-            // Fetch again to get the updated count for avg score calculation
-            const refreshedChallengeForAvg = await DailyChallenge.findById(updatedChallenge._id);
-            if(refreshedChallengeForAvg) updatedChallenge.stats = refreshedChallengeForAvg.stats;
         } else {
             // Atomically add the new score distribution entry
             await DailyChallenge.updateOne(
                 { _id: updatedChallenge._id },
                 { $push: { 'stats.distributions': { score: numericScore, count: 1 } } }
             );
-            // Fetch again to get the updated distribution for avg score calculation
-            const refreshedChallengeForAvg = await DailyChallenge.findById(updatedChallenge._id);
-            if(refreshedChallengeForAvg) updatedChallenge.stats = refreshedChallengeForAvg.stats;
         }
 
-        // Recalculate average score using the correct total completions
-        const totalScoreSum = updatedChallenge.stats.distributions.reduce((sum, dist) => sum + (dist.score * dist.count), 0);
-        const totalCompletions = updatedChallenge.stats.completions; // Use the already incremented value
-        updatedChallenge.stats.averageScore = totalCompletions > 0 ? totalScoreSum / totalCompletions : 0;
+        // Fetch the updated challenge to get the latest data
+        const refreshedChallenge = await DailyChallenge.findById(updatedChallenge._id);
+        if (!refreshedChallenge) {
+            logger.error(`[Submit Error] Failed to fetch updated challenge after atomic updates for ID: ${updatedChallenge._id}`);
+            res.status(500).json({ error: 'Internal server error during score update' });
+            return;
+        }
 
-        // Recalculate processed distribution
-        const processedData = processDistributionData(
-            updatedChallenge.stats.distributions,
-            numericScore,
-            25
+        // Get the definitive new completion count
+        const newCompletions = refreshedChallenge.stats.completions;
+        if (typeof newCompletions !== 'number') {
+            logger.error(`[Submit] Invalid completion count found after refetch for challenge ${refreshedChallenge._id}: ${newCompletions}`);
+            res.status(500).json({ error: 'Internal error processing submission stats' });
+            return;
+        }
+
+        // Variable to hold the processed data we will eventually use/send
+        let processedDataForResponse: ProcessedDistribution | undefined = refreshedChallenge.stats.processedDistribution;
+
+        // Determine if recalculation is needed based on completion count
+        let shouldRecalculate = false;
+        if (newCompletions <= 1000) {
+            logger.info(`[Submit] Completions (${newCompletions}) <= 1000. Recalculating curve for challenge ${refreshedChallenge._id}.`);
+            shouldRecalculate = true;
+        } else if (newCompletions % 100 === 0) { // Recalculate every 100 submissions after 1000
+            logger.info(`[Submit] Completions (${newCompletions}) hit threshold. Recalculating curve for challenge ${refreshedChallenge._id}.`);
+            shouldRecalculate = true;
+        }
+
+        // Perform recalculation and update DB if needed
+        if (shouldRecalculate) {
+            try {
+                logger.info(`[Submit] Calling processDistributionData for challenge ${refreshedChallenge._id}.`);
+                const newlyProcessedData = processDistributionData(
+                    refreshedChallenge.stats.distributions,
+                    undefined, // No specific user score needed for global recalc
+                    25 // Point density setting
+                );
+
+                // Update the challenge document in the DB with the NEW processed distribution
+                await DailyChallenge.updateOne(
+                    { _id: refreshedChallenge._id },
+                    { $set: { 'stats.processedDistribution': newlyProcessedData } }
+                );
+                processedDataForResponse = newlyProcessedData;
+                logger.info(`[Submit] Saved updated processedDistribution to DB for challenge ${refreshedChallenge._id}.`);
+
+            } catch (processingError) {
+                logger.error(`[Submit] Error during processDistributionData or saving it for challenge ${refreshedChallenge._id}:`, processingError);
+                // Fallback: Keep using the potentially stale data already in processedDataForResponse
+                logger.warn(`[Submit] Proceeding with potentially stale processedDistribution for challenge ${refreshedChallenge._id} due to calculation error.`);
+            }
+        }
+
+        // Recalculate and Save Average Score (ensure this uses the latest data)
+        logger.info(`[Submit] Recalculating average score for challenge ${refreshedChallenge._id}.`);
+        const totalScoreSum = refreshedChallenge.stats.distributions.reduce((sum, dist) => sum + (dist.score * (dist.count || 0)), 0);
+        const newAverageScore = newCompletions > 0 ? totalScoreSum / newCompletions : 0;
+
+        await DailyChallenge.updateOne(
+            { _id: refreshedChallenge._id },
+            { $set: { 'stats.averageScore': newAverageScore } }
         );
-        updatedChallenge.stats.processedDistribution = processedData;
-
-        // Save the non-atomic updates (averageScore, processedDistribution)
-        await updatedChallenge.save();
-        logger.info(`[Submit Success] Challenge ${updatedChallenge._id} stats updated for IP: ${sourceIp}. Completions: ${updatedChallenge.stats.completions}`);
+        logger.info(`[Submit] Saved updated average score (${newAverageScore}) for challenge ${refreshedChallenge._id}.`);
 
         // Create the response object matching frontend expectations
         const responseData = {
             message: 'Score submitted successfully',
             stats: {
-                averageScore: updatedChallenge.stats.averageScore,
-                completions: updatedChallenge.stats.completions,
-                processedDistribution: processedData
+                averageScore: newAverageScore,
+                completions: newCompletions,
+                processedDistribution: processedDataForResponse
             }
         };
+
+        // *** ADDED LOGGING ***
+        console.log(`[Submit Response] Sending: completions=${newCompletions}, avgScore=${newAverageScore?.toFixed(2)}, processedDataAvailable=${!!processedDataForResponse}, percentileRank=${processedDataForResponse?.percentileRank}, totalParticipants=${processedDataForResponse?.totalParticipants}`);
+        // *** END LOGGING ***
+
         logger.info(`[Submit Response] Sending response for IP: ${sourceIp}, Score: ${numericScore}`);
         res.status(200).json(responseData);
 
@@ -993,101 +1049,80 @@ router.get(
  * Get stats for today's challenge
  */
 router.get('/daily-challenge/stats', async (req, res) => {
-  try {
-    let startDate: Date, endDate: Date;
-    let queryDateString: string;
+    try {
+        let startDate: Date, endDate: Date;
+        let queryDateString: string;
 
-    if (req.query.date) {
-      queryDateString = req.query.date as string;
-      // Use UTC boundaries for specific date query
-      startDate = new Date(queryDateString + 'T00:00:00.000Z');
-      endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-      if (isNaN(startDate.getTime())) {
-        res.status(400).json({ error: 'Invalid date format' });
-        return;
-      }
-      console.log(`[Stats Endpoint] Querying for specific date ${queryDateString} (UTC)`);
-    } else {
-      // Use CT logic to find 'today's' date if no date query param
-      const now = new Date();
-      queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
-      startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
-      endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-      console.log(`[Stats Endpoint] Querying for current CT date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
+        if (req.query.date) {
+            queryDateString = req.query.date as string;
+            startDate = new Date(queryDateString + 'T00:00:00.000Z');
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+            if (isNaN(startDate.getTime())) {
+                res.status(400).json({ error: 'Invalid date format' });
+                return;
+            }
+            console.log(`[Stats Endpoint] Querying for specific date ${queryDateString} (UTC)`);
+        } else {
+            const now = new Date();
+            queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
+            startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+            console.log(`[Stats Endpoint] Querying for current CT date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
+        }
+
+        const challenge = await DailyChallenge.findOne({
+            date: { $gte: startDate, $lt: endDate },
+            active: true
+        })
+        .select('_id date active stats.averageScore stats.completions stats.processedDistribution');
+
+        if (!challenge) {
+            res.status(404).json({ error: 'No challenge found for this date' });
+            return;
+        }
+
+        res.json(challenge);
+    } catch (err) {
+        console.error('[Stats Endpoint] Error:', err);
+        res.status(500).json({ error: 'Internal server error' });
     }
-
-    const challenge = await DailyChallenge.findOne({
-      date: { $gte: startDate, $lt: endDate },
-      active: true
-    });
-
-    if (!challenge) {
-      res.status(404).json({ error: 'No challenge found for this date' });
-      return;
-    }
-
-    // ... rest of stats logic ...
-    res.json(challenge);
-  } catch (err) {
-    console.error('[Stats Endpoint] Error:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
 });
 
 // src/routes/images.ts
 // import logger from '../utils/logger'; // Temporarily comment out or remove if not used elsewhere in file after changes
 
 router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): Promise<void> => {
-  // ***** SIMPLE CONSOLE LOG AT START *****
-  console.log(`[DATE ROUTE - CONSOLE] Request received for date: ${req.params.date}`);
-  // ***** END SIMPLE CONSOLE LOG *****
+    try {
+        const { date } = req.params;
+        const startDate = new Date(date + 'T00:00:00.000Z');
+        const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+        if (isNaN(startDate.getTime())) {
+            console.error(`[DATE ROUTE - CONSOLE] Invalid date format: ${date}`);
+            res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+            return;
+        }
 
-  try {
-      const { date } = req.params;
-      const startDate = new Date(date + 'T00:00:00.000Z');
-      const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-      if (isNaN(startDate.getTime())) {
-          console.error(`[DATE ROUTE - CONSOLE] Invalid date format: ${date}`); // Use console.error
-          res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
-          return;
-      }
+        console.log(`[DATE ROUTE - CONSOLE] Querying MongoDB for date: ${date}`);
 
-      console.log(`[DATE ROUTE - CONSOLE] Querying MongoDB for date: ${date}`); // Use console.log
+        const challenge = await DailyChallenge.findOne({
+            date: { $gte: startDate, $lt: endDate },
+            active: true
+        })
+        .select('_id images date active stats.averageScore stats.completions stats.processedDistribution');
 
-      const challenge = await DailyChallenge.findOne({
-          date: { $gte: startDate, $lt: endDate },
-          active: true
-      })
-      .select('_id images date active stats.processedDistribution');
+        if (!challenge) {
+            console.warn(`[DATE ROUTE - CONSOLE] Challenge not found for date: ${date}`);
+            res.status(404).json({ error: 'No daily challenge available for this date' });
+            return;
+        }
 
-      if (challenge) {
-           console.log(`[DATE ROUTE - CONSOLE] Found challenge _id: ${challenge._id}`); // Use console.log
-           // Add a simple check for stats presence
-           if(challenge.stats) {
-               console.log(`[DATE ROUTE - CONSOLE] challenge.stats object exists.`);
-               if (challenge.stats.distributions !== undefined) {
-                  console.warn(`[DATE ROUTE - CONSOLE] UNEXPECTED: challenge.stats.distributions exists.`);
-               } else {
-                  console.log(`[DATE ROUTE - CONSOLE] OK: challenge.stats.distributions is undefined.`);
-               }
-           } else {
-               console.warn(`[DATE ROUTE - CONSOLE] challenge.stats is missing.`);
-           }
-      } else {
-          console.warn(`[DATE ROUTE - CONSOLE] Challenge not found for date: ${date}`); // Use console.warn
-          res.status(404).json({ error: 'No daily challenge available for this date' });
-          return;
-      }
+        console.log(`[DATE ROUTE - CONSOLE] Preparing to send response for date: ${date}`);
+        res.status(200).json(challenge);
 
-      console.log(`[DATE ROUTE - CONSOLE] Preparing to send response for date: ${date}`); // Use console.log
-      res.status(200).json(challenge);
-
-  } catch (error) {
-      // ***** USE CONSOLE.ERROR IN CATCH *****
-      console.error(`[DATE ROUTE - CONSOLE] Error fetching challenge for date ${req.params.date}:`, error);
-      // ***** END CONSOLE.ERROR *****
-      res.status(500).json({ error: 'Server error fetching daily challenge' });
-  }
+    } catch (error) {
+        console.error(`[DATE ROUTE - CONSOLE] Error fetching challenge for date ${req.params.date}:`, error);
+        res.status(500).json({ error: 'Server error fetching daily challenge' });
+    }
 }) as RequestHandler);
 
 // ADMIN ROUTES
