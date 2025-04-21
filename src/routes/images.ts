@@ -80,7 +80,7 @@ const IMAGES_PER_REQUEST = 100;
 // --- Rate Limiter Configuration ---
 const submitLimiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hours
-    max: 100, // Limit each IP to 15 submit requests per 24 hours
+    max: 15, // Limit each IP to 15 submit requests per 24 hours
     message: { error: 'Too many submission attempts from this IP, please try again after 24 hours' },
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
