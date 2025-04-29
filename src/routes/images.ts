@@ -1015,62 +1015,48 @@ router.get(
 
 /**
  * GET /api/images/daily-challenge/stats
- * Get stats AND imageUrls for a specific challenge date
+ * Get stats for today's challenge
  */
 router.get('/daily-challenge/stats', async (req, res) => {
-  try {
-      let startDate: Date, endDate: Date;
-      let queryDateString: string;
+    try {
+        let startDate: Date, endDate: Date;
+        let queryDateString: string;
 
-      // --- (Date calculation logic remains the same) ---
-      if (req.query.date) {
-           queryDateString = req.query.date as string;
-           startDate = new Date(queryDateString + 'T00:00:00.000Z');
-           endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-           if (isNaN(startDate.getTime())) {
-               res.status(400).json({ error: 'Invalid date format' });
-               return;
-           }
-           console.log(`[Stats Endpoint] Querying for specific date ${queryDateString} (UTC)`);
-       } else {
-           const now = new Date();
-           queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
-           startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
-           endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-           console.log(`[Stats Endpoint] Querying for current CT date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
-       }
-      // --- (End Date Logic) ---
+        if (req.query.date) {
+            queryDateString = req.query.date as string;
+            startDate = new Date(queryDateString + 'T00:00:00.000Z');
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+            if (isNaN(startDate.getTime())) {
+                res.status(400).json({ error: 'Invalid date format' });
+                return;
+            }
+            console.log(`[Stats Endpoint] Querying for specific date ${queryDateString} (UTC)`);
+        } else {
+            const now = new Date();
+            queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
+            startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+            console.log(`[Stats Endpoint] Querying for current CT date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
+        }
 
-      console.time('findOne-stats-and-images');
-      const challenge = await DailyChallenge.findOne({
-          date: { $gte: startDate, $lt: endDate },
-          active: true
-      })
-      // --- 1. Select 'images' field (or 'imageUrls' if that's your field name) ---
-      .select('_id date active stats.averageScore stats.completions stats.processedDistribution images'); // <-- ADD 'images' HERE
-      console.timeEnd('findOne-stats-and-images');
+        console.time('findOne-stats');
+        const challenge = await DailyChallenge.findOne({
+            date: { $gte: startDate, $lt: endDate },
+            active: true
+        })
+        .select('_id date active stats.averageScore stats.completions stats.processedDistribution');
+        console.timeEnd('findOne-stats');
 
-      if (!challenge) {
-          res.status(404).json({ error: 'No challenge found for this date' });
-          return;
-      }  
+        if (!challenge) {
+            res.status(404).json({ error: 'No challenge found for this date' });
+            return;
+        }
 
-      // --- 2. Restructure the response ---
-      const responseData = {
-          stats: challenge.stats || {}, // Extract stats, provide default empty object
-          // Map over the images array to extract just the URLs
-          // Adjust 'images' and 'img.url' if your schema field names are different
-          imageUrls: Array.isArray(challenge.images)
-                     ? challenge.images.map((img: any) => img.url)
-                     : [] // Provide default empty array if 'images' field is missing or not an array
-      };
-
-      res.json(responseData); // Send the restructured data
-
-  } catch (err) {
-      console.error('[Stats Endpoint] Error:', err);
-      res.status(500).json({ error: 'Internal server error' });
-  }
+        res.json(challenge);
+    } catch (err) {
+        console.error('[Stats Endpoint] Error:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 // src/routes/images.ts
