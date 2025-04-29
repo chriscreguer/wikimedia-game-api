@@ -1053,7 +1053,7 @@ router.get('/daily-challenge/stats', async (req, res) => {
       if (!challenge) {
           res.status(404).json({ error: 'No challenge found for this date' });
           return;
-      }   
+      }  
 
       // --- 2. Restructure the response ---
       const responseData = {
