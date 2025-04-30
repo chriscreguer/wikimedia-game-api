@@ -1071,7 +1071,7 @@ router.get('/daily-challenge/stats', async (req, res) => {
       console.error('[Stats Endpoint] Error:', err);
       res.status(500).json({ error: 'Internal server error' });
   }
-});
+}); 
 
 // src/routes/images.ts
 // import logger from '../utils/logger'; // Temporarily comment out or remove if not used elsewhere in file after changes
