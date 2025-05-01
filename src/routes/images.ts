@@ -80,18 +80,19 @@ const IMAGES_PER_REQUEST = 100;
 // --- Rate Limiter Configuration ---
 const submitLimiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hours
-    max: 15, // Limit each IP to 15 submit requests per 24 hours
-    message: { error: 'Too many submission attempts from this IP, please try again after 24 hours' },
+    max: 3, // Limit each IP+date combo to 3 submit requests per 24 hours
+    message: { error: 'Too many submission attempts for this challenge date from this IP, please try again after 24 hours' },
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
     keyGenerator: (req: Request): string => {
         // Use 'x-forwarded-for' if behind a proxy, otherwise fallback
-        const ip = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress;
-        return ip || 'unknown-ip'; // Provide a fallback key
+        const ip = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress || 'unknown-ip';
+        const dateKey = req.body.date || 'current'; // Use 'current' or default if date is missing
+        return ip + '-' + dateKey; // Key is unique per IP per challenge date
     },
     handler: (req: Request, res: Response, next: NextFunction, options: any) => {
-        const ip = options.keyGenerator(req);
-        logger.warn(`[Rate Limit Blocked] IP: ${ip} exceeded submit limit for date: ${req.body.date || 'N/A'}`);
+        const ip = options.keyGenerator(req); // Use the generated key for logging
+        logger.warn(`[Rate Limit Blocked] Key: ${ip} exceeded submit limit.`); // Log the key
         res.status(options.statusCode).send(options.message);
     }
 });
