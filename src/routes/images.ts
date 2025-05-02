@@ -1072,11 +1072,13 @@ router.get('/daily-challenge/stats', async (req, res) => {
 
       // --- 2. Restructure the response ---
       const responseData = {
+          _id: challenge._id, // Include ID if needed
+          date: challenge.date, // Include date if needed
+          active: challenge.active, // Include active status if needed
           stats: challenge.stats || {}, // Extract stats, provide default empty object
-          // Map over the images array to extract just the URLs
-          // Adjust 'images' and 'img.url' if your schema field names are different
-          imageUrls: Array.isArray(challenge.images)
-                     ? challenge.images.map((img: any) => img.url)
+          // Return the full images array
+          images: Array.isArray(challenge.images)
+                     ? challenge.images // Return the full image objects
                      : [] // Provide default empty array if 'images' field is missing or not an array
       };
 
@@ -1118,7 +1120,31 @@ router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): 
         }
 
         console.log(`[DATE ROUTE - CONSOLE] Preparing to send response for date: ${date}`);
-        res.status(200).json(challenge);
+
+        // Convert to plain object for modification
+        let responseChallenge = challenge.toObject();
+
+        // Check for legacy image structure using 'any' for flexibility
+        const firstImage = responseChallenge.images && responseChallenge.images.length > 0 ? responseChallenge.images[0] : null;
+        if (firstImage && !(firstImage as any).originalJpegUrl && (firstImage as any).url) {
+            console.log("[DATE ROUTE - CONSOLE] Mapping old 'url' field for backwards compatibility...");
+            responseChallenge.images = responseChallenge.images.map((img: any) => { // Use 'any' for input img
+                const newImg = {
+                    ...img,
+                    originalJpegUrl: img.url,     // Map old 'url'
+                    generatedWebpUrl: null as string | null, // Set type explicitly
+                };
+                delete newImg.url; // Remove the old 'url' field dynamically
+                return newImg;
+            });
+        }
+
+        // ADD THIS LOG:
+        console.log("--- Data from DB before sending (date route) ---");
+        console.log(JSON.stringify(responseChallenge.images, null, 2)); // Log potentially modified images
+        console.log("--------------------------------------------");
+
+        res.status(200).json(responseChallenge); // Send the potentially modified object
 
     } catch (error) {
         console.error(`[DATE ROUTE - CONSOLE] Error fetching challenge for date ${req.params.date}:`, error);
@@ -1349,7 +1375,31 @@ router.get('/daily-challenge/today', async (req, res) => {
       res.status(404).json({ error: 'No daily challenge available for today' });
       return;
     }
-    res.json(challenge);
+
+    // Convert to plain object for modification
+    let responseChallenge = challenge.toObject();
+
+    // Check for legacy image structure using 'any' for flexibility
+    const firstImage = responseChallenge.images && responseChallenge.images.length > 0 ? responseChallenge.images[0] : null;
+    if (firstImage && !(firstImage as any).originalJpegUrl && (firstImage as any).url) {
+        console.log("[TODAY ROUTE - CONSOLE] Mapping old 'url' field for backwards compatibility...");
+        responseChallenge.images = responseChallenge.images.map((img: any) => { // Use 'any' for input img
+            const newImg = {
+                ...img,
+                originalJpegUrl: img.url,     // Map old 'url'
+                generatedWebpUrl: null as string | null, // Set type explicitly
+            };
+            delete newImg.url; // Remove the old 'url' field dynamically
+            return newImg;
+        });
+    }
+
+    // ADD THIS LOG:
+    console.log("--- Data from DB before sending (today route) ---");
+    console.log(JSON.stringify(responseChallenge.images, null, 2)); // Log potentially modified images
+    console.log("---------------------------------------------");
+
+    res.json(responseChallenge); // Send the potentially modified object
 
   } catch (err) {
     console.error('[Today Endpoint] Error:', err);

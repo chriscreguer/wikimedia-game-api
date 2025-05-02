@@ -23,7 +23,8 @@ const DailyChallengeSchema: Schema = new Schema({
   images: [{
     filename: { type: String, required: true },
     title: { type: String, required: true },
-    url: { type: String, required: true },
+    originalJpegUrl: { type: String, required: true },
+    generatedWebpUrl: { type: String, required: false },
     year: { type: Number, required: true },
     source: { type: String, required: true },
     description: { type: String, default: '' },
@@ -54,29 +55,28 @@ const DailyChallengeSchema: Schema = new Schema({
 }, { timestamps: true });
 
 // Add this pre-save hook to ensure image URLs are properly formatted
-// Add this pre-save hook to ensure image URLs are properly formatted
 DailyChallengeSchema.pre<DailyChallengeDoc>('save', function(next) {
   // Normalize image URLs
   if (this.images && Array.isArray(this.images)) {
     this.images = this.images.map((image: any) => {
       // Don't modify URLs that are already S3 URLs
-      if (typeof image.url === 'string' && image.url.includes('amazonaws.com')) {
+      if (typeof image.originalJpegUrl === 'string' && image.originalJpegUrl.includes('amazonaws.com')) {
         return image;
       }
       
       // For uploads that still use the old format
-      if (typeof image.url === 'string' && image.url.includes('uploads')) {
+      if (typeof image.originalJpegUrl === 'string' && image.originalJpegUrl.includes('uploads')) {
         // Extract the filename
         let filename;
-        if (image.url.includes('/uploads/')) {
-          filename = image.url.split('/uploads/').pop();
+        if (image.originalJpegUrl.includes('/uploads/')) {
+          filename = image.originalJpegUrl.split('/uploads/').pop();
         } else {
-          filename = image.url.split('/').pop();
+          filename = image.originalJpegUrl.split('/').pop();
         }
         
         // Format as S3 URL instead of local path
         if (filename) {
-          image.url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/${filename}`;
+          image.originalJpegUrl = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/${filename}`;
         }
       }
       return image;

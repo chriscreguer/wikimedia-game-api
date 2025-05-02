@@ -74,7 +74,7 @@ export async function fetchImageData(filename: string): Promise<WikimediaImage |
     
     return {
       title: title,
-      url: imageInfo.url,
+      originalJpegUrl: imageInfo.url,
       source: 'Wikimedia Commons',
       year: year,
       description: imageInfo.extmetadata?.ImageDescription?.value || '',

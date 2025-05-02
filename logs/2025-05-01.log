@@ -1,0 +1,1117 @@
+[2025-05-01T01:40:10.905Z] [INFO] Server is running on port 8080 
+[2025-05-01T01:40:11.429Z] [INFO] MongoDB connected successfully 
+[2025-05-01T01:40:12.085Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:40:12.166Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:40:12.210Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:40:12.254Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:40:16.375Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:40:16.412Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:40:28.363Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:40:28.451Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:40:28.512Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:40:28.553Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:41:40.488Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:41:40.544Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:41:41.810Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T01:41:41.893Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T01:41:41.932Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T01:41:41.986Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T01:56:32.813Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:56:32.922Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:56:32.957Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:56:32.997Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:57:35.581Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:57:35.631Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:57:37.116Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T01:57:37.203Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T01:57:37.242Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T01:57:37.279Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T01:58:05.883Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:58:05.937Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:58:06.884Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:58:06.952Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:58:06.990Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:58:07.027Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T01:58:27.137Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T01:58:27.148Z] [INFO] [Submit Received Validated] IP: 127.0.0.1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 2745, Date: 2025-04-30 
+[2025-05-01T01:58:27.148Z] [INFO] [Submit] Processing for specific date 2025-04-30 (UTC) 
+[2025-05-01T01:58:27.374Z] [INFO] [Submit DB Update] Challenge ID: 6811a005f22b7769eb1fe128, About to update distribution for score: 2745 
+[2025-05-01T01:58:27.459Z] [INFO] [Submit] Recalculating average score for challenge 6811a005f22b7769eb1fe128. 
+[2025-05-01T01:58:27.491Z] [INFO] [Submit] Saved updated average score (3674.0835734870316) for challenge 6811a005f22b7769eb1fe128. 
+[2025-05-01T01:58:27.492Z] [INFO] [Submit Response] Sending response for IP: 127.0.0.1, Score: 2745 
+[2025-05-01T01:59:44.787Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:59:44.833Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T01:59:47.302Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T01:59:47.391Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T01:59:47.431Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T01:59:47.484Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:00:04.615Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:02:25.478Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:02:25.581Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:02:25.677Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:02:25.830Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:02:25.930Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:02:26.044Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:02:26.103Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:02:26.146Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:02:26.186Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:02:26.227Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:06:34.427Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:06:34.468Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:06:34.789Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:06:34.795Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:06:34.881Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:06:34.887Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:06:34.931Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:06:56.306Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:06:56.332Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:06:56.561Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:06:56.572Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:06:56.687Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:06:56.742Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:04.438Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:04.450Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:04.611Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:04.670Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:04.716Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:04.731Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:04.765Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:17.152Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:17.155Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:17.227Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:17.235Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:17.338Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:17.403Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:26.609Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:26.628Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:26.704Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:26.715Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:26.758Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:26.770Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:26.856Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:33.615Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:07:33.684Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:07:34.679Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:07:34.688Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:07:34.760Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:07:34.763Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:07:34.829Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:07:34.867Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:07:36.917Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:07:36.962Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:07:37.721Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:37.723Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:37.784Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:07:37.787Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:37.827Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:07:37.863Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:09:15.064Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:09:15.117Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:09:15.962Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:09:15.966Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:09:16.054Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:09:16.066Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:09:16.135Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:09:16.142Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:09:16.180Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:09:17.964Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:09:18.006Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:09:19.411Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:09:19.412Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:09:19.474Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:09:19.480Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:09:19.534Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:09:19.555Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T02:09:19.582Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T02:12:29.443Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:12:29.501Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:12:30.368Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:12:30.372Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:12:30.443Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:12:30.446Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:12:30.498Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:12:30.502Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:12:30.540Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:12:39.629Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:12:39.678Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:23:21.329Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:23:21.382Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:23:22.478Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:23:22.547Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:23:22.579Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:23:22.615Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:24:29.522Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:24:29.565Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:24:30.299Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:24:30.300Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:24:30.419Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:24:30.468Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:24:30.605Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:24:30.701Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:26:34.417Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:26:34.467Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:26:35.482Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T02:26:35.553Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T02:26:35.587Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T02:26:35.620Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T02:26:58.792Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:26:58.852Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:26:59.642Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:26:59.661Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:26:59.745Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:26:59.746Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:26:59.803Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:26:59.841Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:31:05.148Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:31:05.202Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:31:06.086Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:31:06.157Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:31:06.194Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:31:06.228Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:31:51.081Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:31:51.795Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:31:52.716Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:31:52.725Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:31:52.791Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:31:52.793Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:31:52.843Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:31:52.882Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:33:54.202Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:33:54.254Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:33:55.689Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:33:55.768Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:33:55.806Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:33:55.842Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:41:22.397Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:41:22.537Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:41:30.062Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:41:30.111Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:41:31.172Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:41:31.177Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:41:31.274Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:41:31.276Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:41:31.319Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:41:31.357Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:46:40.173Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:46:40.196Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:46:40.284Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:46:40.287Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:46:40.335Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:46:40.378Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:49:18.014Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:49:18.070Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:49:19.519Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:49:19.582Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:49:19.626Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:49:19.667Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T02:50:21.675Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:50:21.723Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:50:22.723Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:50:22.724Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:50:22.805Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:50:22.806Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:50:22.865Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:50:22.905Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:52:00.154Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:52:00.244Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:52:01.736Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:52:01.818Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:52:01.857Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:52:01.895Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:52:06.473Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:52:06.529Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:52:07.708Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:52:07.710Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:52:07.796Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:52:07.806Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:52:07.842Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:52:07.845Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:52:07.902Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:52:31.440Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:52:31.499Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:52:32.641Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:52:32.720Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:52:32.777Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:52:32.814Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:59:16.289Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:59:16.447Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:59:16.509Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:59:16.557Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T02:59:21.741Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:59:21.807Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T02:59:22.790Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:59:22.794Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:59:22.884Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T02:59:22.894Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:59:22.944Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T02:59:22.986Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:00:26.134Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:00:26.180Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:00:27.375Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T03:00:27.440Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T03:00:27.477Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T03:00:27.512Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T03:00:38.223Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:00:38.278Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:00:39.366Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:00:39.371Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:00:39.452Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:00:39.453Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:00:39.503Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:00:39.546Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:00:57.745Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:00:57.800Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:00:59.251Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:00:59.319Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:00:59.362Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:00:59.400Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:02:01.638Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:02:01.718Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:02:02.712Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:02:02.718Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:02:02.783Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:02:02.812Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:02:02.823Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:02:02.860Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:02:02.863Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:18:41.988Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:18:42.389Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:18:43.671Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:18:43.752Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:18:43.799Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:18:43.838Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:20:52.070Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:20:52.132Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:20:53.629Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:20:53.632Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:20:53.703Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:20:53.758Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:20:53.797Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:20:53.976Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:20:54.013Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:20:54.055Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:20:54.098Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:20:54.133Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:23:00.180Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:23:00.236Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:23:01.114Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:23:01.230Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:23:01.275Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:23:01.348Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T03:25:38.700Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:25:38.786Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:26:17.105Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:26:17.155Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:28:19.818Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:28:19.879Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:28:20.956Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:28:20.975Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:28:21.040Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:28:21.044Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:28:21.090Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:28:21.092Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T03:28:21.134Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T03:30:42.436Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:30:42.527Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T03:30:43.762Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T03:30:43.830Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T03:30:43.875Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T03:30:43.915Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T04:04:59.685Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T04:04:59.846Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T04:04:59.883Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T04:04:59.923Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T04:36:59.581Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:36:59.680Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:37:01.092Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:37:01.095Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:37:01.173Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:37:01.175Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:37:01.229Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:37:01.266Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:37:12.688Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:37:12.746Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:38:19.423Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:38:19.494Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:38:21.032Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T04:38:21.099Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T04:38:21.136Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T04:38:21.291Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T04:38:28.042Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:38:28.099Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:38:29.111Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T04:38:29.177Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T04:38:29.215Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T04:38:29.253Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T04:41:00.808Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T04:41:00.903Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T04:41:00.941Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T04:41:00.980Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T04:44:53.086Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:44:53.171Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:44:54.120Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:44:54.123Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:44:54.193Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:44:54.195Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:44:54.236Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:44:54.237Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:44:54.275Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:45:27.501Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:45:27.626Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:45:27.704Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:45:27.706Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:45:27.755Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:45:27.758Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:45:27.802Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:45:35.436Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:45:35.476Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T04:53:11.823Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:53:11.894Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:53:11.972Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:53:11.973Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T04:53:12.025Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T04:53:12.069Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T05:00:16.850Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T05:00:16.891Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T05:00:16.978Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T05:00:16.988Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T05:00:17.040Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T05:00:17.074Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T05:02:13.070Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T05:02:13.079Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T05:02:13.164Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T05:02:13.168Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T05:02:13.229Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T05:02:13.287Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T05:02:30.641Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T05:02:30.697Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T05:02:34.727Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:02:34.799Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:02:34.838Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:02:34.874Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:40:19.918Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:40:20.099Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:40:20.143Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:40:20.181Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:44:01.989Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:44:02.121Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:44:02.208Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:44:02.253Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:44:05.830Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:44:06.011Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:44:06.081Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T05:44:06.119Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T06:12:58.386Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T06:12:58.612Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T06:12:58.686Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T06:12:58.723Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T07:05:48.517Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:05:48.648Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:05:48.683Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:05:48.727Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:05:51.253Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:05:51.318Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:05:51.354Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:05:51.392Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:06:09.544Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:06:09.613Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:06:09.665Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:06:09.701Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:06:11.094Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:06:11.146Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:07:24.276Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:07:24.327Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:07:28.118Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:07:28.151Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:27:05.862Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:27:06.027Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:27:06.069Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:27:06.108Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:28:14.762Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:28:14.816Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:28:17.357Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:28:17.361Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:28:17.440Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:28:17.448Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:28:17.506Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:28:17.543Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:33:49.151Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:33:49.213Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:34:26.654Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:34:26.673Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:34:26.740Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:34:26.800Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:34:26.803Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:34:26.853Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:34:26.867Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:38:39.980Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:38:40.045Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:38:41.825Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:38:41.915Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:38:41.953Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:38:41.989Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:39:01.575Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:39:01.621Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:39:04.124Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T07:39:04.141Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T07:39:04.188Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T07:39:04.242Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T07:39:04.246Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T07:39:04.288Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T07:39:04.291Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T07:39:15.301Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:39:15.347Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:39:17.888Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:39:17.894Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:39:17.978Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:39:17.986Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:39:18.027Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:39:18.028Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:39:18.066Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:39:19.282Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:39:19.319Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:39:20.599Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:39:20.670Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:39:20.710Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:39:20.749Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:39:41.130Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:39:41.179Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:39:43.365Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:39:43.367Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:39:43.446Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:39:43.457Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:39:43.506Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:39:43.555Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:42:02.545Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:02.597Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:04.943Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:42:05.084Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:42:05.134Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:42:05.181Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:42:05.653Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:05.737Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:07.734Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T07:42:07.819Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T07:42:07.860Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T07:42:07.987Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T07:42:09.295Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:09.328Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:10.513Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T07:42:10.577Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T07:42:10.621Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T07:42:10.660Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T07:42:11.258Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:11.297Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:12.057Z] [INFO] Requested daily challenge: /date/2025-04-26 
+[2025-05-01T07:42:12.121Z] [INFO] Requested daily challenge: /date/2025-04-26 
+[2025-05-01T07:42:12.292Z] [INFO] Requested daily challenge: /date/2025-04-26 
+[2025-05-01T07:42:12.326Z] [INFO] Requested daily challenge: /date/2025-04-26 
+[2025-05-01T07:42:12.810Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:12.842Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:42:14.770Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:42:14.835Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:42:14.875Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:42:14.916Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:44:27.770Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:44:27.865Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:44:27.899Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:44:27.935Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:45:16.977Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:45:17.864Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:45:17.942Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:45:17.975Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:45:18.736Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:45:18.804Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:45:19.332Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:45:19.484Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:46:48.301Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:46:48.433Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:46:48.485Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:46:48.547Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:46:53.888Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:46:53.933Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:46:55.931Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:46:55.938Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:46:56.000Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:46:56.022Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:46:56.041Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:46:56.063Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T07:46:56.079Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T07:46:56.642Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:46:56.692Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T07:46:59.429Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:46:59.496Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:46:59.532Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T07:46:59.565Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T14:56:44.640Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T14:56:44.731Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T14:56:47.294Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T14:56:47.297Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T14:56:47.395Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T14:56:47.398Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T14:56:47.445Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T14:56:47.482Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T14:57:18.773Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T14:57:18.796Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T14:57:18.864Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T14:57:18.868Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T14:57:18.899Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T14:57:18.915Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T14:57:18.933Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T14:57:55.010Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T14:57:55.060Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T14:57:56.300Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T14:57:56.364Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T14:57:56.410Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T14:57:56.511Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T14:57:59.359Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T14:57:59.399Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:34:42.270Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:34:42.364Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:34:44.786Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T15:34:44.803Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T15:34:44.871Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T15:34:44.873Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T15:34:44.910Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T15:34:44.913Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T15:34:44.952Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T15:34:45.767Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:34:45.800Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:35:48.155Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:35:48.209Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:35:52.221Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:35:52.259Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:35:54.684Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T15:35:54.686Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T15:35:54.751Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T15:35:54.755Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T15:35:54.811Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T15:35:54.813Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T15:35:54.853Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T15:35:56.660Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:35:56.697Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:35:57.600Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T15:35:57.685Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T15:35:57.721Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T15:35:57.754Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T15:36:01.641Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:36:01.699Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:36:03.902Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T15:36:03.905Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T15:36:03.968Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T15:36:03.969Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T15:36:04.030Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T15:36:04.097Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T15:38:38.176Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:38:38.225Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:38:40.775Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T15:38:40.841Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T15:38:40.881Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T15:38:40.915Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T15:39:26.429Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T15:39:26.534Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T15:39:26.571Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T15:39:26.614Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T15:42:28.006Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:42:28.083Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:47:05.900Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T15:47:06.004Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T15:47:06.037Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T15:47:06.073Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T15:47:15.838Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:47:15.902Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:47:18.611Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T15:47:18.614Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T15:47:18.678Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T15:47:18.682Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T15:47:18.804Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T15:47:18.808Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T15:47:18.847Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T15:47:19.736Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T15:47:19.773Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T16:00:18.409Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T16:00:18.451Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T16:00:18.547Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T16:00:18.550Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T16:00:18.639Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T16:00:18.664Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T16:00:18.692Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T16:00:29.302Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T16:00:29.403Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T16:00:30.878Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T16:00:30.965Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T16:00:31.031Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T16:00:31.071Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T16:00:44.576Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T16:00:44.584Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T16:00:44.697Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T16:00:44.700Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T16:00:44.760Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T16:00:44.765Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T16:00:44.888Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T16:02:02.885Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T16:02:02.963Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T16:02:04.041Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T16:02:04.190Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T16:02:04.255Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T16:02:04.289Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T16:35:38.893Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T16:35:38.982Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T16:35:42.148Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T16:35:42.154Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T16:35:42.231Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T16:35:42.242Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T16:35:42.288Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T16:35:42.299Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T16:35:42.549Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T17:06:00.749Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:06:01.220Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:06:02.483Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:06:02.515Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:06:05.208Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T17:06:05.283Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T17:06:05.348Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T17:06:05.382Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T17:06:26.915Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:06:26.955Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:06:29.349Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:06:29.357Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:06:29.470Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:06:29.515Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:06:29.561Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:06:29.668Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:06:29.715Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:06:29.754Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:06:29.805Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:06:29.853Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:06:37.094Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:06:37.167Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:07:10.875Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:07:10.926Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:07:12.458Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:07:12.572Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:07:12.616Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:07:12.661Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:10:27.161Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:10:27.215Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:10:30.173Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T17:10:30.176Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T17:10:30.273Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T17:10:30.274Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T17:10:30.326Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T17:10:30.369Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T17:10:45.096Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:10:45.135Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:41:40.949Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:41:41.306Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:41:44.511Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T17:41:44.589Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T17:41:44.630Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T17:41:44.667Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T17:42:48.040Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:42:48.089Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:42:51.977Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:42:51.983Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:42:52.054Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:42:52.100Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:42:52.149Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:42:52.276Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:42:52.340Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:42:52.380Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:42:52.416Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:42:52.456Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:43:02.764Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:43:02.815Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:43:03.911Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:43:03.995Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:43:04.031Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:43:04.066Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:45:18.880Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:45:19.233Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:45:19.310Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:45:19.371Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:45:31.465Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:45:31.523Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:45:33.368Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T17:45:33.371Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T17:45:33.453Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T17:45:33.455Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T17:45:33.512Z] [INFO] Requested daily challenge: /stats?date=2025-04-24 
+[2025-05-01T17:45:33.513Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T17:45:33.560Z] [INFO] Requested daily challenge: /date/2025-04-24 
+[2025-05-01T17:45:37.564Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:45:37.607Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:45:40.089Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T17:45:40.155Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T17:45:40.193Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T17:45:40.231Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T17:45:41.893Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:45:41.948Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:45:45.243Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T17:45:45.313Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T17:45:45.353Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T17:45:45.442Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T17:45:50.748Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:45:50.803Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:45:53.561Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T17:45:53.630Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T17:45:53.670Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T17:45:53.708Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T17:46:21.837Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:46:21.881Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:46:23.092Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:46:23.173Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:46:23.220Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:46:23.259Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:46:25.840Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:46:25.882Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:46:30.024Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T17:46:30.090Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T17:46:30.130Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T17:46:30.167Z] [INFO] Requested daily challenge: /date/2025-04-28 
+[2025-05-01T17:46:34.453Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:46:34.487Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:46:36.968Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:46:36.974Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:46:37.044Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:46:37.046Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:46:37.097Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:46:37.098Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:46:37.135Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:46:46.394Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:46:46.440Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:46:47.533Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:46:47.610Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:46:47.662Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:46:47.696Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T17:47:56.116Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:47:56.167Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:47:58.020Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:47:58.032Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:47:58.103Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:47:58.105Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:47:58.153Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:47:58.154Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:47:58.193Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:47:59.013Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:47:59.058Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:51:02.725Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:51:02.767Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:51:02.857Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:51:02.920Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:51:02.932Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:51:03.244Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:51:04.350Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:51:04.387Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:55:06.431Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:55:06.453Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:55:07.269Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T17:55:07.297Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:55:07.362Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:55:07.400Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T17:58:00.511Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T17:58:00.568Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T18:19:13.245Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T18:19:13.278Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T18:19:13.376Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T18:19:13.379Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T18:19:13.428Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T18:19:13.432Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T18:19:13.468Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T18:47:50.949Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T18:47:51.046Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T18:47:52.407Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T18:47:52.479Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T18:47:52.532Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T18:47:52.568Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T18:52:18.571Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T18:52:18.719Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T18:52:21.616Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T18:52:21.669Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T18:52:22.683Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T18:52:22.688Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T18:52:22.774Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T18:52:22.785Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T18:52:23.221Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T18:52:23.260Z] [INFO] Requested daily challenge: /stats?date=2025-04-30 
+[2025-05-01T18:52:23.310Z] [INFO] Requested daily challenge: /date/2025-04-30 
+[2025-05-01T19:10:25.671Z] [INFO] Server is running on port 8080 
+[2025-05-01T19:10:26.330Z] [INFO] MongoDB connected successfully 
+[2025-05-01T19:10:36.742Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T19:10:36.922Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T19:10:36.991Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T19:10:37.031Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T19:10:40.613Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:10:40.680Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:10:47.349Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T19:10:47.458Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T19:10:47.503Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T19:10:47.554Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T19:11:08.562Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:11:08.612Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:11:37.841Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:11:37.895Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:11:41.153Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T19:11:41.240Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T19:11:41.282Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T19:11:41.330Z] [INFO] Requested daily challenge: /date/2025-04-29 
+[2025-05-01T19:11:50.174Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:11:50.219Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:12:16.606Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:12:16.649Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:12:45.055Z] [INFO] Requested daily challenge: /stats?date=2025-04-29 
+[2025-05-01T19:19:02.607Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:19:02.677Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T19:19:04.037Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T19:19:04.107Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T19:19:04.148Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T19:19:04.200Z] [INFO] Requested daily challenge: /date/2025-04-23 
+[2025-05-01T19:19:05.187Z] [INFO] Requested daily challenge: /stats?date=2025-04-23 
+[2025-05-01T20:41:08.663Z] [INFO] Server is running on port 8080 
+[2025-05-01T20:41:09.178Z] [INFO] MongoDB connected successfully 
+[2025-05-01T20:41:27.830Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T20:41:27.898Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T20:42:07.023Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:42:07.114Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:42:07.156Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:42:07.196Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:45:08.928Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T20:45:08.978Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T20:45:12.228Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T20:45:12.261Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T20:45:21.923Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T20:45:56.176Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T20:45:56.266Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T20:46:02.705Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:46:02.783Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:46:02.843Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:46:02.888Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:46:21.019Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T20:47:29.066Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:47:29.181Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:47:29.243Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:47:29.275Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:47:45.759Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T20:48:04.827Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:48:04.881Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T20:48:04.970Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:48:05.025Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:48:05.062Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T20:48:05.284Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T20:48:05.326Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T20:48:05.368Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T20:48:05.420Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T20:48:05.458Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T21:47:33.504Z] [INFO] Server is running on port 8080 
+[2025-05-01T21:47:33.960Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T21:47:33.967Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T21:47:34.020Z] [INFO] MongoDB connected successfully 
+[2025-05-01T21:47:34.118Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T21:47:34.183Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T21:47:34.231Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T21:47:34.316Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T21:47:34.378Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T21:47:34.420Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T21:47:34.453Z] [INFO] Requested daily challenge: /stats?date=2025-04-15 
+[2025-05-01T21:47:42.488Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T21:47:42.532Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T21:47:43.439Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T21:47:43.519Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T21:47:43.565Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T21:47:43.604Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T21:47:58.682Z] [INFO] Requested daily challenge: /stats?date=2025-04-16 
+[2025-05-01T21:49:22.744Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T21:49:22.797Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T21:49:23.676Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T21:49:23.745Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T21:49:23.782Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T21:49:23.819Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T21:53:53.614Z] [INFO] Server is running on port 8080 
+[2025-05-01T21:53:54.107Z] [INFO] MongoDB connected successfully 
+[2025-05-01T21:54:16.595Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T21:54:17.006Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T21:54:39.509Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T21:54:39.625Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T21:54:39.702Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T21:54:39.748Z] [INFO] Requested daily challenge: /date/2025-04-17 
+[2025-05-01T21:55:12.371Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T21:55:12.378Z] [INFO] [Submit Received Validated] IP: 127.0.0.1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 1983, Date: 2025-04-17 
+[2025-05-01T21:55:12.379Z] [INFO] [Submit] Processing for specific date 2025-04-17 (UTC) 
+[2025-05-01T21:55:12.395Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-04-17, Is Past: true 
+[2025-05-01T21:55:12.406Z] [INFO] Requested daily challenge: /stats?date=2025-04-17 
+[2025-05-01T21:55:12.528Z] [INFO] [Submit Past Date] Only incremented completions for challenge ID: 67d8f5cba282513ea3e8cedc. Preparing to return existing stats. 
+[2025-05-01T21:55:12.529Z] [INFO] [Submit Response] Sending response for IP: 127.0.0.1, Score: 1983, Date: 2025-04-17 
+[2025-05-01T21:55:33.534Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T21:55:33.589Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T21:55:34.670Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-05-01T21:55:34.741Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-05-01T21:55:34.779Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-05-01T21:55:34.822Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-05-01T21:56:59.928Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T21:56:59.934Z] [INFO] [Submit Received Validated] IP: 127.0.0.1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 1361, Date: 2025-04-18 
+[2025-05-01T21:56:59.934Z] [INFO] [Submit] Processing for specific date 2025-04-18 (UTC) 
+[2025-05-01T21:56:59.943Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-04-18, Is Past: true 
+[2025-05-01T21:56:59.968Z] [INFO] Requested daily challenge: /stats?date=2025-04-18 
+[2025-05-01T21:57:00.119Z] [INFO] [Submit Past Date] Only incremented completions for challenge ID: 68017c54c085743a52526cd9. Preparing to return existing stats. 
+[2025-05-01T21:57:00.121Z] [INFO] [Submit Response] Sending response for IP: 127.0.0.1, Score: 1361, Date: 2025-04-18 
+[2025-05-01T22:01:14.924Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:01:14.978Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:01:20.220Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-05-01T22:01:20.365Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-05-01T22:01:20.415Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-05-01T22:01:20.468Z] [INFO] Requested daily challenge: /date/2025-04-18 
+[2025-05-01T22:01:36.483Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:01:36.557Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:01:37.179Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:01:37.215Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:01:38.492Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T22:01:38.562Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T22:01:38.602Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T22:01:38.641Z] [INFO] Requested daily challenge: /date/2025-04-16 
+[2025-05-01T22:01:40.654Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:01:40.698Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:01:41.504Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:01:41.578Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:01:41.623Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:01:41.661Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:02:17.313Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:02:17.389Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:02:17.461Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:02:17.545Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:02:43.268Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:02:43.369Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:02:43.446Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:02:43.481Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:03:20.118Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:03:20.250Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:03:20.301Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:03:20.382Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:05:04.384Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:05:04.544Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:05:04.586Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:05:04.623Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:32:18.349Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T22:32:18.356Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 3500, Date: 2025-04-15 
+[2025-05-01T22:32:18.356Z] [INFO] [Submit] Processing for specific date 2025-04-15 (UTC) 
+[2025-05-01T22:32:18.365Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-04-15, Is Past: true 
+[2025-05-01T22:32:18.466Z] [INFO] [Submit Past Date] Only incremented completions for challenge ID: 67eda6a71e00faab410e647c. Preparing to return existing stats. 
+[2025-05-01T22:32:18.467Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3500, Date: 2025-04-15 
+[2025-05-01T22:32:57.984Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:32:58.028Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:33:00.750Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:33:00.868Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:33:00.925Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:33:01.011Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:33:02.538Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:33:02.587Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:33:20.684Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T22:33:20.687Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 3500, Date: 2025-04-15 
+[2025-05-01T22:33:20.687Z] [INFO] [Submit] Processing for specific date 2025-04-15 (UTC) 
+[2025-05-01T22:33:20.691Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-04-15, Is Past: true 
+[2025-05-01T22:33:20.766Z] [INFO] [Submit Past Date] Only incremented completions for challenge ID: 67eda6a71e00faab410e647c. Preparing to return existing stats. 
+[2025-05-01T22:33:20.767Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3500, Date: 2025-04-15 
+[2025-05-01T22:33:32.914Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T22:33:32.916Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 3500, Date: 2025-04-15 
+[2025-05-01T22:33:32.916Z] [INFO] [Submit] Processing for specific date 2025-04-15 (UTC) 
+[2025-05-01T22:33:32.917Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-04-15, Is Past: true 
+[2025-05-01T22:33:32.996Z] [INFO] [Submit Past Date] Only incremented completions for challenge ID: 67eda6a71e00faab410e647c. Preparing to return existing stats. 
+[2025-05-01T22:33:32.996Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3500, Date: 2025-04-15 
+[2025-05-01T22:34:25.994Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T22:34:26.003Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 3852, Date: 2025-04-15 
+[2025-05-01T22:34:26.003Z] [INFO] [Submit] Processing for specific date 2025-04-15 (UTC) 
+[2025-05-01T22:34:26.009Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-04-15, Is Past: true 
+[2025-05-01T22:34:26.082Z] [INFO] [Submit Past Date] Only incremented completions for challenge ID: 67eda6a71e00faab410e647c. Preparing to return existing stats. 
+[2025-05-01T22:34:26.083Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3852, Date: 2025-04-15 
+[2025-05-01T22:34:45.158Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T22:34:45.159Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 3852, Date: 2025-04-15 
+[2025-05-01T22:34:45.159Z] [INFO] [Submit] Processing for specific date 2025-04-15 (UTC) 
+[2025-05-01T22:34:45.160Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-04-15, Is Past: true 
+[2025-05-01T22:34:45.237Z] [INFO] [Submit Past Date] Only incremented completions for challenge ID: 67eda6a71e00faab410e647c. Preparing to return existing stats. 
+[2025-05-01T22:34:45.238Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 3852, Date: 2025-04-15 
+[2025-05-01T22:37:05.588Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T22:37:05.594Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 2156, Date: 2025-05-01 
+[2025-05-01T22:37:05.594Z] [INFO] [Submit] Processing for specific date 2025-05-01 (UTC) 
+[2025-05-01T22:37:05.599Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-05-01, Is Past: false 
+[2025-05-01T22:37:05.766Z] [INFO] [Submit Current Date] Processing full stats update for challenge ID: 6811a23af22b7769eb22ae0d on date 2025-05-01. 
+[2025-05-01T22:37:05.771Z] [INFO] [Submit DB Update] Adding new score 2156 to distributions for challenge 6811a23af22b7769eb22ae0d 
+[2025-05-01T22:37:05.942Z] [INFO] [Submit Calc] Recalculating average score. Completions: 4821, Distributions Count: 2162 
+[2025-05-01T22:37:05.976Z] [INFO] [Submit DB Update] Saved updated average score (3845.5208462974488) for challenge 6811a23af22b7769eb22ae0d. No distribution recalculation needed. 
+[2025-05-01T22:37:05.976Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 2156, Date: 2025-05-01 
+[2025-05-01T22:38:00.025Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T22:38:00.042Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 2156, Date: 2025-05-01 
+[2025-05-01T22:38:00.042Z] [INFO] [Submit] Processing for specific date 2025-05-01 (UTC) 
+[2025-05-01T22:38:00.050Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-05-01, Is Past: false 
+[2025-05-01T22:38:00.211Z] [INFO] [Submit Current Date] Processing full stats update for challenge ID: 6811a23af22b7769eb22ae0d on date 2025-05-01. 
+[2025-05-01T22:38:00.212Z] [INFO] [Submit DB Update] Incrementing count for existing score 2156 on challenge 6811a23af22b7769eb22ae0d 
+[2025-05-01T22:38:00.315Z] [INFO] [Submit Calc] Recalculating average score. Completions: 4826, Distributions Count: 2163 
+[2025-05-01T22:38:00.348Z] [INFO] [Submit DB Update] Saved updated average score (3844.8669705760462) for challenge 6811a23af22b7769eb22ae0d. No distribution recalculation needed. 
+[2025-05-01T22:38:00.348Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 2156, Date: 2025-05-01 
+[2025-05-01T22:41:44.172Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:41:44.225Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:42:23.392Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:42:23.448Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:48:06.983Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T22:48:06.989Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 2156, Date: 2021-05-01 
+[2025-05-01T22:48:06.989Z] [INFO] [Submit] Processing for specific date 2021-05-01 (UTC) 
+[2025-05-01T22:48:06.994Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2021-05-01, Is Past: true 
+[2025-05-01T22:48:07.032Z] [WARN] [Submit Not Found] Challenge not found or inactive for date: 2021-05-01, IP: ::1 
+[2025-05-01T22:53:01.662Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:53:01.794Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:53:01.885Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:53:01.928Z] [INFO] Requested daily challenge: /date/2025-04-15 
+[2025-05-01T22:54:25.810Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:54:25.887Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T22:54:28.464Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T22:54:28.541Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T22:54:28.579Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T22:54:28.615Z] [INFO] Requested daily challenge: /date/2025-05-01 
+[2025-05-01T22:54:41.913Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T22:54:41.922Z] [INFO] [Submit Received Validated] IP: 127.0.0.1, UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36", Score: 4653, Date: 2025-05-01 
+[2025-05-01T22:54:41.923Z] [INFO] [Submit] Processing for specific date 2025-05-01 (UTC) 
+[2025-05-01T22:54:41.938Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-05-01, Is Past: false 
+[2025-05-01T22:54:42.093Z] [INFO] [Submit Current Date] Processing full stats update for challenge ID: 6811a23af22b7769eb22ae0d on date 2025-05-01. 
+[2025-05-01T22:54:42.093Z] [INFO] [Submit DB Update] Incrementing count for existing score 4653 on challenge 6811a23af22b7769eb22ae0d 
+[2025-05-01T22:54:42.328Z] [INFO] [Submit Calc] Recalculating average score. Completions: 4873, Distributions Count: 2170 
+[2025-05-01T22:54:42.362Z] [INFO] [Submit DB Update] Saved updated average score (3844.6055817771394) for challenge 6811a23af22b7769eb22ae0d. No distribution recalculation needed. 
+[2025-05-01T22:54:42.362Z] [INFO] [Submit Response] Sending response for IP: 127.0.0.1, Score: 4653, Date: 2025-05-01 
+[2025-05-01T23:16:21.911Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T23:16:22.025Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T23:35:48.327Z] [INFO] Server is running on port 8080 
+[2025-05-01T23:35:48.899Z] [INFO] MongoDB connected successfully 
+[2025-05-01T23:37:05.809Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T23:37:05.813Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 4001, Date: 2025-05-01 
+[2025-05-01T23:37:05.813Z] [INFO] [Submit] Processing for specific date 2025-05-01 (UTC) 
+[2025-05-01T23:37:05.821Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-05-01, Is Past: false 
+[2025-05-01T23:37:06.009Z] [INFO] [Submit Current Date] Processing full stats update for challenge ID: 6811a23af22b7769eb22ae0d on date 2025-05-01. 
+[2025-05-01T23:37:06.010Z] [INFO] [Submit DB Update] Incrementing count for existing score 4001 on challenge 6811a23af22b7769eb22ae0d 
+[2025-05-01T23:37:06.104Z] [INFO] [Submit Calc] Recalculating average score. Completions: 4944, Distributions Count: 2183 
+[2025-05-01T23:37:06.135Z] [INFO] [Submit DB Update] Saved updated average score (3844.3608414239484) for challenge 6811a23af22b7769eb22ae0d. No distribution recalculation needed. 
+[2025-05-01T23:37:06.136Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 4001, Date: 2025-05-01 
+[2025-05-01T23:37:07.526Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T23:37:07.527Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 4001, Date: 2025-05-01 
+[2025-05-01T23:37:07.527Z] [INFO] [Submit] Processing for specific date 2025-05-01 (UTC) 
+[2025-05-01T23:37:07.527Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-05-01, Is Past: false 
+[2025-05-01T23:37:07.666Z] [INFO] [Submit Current Date] Processing full stats update for challenge ID: 6811a23af22b7769eb22ae0d on date 2025-05-01. 
+[2025-05-01T23:37:07.666Z] [INFO] [Submit DB Update] Incrementing count for existing score 4001 on challenge 6811a23af22b7769eb22ae0d 
+[2025-05-01T23:37:07.747Z] [INFO] [Submit Calc] Recalculating average score. Completions: 4945, Distributions Count: 2183 
+[2025-05-01T23:37:07.778Z] [INFO] [Submit DB Update] Saved updated average score (3844.392517694641) for challenge 6811a23af22b7769eb22ae0d. No distribution recalculation needed. 
+[2025-05-01T23:37:07.778Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 4001, Date: 2025-05-01 
+[2025-05-01T23:37:08.956Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T23:37:08.956Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 4001, Date: 2025-05-01 
+[2025-05-01T23:37:08.956Z] [INFO] [Submit] Processing for specific date 2025-05-01 (UTC) 
+[2025-05-01T23:37:08.957Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-05-01, Is Past: false 
+[2025-05-01T23:37:09.101Z] [INFO] [Submit Current Date] Processing full stats update for challenge ID: 6811a23af22b7769eb22ae0d on date 2025-05-01. 
+[2025-05-01T23:37:09.102Z] [INFO] [Submit DB Update] Incrementing count for existing score 4001 on challenge 6811a23af22b7769eb22ae0d 
+[2025-05-01T23:37:09.183Z] [INFO] [Submit Calc] Recalculating average score. Completions: 4946, Distributions Count: 2183 
+[2025-05-01T23:37:09.214Z] [INFO] [Submit DB Update] Saved updated average score (3844.4241811564902) for challenge 6811a23af22b7769eb22ae0d. No distribution recalculation needed. 
+[2025-05-01T23:37:09.215Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 4001, Date: 2025-05-01 
+[2025-05-01T23:37:10.290Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T23:37:10.291Z] [WARN] [Rate Limit Blocked] Key: ::1-2025-05-01 exceeded submit limit. 
+[2025-05-01T23:37:30.725Z] [INFO] Requested daily challenge: /submit 
+[2025-05-01T23:37:30.726Z] [INFO] [Submit Received Validated] IP: ::1, UA: "curl/8.7.1", Score: 1005, Date: 2025-04-29 
+[2025-05-01T23:37:30.726Z] [INFO] [Submit] Processing for specific date 2025-04-29 (UTC) 
+[2025-05-01T23:37:30.727Z] [INFO] [Submit] Today (America/New_York): 2025-05-01, Challenge Date: 2025-04-29, Is Past: true 
+[2025-05-01T23:37:30.936Z] [INFO] [Submit Past Date] Only incremented completions for challenge ID: 680fc922f9fab8799299a6aa. Preparing to return existing stats. 
+[2025-05-01T23:37:30.937Z] [INFO] [Submit Response] Sending response for IP: ::1, Score: 1005, Date: 2025-04-29 
+[2025-05-01T23:43:08.019Z] [INFO] Requested daily challenge: /dates 
+[2025-05-01T23:43:08.122Z] [INFO] Requested daily challenge: /dates 

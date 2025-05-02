@@ -2,7 +2,8 @@
 
 
 export interface WikimediaImage {
-  url: string;
+  originalJpegUrl: string;
+  generatedWebpUrl?: string;
   title: string;
   source: string;
   year: number;
