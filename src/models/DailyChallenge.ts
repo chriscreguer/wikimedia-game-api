@@ -25,6 +25,7 @@ const DailyChallengeSchema: Schema = new Schema({
     title: { type: String, required: true },
     originalJpegUrl: { type: String, required: true },
     generatedWebpUrl: { type: String, required: false },
+    backgroundImageUrl: { type: String, required: false },
     year: { type: Number, required: true },
     source: { type: String, required: true },
     description: { type: String, default: '' },

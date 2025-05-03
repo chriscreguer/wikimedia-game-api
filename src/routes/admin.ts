@@ -3,6 +3,7 @@ import express, { Request, Response, RequestHandler } from 'express';
 import path from 'path';
 import DailyChallenge from '../models/DailyChallenge';
 import { fetchImageData, fetchMultipleImageData, extractFilenameFromUrl } from '../utils/wikimediaHelper';
+import { WikimediaImage } from '../types/wikimedia';
 import logger from '../utils/logger';
 import multer from 'multer'; 
 import fs from 'fs';
@@ -298,6 +299,7 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
           // --- Start Image Processing ---
           let imageBuffer: Buffer | null = null;
           let generatedWebpUrl: string | null = null;
+          let backgroundImageUrl: string | null = null; // Variable for background URL
 
           if (originalJpegUrl) {
             try {
@@ -330,6 +332,22 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
                 // generatedWebpUrl remains null
               }
 
+              // *** ADD: Generate Background Image ***
+              try {
+                logger.info(`Generating background image for ${baseKeyForPreviews}...`);
+                const backgroundBuffer = await sharp(imageBuffer)
+                    .resize({ width: 400, withoutEnlargement: true, fit: 'inside' }) // Small
+                    .jpeg({ quality: 20, mozjpeg: true }) // Compressed
+                    .toBuffer();
+                logger.info(`Generated background buffer (${backgroundBuffer.length} bytes), uploading...`);
+                // Ensure uploadProcessedToS3 handles naming, or create key here
+                backgroundImageUrl = await uploadProcessedToS3(backgroundBuffer, baseKeyForPreviews, 'jpeg');
+                logger.info(`Background image uploaded for ${baseKeyForPreviews} to: ${backgroundImageUrl}`);
+              } catch (bgError) {
+                logger.error(`Failed to generate background image for ${baseKeyForPreviews}:`, bgError);
+                 // backgroundImageUrl remains null
+              }
+
             } catch (processingError) {
               logger.error(`General error processing image ${baseKeyForPreviews}:`, processingError);
               // WebP URL remains null
@@ -345,6 +363,7 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
               ...baseImageData,
               originalJpegUrl: originalJpegUrl,
               generatedWebpUrl: generatedWebpUrl,
+              backgroundImageUrl: backgroundImageUrl, // Add background URL
             });
              logger.info(`Added image to final list: ${originalJpegUrl} (WebP: ${!!generatedWebpUrl})`);
           } else {
@@ -512,133 +531,159 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, uploadWithErrorHandling, (a
       try {
         const orderData = typeof imagesOrder === 'string' ? JSON.parse(imagesOrder) : imagesOrder;
         logger.info(`Processing ${orderData.length} images for edit`);
-        const updatedImages: any[] = [];
-        // Keep track of uploaded files used during edit
-        let uploadCounter = 0; 
-        
-        // Process each image in the desired order
+        let updatedImages: any[] = [];
+        let uploadCounter = 0; // Keep track of which uploaded file corresponds to an 'upload' type
+
         for (const imageInfo of orderData) {
-          logger.info(`Processing image for edit, type: ${imageInfo.type}`);
-          
+          logger.info(`Processing imageInfo: ${JSON.stringify(imageInfo)}`);
           if (imageInfo.type === 'existing') {
-            // Handle existing image - mostly update metadata
             const index = parseInt(imageInfo.originalIndex, 10);
             if (!isNaN(index) && index >= 0 && index < challenge.images.length) {
-              // Get existing image data, ensuring all fields (including previews) are copied
-              // Manually create a plain JS object copy
-              const currentImage = challenge.images[index];
+              const currentImage: WikimediaImage = challenge.images[index];
+              logger.info(`Keeping existing image at originalIndex ${index}: ${currentImage.originalJpegUrl}`);
+              // FIX: Correctly copy existing fields including new ones
               const existingImage = {
-                filename: currentImage.filename,
-                title: currentImage.title,
-                originalJpegUrl: currentImage.originalJpegUrl,
-                generatedWebpUrl: currentImage.generatedWebpUrl,
-                year: currentImage.year,
-                source: currentImage.source,
-                description: currentImage.description,
-                revealedDescription: currentImage.revealedDescription
+                  filename: currentImage.filename,
+                  title: currentImage.title,
+                  originalJpegUrl: currentImage.originalJpegUrl, // Copy correct field
+                  generatedWebpUrl: currentImage.generatedWebpUrl, // Copy correct field
+                  backgroundImageUrl: currentImage.backgroundImageUrl, // Copy background URL too
+                  year: imageInfo.year !== undefined ? parseInt(imageInfo.year, 10) : currentImage.year,
+                  source: currentImage.source,
+                  description: imageInfo.description !== undefined ? imageInfo.description : currentImage.description,
+                  revealedDescription: imageInfo.revealedDescription !== undefined ? imageInfo.revealedDescription : currentImage.revealedDescription
               };
-              
-              // Update fields if provided in the request
-              if (imageInfo.year !== undefined) {
-                existingImage.year = parseInt(imageInfo.year, 10);
+
+              // Validation check before pushing
+              if (!existingImage.originalJpegUrl) {
+                  logger.error(`Edit Error: Existing image at originalIndex ${index} is missing required originalJpegUrl! Skipping.`);
+                  // Consider throwing an error or handling appropriately if required field is missing
+              } else {
+                   updatedImages.push(existingImage);
+                   logger.info(`Edit: Kept existing image: ${existingImage.originalJpegUrl}`);
               }
-              if (imageInfo.description !== undefined) {
-                existingImage.description = imageInfo.description;
-              }
-              if (imageInfo.revealedDescription !== undefined) {
-                existingImage.revealedDescription = imageInfo.revealedDescription;
-              }
-              
-              logger.info(`Keeping existing image: ${existingImage.originalJpegUrl}`);
-              updatedImages.push(existingImage);
             } else {
-              logger.warn(`Invalid existing image index during edit: ${imageInfo.originalIndex}`);
+              logger.error(`Invalid originalIndex ${imageInfo.originalIndex} for existing image. Skipping.`);
             }
           } else if (imageInfo.type === 'wikimedia' || imageInfo.type === 'upload') {
-            // Handle NEW Wikimedia or Uploaded image - same logic as CREATE
-            let originalJpegUrl: string | null = null;
-            let baseImageData: any = {};
+            // Logic for NEWLY ADDED images during edit
+            logger.info(`Processing new image of type: ${imageInfo.type}`);
+            let originalUrl: string | null = null;
             let s3Key: string | null = null;
             let filenameForPreviews: string | null = null;
+            let baseImageData: any = {};
 
             if (imageInfo.type === 'wikimedia') {
               const filename = imageInfo.url ? extractFilenameFromUrl(imageInfo.url) : null;
               if (filename) {
-                const wikimediaData = await fetchImageData(filename);
-                if (wikimediaData) {
-                  originalJpegUrl = wikimediaData.originalJpegUrl;
-                  filenameForPreviews = filename;
-                  baseImageData = {
-                    filename: wikimediaData.filename,
-                    title: wikimediaData.title,
-                    year: imageInfo.year || wikimediaData.year,
-                    source: wikimediaData.source,
-                    description: imageInfo.description || wikimediaData.description || '',
-                    revealedDescription: imageInfo.revealedDescription || imageInfo.description || ''
-                  };
-                } else { logger.warn(`Edit: Could not fetch wikimedia data for ${filename}`); }
-              } else { logger.warn(`Edit: Could not extract filename from ${imageInfo.url}`); }
-            } else { // type === 'upload'
-               if (uploadCounter < uploadedFiles.length) {
-                  const file = uploadedFiles[uploadCounter];
-                  originalJpegUrl = (file as Express.MulterS3.File).location;
-                  s3Key = (file as Express.MulterS3.File).key;
-                  filenameForPreviews = s3Key; // Use S3 key
-                  baseImageData = {
-                    filename: file.originalname,
-                    title: file.originalname,
-                    year: imageInfo.year || new Date().getFullYear(),
-                    source: 'User Upload',
-                    description: imageInfo.description || '',
-                    revealedDescription: imageInfo.revealedDescription || imageInfo.description || ''
-                  };
-                  uploadCounter++;
-              } else { logger.warn(`Edit: Upload type specified but no file at index ${uploadCounter}`); }
+                try {
+                  const wikimediaData = await fetchImageData(filename);
+                  if (wikimediaData) {
+                    originalUrl = wikimediaData.originalJpegUrl;
+                    filenameForPreviews = filename;
+                    baseImageData = {
+                      filename: wikimediaData.filename,
+                      title: wikimediaData.title,
+                      year: imageInfo.year || wikimediaData.year,
+                      source: wikimediaData.source,
+                      description: imageInfo.description || wikimediaData.description || '',
+                      revealedDescription: imageInfo.revealedDescription || imageInfo.description || ''
+                    };
+                  } else {
+                    logger.warn(`Could not fetch wikimedia data for filename: ${filename}`);
+                  }
+                } catch (wikiError) {
+                  logger.error(`Error fetching wikimedia data for ${filename}:`, wikiError);
+                }
+              } else {
+                logger.warn(`Could not extract filename from wikimedia URL: ${imageInfo.url}`);
+              }
+            } else { // imageInfo.type === 'upload'
+              if (uploadCounter < uploadedFiles.length) {
+                const file = uploadedFiles[uploadCounter] as Express.MulterS3.File;
+                originalUrl = file.location;
+                s3Key = file.key;
+                filenameForPreviews = file.key;
+                baseImageData = {
+                  filename: file.originalname,
+                  title: file.originalname,
+                  year: imageInfo.year || new Date().getFullYear(),
+                  source: 'User Upload',
+                  description: imageInfo.description || '',
+                  revealedDescription: imageInfo.revealedDescription || imageInfo.description || ''
+                };
+                uploadCounter++;
+              } else {
+                logger.warn(`Upload type specified but no corresponding file found at index ${uploadCounter}`);
+              }
             }
 
-            // --- Start Image Processing (Same as Create, adjusted) ---
-            let imageBuffer: Buffer | null = null;
-            let generatedWebpUrl: string | null = null;
+            let newImageBuffer: Buffer | null = null;
+            try {
+                if (originalUrl) {
+                    logger.info(`Downloading original for new image processing: ${originalUrl}`);
+                    newImageBuffer = await downloadImage(originalUrl);
+                    logger.info(`Downloaded ${newImageBuffer.length} bytes for ${originalUrl}`);
+                }
+            } catch (downloadError) {
+                logger.error(`Failed to download new image ${originalUrl}:`, downloadError);
+            }
 
-            if (originalJpegUrl) {
+            let previewWebpUrl: string | null = null;
+            let backgroundImageUrl: string | null = null; // Variable for background URL
+
+            if (newImageBuffer) {
+              const baseKeyForPreviews = s3Key || filenameForPreviews || `image_${Date.now()}`;
+              logger.info(`Processing new image for base key: ${baseKeyForPreviews}`);
               try {
-                logger.info(`Edit: Downloading original for processing: ${originalJpegUrl}`);
-                imageBuffer = await downloadImage(originalJpegUrl);
-                logger.info(`Edit: Downloaded ${imageBuffer?.length || 0} bytes for ${originalJpegUrl}`);
-              } catch (downloadError) {
-                logger.error(`Edit: Failed to download original image ${originalJpegUrl}:`, downloadError);
+                  // Generate WebP (Full-Res, High Quality)
+                  try {
+                      logger.info(`Generating WebP for ${baseKeyForPreviews}...`);
+                      const webpBuffer = await sharp(newImageBuffer).webp({ quality: 90 }).toBuffer();
+                      logger.info(`Generated WebP buffer (${webpBuffer.length} bytes), uploading...`);
+                      previewWebpUrl = await uploadProcessedToS3(webpBuffer, baseKeyForPreviews, 'webp');
+                      logger.info(`WebP uploaded for ${baseKeyForPreviews} to: ${previewWebpUrl}`);
+                  } catch (webpError) {
+                      logger.error(`Failed to generate WebP for ${baseKeyForPreviews}:`, webpError);
+                      // previewWebpUrl remains null
+                  }
+
+                  // *** ADD: Generate Background Image ***
+                  try {
+                     logger.info(`Generating background image for ${baseKeyForPreviews}...`);
+                     const backgroundBuffer = await sharp(newImageBuffer)
+                         .resize({ width: 400, withoutEnlargement: true, fit: 'inside' }) // Small
+                         .jpeg({ quality: 20, mozjpeg: true }) // Compressed
+                         .toBuffer();
+                     logger.info(`Generated background buffer (${backgroundBuffer.length} bytes), uploading...`);
+                     backgroundImageUrl = await uploadProcessedToS3(backgroundBuffer, baseKeyForPreviews, 'jpeg'); // Assumes helper names with extension
+                     logger.info(`Background image uploaded for ${baseKeyForPreviews} to: ${backgroundImageUrl}`);
+                  } catch (bgError) {
+                      logger.error(`Failed to generate background image for ${baseKeyForPreviews}:`, bgError);
+                     // backgroundImageUrl remains null
+                  }
+
+              } catch (processingError) {
+                  logger.error(`General error processing new image ${baseKeyForPreviews}:`, processingError);
               }
-            } else { logger.warn(`Edit: Skipping download for type ${imageInfo.type}, no originalJpegUrl.`); }
-
-            if (imageBuffer) {
-              const baseKeyForPreviews = filenameForPreviews || `image_${Date.now()}`;
-              logger.info(`Edit: Processing WebP for base key: ${baseKeyForPreviews}`);
-              try {
-                // WebP (No resize, updated quality)
-                try {
-                  const webpBuffer = await sharp(imageBuffer)
-                                          .webp({ quality: 90 })
-                                          .toBuffer();
-                  generatedWebpUrl = await uploadProcessedToS3(webpBuffer, baseKeyForPreviews, 'webp');
-                  logger.info(`Edit: WebP uploaded: ${generatedWebpUrl}`);
-                } catch (webpError) { logger.error(`Edit: Failed WebP for ${baseKeyForPreviews}:`, webpError); }
-                
-              } catch (processingError) { logger.error(`Edit: General processing error for ${baseKeyForPreviews}:`, processingError); }
-            } else { logger.warn(`Edit: Skipping WebP generation for ${filenameForPreviews}, download failed.`); }
-            // --- End Image Processing ---
-
-            if (originalJpegUrl) {
-              updatedImages.push({
-                ...baseImageData,
-                originalJpegUrl: originalJpegUrl,
-                generatedWebpUrl: generatedWebpUrl,
-              });
-              logger.info(`Edit: Added new/uploaded image: ${originalJpegUrl} (WebP: ${!!generatedWebpUrl})`);
-            } else { logger.warn(`Edit: Not adding image type ${imageInfo.type}, missing originalJpegUrl.`); }
             } else {
-             logger.warn(`Unknown image type encountered during edit: ${imageInfo.type}`);
+                logger.warn(`Skipping processing for new image ${filenameForPreviews || 'uploaded'} because download failed or buffer was null.`);
+            }
+
+            // Push data for NEW image (ensure field names match schema)
+            if (originalUrl) {
+                updatedImages.push({
+                    ...baseImageData,
+                    originalJpegUrl: originalUrl,
+                    generatedWebpUrl: previewWebpUrl,
+                    backgroundImageUrl: backgroundImageUrl, // Add background URL
+                });
+                 logger.info(`Added new image to updated list: ${originalUrl} (WebP: ${!!previewWebpUrl}, BG: ${!!backgroundImageUrl})`);
+            } else {
+               logger.warn(`Not adding new image to list as originalUrl was missing for type ${imageInfo.type}.`);
+            }
           }
-        } // End of for...of orderData loop
+        } // End of loop
         
         // Replace images only if we processed some valid ones
         if (updatedImages.length > 0) {
