@@ -1385,4 +1385,41 @@ router.get('/daily-challenge/today', async (req, res) => {
   }
 });
 
+/**
+ * GET /api/images/daily-challenge/round-guess-distributions
+ * Get processed round guess distributions for a specific date.
+ */
+router.get('/daily-challenge/round-guess-distributions', (async (req: Request, res: Response) => {
+  try {
+    const dateQuery = req.query.date as string;
+
+    if (!dateQuery || !/^\d{4}-\d{2}-\d{2}$/.test(dateQuery)) {
+      logger.warn(`[RoundGuessDists] Invalid or missing date query parameter: ${dateQuery}`);
+      return res.status(400).json({ error: 'Invalid or missing date query parameter. Use YYYY-MM-DD format.' });
+    }
+
+    // Determine startDate and endDate for the MongoDB query based on TARGET_TIMEZONE
+    const startDate = toZonedTime(`${dateQuery}T00:00:00`, TARGET_TIMEZONE);
+    const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours later UTC
+
+    logger.info(`[RoundGuessDists] Querying for challenge date ${dateQuery} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
+
+    const challenge = await DailyChallenge.findOne(
+      { date: { $gte: startDate, $lt: endDate }, active: true },
+      { 'stats.roundGuessDistributions': 1, _id: 0 } // Select only the necessary field
+    );
+
+    if (challenge && challenge.stats && challenge.stats.roundGuessDistributions) {
+      logger.info(`[RoundGuessDists] Found and returning round guess distributions for date: ${dateQuery}`);
+      res.status(200).json(challenge.stats.roundGuessDistributions);
+    } else {
+      logger.warn(`[RoundGuessDists] Round guess distributions not found for date: ${dateQuery}`);
+      res.status(404).json({ message: 'Round guess distributions not found for this date.' });
+    }
+  } catch (error) {
+    logger.error('[RoundGuessDists] Error fetching round guess distributions:', error);
+    res.status(500).json({ error: 'Failed to fetch round guess distributions.' });
+  }
+}) as RequestHandler);
+
 export default router;

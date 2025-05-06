@@ -10,6 +10,7 @@ import { PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import multerS3 from 'multer-s3';
 import s3Client, { s3BucketName } from '../utils/awsConfig';
+import { processAndStoreRoundGuessDistributions } from '../utils/distributionProcessor';
 
 const storage = multerS3({
   s3: s3Client,
@@ -537,6 +538,30 @@ router.delete('/daily-challenge/:id', verifyAdmin, (async (req, res) => {
   } catch (error) {
     logger.error('Error deleting daily challenge:', error);
     res.status(500).json({ error: 'Failed to delete daily challenge' });
+  }
+}) as RequestHandler);
+
+/**
+ * POST /api/admin/daily-challenge/process-round-guesses
+ * Process raw round guesses and store aggregated distributions for a given date.
+ * Admin only.
+ */
+router.post('/daily-challenge/process-round-guesses', verifyAdmin, (async (req: Request, res: Response) => {
+  const { date } = req.body;
+
+  if (!date || typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    logger.warn(`[Admin ProcessRoundGuesses] Invalid date format received: ${date}`);
+    return res.status(400).json({ error: 'Invalid date format. Please use YYYY-MM-DD.' });
+  }
+
+  try {
+    logger.info(`[Admin ProcessRoundGuesses] Received request to process round guesses for date: ${date}`);
+    await processAndStoreRoundGuessDistributions(date);
+    logger.info(`[Admin ProcessRoundGuesses] Successfully initiated round guess processing for date: ${date}. Check logs for details.`);
+    res.status(200).json({ message: `Successfully initiated round guess processing for ${date}. Check server logs for completion status and details.` });
+  } catch (error) {
+    logger.error(`[Admin ProcessRoundGuesses] Error triggering round guess processing for date ${date}:`, error);
+    res.status(500).json({ error: 'Failed to trigger round guess processing. See server logs.' });
   }
 }) as RequestHandler);
 
