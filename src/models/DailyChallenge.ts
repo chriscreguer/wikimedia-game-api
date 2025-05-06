@@ -13,6 +13,7 @@ interface ChallengeImage {
   year: number;
   description?: string;
   filename?: string;
+  revealedDescription?: string;
 }
 
 // Interface for a single point in the score distribution
@@ -89,7 +90,8 @@ const ChallengeImageSchema: Schema = new Schema<ChallengeImage>({
   source: { type: String, required: true },
   year: { type: Number, required: true },
   description: { type: String },
-  filename: { type: String }
+  filename: { type: String },
+  revealedDescription: { type: String, default: '' }
 }, { _id: false });
 
 // Schema for distribution points
