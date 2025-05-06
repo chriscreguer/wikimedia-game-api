@@ -7,6 +7,8 @@ import logger from '../utils/logger';
 import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import rateLimit from 'express-rate-limit';
 import { ProcessedDistribution, ProcessedDistributionPoint } from '../types/types';
+import RoundGuess from '../models/RoundGuess';
+import { DailyChallengeDoc } from '../models/DailyChallenge';
 
 dotenv.config();
 
@@ -80,19 +82,18 @@ const IMAGES_PER_REQUEST = 100;
 // --- Rate Limiter Configuration ---
 const submitLimiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hours
-    max: 3, // Limit each IP+date combo to 3 submit requests per 24 hours
+    max: 3, // Confirmed: original value is 3
     message: { error: 'Too many submission attempts for this challenge date from this IP, please try again after 24 hours' },
-    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    standardHeaders: true, 
+    legacyHeaders: false, 
     keyGenerator: (req: Request): string => {
-        // Use 'x-forwarded-for' if behind a proxy, otherwise fallback
         const ip = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress || 'unknown-ip';
-        const dateKey = req.body.date || 'current'; // Use 'current' or default if date is missing
-        return ip + '-' + dateKey; // Key is unique per IP per challenge date
+        const dateKey = req.body.date || 'current'; 
+        return ip + '-' + dateKey; 
     },
     handler: (req: Request, res: Response, next: NextFunction, options: any) => {
-        const ip = options.keyGenerator(req); // Use the generated key for logging
-        logger.warn(`[Rate Limit Blocked] Key: ${ip} exceeded submit limit.`); // Log the key
+        const ip = options.keyGenerator(req); 
+        logger.warn(`[Rate Limit Blocked] Key: ${ip} exceeded submit limit.`); 
         res.status(options.statusCode).send(options.message);
     }
 });
@@ -772,188 +773,156 @@ router.get('/', async (req: Request, res: Response) => {
  * POST /api/images/daily-challenge/submit
  * Submit a score for today's challenge
  */
-router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: Response): Promise<void> => {
-    const sourceIp = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress || 'unknown-ip';
-    const userAgent = req.headers['user-agent'] || 'Unknown';
-    const { score, date } = req.body;
+router.post('/daily-challenge/submit', submitLimiter, async (req, res) => {
+  try {
+    const { score, date, guesses } = req.body;
+    const ipAddress = req.ip;
 
     // --- INPUT VALIDATION ---
-    const numericScore = Number(score); // Convert score to number
+    const numericScore = Number(score);
     if (score === undefined || score === null || isNaN(numericScore) || numericScore < 0 || numericScore > 5000) {
-        logger.warn(`[Submit Invalid Score] IP: ${sourceIp}, UA: "${userAgent}", Received invalid score: "${score}", Date: ${date}`);
+        logger.warn(`[Submit Invalid Score] IP: ${ipAddress}, Received invalid score: "${score}", Date: ${date}`);
         res.status(400).json({ error: `Invalid score value submitted. Score must be a number between 0 and 5000.` });
         return;
     }
 
-    logger.info(`[Submit Received Validated] IP: ${sourceIp}, UA: "${userAgent}", Score: ${numericScore}, Date: ${date}`);
+    logger.info(`[Submit Received Validated] IP: ${ipAddress}, Score: ${numericScore}, Date: ${date}`);
 
     try {
+        // --- Reverted/Simplified Date Logic --- 
         let startDate: Date, endDate: Date;
-        let queryDateString: string; // YYYY-MM-DD format
+        let queryDateString: string;
 
-        // --- Determine Challenge Date and Boundaries ---
         if (date) {
-            // Use the date provided in the request body (expected format YYYY-MM-DD)
             queryDateString = date as string;
-            // Create UTC date range from the provided string
             startDate = new Date(queryDateString + 'T00:00:00.000Z');
-            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
             if (isNaN(startDate.getTime())) {
-                logger.warn(`[Submit Invalid Date] IP: ${sourceIp}, Invalid date format: ${date}`);
+                logger.warn(`[Submit Invalid Date] IP: ${ipAddress}, Invalid date format: ${date}`); 
                 res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
                 return;
             }
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
             logger.info(`[Submit] Processing for specific date ${queryDateString} (UTC)`);
         } else {
-            // Default to today's date based on TARGET_TIMEZONE (now ET)
             const now = new Date();
             queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
-            // Create UTC date range based on the timezone-specific date
-            startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE); // Midnight in TARGET_TIMEZONE converted to UTC
-            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours later UTC
+            startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
             logger.info(`[Submit] Processing for current ${TARGET_TIMEZONE} date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
         }
+        // --- End Reverted Date Logic ---
 
-        // --- Determine if it's a Past Challenge based on ET ---
-        const todayET = formatInTimeZone(new Date(), TARGET_TIMEZONE, 'yyyy-MM-dd');
-        const isPastChallenge = queryDateString < todayET;
-        logger.info(`[Submit] Today (${TARGET_TIMEZONE}): ${todayET}, Challenge Date: ${queryDateString}, Is Past: ${isPastChallenge}`);
-
-        // --- Atomically Increment Completions (ALWAYS) ---
-        const updatedChallengeIncremented = await DailyChallenge.findOneAndUpdate(
-            {
-                date: { $gte: startDate, $lt: endDate },
-                 active: true // Keep this unless you want to track completions for inactive challenges
-            },
-            { $inc: { 'stats.completions': 1 } },
-            { new: true, upsert: false } // Return the updated document, DO NOT create if not found
+        // --- Reverted/Simplified Update Logic --- 
+        const challengeUpdate = await DailyChallenge.findOneAndUpdate(
+            { date: { $gte: startDate, $lt: endDate }, active: true },
+            [ // Using aggregation pipeline for atomic updates
+                {
+                    $set: {
+                        "stats.completions": { $add: [{$ifNull: ["$stats.completions", 0]}, 1] }, // Handle null completions
+                        "stats.distributions": {
+                            $let: {
+                                vars: {
+                                    currentDist: {$ifNull: ["$stats.distributions", []]}, // Handle null distributions
+                                    scoreIndex: { $indexOfArray: [{$ifNull: ["$stats.distributions.score", []]}, numericScore] }
+                                },
+                                in: {
+                                    $cond: {
+                                        if: { $eq: ["$$scoreIndex", -1] },
+                                        then: { $concatArrays: ["$$currentDist", [{ score: numericScore, count: 1 }]] }, // Add new score
+                                        else: { // Increment existing score
+                                            $map: {
+                                                input: "$$currentDist",
+                                                as: "item",
+                                                in: {
+                                                    $cond: {
+                                                        if: { $eq: ["$$item.score", numericScore] },
+                                                        then: { score: "$$item.score", count: { $add: ["$$item.count", 1] } },
+                                                        else: "$$item"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                { // Recalculate average score within the pipeline
+                    $set: {
+                         "stats.averageScore": {
+                             $let: {
+                                vars: {
+                                    totalSum: { $reduce: { input: "$stats.distributions", initialValue: 0, in: { $add: ["$$value", { $multiply: ["$$this.score", "$$this.count"] }] } } },
+                                    totalCount: "$stats.completions"
+                                },
+                                in: {
+                                     $cond: { // Avoid division by zero
+                                         if: { $gt: ["$$totalCount", 0] },
+                                         then: { $divide: [ "$$totalSum", "$$totalCount"] },
+                                         else: 0
+                                     }
+                                 }
+                             }
+                        }
+                    }
+                }
+            ],
+            { new: true, upsert: false } // Return the updated document
         );
 
-        if (!updatedChallengeIncremented) {
-            logger.warn(`[Submit Not Found] Challenge not found or inactive for date: ${queryDateString}, IP: ${sourceIp}`);
+        if (!challengeUpdate) {
+            logger.warn(`[Submit Not Found] Challenge not found or inactive for date: ${queryDateString}, IP: ${ipAddress}`);
             res.status(404).json({ error: 'No active challenge found for this date' });
             return;
         }
 
-        // Use this variable to hold the final state to send back
-        // Initialize with the state after completion increment
-        let finalChallengeState = updatedChallengeIncremented;
+        let finalChallengeState = challengeUpdate; // Use the result of the update
+        // --- End Reverted Update Logic ---
+        
+        // --- Block for saving round guesses (Kept from previous step) --- 
+        if (guesses && Array.isArray(guesses)) {
+            logger.info(`[Submit] Processing ${guesses.length} received round guesses...`);
+            try {
+                const correctChallengeDateForGuesses = startDate; 
+                const roundGuessesToSave = guesses
+                    .filter(guess => typeof guess.roundIndex === 'number' && typeof guess.guessedYear === 'number')
+                    .map(guess => ({
+                        challengeDate: correctChallengeDateForGuesses, 
+                        roundIndex: guess.roundIndex,
+                        guessedYear: guess.guessedYear
+                    }));
 
-        // --- Perform distribution/average updates ONLY if it's NOT a past challenge ---
-        if (!isPastChallenge) {
-            logger.info(`[Submit Current Date] Processing full stats update for challenge ID: ${updatedChallengeIncremented._id} on date ${queryDateString}.`);
-
-            // --- Update Distributions (Atomic) ---
-            // Need to use the state *before* potential refetch for finding the index
-            const existingScoreIndex = finalChallengeState.stats.distributions.findIndex(d => d.score === numericScore);
-            if (existingScoreIndex > -1) {
-                 logger.info(`[Submit DB Update] Incrementing count for existing score ${numericScore} on challenge ${finalChallengeState._id}`);
-                await DailyChallenge.updateOne(
-                    { _id: finalChallengeState._id, 'stats.distributions.score': numericScore },
-                    { $inc: { 'stats.distributions.$.count': 1 } }
-                );
-            } else {
-                 logger.info(`[Submit DB Update] Adding new score ${numericScore} to distributions for challenge ${finalChallengeState._id}`);
-                await DailyChallenge.updateOne(
-                    { _id: finalChallengeState._id },
-                    { $push: { 'stats.distributions': { score: numericScore, count: 1 } } }
-                );
+                if (roundGuessesToSave.length > 0) {
+                    await RoundGuess.insertMany(roundGuessesToSave, { ordered: false });
+                    logger.info(`[Submit Guesses OK] Saved ${roundGuessesToSave.length} round guesses for date ${correctChallengeDateForGuesses.toISOString().split('T')[0]}.`);
+                }
+            } catch (guessError: any) {
+                logger.error(`[Submit Guesses Error] Failed to save round guesses: ${guessError.message}`, guessError);
             }
-
-            // --- Refetch state AFTER distribution updates to ensure calculations use latest data ---
-            const refetchedChallenge = await DailyChallenge.findById(finalChallengeState._id);
-            if (!refetchedChallenge) {
-                logger.error(`[Submit Error] Failed to fetch updated challenge after distribution updates for ID: ${finalChallengeState._id}`);
-                res.status(500).json({ error: 'Internal server error during score update refetch' });
-                return;
-            }
-            finalChallengeState = refetchedChallenge; // Use the latest state from now on
-
-            // --- Recalculate Average Score ---
-            const newCompletions = finalChallengeState.stats.completions; // Use completions from refetched state
-            const currentDistributions = finalChallengeState.stats.distributions; // Use distributions from refetched state
-             logger.info(`[Submit Calc] Recalculating average score. Completions: ${newCompletions}, Distributions Count: ${currentDistributions.length}`);
-            const totalScoreSum = currentDistributions.reduce((sum, dist) => sum + (dist.score * (dist.count || 0)), 0);
-            const newAverageScore = newCompletions > 0 ? totalScoreSum / newCompletions : 0;
-
-            // --- Potentially Recalculate Processed Distribution ---
-            let processedDataForUpdate: ProcessedDistribution | undefined = finalChallengeState.stats.processedDistribution; // Existing processed data
-            let shouldRecalculate = false;
-             if (newCompletions <= 1000 || newCompletions % 100 === 0) { // Recalculate frequently early on, then every 100
-                 shouldRecalculate = true;
-                 logger.info(`[Submit Calc] Completion threshold (${newCompletions}) met. Recalculating processed distribution.`);
-             }
-
-            if (shouldRecalculate) {
-                 try {
-                     logger.info(`[Submit Calc] Calling processDistributionData for challenge ${finalChallengeState._id}.`);
-                     const newlyProcessedData = processDistributionData(
-                         currentDistributions,
-                         newCompletions,
-                         undefined // No specific user score needed for global recalc
-                     );
-                     // Update DB with NEW processed distribution AND average score
-                     await DailyChallenge.updateOne(
-                         { _id: finalChallengeState._id },
-                         { $set: { 'stats.processedDistribution': newlyProcessedData, 'stats.averageScore': newAverageScore } }
-                     );
-                     processedDataForUpdate = newlyProcessedData; // Use the new data for the response
-                     // Manually update the state variable to reflect the change for the response logic below
-                     finalChallengeState.stats.processedDistribution = newlyProcessedData;
-                     finalChallengeState.stats.averageScore = newAverageScore;
-                     logger.info(`[Submit DB Update] Saved updated processedDistribution and average score to DB for challenge ${finalChallengeState._id}.`);
-                 } catch (processingError) {
-                      logger.error(`[Submit Calc Error] Error during processDistributionData or saving it for challenge ${finalChallengeState._id}:`, processingError);
-                      // If processing fails, just save the average score
-                      await DailyChallenge.updateOne(
-                         { _id: finalChallengeState._id },
-                         { $set: { 'stats.averageScore': newAverageScore } }
-                      );
-                       finalChallengeState.stats.averageScore = newAverageScore; // Update state variable
-                      logger.warn(`[Submit DB Update] Saved updated average score (${newAverageScore}) after distribution processing error for challenge ${finalChallengeState._id}.`);
-                 }
-             } else {
-                 // If not recalculating distribution, still save the potentially updated average score
-                 await DailyChallenge.updateOne(
-                     { _id: finalChallengeState._id },
-                     { $set: { 'stats.averageScore': newAverageScore } }
-                 );
-                  finalChallengeState.stats.averageScore = newAverageScore; // Update state variable
-                 logger.info(`[Submit DB Update] Saved updated average score (${newAverageScore}) for challenge ${finalChallengeState._id}. No distribution recalculation needed.`);
-             }
-
-        } else {
-            // This block executes for PAST challenges
-            logger.info(`[Submit Past Date] Only incremented completions for challenge ID: ${updatedChallengeIncremented._id}. Preparing to return existing stats.`);
-            // finalChallengeState already holds the correct data (only completions incremented)
         }
+        // --- End block for saving round guesses ---
 
-        // --- Construct and Send Response (Common for both paths) ---
-        // Use the finalChallengeState which contains the correct data for both past and present scenarios
+        // --- Simplified Final Response --- 
         const responseData = {
-            message: isPastChallenge ? 'Completion count updated for past challenge.' : 'Score submitted successfully',
+            message: 'Score submitted successfully', 
             stats: {
-                averageScore: finalChallengeState.stats.averageScore, // Existing or updated average
-                completions: finalChallengeState.stats.completions, // Always the updated count
-                // Send existing or updated processed data - ensure structure matches frontend expectation
-                processedDistribution: finalChallengeState.stats.processedDistribution ? {
-                     totalParticipants: finalChallengeState.stats.processedDistribution.totalParticipants,
-                     curvePoints: finalChallengeState.stats.processedDistribution.curvePoints,
-                     minScore: finalChallengeState.stats.processedDistribution.minScore,
-                     maxScore: finalChallengeState.stats.processedDistribution.maxScore,
-                     medianScore: finalChallengeState.stats.processedDistribution.medianScore
-                     // Note: We don't calculate/send percentileRank from the submit endpoint
-                 } : undefined
-             }
+                averageScore: finalChallengeState.stats.averageScore,
+                completions: finalChallengeState.stats.completions,
+            }
          };
-
-        logger.info(`[Submit Response] Sending response for IP: ${sourceIp}, Score: ${numericScore}, Date: ${queryDateString}`);
+        logger.info(`[Submit Response] Sending response for IP: ${ipAddress}, Score: ${numericScore}, Date: ${queryDateString}`);
         res.status(200).json(responseData);
 
     } catch (err) {
-        logger.error(`[Submit Error] IP: ${sourceIp}, Score: ${score}, Date: ${date}`, err);
+        logger.error(`[Submit Error] IP: ${ipAddress}, Score: ${score}, Date: ${date}`, err);
         res.status(500).json({ error: 'Internal server error during score update' });
     }
+
+  } catch (error) {
+    logger.error('[Submit Error]', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 /**

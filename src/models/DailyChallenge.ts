@@ -1,117 +1,133 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { WikimediaImage } from '../types/wikimedia';
-import { ScoreDistribution, ProcessedDistribution, ChallengeStats } from '../types/types';
+// Import only the INTERFACES/TYPES needed from types/types
+import { ProcessedDistribution, ProcessedDistributionPoint } from '../types/types'; 
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-// Interface for daily challenge document
-export interface DailyChallengeDoc extends Document {
-  date: Date;
-  images: WikimediaImage[];
-  stats: ChallengeStats;
-  active: boolean;
+// Interface for individual image data within a challenge
+interface ChallengeImage {
+  title: string;
+  url: string;
+  source: string;
+  year: number;
+  description?: string;
+  filename?: string;
 }
 
-// Schema definition for daily challenge
-const DailyChallengeSchema: Schema = new Schema({
-  date: {
-    type: Date,
-    required: true,
-    unique: true,
-    index: true
-  },
-  images: [{
-    filename: { type: String, required: true },
-    title: { type: String, required: true },
-    url: { type: String, required: true },
-    year: { type: Number, required: true },
-    source: { type: String, required: true },
-    description: { type: String, default: '' },
-    revealedDescription: { type: String, default: '' }
-  }],
-  stats: {
-    averageScore: { type: Number, default: 0 },
-    completions: { type: Number, default: 0 },
-    distributions: [{ // Raw score counts
-      score: { type: Number, required: true },
-      count: { type: Number, required: true }
-    }],
-    processedDistribution: { // Processed KDE results
-      percentileRank: { type: Number }, // Optional, might be null
-      curvePoints: [{
-        score: { type: Number, required: true },
-        density: { type: Number, required: true },
-        percentile: { type: Number, required: true }
-      }],
-      // These fields are only populated after scores are submitted and processed
-      totalParticipants: { type: Number, required: false },
-      minScore: { type: Number, required: false },
-      maxScore: { type: Number, required: false },
-      medianScore: { type: Number, required: false }
-    }
-  },
+// Interface for a single point in the score distribution
+interface DistributionPoint {
+  score: number;
+  count: number;
+}
+
+// --- NEW INTERFACES/TYPES FOR ROUND GUESS DISTRIBUTIONS --- 
+
+// Interface for processed round guess distribution points
+interface ProcessedRoundGuessDistributionPoint {
+    guessedYear: number; 
+    density: number;     
+}
+
+// Interface for a single round's processed guess distribution
+interface ProcessedRoundGuessDistribution {
+    roundIndex: number;
+    curvePoints: ProcessedRoundGuessDistributionPoint[]; 
+    totalGuesses: number; 
+    minGuess?: number;     
+    maxGuess?: number;     
+    medianGuess?: number;  
+}
+
+// --- END NEW INTERFACES --- 
+
+// Interface for the challenge statistics (using local interfaces now)
+interface ChallengeStats {
+  averageScore: number;
+  completions: number;
+  distributions: DistributionPoint[]; 
+  processedDistribution?: ProcessedDistribution; // Use the TYPE from types/types
+  roundGuessDistributions?: ProcessedRoundGuessDistribution[]; // Use newly defined interface
+}
+
+// --- Local Schema Definitions --- 
+
+// Sub-schema for processed SCORE distribution points (Needs to be defined here or imported if defined elsewhere)
+const ProcessedDistributionPointSchema: Schema = new Schema<ProcessedDistributionPoint>({
+    score: { type: Number, required: true },
+    density: { type: Number, required: true },
+    percentile: { type: Number, required: true }
+}, { _id: false });
+
+// Sub-schema for processed SCORE distribution summary (Needs to be defined here or imported if defined elsewhere)
+const ProcessedDistributionSchema: Schema = new Schema<ProcessedDistribution>({
+    totalParticipants: { type: Number },
+    curvePoints: [ProcessedDistributionPointSchema], // Use the schema defined above
+    minScore: { type: Number },
+    maxScore: { type: Number },
+    medianScore: { type: Number }
+}, { _id: false });
+
+const ProcessedRoundGuessDistributionPointSchema: Schema = new Schema<ProcessedRoundGuessDistributionPoint>({
+    guessedYear: { type: Number, required: true }, 
+    density: { type: Number, required: true }     
+}, { _id: false });
+
+const ProcessedRoundGuessDistributionSchema: Schema = new Schema<ProcessedRoundGuessDistribution>({
+    roundIndex: { type: Number, required: true },
+    curvePoints: [ProcessedRoundGuessDistributionPointSchema], 
+    totalGuesses: { type: Number, required: true }, 
+    minGuess: { type: Number },                     
+    maxGuess: { type: Number },                     
+    medianGuess: { type: Number }                   
+}, { _id: false });
+
+// Schema for individual images
+const ChallengeImageSchema: Schema = new Schema<ChallengeImage>({
+  title: { type: String, required: true },
+  url: { type: String, required: true },
+  source: { type: String, required: true },
+  year: { type: Number, required: true },
+  description: { type: String },
+  filename: { type: String }
+}, { _id: false });
+
+// Schema for distribution points
+const DistributionPointSchema: Schema = new Schema<DistributionPoint>({
+  score: { type: Number, required: true },
+  count: { type: Number, required: true, default: 0 }
+}, { _id: false });
+
+// Schema for challenge statistics
+const ChallengeStatsSchema: Schema = new Schema<ChallengeStats>({
+  averageScore: { type: Number, default: 0 },
+  completions: { type: Number, default: 0 },
+  distributions: [DistributionPointSchema], 
+  processedDistribution: ProcessedDistributionSchema, // Use the locally defined SCHEMA
+  roundGuessDistributions: [ProcessedRoundGuessDistributionSchema] 
+}, { _id: false });
+
+// Main schema for the Daily Challenge
+export interface DailyChallengeDoc extends Document {
+  date: Date;
+  images: ChallengeImage[];
+  stats: ChallengeStats;
+  active: boolean;
+  createdAt?: Date; 
+  updatedAt?: Date; 
+}
+
+const DailyChallengeSchema: Schema = new Schema<DailyChallengeDoc>({
+  date: { type: Date, required: true, index: true, unique: true },
+  images: [ChallengeImageSchema],
+  stats: { type: ChallengeStatsSchema, default: () => ({ completions: 0, averageScore: 0, distributions: [], roundGuessDistributions: [] }) }, // Added default for new field
   active: { type: Boolean, default: true }
 }, { timestamps: true });
 
-// Add this pre-save hook to ensure image URLs are properly formatted
-// Add this pre-save hook to ensure image URLs are properly formatted
-DailyChallengeSchema.pre<DailyChallengeDoc>('save', function(next) {
-  // Normalize image URLs
-  if (this.images && Array.isArray(this.images)) {
-    this.images = this.images.map((image: any) => {
-      // Don't modify URLs that are already S3 URLs
-      if (typeof image.url === 'string' && image.url.includes('amazonaws.com')) {
-        return image;
-      }
-      
-      // For uploads that still use the old format
-      if (typeof image.url === 'string' && image.url.includes('uploads')) {
-        // Extract the filename
-        let filename;
-        if (image.url.includes('/uploads/')) {
-          filename = image.url.split('/uploads/').pop();
-        } else {
-          filename = image.url.split('/').pop();
-        }
-        
-        // Format as S3 URL instead of local path
-        if (filename) {
-          image.url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/${filename}`;
-        }
-      }
-      return image;
-    });
-  }
-  next();
-});
+// Indexing fields within stats for potential queries
+DailyChallengeSchema.index({ 'stats.completions': 1 });
+DailyChallengeSchema.index({ 'date': 1, 'active': 1 }); // Compound index
 
-// Pre-save hook to ensure processedDistribution is valid
-DailyChallengeSchema.pre('save', function(this: mongoose.Document & { stats: { processedDistribution?: ProcessedDistribution } }, next) {
-  // Only validate if processedDistribution AND curvePoints actually exist and have data
-  if (this.stats.processedDistribution && Array.isArray(this.stats.processedDistribution.curvePoints) && this.stats.processedDistribution.curvePoints.length > 0) {
-    const { curvePoints, totalParticipants, minScore, maxScore, medianScore } = this.stats.processedDistribution;
+const DailyChallenge = mongoose.model<DailyChallengeDoc>('DailyChallenge', DailyChallengeSchema);
 
-    // Validate each curve point
-    for (const point of curvePoints) {
-      if (typeof point.score !== 'number' ||
-          typeof point.density !== 'number' ||
-          typeof point.percentile !== 'number') {
-        return next(new Error('Each curve point must have valid score, density, and percentile values'));
-      }
-    }
-
-    // Validate summary statistics ONLY if they exist (since they are optional now)
-    if (totalParticipants === undefined || typeof totalParticipants !== 'number' ||
-        minScore === undefined || typeof minScore !== 'number' ||
-        maxScore === undefined || typeof maxScore !== 'number' ||
-        medianScore === undefined || typeof medianScore !== 'number') {
-      return next(new Error('If curvePoints exist, processedDistribution must also have valid totalParticipants, minScore, maxScore, and medianScore'));
-    }
-  }
-
-  // If processedDistribution or curvePoints don't exist or are empty, validation passes for this hook
-  next();
-});
-
-// Create and export the model
-export default mongoose.model<DailyChallengeDoc>('DailyChallenge', DailyChallengeSchema);
+export default DailyChallenge;
