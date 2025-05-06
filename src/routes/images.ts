@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction, RequestHandler } from 'expres
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import DailyChallenge from '../models/DailyChallenge';
+import RoundGuess from '../models/RoundGuess';
 import { fetchImageData, fetchMultipleImageData } from '../utils/wikimediaHelper';
 import logger from '../utils/logger';
 import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
@@ -775,7 +776,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: Response): Promise<void> => {
     const sourceIp = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress || 'unknown-ip';
     const userAgent = req.headers['user-agent'] || 'Unknown';
-    const { score, date } = req.body;
+    const { score, date, guesses } = req.body;
 
     // --- INPUT VALIDATION ---
     const numericScore = Number(score); // Convert score to number
@@ -928,6 +929,33 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
             // finalChallengeState already holds the correct data (only completions incremented)
         }
 
+        // --- Start: New block for saving round guesses (Phase 1) ---
+        if (guesses && Array.isArray(guesses) && guesses.length > 0) {
+            logger.info(`[Submit] Phase 1: Processing ${guesses.length} received round guesses...`);
+            try {
+                // ENSURE 'startDate' below is the correct variable from this route's existing logic 
+                // that holds the UTC start date of the challenge being submitted.
+                const correctChallengeDateForGuesses = startDate; 
+
+                const roundGuessesToSave = guesses
+                    .filter(guess => typeof guess.roundIndex === 'number' && typeof guess.guessedYear === 'number')
+                    .map(guess => ({
+                        challengeDate: correctChallengeDateForGuesses,
+                        roundIndex: guess.roundIndex,
+                        guessedYear: guess.guessedYear
+                    }));
+
+                if (roundGuessesToSave.length > 0) {
+                    await RoundGuess.insertMany(roundGuessesToSave, { ordered: false });
+                    logger.info(`[Submit Guesses OK] Phase 1: Saved ${roundGuessesToSave.length} round guesses for challenge date ${correctChallengeDateForGuesses.toISOString().split('T')[0]}.`);
+                }
+            } catch (guessSaveError: any) {
+                logger.error(`[Submit Guesses Error] Phase 1: Failed to save round guesses for challenge date ${startDate.toISOString().split('T')[0]}: ${guessSaveError.message}`, guessSaveError);
+                // This error should NOT prevent the main success response from being sent.
+            }
+        }
+        // --- End: New block for saving round guesses (Phase 1) ---
+
         // --- Construct and Send Response (Common for both paths) ---
         // Use the finalChallengeState which contains the correct data for both past and present scenarios
         const responseData = {
@@ -1018,7 +1046,7 @@ router.get(
       res.status(200).json({
         date: targetDate.toISOString().split('T')[0],
         averageScore: challenge.stats.averageScore,
-        completions: challenge.stats.completions,
+        completions: challenge.stats.completions, 
         distribution: processedData
       });
     } catch (error) {
