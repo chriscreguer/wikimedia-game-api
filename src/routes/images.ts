@@ -1398,8 +1398,8 @@ router.get('/daily-challenge/round-guess-distributions', (async (req: Request, r
       return res.status(400).json({ error: 'Invalid or missing date query parameter. Use YYYY-MM-DD format.' });
     }
 
-    // Determine startDate and endDate for the MongoDB query based on TARGET_TIMEZONE
-    const startDate = toZonedTime(`${dateQuery}T00:00:00`, TARGET_TIMEZONE);
+    // Determine startDate and endDate for the MongoDB query based on UTC midnight
+    const startDate = new Date(dateQuery + 'T00:00:00.000Z');
     const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours later UTC
 
     logger.info(`[RoundGuessDists] Querying for challenge date ${dateQuery} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
