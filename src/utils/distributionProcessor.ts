@@ -112,7 +112,7 @@ export async function processAndStoreRoundGuessDistributions(challengeDateString
       // Define KDE parameters
       const MIN_YEAR_DOMAIN = 1850;
       const MAX_YEAR_DOMAIN = new Date().getFullYear(); // e.g., 2025
-      const KDE_BANDWIDTH_YEARS = 1; // << ADJUST THIS FOR SMOOTHNESS (e.g., 3, 5, 7, 10)
+      const KDE_BANDWIDTH_YEARS = 1.5; // << ADJUST THIS FOR SMOOTHNESS (e.g., 3, 5, 7, 10)
       const KDE_STEP_YEARS = 1;      // << ADJUST THIS FOR FEWER/MORE POINTS (e.g., 1, 2, 3)
 
       const curvePoints = generateYearKdeCurve(
