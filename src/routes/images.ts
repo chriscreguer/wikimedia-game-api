@@ -8,6 +8,7 @@ import logger from '../utils/logger';
 import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import rateLimit from 'express-rate-limit';
 import { ProcessedDistribution, ProcessedDistributionPoint } from '../types/types';
+import { processAndStoreRoundGuessDistributions } from '../utils/distributionProcessor';
 
 dotenv.config();
 
@@ -928,6 +929,26 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
             logger.info(`[Submit Past Date] Only incremented completions for challenge ID: ${updatedChallengeIncremented._id}. Preparing to return existing stats.`);
             // finalChallengeState already holds the correct data (only completions incremented)
         }
+
+        // --- START: Conditional Round Guess Processing ---
+        const completions = finalChallengeState.stats.completions; // Use the final, updated count
+        let shouldRecalculateRoundGuesses = false;
+        if (completions <= 100) { 
+            shouldRecalculateRoundGuesses = true;
+        } else if (completions <= 500 && completions % 25 === 0) { 
+            shouldRecalculateRoundGuesses = true;
+        } else if (completions > 500 && completions % 100 === 0) { 
+            shouldRecalculateRoundGuesses = true;
+        }
+
+        if (shouldRecalculateRoundGuesses) {
+            logger.info(`[Submit Calc] Completion threshold (${completions}) met for round guesses. Triggering background processing for date: ${queryDateString}`);
+            // Run in background, don't await
+            processAndStoreRoundGuessDistributions(queryDateString).catch(err => {
+                logger.error(`[Submit Background Processing Error] Round guess distribution processing failed for date ${queryDateString}:`, err);
+            });
+        }
+        // --- END: Conditional Round Guess Pr
 
         // --- Start: New block for saving round guesses (Phase 1) ---
         if (guesses && Array.isArray(guesses) && guesses.length > 0) {
