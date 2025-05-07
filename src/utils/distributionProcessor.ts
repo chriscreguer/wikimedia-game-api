@@ -5,6 +5,11 @@ import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 
 const TARGET_TIMEZONE = 'America/New_York'; // As defined in images.ts
 
+interface KdePoint {
+  guessedYear: number;
+  density: number;
+}
+
 interface RoundGuessDistributionItem {
   roundIndex: number;
   curvePoints: Array<{
@@ -15,6 +20,40 @@ interface RoundGuessDistributionItem {
   minGuess: number;
   maxGuess: number;
   medianGuess: number;
+}
+
+function generateYearKdeCurve(
+  allGuessedYearsInRound: number[], // Array of ALL individual year guesses for the round
+  domainMin: number,
+  domainMax: number,
+  bandwidth: number, // Controls smoothness (e.g., 3, 5, or 7 years)
+  step: number      // Determines how many points on the curve (e.g., 1 for yearly points)
+): KdePoint[] {
+  const kdePointsRaw: KdePoint[] = [];
+
+  for (let currentYearToEvaluate = domainMin; currentYearToEvaluate <= domainMax; currentYearToEvaluate += step) {
+    let densityValue = 0;
+    if (allGuessedYearsInRound.length > 0 && bandwidth > 0) { // Ensure valid inputs for kernel calculation
+      for (const guessedYear of allGuessedYearsInRound) {
+        const u = (currentYearToEvaluate - guessedYear) / bandwidth;
+        const kernelValue = (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * u * u);
+        densityValue += kernelValue;
+      }
+      densityValue /= (allGuessedYearsInRound.length * bandwidth); // Normalize for area
+    }
+    kdePointsRaw.push({ guessedYear: currentYearToEvaluate, density: densityValue });
+  }
+
+  // Normalize densities so the peak is 1.0 for better visualization
+  const maxOverallDensity = Math.max(...kdePointsRaw.map(p => p.density), 0);
+
+  if (maxOverallDensity > 0) {
+    return kdePointsRaw.map(point => ({
+      ...point,
+      density: point.density / maxOverallDensity,
+    }));
+  }
+  return kdePointsRaw; // Return as is if all densities are 0
 }
 
 export async function processAndStoreRoundGuessDistributions(challengeDateString: string): Promise<void> {
@@ -70,12 +109,19 @@ export async function processAndStoreRoundGuessDistributions(challengeDateString
         medianGuessedYear = guessedYearsInRound[mid];
       }
 
-      const curvePoints = Object.entries(frequencyMap)
-        .map(([yearStr, count]) => ({
-          guessedYear: parseInt(yearStr),
-          density: count / totalGuessesInRound,
-        }))
-        .sort((a, b) => a.guessedYear - b.guessedYear);
+      // Define KDE parameters
+      const MIN_YEAR_DOMAIN = 1850;
+      const MAX_YEAR_DOMAIN = new Date().getFullYear(); // e.g., 2025
+      const KDE_BANDWIDTH_YEARS = 1; // << ADJUST THIS FOR SMOOTHNESS (e.g., 3, 5, 7, 10)
+      const KDE_STEP_YEARS = 1;      // << ADJUST THIS FOR FEWER/MORE POINTS (e.g., 1, 2, 3)
+
+      const curvePoints = generateYearKdeCurve(
+          guessedYearsInRound,       // Pass the array of all individual guesses
+          MIN_YEAR_DOMAIN,
+          MAX_YEAR_DOMAIN,
+          KDE_BANDWIDTH_YEARS,
+          KDE_STEP_YEARS
+      );
 
       processedRoundDistributions.push({
         roundIndex: roundIdx,
