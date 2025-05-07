@@ -93,19 +93,18 @@ export async function processAndStoreRoundGuessDistributions(challengeDateString
         return;
     }
 
-    // Find the DailyChallenge document
-    // Date querying for DailyChallenge uses TARGET_TIMEZONE
-    const startDate = toZonedTime(`${challengeDateString}T00:00:00`, TARGET_TIMEZONE);
-    const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours later UTC
+    // Find the DailyChallenge document using UTC midnight consistently
+    const startDateForDailyChallengeQuery = new Date(challengeDateString + 'T00:00:00.000Z');
+    const endDateForDailyChallengeQuery = new Date(startDateForDailyChallengeQuery.getTime() + 24 * 60 * 60 * 1000);
 
-    logger.info(`[ProcessRoundGuesses] Attempting to find DailyChallenge for date ${challengeDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
+    logger.info(`[ProcessRoundGuesses] Attempting to find DailyChallenge for date ${challengeDateString} (UTC range: ${startDateForDailyChallengeQuery.toISOString()} to ${endDateForDailyChallengeQuery.toISOString()})`);
     
     const dailyChallenge = await DailyChallenge.findOne({
-      date: { $gte: startDate, $lt: endDate },
+      date: { $gte: startDateForDailyChallengeQuery, $lt: endDateForDailyChallengeQuery },
     });
 
     if (!dailyChallenge) {
-      logger.warn(`[ProcessRoundGuesses] DailyChallenge not found for date: ${challengeDateString} (query range ${startDate.toISOString()} - ${endDate.toISOString()}). Cannot store distributions.`);
+      logger.warn(`[ProcessRoundGuesses] DailyChallenge not found for date: ${challengeDateString} (query range ${startDateForDailyChallengeQuery.toISOString()} - ${endDateForDailyChallengeQuery.toISOString()}). Cannot store distributions.`);
       return;
     }
 
