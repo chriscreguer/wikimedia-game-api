@@ -1,8 +1,28 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { WikimediaImage } from '../types/wikimedia';
-import { ScoreDistribution, ProcessedDistribution, ChallengeStats } from '../types/types';
+import { ScoreDistribution, ProcessedDistribution, ChallengeStats as ChallengeStatsType } from '../types/types';
 import dotenv from 'dotenv';
 dotenv.config();
+
+// Define the structure for a single round's guess distribution
+interface RoundGuessDistributionItem {
+  roundIndex: number;
+  curvePoints: Array<{
+    guessedYear: number;
+    density: number;
+  }>;
+  totalGuesses: number;
+  minGuess: number;
+  maxGuess: number;
+  medianGuess: number;
+}
+
+// Update ChallengeStats interface
+export interface ChallengeStats extends ChallengeStatsType {
+  // distributions: ScoreDistribution[]; // This might be from types.ts as well
+  // processedDistribution?: ProcessedDistribution; // This might be from types.ts
+  roundGuessDistributions?: RoundGuessDistributionItem[]; // New field
+}
 
 // Interface for daily challenge document
 export interface DailyChallengeDoc extends Document {
@@ -48,7 +68,18 @@ const DailyChallengeSchema: Schema = new Schema({
       minScore: { type: Number, required: false },
       maxScore: { type: Number, required: false },
       medianScore: { type: Number, required: false }
-    }
+    },
+    roundGuessDistributions: [{ // New field for round guess distributions
+      roundIndex: { type: Number, required: true },
+      curvePoints: [{
+        guessedYear: { type: Number, required: true },
+        density: { type: Number, required: true },
+      }],
+      totalGuesses: { type: Number, required: true },
+      minGuess: { type: Number, required: true },
+      maxGuess: { type: Number, required: true },
+      medianGuess: { type: Number, required: true },
+    }]
   },
   active: { type: Boolean, default: true }
 }, { timestamps: true });
