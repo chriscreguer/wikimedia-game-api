@@ -147,6 +147,13 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public/admin.html'));
 });
 
+
+// In src/routes/admin.ts, near the top
+router.post('/test-admin-post', (req, res) => {
+  logger.info('[Admin Test] POST /admin/test-admin-post hit successfully');
+  res.status(200).send('Admin POST test successful');
+});
+
 /**
  * Create a daily challenge from Wikimedia URL(s)
  * POST /admin/daily-challenge/create
