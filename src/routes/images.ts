@@ -9,6 +9,7 @@ import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import rateLimit from 'express-rate-limit';
 import { ProcessedDistribution, ProcessedDistributionPoint } from '../types/types';
 import { processAndStoreRoundGuessDistributions } from '../utils/distributionProcessor';
+import { archiveSpecificDayEmergency } from '../utils/emergencyArchiver'; // Adjust path as needed
 
 dotenv.config();
 
@@ -930,33 +931,66 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
             // finalChallengeState already holds the correct data (only completions incremented)
         }
 
-        // --- START: Conditional Round Guess Processing ---
-        const completions = finalChallengeState.stats.completions;
-        const isRoundStatsFinalized = finalChallengeState.roundStatsFinalized;
+        // --- START: Emergency Archival Failsafe ---
+        const EMERGENCY_COMPLETION_THRESHOLD = 250000;
+        
+        // Check if finalChallengeState is valid and has the necessary properties
+        if (finalChallengeState && typeof finalChallengeState.stats === 'object' && finalChallengeState.stats !== null && finalChallengeState._id) {
+            const currentCompletions = finalChallengeState.stats.completions;
+            const isFinalized = finalChallengeState.roundStatsFinalized;
+            const challengeIdStr = String(finalChallengeState._id); // Use String() for robust conversion
 
-        let shouldRecalculateRoundGuesses = false;
-
-        if (isRoundStatsFinalized) {
-            logger.info(`[Submit Calc] Round guess distributions for date ${queryDateString} are ALREADY FINALIZED. Skipping recalculation.`);
-            shouldRecalculateRoundGuesses = false;
-        } else {
-            logger.info(`[Submit Calc] Round guess distributions for date ${queryDateString} are NOT YET FINALIZED. Applying recalculation logic.`);
-            if (completions <= 100) {
-                shouldRecalculateRoundGuesses = true;
-            } else if (completions <= 500 && completions % 25 === 0) {
-                shouldRecalculateRoundGuesses = true;
-            } else if (completions > 500 && completions % 100 === 0) {
-                shouldRecalculateRoundGuesses = true;
+            if (
+                typeof currentCompletions === 'number' && 
+                currentCompletions >= EMERGENCY_COMPLETION_THRESHOLD &&
+                !isFinalized 
+            ) {
+                logger.warn(`[Submit Failsafe] EMERGENCY: Challenge ${queryDateString} (ID: ${challengeIdStr}) reached ${currentCompletions} completions. Triggering immediate archival and finalization.`);
+                
+                archiveSpecificDayEmergency(queryDateString, challengeIdStr)
+                    .then(() => {
+                        logger.info(`[Submit Failsafe] Emergency archival for ${queryDateString} likely completed or is in progress.`);
+                    })
+                    .catch(err => {
+                        logger.error(`[Submit Failsafe] Asynchronous EMERGENCY archival for ${queryDateString} FAILED. Check other logs from EmergencyArchiver. Error:`, err);
+                    });
             }
+        } else {
+            logger.error(`[Submit Failsafe] Critical error: finalChallengeState or its properties are not valid before emergency archival check. ID: ${finalChallengeState?._id}`);
         }
+        // --- END: Emergency Archival Failsafe ---
 
-        if (shouldRecalculateRoundGuesses) {
-            logger.info(`[Submit Calc] Conditions met to recalculate round guesses for date ${queryDateString}. Triggering processing.`);
-            processAndStoreRoundGuessDistributions(queryDateString).catch(err => {
-                logger.error(`[Submit Background Processing Error] Round guess distribution processing failed for date ${queryDateString}:`, err);
-            });
+        // --- START: Conditional Round Guess Processing ---
+        if (finalChallengeState && typeof finalChallengeState.stats === 'object' && finalChallengeState.stats !== null) {
+            const completions = finalChallengeState.stats.completions;
+            const isRoundStatsFinalized = finalChallengeState.roundStatsFinalized;
+
+            let shouldRecalculateRoundGuesses = false;
+
+            if (isRoundStatsFinalized) {
+                logger.info(`[Submit Calc] Round guess distributions for date ${queryDateString} are ALREADY FINALIZED. Skipping recalculation.`);
+                shouldRecalculateRoundGuesses = false;
+            } else {
+                logger.info(`[Submit Calc] Round guess distributions for date ${queryDateString} are NOT YET FINALIZED. Applying recalculation logic.`);
+                if (completions <= 100) {
+                    shouldRecalculateRoundGuesses = true;
+                } else if (completions <= 500 && completions % 25 === 0) {
+                    shouldRecalculateRoundGuesses = true;
+                } else if (completions > 500 && completions % 100 === 0) {
+                    shouldRecalculateRoundGuesses = true;
+                }
+            }
+
+            if (shouldRecalculateRoundGuesses) {
+                logger.info(`[Submit Calc] Regular conditions met to recalculate round guesses for date ${queryDateString}. Triggering processing.`);
+                processAndStoreRoundGuessDistributions(queryDateString).catch(err => {
+                    logger.error(`[Submit Background Processing Error] Regular round guess distribution processing failed for date ${queryDateString}:`, err);
+                });
+            }
+        } else {
+            logger.error(`[Submit Logic Error] Critical error: finalChallengeState or stats not valid before conditional round guess processing. ID: ${finalChallengeState?._id}`);
         }
-        // --- END: Conditional Round Guess Pr
+        // --- END: Conditional Round Guess Processing ---
 
         // --- Start: New block for saving round guesses (Phase 1) ---
         if (guesses && Array.isArray(guesses) && guesses.length > 0) {
