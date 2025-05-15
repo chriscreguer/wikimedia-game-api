@@ -19,7 +19,7 @@ const TARGET_TIMEZONE = process.env.TARGET_TIMEZONE || 'America/New_York';
 const ARCHIVE_S3_BUCKET_NAME_FROM_ENV = process.env.ARCHIVE_S3_BUCKET_NAME;
 const ARCHIVE_S3_PREFIX = (process.env.ARCHIVE_S3_PREFIX || 'round-guesses-archive/').replace(/\/$/, ''); // Ensure no trailing slash initially
 const PROCESS_CHALLENGES_OLDER_THAN_DAYS: number = parseInt(process.env.PROCESS_CHALLENGES_OLDER_THAN_DAYS || "1", 10);
-// --- End Configuration ---
+// --- End Configuration --- 
 
 export async function archiveAndCleanupRoundGuesses() {
     logger.info("[ArchiveScript] Starting archival process.");
