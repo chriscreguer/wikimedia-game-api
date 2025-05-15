@@ -10,9 +10,10 @@ import s3Client from '../utils/awsConfig';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import logger from '../utils/logger';
 
-console.log("--- ARCHIVE SCRIPT STARTED (Handles Initial & Delta Archival) ---");
+// This console.log is for standalone execution, fine to keep or remove
+// console.log("--- ARCHIVE SCRIPT STARTED (Handles Initial & Delta Archival) ---");
 
-dotenv.config();
+dotenv.config(); // For standalone execution
 
 // --- Configuration ---
 const TARGET_TIMEZONE = process.env.TARGET_TIMEZONE || 'America/New_York';
@@ -21,25 +22,38 @@ const ARCHIVE_S3_PREFIX = (process.env.ARCHIVE_S3_PREFIX || 'round-guesses-archi
 const PROCESS_CHALLENGES_OLDER_THAN_DAYS: number = parseInt(process.env.PROCESS_CHALLENGES_OLDER_THAN_DAYS || "1", 10);
 // --- End Configuration --- 
 
-export async function archiveAndCleanupRoundGuesses() {
-    logger.info("[ArchiveScript] Starting archival process.");
+export async function archiveAndCleanupRoundGuesses(isLaunchedByApp?: boolean) {
+    logger.info(`[ArchiveScript] Starting archival process. Launched by app: ${!!isLaunchedByApp}`);
 
-    const connectionString = process.env.MONGODB_URI;
-    if (!connectionString) {
-        logger.error("[ArchiveScript] MONGODB_URI environment variable not set. Exiting.");
-        process.exit(1);
+    if (!isLaunchedByApp) { // <<< Only connect if NOT launched by app
+        const connectionString = process.env.MONGODB_URI;
+        if (!connectionString) {
+            logger.error("[ArchiveScript] MONGODB_URI environment variable not set for standalone run. Exiting.");
+            process.exit(1);
+        }
+        if (mongoose.connection.readyState !== 1 && mongoose.connection.readyState !== 2) { // 1 = connected, 2 = connecting
+             await mongoose.connect(connectionString);
+             logger.info("[ArchiveScript] Standalone Run: Successfully connected to MongoDB.");
+        } else {
+             logger.info("[ArchiveScript] Standalone Run: MongoDB connection already established or connecting.");
+        }
+    } else {
+        if (mongoose.connection.readyState !== 1) { // Check if app's connection is live
+            logger.error("[ArchiveScript] Launched by App: MongoDB is not connected as expected. Aborting.");
+            // Throw an error or return early to prevent operations on a disconnected DB
+            throw new Error("MongoDB not connected when script was called by app.");
+        }
+        logger.info("[ArchiveScript] Launched by App: Using existing MongoDB connection.");
     }
 
     const canAttemptS3Archive = ARCHIVE_S3_BUCKET_NAME_FROM_ENV && process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY;
 
     if (ARCHIVE_S3_BUCKET_NAME_FROM_ENV && !canAttemptS3Archive) {
-        logger.warn(`[ArchiveScript] ARCHIVE_S3_BUCKET_NAME ('${ARCHIVE_S3_BUCKET_NAME_FROM_ENV}') is set, but AWS credentials seem incomplete. S3 archival will be SKIPPED for new finalizations.`);
+         logger.warn(`[ArchiveScript] ARCHIVE_S3_BUCKET_NAME ('${ARCHIVE_S3_BUCKET_NAME_FROM_ENV}') is set, but AWS credentials seem incomplete. S3 archival will be SKIPPED.`);
     }
     logger.info(`[ArchiveScript] Processing challenges older than ${PROCESS_CHALLENGES_OLDER_THAN_DAYS} day(s).`);
     logger.info(`[ArchiveScript] S3 Archival is ${canAttemptS3Archive ? `ENABLED (Bucket: ${ARCHIVE_S3_BUCKET_NAME_FROM_ENV})` : 'DISABLED (S3 not fully configured)'}.`);
 
-    await mongoose.connect(connectionString);
-    logger.info("[ArchiveScript] Successfully connected to MongoDB.");
 
     try {
         const now = new Date();
@@ -175,17 +189,24 @@ export async function archiveAndCleanupRoundGuesses() {
 
     } catch (error: any) {
         logger.error(`[ArchiveScript] A critical error occurred during the main execution block: ${error.message}`, error);
+        // If an error happens in the main block, we might not want to disconnect if launched by app
+        if (!isLaunchedByApp) { throw error; } // Re-throw for standalone to be caught by outer catch
+        // If launched by app, the error is logged, but we don't disconnect here.
     } finally {
-        if (mongoose.connection.readyState === 1) {
+        if (!isLaunchedByApp && mongoose.connection.readyState === 1) { // <<< Only disconnect if standalone AND connected
             await mongoose.disconnect();
-            logger.info("[ArchiveScript] MongoDB connection closed.");
+            logger.info("[ArchiveScript] Standalone Run: MongoDB connection closed.");
+        } else if (isLaunchedByApp) {
+            logger.info("[ArchiveScript] Launched by App: Script logic finished. Leaving MongoDB connection managed by app.");
         }
     }
 }
 
-if (require.main === module) { // Only run if executed directly
-    archiveAndCleanupRoundGuesses().catch(e => {
-        logger.error("[ArchiveScript] Unhandled error at the top level of script execution when run directly.", e);
+// This block ensures the script runs when executed directly with `node`
+if (require.main === module) {
+    archiveAndCleanupRoundGuesses(false).catch(e => { // <<< PASS false for standalone
+        logger.error("[ArchiveScript] Unhandled error at the top level of standalone script execution.", e);
+        // Ensure disconnection if standalone and an error occurs before normal finally block
         if (mongoose.connection && mongoose.connection.readyState === 1) {
             mongoose.disconnect();
         }

@@ -572,18 +572,25 @@ router.post('/daily-challenge/process-round-guesses', verifyAdmin, (async (req: 
   }
 }) as RequestHandler);
 
+// @ts-ignore
 router.post('/trigger-archive-script', verifyAdmin, async (req: Request, res: Response) => {
     logger.info('[Admin Endpoint] Received request to trigger archive script.');
     try {
-        archiveAndCleanupRoundGuesses().then(() => {
-            logger.info('[Admin Endpoint] archiveAndCleanupRoundGuesses finished.');
-        }).catch(err => {
-            logger.error('[Admin Endpoint] archiveAndCleanupRoundGuesses threw an error:', err);
-        });
+        // Call the function, passing true to indicate it's launched by the app
+        // This will prevent it from managing the mongoose connection itself
+        archiveAndCleanupRoundGuesses(true) // <<< PASS true HERE
+            .then(() => {
+                logger.info('[Admin Endpoint] archiveAndCleanupRoundGuesses finished processing (async).');
+            })
+            .catch(err => {
+                // This catch is for errors within the promise of archiveAndCleanupRoundGuesses
+                logger.error('[Admin Endpoint] archiveAndCleanupRoundGuesses promise rejected an error:', err);
+            });
 
         res.status(202).json({ message: "Archive script triggered. Check server logs for progress and completion." });
     } catch (error: any) {
-        logger.error('[Admin Endpoint] Error triggering archive script:', error);
+        // This catch is for synchronous errors in setting up the call
+        logger.error('[Admin Endpoint] Error synchronously triggering archive script:', error);
         res.status(500).json({ error: 'Failed to trigger archive script.', details: error.message });
     }
 });
