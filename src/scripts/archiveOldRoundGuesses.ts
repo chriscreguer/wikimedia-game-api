@@ -21,7 +21,7 @@ const ARCHIVE_S3_PREFIX = (process.env.ARCHIVE_S3_PREFIX || 'round-guesses-archi
 const PROCESS_CHALLENGES_OLDER_THAN_DAYS: number = parseInt(process.env.PROCESS_CHALLENGES_OLDER_THAN_DAYS || "1", 10);
 // --- End Configuration ---
 
-async function archiveAndCleanupRoundGuesses() {
+export async function archiveAndCleanupRoundGuesses() {
     logger.info("[ArchiveScript] Starting archival process.");
 
     const connectionString = process.env.MONGODB_URI;
@@ -183,10 +183,12 @@ async function archiveAndCleanupRoundGuesses() {
     }
 }
 
-archiveAndCleanupRoundGuesses().catch(e => {
-    logger.error("[ArchiveScript] Unhandled error at the top level of script execution.", e);
-    if (mongoose.connection && mongoose.connection.readyState === 1) {
-        mongoose.disconnect();
-    }
-    process.exit(1);
-});
+if (require.main === module) { // Only run if executed directly
+    archiveAndCleanupRoundGuesses().catch(e => {
+        logger.error("[ArchiveScript] Unhandled error at the top level of script execution when run directly.", e);
+        if (mongoose.connection && mongoose.connection.readyState === 1) {
+            mongoose.disconnect();
+        }
+        process.exit(1);
+    });
+}

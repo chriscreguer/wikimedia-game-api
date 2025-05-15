@@ -11,6 +11,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import multerS3 from 'multer-s3';
 import s3Client, { s3BucketName } from '../utils/awsConfig';
 import { processAndStoreRoundGuessDistributions } from '../utils/distributionProcessor';
+import { archiveAndCleanupRoundGuesses } from '../scripts/archiveOldRoundGuesses';
 
 const storage = multerS3({
   s3: s3Client,
@@ -89,15 +90,14 @@ async function getS3Url(key: string): Promise<string> {
 
 const router = express.Router();
 
-// Admin authentication middleware - using the same key as in images.ts
+// Admin authentication middleware - should be defined in this file or imported correctly
+// Based on search, verifyAdmin is defined in this file itself.
 const verifyAdmin: RequestHandler = (req, res, next) => {
-  const adminKey = req.headers['x-admin-key'] || req.query.adminKey;
-  
+  const adminKey = req.headers['x-admin-key'] || req.query.adminKey; // Or however you get the key
   if (!adminKey || adminKey !== process.env.ADMIN_API_KEY) {
     res.status(401).json({ error: 'Unauthorized' });
     return;
   }
-  
   next();
 };
 
@@ -571,5 +571,21 @@ router.post('/daily-challenge/process-round-guesses', verifyAdmin, (async (req: 
     res.status(500).json({ error: 'Failed to trigger round guess processing. See server logs.' });
   }
 }) as RequestHandler);
+
+router.post('/trigger-archive-script', verifyAdmin, async (req: Request, res: Response) => {
+    logger.info('[Admin Endpoint] Received request to trigger archive script.');
+    try {
+        archiveAndCleanupRoundGuesses().then(() => {
+            logger.info('[Admin Endpoint] archiveAndCleanupRoundGuesses finished.');
+        }).catch(err => {
+            logger.error('[Admin Endpoint] archiveAndCleanupRoundGuesses threw an error:', err);
+        });
+
+        res.status(202).json({ message: "Archive script triggered. Check server logs for progress and completion." });
+    } catch (error: any) {
+        logger.error('[Admin Endpoint] Error triggering archive script:', error);
+        res.status(500).json({ error: 'Failed to trigger archive script.', details: error.message });
+    }
+});
 
 export default router;
