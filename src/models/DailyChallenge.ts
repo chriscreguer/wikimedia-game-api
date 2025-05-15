@@ -30,6 +30,7 @@ export interface DailyChallengeDoc extends Document {
   images: WikimediaImage[];
   stats: ChallengeStats;
   active: boolean;
+  roundStatsFinalized?: boolean;
 }
 
 // Schema definition for daily challenge
@@ -81,7 +82,8 @@ const DailyChallengeSchema: Schema = new Schema({
       medianGuess: { type: Number, required: true },
     }]
   },
-  active: { type: Boolean, default: true }
+  active: { type: Boolean, default: true },
+  roundStatsFinalized: { type: Boolean, default: false }
 }, { timestamps: true });
 
 // Add this pre-save hook to ensure image URLs are properly formatted

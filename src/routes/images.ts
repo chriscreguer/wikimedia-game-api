@@ -931,19 +931,27 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
         }
 
         // --- START: Conditional Round Guess Processing ---
-        const completions = finalChallengeState.stats.completions; // Use the final, updated count
+        const completions = finalChallengeState.stats.completions;
+        const isRoundStatsFinalized = finalChallengeState.roundStatsFinalized;
+
         let shouldRecalculateRoundGuesses = false;
-        if (completions <= 100) { 
-            shouldRecalculateRoundGuesses = true;
-        } else if (completions <= 500 && completions % 25 === 0) { 
-            shouldRecalculateRoundGuesses = true;
-        } else if (completions > 500 && completions % 100 === 0) { 
-            shouldRecalculateRoundGuesses = true;
+
+        if (isRoundStatsFinalized) {
+            logger.info(`[Submit Calc] Round guess distributions for date ${queryDateString} are ALREADY FINALIZED. Skipping recalculation.`);
+            shouldRecalculateRoundGuesses = false;
+        } else {
+            logger.info(`[Submit Calc] Round guess distributions for date ${queryDateString} are NOT YET FINALIZED. Applying recalculation logic.`);
+            if (completions <= 100) {
+                shouldRecalculateRoundGuesses = true;
+            } else if (completions <= 500 && completions % 25 === 0) {
+                shouldRecalculateRoundGuesses = true;
+            } else if (completions > 500 && completions % 100 === 0) {
+                shouldRecalculateRoundGuesses = true;
+            }
         }
 
         if (shouldRecalculateRoundGuesses) {
-            logger.info(`[Submit Calc] Completion threshold (${completions}) met for round guesses. Triggering background processing for date: ${queryDateString}`);
-            // Run in background, don't await
+            logger.info(`[Submit Calc] Conditions met to recalculate round guesses for date ${queryDateString}. Triggering processing.`);
             processAndStoreRoundGuessDistributions(queryDateString).catch(err => {
                 logger.error(`[Submit Background Processing Error] Round guess distribution processing failed for date ${queryDateString}:`, err);
             });
