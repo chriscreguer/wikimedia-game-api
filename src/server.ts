@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import dotenv from 'dotenv';
+dotenv.config();
 import imagesRoutes from './routes/images';
 import mongoose from 'mongoose';
 import logger from './utils/logger';
@@ -30,9 +31,6 @@ try {
     console.error("🚨 Error listing dist contents at startup:", err);
 }
 */
-
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
