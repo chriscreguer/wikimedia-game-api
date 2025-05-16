@@ -9,6 +9,7 @@ export interface WikimediaImage {
   description?: string;
   filename?: string;
   revealedDescription?: string;
+  s3BaseKey?: string;
 }
 
 export interface GuessHistoryItem {
