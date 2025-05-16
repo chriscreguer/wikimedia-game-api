@@ -25,7 +25,12 @@ async function uploadToS3(buffer: Buffer, key: string, contentType: string): Pro
     ACL: 'public-read', // Or your preferred ACL
   });
   await s3Client.send(command);
-  return `https://<span class="math-inline">\{s3BucketName\}\.s3\.</span>{process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/${key}`;
+  
+  logger.info(`[imageProcessor] s3BucketName: ${s3BucketName}`);
+  logger.info(`[imageProcessor] AWS_REGION: ${process.env.AWS_REGION}`);
+  const constructedUrl = `https://${s3BucketName}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/${key}`;
+  logger.info(`[imageProcessor] Constructed URL: ${constructedUrl}`);
+  return constructedUrl;
 }
 
 /**
