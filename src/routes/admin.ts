@@ -12,7 +12,7 @@ import multerS3 from 'multer-s3';
 import s3Client, { s3BucketName } from '../utils/awsConfig';
 import { processAndStoreRoundGuessDistributions } from '../utils/distributionProcessor';
 import { archiveAndCleanupRoundGuesses } from '../scripts/archiveOldRoundGuesses';
-import { processAndUploadVariants, fetchImageFromUrl, deleteFromS3 } from '../utils/imageProcessor';
+import { processAndStoreImageVariants, fetchImageFromUrl, deleteFromS3 } from '../utils/imageProcessor';
 import { v4 as uuidv4 } from 'uuid';
 import { WikimediaImage } from '../types/wikimedia';
 
@@ -203,74 +203,75 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
 
         for (const imageInfo of imagesOrder) {
           let originalImageBuffer: Buffer | null = null;
-          let s3BaseKey = `challenge-images/${uuidv4()}`; // Generate a unique base key
-          let originalS3KeyToDelete: string | undefined = undefined;
+          let baseIdentifier: string = uuidv4(); // Used for S3 object naming (without extension)
+          let originalS3KeyOfUpload: string | undefined = undefined; // Full S3 key of original multer upload for deletion
 
           if (imageInfo.type === 'wikimedia') {
             const wikimediaData = await fetchImageData(extractFilenameFromUrl(imageInfo.url) || '');
             if (wikimediaData && wikimediaData.url) {
               originalImageBuffer = await fetchImageFromUrl(wikimediaData.url);
-              if (originalImageBuffer) {
-                const variants = await processAndUploadVariants(originalImageBuffer, s3BaseKey);
-                if (variants.webpUrl) { // Prefer WebP URL for storage
-                  imageData.push({
-                    filename: wikimediaData.filename || imageInfo.url.split('/').pop(),
-                    title: wikimediaData.title || 'Wikimedia Image',
-                    url: variants.webpUrl, // Store WebP URL
-                    year: imageInfo.year || wikimediaData.year,
-                    source: wikimediaData.source || 'Wikimedia Commons',
-                    description: imageInfo.description || wikimediaData.description || '',
-                    revealedDescription: imageInfo.revealedDescription || imageInfo.description || '',
-                    s3BaseKey: s3BaseKey
-                  });
-                } else {
-                    logger.warn(`Failed to create variants for Wikimedia image: ${imageInfo.url}`);
-                }
-              } else {
-                logger.warn(`Failed to download Wikimedia image: ${imageInfo.url}`);
-              }
+              // baseIdentifier is already a new UUID for Wikimedia images
+            } else {
+              logger.warn(`Could not fetch Wikimedia data for URL: ${imageInfo.url}`);
+              continue; // Skip this image
             }
           } else if (imageInfo.type === 'upload') {
             const uploadIndex = imageInfo.uploadIndex;
             if (uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
-              const file = uploadedFiles[uploadIndex]; 
-              originalS3KeyToDelete = file.key; 
+              const file = uploadedFiles[uploadIndex] as Express.MulterS3.File; // Ensure type cast
+              originalS3KeyOfUpload = file.key; // This is the full S3 key from multer-s3
 
               const s3ObjectResponse = await s3Client.send(new GetObjectCommand({ Bucket: s3BucketName, Key: file.key }));
               if (s3ObjectResponse.Body) {
                 originalImageBuffer = Buffer.from(await s3ObjectResponse.Body.transformToByteArray());
-              }
-
-              if (originalImageBuffer) {
-                const keyParts = file.key.split('.');
-                const extension = keyParts.pop();
-                s3BaseKey = keyParts.join('.'); 
-
-                const variants = await processAndUploadVariants(originalImageBuffer, s3BaseKey);
-                if (variants.webpUrl) {
-                  imageData.push({
-                    filename: file.originalname,
-                    title: file.originalname,
-                    url: variants.webpUrl, 
-                    year: imageInfo.year || new Date().getFullYear(),
-                    source: 'User Upload',
-                    description: imageInfo.description || '',
-                    revealedDescription: imageInfo.revealedDescription || imageInfo.description || '',
-                    s3BaseKey: s3BaseKey
-                  });
-                  if (originalS3KeyToDelete && !['webp', 'jpg', 'jpeg'].includes(extension?.toLowerCase() || '')) {
-                      await deleteFromS3(originalS3KeyToDelete);
-                  }
-                } else {
-                     logger.warn(`Failed to create variants for uploaded file: ${file.originalname}`);
-                }
+                // Derive a baseIdentifier from the original S3 key (without extension or path)
+                const keyParts = file.key.split('/').pop()?.split('.') || [];
+                keyParts.pop(); // Remove extension
+                baseIdentifier = keyParts.join('.') || uuidv4(); // Fallback to UUID if stem is empty
               } else {
                 logger.warn(`Failed to fetch uploaded file from S3: ${file.key}`);
+                continue; // Skip this image
               }
+            } else {
+              logger.warn(`Invalid uploadIndex ${uploadIndex} for uploaded files.`);
+              continue; // Skip this image
+            }
+          } else {
+            logger.warn(`Unknown image type: ${imageInfo.type}`);
+            continue; // Skip this image
+          }
+
+          if (originalImageBuffer) {
+            const processedInfo = await processAndStoreImageVariants(originalImageBuffer, baseIdentifier);
+            if (processedInfo.cloudFrontUrl) {
+              imageData.push({
+                filename: imageInfo.type === 'upload' ? (uploadedFiles[imageInfo.uploadIndex] as Express.MulterS3.File).originalname : (extractFilenameFromUrl(imageInfo.url) || baseIdentifier),
+                title: imageInfo.type === 'upload' ? (uploadedFiles[imageInfo.uploadIndex] as Express.MulterS3.File).originalname : (extractFilenameFromUrl(imageInfo.url) || baseIdentifier),
+                url: processedInfo.cloudFrontUrl, // Store the CloudFront URL for the .webp variant
+                year: parseInt(imageInfo.year) || new Date().getFullYear(),
+                source: imageInfo.type === 'upload' ? 'User Upload' : 'Wikimedia Commons',
+                description: imageInfo.description || '',
+                revealedDescription: imageInfo.revealedDescription || imageInfo.description || '',
+                s3BaseIdentifier: processedInfo.s3BaseIdentifier // Store just the unique ID part
+              });
+
+              // Delete the original file uploaded by multer-s3 if it's different from the variants and was an upload
+              if (imageInfo.type === 'upload' && originalS3KeyOfUpload) {
+                const originalExtension = originalS3KeyOfUpload.split('.').pop()?.toLowerCase();
+                if (originalExtension && !['webp', 'jpg', 'jpeg'].includes(originalExtension)) {
+                  await deleteFromS3(originalS3KeyOfUpload);
+                } else if (originalS3KeyOfUpload !== `game-images/${baseIdentifier}.${originalExtension}`) {
+                    // If original was already webp/jpg but not under game-images/ path or different base, delete it too
+                    // This logic might need refinement based on how multer-s3 names files vs. your baseIdentifier
+                    await deleteFromS3(originalS3KeyOfUpload);
+                }
+              }
+            } else {
+              logger.warn(`Failed to process variants for baseIdentifier: ${baseIdentifier}`);
             }
           }
         }
-      } catch (parseError) {
+      } catch (error) {
         // Clean up uploaded files on error
         if (req.files && Array.isArray(req.files)) {
           logger.warn(`Invalid imagesOrder format, cleaning up ${req.files.length} S3 objects from initial upload.`);
@@ -399,10 +400,10 @@ router.get('/daily-challenges', verifyAdmin, async (req: Request, res: Response)
  * Edit a daily challenge
  * PUT /admin/daily-challenge/:id/edit
  */
-router.put('/daily-challenge/:id/edit', verifyAdmin, uploadWithErrorHandling, (async (req, res) => {
+router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles', 5), async (req, res) => {
   try {
     const { id } = req.params;
-    const { date, imagesOrder } = req.body;
+    const { date, imagesOrder: imagesOrderStr, isHardMode, source, creatorUserId, hints, facts, solutionText, articleSource } = req.body;
     
     logger.info(`Editing challenge ${id}`);
     const uploadedFiles = req.files as Express.Multer.File[] || [];
@@ -428,127 +429,95 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, uploadWithErrorHandling, (a
     }
 
     // Process image updates if provided
-    if (imagesOrder) {
-      try {
-        const orderData = typeof imagesOrder === 'string' ? JSON.parse(imagesOrder) : imagesOrder;
-        logger.info(`Processing ${orderData.length} images`);
-        const updatedImages: WikimediaImage[] = [];
-        
-        // Process each image
-        for (const imageInfo of orderData) {
-          logger.info(`Processing image of type: ${imageInfo.type}`);
-          
-          if (imageInfo.type === 'existing') {
-            // Handle existing image
-            const index = parseInt(imageInfo.originalIndex, 10);
-            if (!isNaN(index) && index >= 0 && index < challenge.images.length) {
-              // Get existing image data
-              const existingImage = {
-                filename: challenge.images[index].filename,
-                title: challenge.images[index].title,
-                url: challenge.images[index].url,
-                year: challenge.images[index].year,
-                source: challenge.images[index].source || 'Unknown',
-                description: challenge.images[index].description || '',
-                revealedDescription: challenge.images[index].revealedDescription || '',
-                s3BaseKey: challenge.images[index].s3BaseKey // Preserve existing s3BaseKey
-              };
-              
-              // Update fields if provided
-              if (imageInfo.year !== undefined) {
-                existingImage.year = parseInt(imageInfo.year, 10);
-              }
-              if (imageInfo.description !== undefined) {
-                existingImage.description = imageInfo.description;
-              }
-              if (imageInfo.revealedDescription !== undefined) {
-                existingImage.revealedDescription = imageInfo.revealedDescription;
-              }
-              
-              logger.info(`Adding existing image: ${existingImage.url}`);
-              updatedImages.push(existingImage);
+    if (imagesOrderStr) {
+      const imagesOrder = JSON.parse(imagesOrderStr);
+      const uploadedFiles = req.files as Express.MulterS3.File[] || [];
+      const newImageData: WikimediaImage[] = [];
+
+      for (const imageInfo of imagesOrder) {
+        if (imageInfo.type === 'existing') {
+          // Find the existing image data from challengeToUpdate.images
+          const existingImage = challenge.images.find(img => img.url === imageInfo.url || (img.s3BaseIdentifier && img.s3BaseIdentifier === imageInfo.s3BaseIdentifier));
+          if (existingImage) {
+            newImageData.push({
+              ...existingImage, // Spread existing data
+              // Update specific fields if they are part of imageInfo and meant to be editable here
+              year: parseInt(imageInfo.year) || existingImage.year,
+              description: imageInfo.description || existingImage.description,
+              revealedDescription: imageInfo.revealedDescription || existingImage.revealedDescription,
+              title: imageInfo.title || existingImage.title, // Preserve or update title
+              // url and s3BaseIdentifier are preserved from existingImage unless explicitly changed
+            });
+          } else {
+            logger.warn(`Could not find existing image for URL/ID: ${imageInfo.url || imageInfo.s3BaseIdentifier}`);
+          }
+        } else { // 'wikimedia' or 'upload' (new images)
+          let originalImageBuffer: Buffer | null = null;
+          let baseIdentifier: string = uuidv4();
+          let originalS3KeyOfUpload: string | undefined = undefined;
+
+          if (imageInfo.type === 'wikimedia') {
+            const wikimediaData = await fetchImageData(extractFilenameFromUrl(imageInfo.url) || '');
+            if (wikimediaData && wikimediaData.url) {
+              originalImageBuffer = await fetchImageFromUrl(wikimediaData.url);
             } else {
-              logger.warn(`Invalid existing image index: ${imageInfo.originalIndex}`);
-            }
-          } else if (imageInfo.type === 'wikimedia') {
-            // Handle Wikimedia image
-            const filename = imageInfo.url ? extractFilenameFromUrl(imageInfo.url) : '';
-            if (filename) {
-              const wikimediaData = await fetchImageData(filename);
-              if (wikimediaData && wikimediaData.url) {
-                wikimediaData.year = imageInfo.year || wikimediaData.year;
-                wikimediaData.description = imageInfo.description || wikimediaData.description || '';
-                wikimediaData.revealedDescription = imageInfo.revealedDescription || imageInfo.description || '';
-                
-                logger.info(`Adding Wikimedia image: ${wikimediaData.url}`);
-                updatedImages.push(wikimediaData);
-              } else {
-                logger.warn(`Failed to fetch Wikimedia data for: ${filename}`);
-              }
-            } else {
-              logger.warn(`Invalid Wikimedia URL: ${imageInfo.url}`);
+              logger.warn(`Could not fetch Wikimedia data for URL: ${imageInfo.url}`);
+              continue;
             }
           } else if (imageInfo.type === 'upload') {
-            // Handle new upload
-            const uploadIndex = parseInt(imageInfo.uploadIndex, 10);
-            logger.info(`Processing upload index: ${uploadIndex} (of ${uploadedFiles.length} files)`);
-            
-            if (!isNaN(uploadIndex) && uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
-              const file = uploadedFiles[uploadIndex] as Express.MulterS3.File; // Cast to MulterS3.File
-              const originalS3KeyToDelete = file.key;
+            const uploadIndex = imageInfo.uploadIndex;
+            if (uploadIndex >= 0 && uploadIndex < uploadedFiles.length) {
+              const file = uploadedFiles[uploadIndex] as Express.MulterS3.File;
+              originalS3KeyOfUpload = file.key;
 
               const s3ObjectResponse = await s3Client.send(new GetObjectCommand({ Bucket: s3BucketName, Key: file.key }));
-              let originalImageBuffer: Buffer | null = null;
               if (s3ObjectResponse.Body) {
                 originalImageBuffer = Buffer.from(await s3ObjectResponse.Body.transformToByteArray());
-              }
-
-              if (originalImageBuffer) {
-                const keyParts = file.key.split('.');
-                const extension = keyParts.pop();
-                const s3BaseKey = keyParts.join('.');
-
-                const variants = await processAndUploadVariants(originalImageBuffer, s3BaseKey);
-                if (variants.webpUrl) {
-                  updatedImages.push({
-                    filename: file.originalname,
-                    title: file.originalname,
-                    url: variants.webpUrl, // Store WebP URL
-                    year: imageInfo.year ? parseInt(imageInfo.year, 10) : new Date().getFullYear(),
-                    source: 'User Upload',
-                    description: imageInfo.description || '',
-                    revealedDescription: imageInfo.revealedDescription || imageInfo.description || '',
-                    s3BaseKey: s3BaseKey
-                  });
-                  logger.info(`Added new uploaded image during edit: ${variants.webpUrl}`);
-                  if (originalS3KeyToDelete && !['webp', 'jpg', 'jpeg'].includes(extension?.toLowerCase() || '')) {
-                     await deleteFromS3(originalS3KeyToDelete);
-                  }
-                } else {
-                    logger.warn(`Failed to process new uploaded image during edit: ${file.originalname}`);
-                }
+                const keyParts = file.key.split('/').pop()?.split('.') || [];
+                keyParts.pop();
+                baseIdentifier = keyParts.join('.') || uuidv4();
               } else {
-                logger.warn(`Failed to fetch newly uploaded file from S3 during edit: ${file.key}`);
+                logger.warn(`Failed to fetch uploaded file from S3: ${file.key}`);
+                continue;
               }
+            } else {
+              logger.warn(`Invalid uploadIndex ${uploadIndex} for uploaded files.`);
+              continue;
+            }
+          } else {
+            logger.warn(`Unknown image type: ${imageInfo.type}`);
+            continue;
+          }
+
+          if (originalImageBuffer) {
+            const processedInfo = await processAndStoreImageVariants(originalImageBuffer, baseIdentifier);
+            if (processedInfo.cloudFrontUrl) {
+              newImageData.push({
+                filename: imageInfo.type === 'upload' ? (uploadedFiles[imageInfo.uploadIndex] as Express.MulterS3.File).originalname : (extractFilenameFromUrl(imageInfo.url) || baseIdentifier),
+                title: imageInfo.type === 'upload' ? (uploadedFiles[imageInfo.uploadIndex] as Express.MulterS3.File).originalname : (extractFilenameFromUrl(imageInfo.url) || baseIdentifier),
+                url: processedInfo.cloudFrontUrl,
+                year: parseInt(imageInfo.year) || new Date().getFullYear(),
+                source: imageInfo.type === 'upload' ? 'User Upload' : 'Wikimedia Commons',
+                description: imageInfo.description || '',
+                revealedDescription: imageInfo.revealedDescription || imageInfo.description || '',
+                s3BaseIdentifier: processedInfo.s3BaseIdentifier
+              });
+
+              if (imageInfo.type === 'upload' && originalS3KeyOfUpload) {
+                 const originalExtension = originalS3KeyOfUpload.split('.').pop()?.toLowerCase();
+                if (originalExtension && !['webp', 'jpg', 'jpeg'].includes(originalExtension)) {
+                  await deleteFromS3(originalS3KeyOfUpload);
+                } else if (originalS3KeyOfUpload !== `game-images/${baseIdentifier}.${originalExtension}`) {
+                    await deleteFromS3(originalS3KeyOfUpload);
+                }
+              }
+            } else {
+              logger.warn(`Failed to process variants for new image with baseIdentifier: ${baseIdentifier}`);
             }
           }
         }
-        
-        // Replace images if we have new ones
-        if (updatedImages.length > 0) {
-          logger.info(`Replacing challenge images with ${updatedImages.length} updated images`);
-          challenge.images = updatedImages;
-        } else {
-          logger.warn('No valid images to update');
-          return res.status(400).json({ error: 'No valid images to update' });
-        }
-      } catch (error) {
-        logger.error('Error processing image updates:', error);
-        return res.status(400).json({ 
-          error: 'Invalid image order data',
-          details: error instanceof Error ? error.message : 'Unknown error'
-        });
       }
+      challenge.images = newImageData;
     }
 
     // Save the updated challenge
@@ -589,7 +558,7 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, uploadWithErrorHandling, (a
       details: error instanceof Error ? error.message : 'Unknown error'
     });
   }
-}) as RequestHandler);
+});
 
 /**
  * Delete a daily challenge
