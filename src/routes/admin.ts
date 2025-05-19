@@ -243,6 +243,7 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
 
           if (originalImageBuffer) {
             const processedInfo = await processAndStoreImageVariants(originalImageBuffer, baseIdentifier);
+            logger.info('[AdminTS] ProcessedInfo from imageProcessor:', processedInfo);
             if (processedInfo.cloudFrontUrl) {
               imageData.push({
                 filename: imageInfo.type === 'upload' ? (uploadedFiles[imageInfo.uploadIndex] as Express.MulterS3.File).originalname : (extractFilenameFromUrl(imageInfo.url) || baseIdentifier),
@@ -491,6 +492,7 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
 
           if (originalImageBuffer) {
             const processedInfo = await processAndStoreImageVariants(originalImageBuffer, baseIdentifier);
+            logger.info('[AdminTS] ProcessedInfo from imageProcessor:', processedInfo);
             if (processedInfo.cloudFrontUrl) {
               newImageData.push({
                 filename: imageInfo.type === 'upload' ? (uploadedFiles[imageInfo.uploadIndex] as Express.MulterS3.File).originalname : (extractFilenameFromUrl(imageInfo.url) || baseIdentifier),
