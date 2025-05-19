@@ -487,7 +487,7 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
           } else {
             logger.warn(`Unknown image type: ${imageInfo.type}`);
             continue;
-          }
+          } 
 
           if (originalImageBuffer) {
             const processedInfo = await processAndStoreImageVariants(originalImageBuffer, baseIdentifier);
