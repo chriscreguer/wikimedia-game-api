@@ -48,7 +48,9 @@ const DailyChallengeSchema: Schema = new Schema({
     year: { type: Number, required: true },
     source: { type: String, required: true },
     description: { type: String, default: '' },
-    revealedDescription: { type: String, default: '' }
+    revealedDescription: { type: String, default: '' },
+    s3BaseKey: { type: String, required: false },
+    s3BaseIdentifier: { type: String, required: false }
   }],
   stats: {
     averageScore: { type: Number, default: 0 },

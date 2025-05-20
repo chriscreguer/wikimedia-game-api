@@ -260,6 +260,13 @@ function extractYearWithConfidence(metadata: any, uploadYear: number): { year: n
 
 // Helper function to generate curve points
 function generateCurvePoints(distributions: { score: number; count: number }[], n: number): ProcessedDistributionPoint[] {
+    // *** ADDED LOGGING ***
+    logger.info(`[generateCurvePoints] Called with n=${n}, distributions.length=${distributions.length}`);
+    if (n < 5) { // Log distributions for small datasets
+        logger.info(`[generateCurvePoints] Input distributions (n=${n}):`, distributions);
+    }
+    // *** END LOGGING ***
+
     const step = 25;
     const bandwidth = 175;
     const minScoreDomain = 0;
@@ -272,6 +279,9 @@ function generateCurvePoints(distributions: { score: number; count: number }[], 
             allScores.push(dist.score);
         }
     });
+    // *** ADDED LOGGING ***
+    logger.info(`[generateCurvePoints] allScores (flattened for KDE, first 10):`, allScores.slice(0, 10));
+    // *** END LOGGING ***
 
     // Gaussian kernel function
     const gaussianKernel = (u: number): number => (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * u * u);
@@ -284,23 +294,41 @@ function generateCurvePoints(distributions: { score: number; count: number }[], 
             const u = (x - score) / bandwidth;
             density += gaussianKernel(u);
         }
-        density /= (n * bandwidth);
+        density /= (n * bandwidth); // n can be 0 here, will result in Infinity if not handled
+        if (n === 0) density = 0; // Handle n=0 case to prevent Infinity
         kdePointsRaw.push({ score: x, density });
     }
-
+    // *** ADDED LOGGING ***
+    // Log a few sample density values
+    if (kdePointsRaw.length > 5) {
+        logger.info(`[generateCurvePoints] Sample kdePointsRaw (first 5):`, kdePointsRaw.slice(0, 5));
+    } else {
+        logger.info(`[generateCurvePoints] kdePointsRaw:`, kdePointsRaw);
+    }
+    // *** END LOGGING ***
+    
     // Normalize densities
     let maxDensity = 0;
     kdePointsRaw.forEach(p => {
-        if (p.density > maxDensity) maxDensity = p.density;
+        if (p.density > maxDensity && isFinite(p.density)) maxDensity = p.density; // Ensure finite
     });
+    // *** ADDED LOGGING ***
+    logger.info(`[generateCurvePoints] maxDensity (before normalization): ${maxDensity}`);
+    // *** END LOGGING ***
+
     if (maxDensity > 0) {
         kdePointsRaw.forEach(p => {
-            p.density /= maxDensity;
+            p.density = isFinite(p.density) ? p.density / maxDensity : 0; // Ensure finite result
         });
     }
+    // *** ADDED LOGGING ***
+    if (kdePointsRaw.length > 5) {
+        logger.info(`[generateCurvePoints] Sample kdePointsRaw (normalized, first 5):`, kdePointsRaw.slice(0, 5));
+    }
+    // *** END LOGGING ***
 
     // Calculate percentiles and create final curve points
-    const finalCurvePoints: ProcessedDistributionPoint[] = [];
+    const finalCurvePointsCalculated: ProcessedDistributionPoint[] = [];
     let cumulativeCount = 0;
     let distIndex = 0;
     const sortedDistributions = [...distributions].sort((a, b) => a.score - b.score);
@@ -311,22 +339,46 @@ function generateCurvePoints(distributions: { score: number; count: number }[], 
             distIndex++;
         }
         const percentile = n > 0 ? Math.round((cumulativeCount / n) * 100) : 0;
-        finalCurvePoints.push({
+        finalCurvePointsCalculated.push({
             score: kdePoint.score,
-            density: kdePoint.density,
+            density: isFinite(kdePoint.density) ? kdePoint.density : 0, // Ensure finite
             percentile
         });
     }
+    // *** ADDED LOGGING ***
+    logger.info(`[generateCurvePoints] finalCurvePointsCalculated (before fallback, count): ${finalCurvePointsCalculated.length}`);
+    if (finalCurvePointsCalculated.length > 0 && finalCurvePointsCalculated.length < 10) {
+        logger.info(`[generateCurvePoints] finalCurvePointsCalculated (content):`, finalCurvePointsCalculated);
+    }
+    // *** END LOGGING ***
 
-    // Ensure we have points at domain boundaries
-    if (finalCurvePoints.length === 0) {
-        finalCurvePoints.push(
+    // Ensure we have points at domain boundaries (fallback)
+    if (finalCurvePointsCalculated.length === 0 && n > 0) { // Modified fallback to only apply if n > 0
+        logger.warn(`[generateCurvePoints] finalCurvePointsCalculated was empty with n=${n}. Applying fallback for single data point.`);
+        // If only one unique score, create a simple peak
+        if (distributions.length === 1 && distributions[0].count === n) {
+             const singleScore = distributions[0].score;
+             finalCurvePointsCalculated.push({ score: Math.max(0, singleScore - bandwidth * 2), density: 0, percentile: 0 });
+             finalCurvePointsCalculated.push({ score: singleScore, density: 1, percentile: 50 });
+             finalCurvePointsCalculated.push({ score: Math.min(maxScoreDomain, singleScore + bandwidth * 2), density: 0, percentile: 100 });
+        } else { // Generic fallback if still empty for other reasons with n > 0
+            finalCurvePointsCalculated.push(
+                { score: 0, density: 0, percentile: 0 },
+                { score: maxScoreDomain, density: 0, percentile: 100 }
+            );
+        }
+        logger.info(`[generateCurvePoints] Applied fallback, finalCurvePointsCalculated:`, finalCurvePointsCalculated);
+    } else if (finalCurvePointsCalculated.length === 0 && n === 0) {
+        logger.info(`[generateCurvePoints] finalCurvePointsCalculated was empty with n=0. Applying standard empty fallback.`);
+        finalCurvePointsCalculated.push(
             { score: 0, density: 0, percentile: 0 },
-            { score: 5000, density: 0, percentile: 100 }
+            { score: maxScoreDomain, density: 0, percentile: 100 }
         );
     }
-
-    return finalCurvePoints;
+    // *** ADDED LOGGING ***
+    logger.info(`[generateCurvePoints] Returning finalCurvePointsCalculated (count): ${finalCurvePointsCalculated.length}`);
+    // *** END LOGGING ***
+    return finalCurvePointsCalculated;
 }
 
 export function processDistributionData(
@@ -895,6 +947,10 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
                          newCompletions,
                          undefined // No specific user score needed for global recalc
                      );
+                     // *** ADDED LOGGING ***
+                     logger.info(`[Submit] newlyProcessedData (before saving to DB): ChallengeID: ${finalChallengeState._id}, Completions: ${newCompletions}`, newlyProcessedData);
+                     // *** END LOGGING ***
+
                      // Update DB with NEW processed distribution AND average score
                      await DailyChallenge.updateOne(
                          { _id: finalChallengeState._id },
