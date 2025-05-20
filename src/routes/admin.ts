@@ -440,24 +440,28 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
 
       for (const imageInfo of imagesOrder) {
         if (imageInfo.type === 'existing') {
-          // Find the existing image data from challengeToUpdate.images
-          logger.info(`[Admin Edit ${id}] Existing image find - imageInfo.url: ${imageInfo.url}, imageInfo.s3BaseIdentifier: ${imageInfo.s3BaseIdentifier}`);
-          const existingImage = challenge.images.find(img => img.url === imageInfo.url || (img.s3BaseIdentifier && img.s3BaseIdentifier === imageInfo.s3BaseIdentifier));
-          logger.info(`[Admin Edit ${id}] Existing image find - existingImage:`, JSON.stringify(existingImage));
-          if (existingImage) {
-            const imageToPush = {
-              ...existingImage, // Spread existing data
-              // Update specific fields if they are part of imageInfo and meant to be editable here
-              year: parseInt(imageInfo.year) || existingImage.year,
-              description: imageInfo.description || existingImage.description,
-              revealedDescription: imageInfo.revealedDescription || existingImage.revealedDescription,
-              title: imageInfo.title || existingImage.title, // Preserve or update title
-              // url and s3BaseIdentifier are preserved from existingImage unless explicitly changed
-            };
-            logger.info(`[Admin Edit ${id}] Existing image push - imageToPush:`, JSON.stringify(imageToPush));
-            newImageData.push(imageToPush);
+          const originalIndex = parseInt(imageInfo.originalIndex, 10); // Get originalIndex from client
+          if (!isNaN(originalIndex) && originalIndex >= 0 && originalIndex < challenge.images.length) {
+            const existingImage = challenge.images[originalIndex]; // Get image by its original index
+
+            // Log the existing image found and the imageInfo from client for comparison
+            logger.info(`[Admin Edit ${id}] Found existing image at index ${originalIndex}:`, JSON.stringify(existingImage));
+            logger.info(`[Admin Edit ${id}] Client-sent imageInfo for existing:`, JSON.stringify(imageInfo));
+
+            newImageData.push({
+              ...existingImage, // Spread the original image data from DB
+              filename: imageInfo.filename || existingImage.filename, // Keep original filename if not provided
+              title: imageInfo.title || existingImage.title,       // Keep original title if not provided
+              url: existingImage.url, // CRITICAL: Preserve existing URL
+              s3BaseIdentifier: existingImage.s3BaseIdentifier, // CRITICAL: Preserve existing s3BaseIdentifier
+              year: imageInfo.year !== undefined ? parseInt(imageInfo.year) : existingImage.year, // Update year if provided
+              source: existingImage.source, // Preserve original source
+              description: imageInfo.description !== undefined ? imageInfo.description : existingImage.description,
+              revealedDescription: imageInfo.revealedDescription !== undefined ? imageInfo.revealedDescription : existingImage.revealedDescription,
+            });
           } else {
-            logger.warn(`[Admin Edit ${id}] Could not find existing image for URL/ID: ${imageInfo.url || imageInfo.s3BaseIdentifier}`);
+            logger.warn(`[Admin Edit ${id}] Invalid originalIndex (${imageInfo.originalIndex}) or image not found at that index for an 'existing' image.`);
+            // Decide how to handle: skip this image, or error out? Skipping for now.
           }
         } else { // 'wikimedia' or 'upload' (new images)
           let originalImageBuffer: Buffer | null = null;
