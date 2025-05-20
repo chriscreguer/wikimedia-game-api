@@ -17,7 +17,6 @@ async function uploadVariantToS3(buffer: Buffer, s3Key: string, contentType: str
     Key: s3Key, // s3Key will include "game-images/" prefix
     Body: buffer,
     ContentType: contentType,
-    ACL: 'public-read',
   });
   await s3Client.send(command);
   logger.info(`[imageProcessor] Successfully uploaded to S3: ${s3Key}`);
