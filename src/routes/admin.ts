@@ -435,12 +435,17 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
       const uploadedFiles = req.files as Express.MulterS3.File[] || [];
       const newImageData: WikimediaImage[] = [];
 
+      logger.info(`[Admin Edit ${id}] Before loop - challenge.images:`, JSON.stringify(challenge.images));
+      logger.info(`[Admin Edit ${id}] Before loop - incoming imagesOrder:`, JSON.stringify(imagesOrder));
+
       for (const imageInfo of imagesOrder) {
         if (imageInfo.type === 'existing') {
           // Find the existing image data from challengeToUpdate.images
+          logger.info(`[Admin Edit ${id}] Existing image find - imageInfo.url: ${imageInfo.url}, imageInfo.s3BaseIdentifier: ${imageInfo.s3BaseIdentifier}`);
           const existingImage = challenge.images.find(img => img.url === imageInfo.url || (img.s3BaseIdentifier && img.s3BaseIdentifier === imageInfo.s3BaseIdentifier));
+          logger.info(`[Admin Edit ${id}] Existing image find - existingImage:`, JSON.stringify(existingImage));
           if (existingImage) {
-            newImageData.push({
+            const imageToPush = {
               ...existingImage, // Spread existing data
               // Update specific fields if they are part of imageInfo and meant to be editable here
               year: parseInt(imageInfo.year) || existingImage.year,
@@ -448,9 +453,11 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
               revealedDescription: imageInfo.revealedDescription || existingImage.revealedDescription,
               title: imageInfo.title || existingImage.title, // Preserve or update title
               // url and s3BaseIdentifier are preserved from existingImage unless explicitly changed
-            });
+            };
+            logger.info(`[Admin Edit ${id}] Existing image push - imageToPush:`, JSON.stringify(imageToPush));
+            newImageData.push(imageToPush);
           } else {
-            logger.warn(`Could not find existing image for URL/ID: ${imageInfo.url || imageInfo.s3BaseIdentifier}`);
+            logger.warn(`[Admin Edit ${id}] Could not find existing image for URL/ID: ${imageInfo.url || imageInfo.s3BaseIdentifier}`);
           }
         } else { // 'wikimedia' or 'upload' (new images)
           let originalImageBuffer: Buffer | null = null;
@@ -519,7 +526,9 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
           }
         }
       }
+      logger.info(`[Admin Edit ${id}] After loop - newImageData:`, JSON.stringify(newImageData));
       challenge.images = newImageData;
+      logger.info(`[Admin Edit ${id}] Before save - challenge.images:`, JSON.stringify(challenge.images));
     }
 
     // Save the updated challenge
