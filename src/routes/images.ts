@@ -1242,33 +1242,35 @@ router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): 
     try {
         const { date } = req.params;
         const startDate = new Date(date + 'T00:00:00.000Z');
-        const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+        const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours later
         if (isNaN(startDate.getTime())) {
             console.error(`[DATE ROUTE - CONSOLE] Invalid date format: ${date}`);
             res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
             return;
         }
 
-        console.log(`[DATE ROUTE - CONSOLE] Querying MongoDB for date: ${date}`);
-        console.time('findOne-date');
+        console.log(`[DATE ROUTE - CONSOLE] Querying MongoDB for date: ${date} (for challenge images only)`);
+        console.time('findOne-date-lean');
         const challenge = await DailyChallenge.findOne({
             date: { $gte: startDate, $lt: endDate },
             active: true
         })
-        .select('_id images date active stats.averageScore stats.completions stats.processedDistribution');
-        console.timeEnd('findOne-date');
+        // MODIFIED .select() TO RETURN ONLY ESSENTIALS FOR STARTING THE CHALLENGE:
+        .select('_id images date active'); // REMOVED stats fields
+        console.timeEnd('findOne-date-lean');
 
         if (!challenge) {
-            console.warn(`[DATE ROUTE - CONSOLE] Challenge not found for date: ${date}`);
+            console.warn(`[DATE ROUTE - CONSOLE] Lean challenge data not found for date: ${date}`);
             res.status(404).json({ error: 'No daily challenge available for this date' });
             return;
         }
 
-        console.log(`[DATE ROUTE - CONSOLE] Preparing to send response for date: ${date}`);
+        console.log(`[DATE ROUTE - CONSOLE] Preparing to send lean response for date: ${date}`);
+        // The response will now be smaller, without the 'stats' object.
         res.status(200).json(challenge);
 
     } catch (error) {
-        console.error(`[DATE ROUTE - CONSOLE] Error fetching challenge for date ${req.params.date}:`, error);
+        console.error(`[DATE ROUTE - CONSOLE] Error fetching lean challenge for date ${req.params.date}:`, error);
         res.status(500).json({ error: 'Server error fetching daily challenge' });
     }
 }) as RequestHandler);
