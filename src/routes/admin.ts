@@ -253,7 +253,8 @@ router.post('/daily-challenge/create', verifyAdmin, upload.array('uploadedFiles'
                 source: imageInfo.type === 'upload' ? 'User Upload' : 'Wikimedia Commons',
                 description: imageInfo.description || '',
                 revealedDescription: imageInfo.revealedDescription || imageInfo.description || '',
-                s3BaseIdentifier: processedInfo.s3BaseIdentifier // Store just the unique ID part
+                s3BaseIdentifier: processedInfo.s3BaseIdentifier, // Store just the unique ID part
+                tinyBlurredPlaceholderUrl: processedInfo.tinyBlurredPlaceholderUrl ?? undefined
               });
 
               // Delete the original file uploaded by multer-s3 if it's different from the variants and was an upload
@@ -454,6 +455,7 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
               title: imageInfo.title || existingImage.title,       // Keep original title if not provided
               url: existingImage.url, // CRITICAL: Preserve existing URL
               s3BaseIdentifier: existingImage.s3BaseIdentifier, // CRITICAL: Preserve existing s3BaseIdentifier
+              tinyBlurredPlaceholderUrl: (existingImage.tinyBlurredPlaceholderUrl as string | null | undefined) ?? undefined, // Preserve if it exists
               year: imageInfo.year !== undefined ? parseInt(imageInfo.year) : existingImage.year, // Update year if provided
               source: existingImage.source, // Preserve original source
               description: imageInfo.description !== undefined ? imageInfo.description : existingImage.description,
@@ -513,7 +515,8 @@ router.put('/daily-challenge/:id/edit', verifyAdmin, upload.array('uploadedFiles
                 source: imageInfo.type === 'upload' ? 'User Upload' : 'Wikimedia Commons',
                 description: imageInfo.description || '',
                 revealedDescription: imageInfo.revealedDescription || imageInfo.description || '',
-                s3BaseIdentifier: processedInfo.s3BaseIdentifier
+                s3BaseIdentifier: processedInfo.s3BaseIdentifier,
+                tinyBlurredPlaceholderUrl: processedInfo.tinyBlurredPlaceholderUrl ?? undefined
               });
 
               if (imageInfo.type === 'upload' && originalS3KeyOfUpload) {

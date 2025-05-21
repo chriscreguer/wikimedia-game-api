@@ -11,6 +11,7 @@ export interface WikimediaImage {
   revealedDescription?: string;
   s3BaseKey?: string;
   s3BaseIdentifier?: string;
+  tinyBlurredPlaceholderUrl?: string;
 }
 
 export interface GuessHistoryItem {

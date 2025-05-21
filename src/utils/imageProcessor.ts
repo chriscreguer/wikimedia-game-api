@@ -8,6 +8,7 @@ import fetch from 'node-fetch';
 export interface ProcessedImageInfo {
   cloudFrontUrl: string | null; // Full CloudFront URL for the .webp image
   s3BaseIdentifier: string;   // Just the unique part, e.g., UUID or filename stem
+  tinyBlurredPlaceholderUrl?: string | null; // New field for CloudFront URL of the tiny blurred image
   // We don't strictly need to return s3Keys if admin.ts doesn't use them directly after this call
 }
 
@@ -26,7 +27,7 @@ export async function processAndStoreImageVariants(
   imageBuffer: Buffer,
   baseIdentifier: string // e.g., "your-uuid" or "multer-key-without-extension-stem"
 ): Promise<ProcessedImageInfo> {
-  const results: ProcessedImageInfo = { cloudFrontUrl: null, s3BaseIdentifier: baseIdentifier };
+  const results: ProcessedImageInfo = { cloudFrontUrl: null, s3BaseIdentifier: baseIdentifier, tinyBlurredPlaceholderUrl: null };
   const s3ObjectPrefix = "game-images/"; // Matches CloudFront behavior path segment
   const cloudFrontDomain = process.env.CLOUDFRONT_IMAGES_DOMAIN;
 
@@ -52,6 +53,21 @@ export async function processAndStoreImageVariants(
     await uploadVariantToS3(jpegBuffer, jpegS3Key, 'image/jpeg');
   } catch (err) {
     logger.error(`[imageProcessor] Failed to process/upload JPEG for ${baseIdentifier}:`, err);
+  }
+
+  // Tiny, Pre-blurred Placeholder Variant (e.g., JPEG)
+  try {
+    const tinyBlurredBuffer = await sharp(imageBuffer)
+      .resize(50) // Resize to 50px wide, maintain aspect ratio
+      .blur(5)    // Apply a moderate blur; adjust sigma as needed
+      .jpeg({ quality: 30, progressive: true }) // Heavily compress, progressive JPEG
+      .toBuffer();
+    const tinyBlurredS3Key = `${s3ObjectPrefix}${baseIdentifier}_tinyblur.jpg`;
+    await uploadVariantToS3(tinyBlurredBuffer, tinyBlurredS3Key, 'image/jpeg');
+    results.tinyBlurredPlaceholderUrl = `https://${cloudFrontDomain}/${tinyBlurredS3Key}`;
+    logger.info(`[imageProcessor] Uploaded tiny blurred placeholder: ${results.tinyBlurredPlaceholderUrl}`);
+  } catch (err) {
+    logger.error(`[imageProcessor] Failed to process/upload tiny blurred placeholder for ${baseIdentifier}:`, err);
   }
 
   return results;
