@@ -387,9 +387,9 @@ export function processDistributionData(
     userScore?: number
 ): ProcessedDistribution {
     // *** ADDED LOGGING ***
-    console.log(`[processDistributionData] Input: n=${n}, userScore=${userScore}, distributions.length=${distributions.length}`);
+  
     if (n < 5) {
-        console.log(`[processDistributionData] Small dataset (n=${n}):`, distributions);
+      
     }
     // *** END LOGGING ***
 
@@ -432,7 +432,7 @@ export function processDistributionData(
     }
 
     // *** ADDED LOGGING ***
-    console.log(`[processDistributionData] Output: totalParticipants=${totalParticipants}, percentileRank=${percentileRank}, curvePoints.length=${curvePoints.length}`);
+ 
     // *** END LOGGING ***
 
     // Return only the data needed for global storage
@@ -556,7 +556,7 @@ async function getImagesFromCategory(category: string, decadeRange: { start: num
     
     return processedImages.filter(img => img !== null) as CachedImage[];
   } catch (error) {
-    console.error(`Error fetching from category ${category}:`, error);
+
     return [];
   }
 }
@@ -598,7 +598,7 @@ async function getRandomWikimediaImages(decadeRange: { start: number, end: numbe
     const data = await response.json();
 
     if (!data.query || !data.query.random) {
-      console.error('Unexpected API response:', data);
+
       return [];
     }
     const randomImages = data.query.random;
@@ -676,7 +676,7 @@ async function getRandomWikimediaImages(decadeRange: { start: number, end: numbe
 
     return processedImages.filter(img => img !== null) as CachedImage[];
   } catch (error) {
-    console.error('Error fetching images from Wikimedia:', error);
+
     return [];
   }
 }
@@ -728,9 +728,9 @@ async function getRandomImageWithYear(targetDecade?: { start: number, end: numbe
         return images[randomIndex];
       }
       
-      console.log(`Attempt ${attempt + 1}: No images found in category ${randomCategory} for decade ${decadeKey}`);
+   
     } catch (error) {
-      console.error(`Attempt ${attempt + 1} failed:`, error);
+
     }
   }
   
@@ -754,15 +754,15 @@ async function getRandomImageWithYear(targetDecade?: { start: number, end: numbe
         return images[randomIndex];
       }
       
-      console.log(`Random attempt ${attempt + 1}: No images found for decade ${decadeKey}`);
+     
     } catch (error) {
-      console.error(`Random attempt ${attempt + 1} failed:`, error);
+
     }
   }
   
   // If we still have no images, try with a different decade
   if (targetDecade) {
-    console.log(`Failed to find images for decade ${decadeKey}, trying any decade`);
+  
     return getRandomImageWithYear();
   }
   
@@ -811,7 +811,7 @@ router.get('/', async (req: Request, res: Response) => {
     const image = await getRandomImageWithYear(targetDecade);
     res.json(image);
   } catch (error) {
-    console.error('Error processing request:', error);
+   
     // Even in case of error, we should return something
     const fallbackImage = {
       title: "Historical photograph",
@@ -1193,24 +1193,24 @@ router.get('/daily-challenge/stats', async (req, res) => {
                res.status(400).json({ error: 'Invalid date format' });
                return;
            }
-           console.log(`[Stats Endpoint] Querying for specific date ${queryDateString} (UTC)`);
+
        } else {
            const now = new Date();
            queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
            startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-           console.log(`[Stats Endpoint] Querying for current CT date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
+      
        }
       // --- (End Date Logic) ---
 
-      console.time('findOne-stats-and-images');
+
       const challenge = await DailyChallenge.findOne({
           date: { $gte: startDate, $lt: endDate },
           active: true
       })
       // --- 1. Select 'images' field (or 'imageUrls' if that's your field name) ---
       .select('_id date active stats.averageScore stats.completions stats.processedDistribution images'); // <-- ADD 'images' HERE
-      console.timeEnd('findOne-stats-and-images');
+    
 
       if (!challenge) {
           res.status(404).json({ error: 'No challenge found for this date' });
@@ -1230,7 +1230,7 @@ router.get('/daily-challenge/stats', async (req, res) => {
       res.json(responseData); // Send the restructured data
 
   } catch (err) {
-      console.error('[Stats Endpoint] Error:', err);
+  
       res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -1244,33 +1244,32 @@ router.get('/daily-challenge/date/:date', (async (req: Request, res: Response): 
         const startDate = new Date(date + 'T00:00:00.000Z');
         const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours later
         if (isNaN(startDate.getTime())) {
-            console.error(`[DATE ROUTE - CONSOLE] Invalid date format: ${date}`);
+           
             res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
             return;
         }
 
-        console.log(`[DATE ROUTE - CONSOLE] Querying MongoDB for date: ${date} (for challenge images only)`);
-        console.time('findOne-date-lean');
+     
         const challenge = await DailyChallenge.findOne({
             date: { $gte: startDate, $lt: endDate },
             active: true
         })
         // MODIFIED .select() TO RETURN ONLY ESSENTIALS FOR STARTING THE CHALLENGE:
         .select('_id images date active'); // REMOVED stats fields
-        console.timeEnd('findOne-date-lean');
+      
 
         if (!challenge) {
-            console.warn(`[DATE ROUTE - CONSOLE] Lean challenge data not found for date: ${date}`);
+           
             res.status(404).json({ error: 'No daily challenge available for this date' });
             return;
         }
 
-        console.log(`[DATE ROUTE - CONSOLE] Preparing to send lean response for date: ${date}`);
+       
         // The response will now be smaller, without the 'stats' object.
         res.status(200).json(challenge);
 
     } catch (error) {
-        console.error(`[DATE ROUTE - CONSOLE] Error fetching lean challenge for date ${req.params.date}:`, error);
+       
         res.status(500).json({ error: 'Server error fetching daily challenge' });
     }
 }) as RequestHandler);
@@ -1371,7 +1370,7 @@ router.get('/daily-challenge/dates', async (req: Request, res: Response) => {
     );
     res.status(200).json({ dates });
   } catch (error) {
-    console.error('Error fetching challenge dates:', error);
+  
     res.status(500).json({ error: 'Failed to fetch challenge dates' });
   }
 });
@@ -1476,13 +1475,13 @@ router.get('/daily-challenge/today', async (req, res) => {
     const now = new Date(); // Current time UTC (usually from server)
     const todayDateStringCT = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd'); // Gets '2025-04-15' based on CT
 
-    console.log(`[Today Endpoint] Current CT Date: ${todayDateStringCT}`);
+  
 
     // 2. Construct UTC query boundaries based on the CT date string
     const startDate = toZonedTime(`${todayDateStringCT}T00:00:00`, TARGET_TIMEZONE); // Midnight CT start converted to UTC
     const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours later UTC
 
-    console.log(`[Today Endpoint] Querying for challenge >= ${startDate.toISOString()} and < ${endDate.toISOString()} (based on CT date)`);
+   
 
     // 3. Query using UTC boundaries
     const challenge = await DailyChallenge.findOne({
@@ -1494,14 +1493,14 @@ router.get('/daily-challenge/today', async (req, res) => {
     });
 
     if (!challenge) {
-      console.log(`[Today Endpoint] No challenge found for CT date ${todayDateStringCT}`);
+    
       res.status(404).json({ error: 'No daily challenge available for today' });
       return;
     }
     res.json(challenge);
 
   } catch (err) {
-    console.error('[Today Endpoint] Error:', err);
+  
     res.status(500).json({ error: 'Internal server error' });
   }
 });

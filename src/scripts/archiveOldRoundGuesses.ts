@@ -10,8 +10,7 @@ import s3Client from '../utils/awsConfig';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import logger from '../utils/logger';
 
-// This console.log is for standalone execution, fine to keep or remove
-// console.log("--- ARCHIVE SCRIPT STARTED (Handles Initial & Delta Archival) ---");
+
 
 dotenv.config(); // For standalone execution
 

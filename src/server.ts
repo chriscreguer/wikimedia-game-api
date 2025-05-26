@@ -9,42 +9,18 @@ import logger from './utils/logger';
 import fs from 'fs';
 import adminRoutes from './routes/admin';
 
-// Diagnostic logging
-console.log("🔖 SERVER.TS TOP LEVEL REACHED");
-console.log("🔖 GIT COMMIT SHA:", process.env.RAILWAY_GIT_COMMIT_SHA || "Not Set in Environment");
-
-// Temporarily comment out directory listing
-/*
-try {
-    const distPath = path.join(process.cwd(), 'dist');
-    console.log(`📂 Checking dist contents at startup in: ${distPath}`);
-    const contents = fs.readdirSync(distPath);
-    console.log("📂 dist contents:", contents);
-    // Optionally list deeper structure if needed, e.g., routes
-    const routesPath = path.join(distPath, 'routes');
-    if (fs.existsSync(routesPath)) {
-        console.log("📂 dist/routes contents:", fs.readdirSync(routesPath));
-    } else {
-         console.log("📂 dist/routes directory not found.");
-    }
-} catch (err) {
-    console.error("🚨 Error listing dist contents at startup:", err);
-}
-*/
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Define uploads path consistently using absolute path with process.cwd()
 const uploadsPath = path.resolve(process.cwd(), 'uploads');
-console.log('ABSOLUTE Uploads directory path:', uploadsPath);
-console.log('Current working directory:', process.cwd());
-console.log('__dirname:', __dirname);
+
 
 // Make sure the directory exists
 if (!fs.existsSync(uploadsPath)) {
   fs.mkdirSync(uploadsPath, { recursive: true });
-  console.log('Created uploads directory at:', uploadsPath);
+
 }
 
 app.use(cors({
@@ -94,7 +70,7 @@ app.use('/api/images/daily-challenge', (req, res, next) => {
 const BUILD_TIMESTAMP = "2025-04-17_1116_CDT"; // <-- UPDATE THIS VALUE before deploying!
 
 app.get('/api/build-info', (req, res) => {
-    console.log(`[CONSOLE] Request received for /api/build-info`); // Add console log here too
+   
     res.status(200).json({
         message: "Wikimedia Game API Build Info",
         buildTimestamp: BUILD_TIMESTAMP, // Return the hardcoded timestamp

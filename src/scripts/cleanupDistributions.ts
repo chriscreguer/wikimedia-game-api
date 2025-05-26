@@ -58,7 +58,7 @@ function processDistributionData(
 async function cleanupAndRecalculateScores() {
   const connectionString = process.env.MONGODB_URI;
   if (!connectionString) {
-    console.error("Error: MONGODB_URI not found in environment variables.");
+  
     process.exit(1);
   }
 
@@ -69,57 +69,57 @@ async function cleanupAndRecalculateScores() {
     console.log("MongoDB connected successfully.");
 
     // --- Step 1: Remove high scores ---
-    console.log(`Step 1: Removing distribution entries with score > ${SCORE_THRESHOLD} from challenge ID: ${CHALLENGE_ID_TO_CLEAN}`);
+   
     const pullResult = await DailyChallenge.updateOne(
       { _id: CHALLENGE_ID_TO_CLEAN },
       { $pull: { 'stats.distributions': { score: { $gt: SCORE_THRESHOLD } } } }
     );
-    console.log("Pull Result:", JSON.stringify(pullResult, null, 2));
+  
 
     if (pullResult.matchedCount === 0) {
-      console.log(`Warning: No challenge found with ID: ${CHALLENGE_ID_TO_CLEAN}. No recalculation needed.`);
+    
       return; // Exit if document wasn't found
     }
 
     if (pullResult.modifiedCount === 0) {
-       console.log(`No entries with score > ${SCORE_THRESHOLD} found to remove. Recalculation might still be needed if stats were manually changed previously.`);
+    
        // We might still want to recalculate even if nothing was pulled, to ensure consistency
     } else {
-         console.log(`Successfully removed ${pullResult.modifiedCount} entries with score > ${SCORE_THRESHOLD}.`);
+      
     }
 
     // --- Step 2: Fetch the updated document ---
-    console.log(`Step 2: Fetching updated challenge data for ID: ${CHALLENGE_ID_TO_CLEAN}`);
+  
     const updatedChallenge = await DailyChallenge.findById(CHALLENGE_ID_TO_CLEAN);
 
     if (!updatedChallenge || !updatedChallenge.stats) {
-      console.error(`Error: Could not find challenge with ID ${CHALLENGE_ID_TO_CLEAN} after update, or it has no stats.`);
+  
       return; // Exit if document couldn't be fetched
     }
 
     const currentDistributions = updatedChallenge.stats.distributions || [];
-    console.log(`Found ${currentDistributions.length} remaining distribution entries.`);
+   
 
     // --- Step 3: Recalculate Stats ---
-    console.log("Step 3: Recalculating stats...");
+  
 
     // Recalculate Completions
     const newCompletions = currentDistributions.reduce((sum, dist) => sum + (dist.count || 0), 0);
-    console.log(`  - New Completions: ${newCompletions}`);
+    
 
     // Recalculate Average Score
     const totalScoreSum = currentDistributions.reduce((sum, dist) => sum + (dist.score * (dist.count || 0)), 0);
     const newAverageScore = newCompletions > 0 ? (totalScoreSum / newCompletions) : 0;
-    console.log(`  - New Average Score: ${newAverageScore}`);
+  
 
     // Recalculate Processed Distribution
     // Pass undefined for userScore as it's not relevant here
     const newProcessedDistribution = processDistributionData(currentDistributions, undefined);
-    console.log(`  - New Processed Distribution calculated (curvePoints count: ${newProcessedDistribution.curvePoints.length})`);
+ 
 
 
     // --- Step 4: Update the document with recalculated stats ---
-    console.log("Step 4: Updating challenge with recalculated stats...");
+  
     const updateStatsResult = await DailyChallenge.updateOne(
       { _id: CHALLENGE_ID_TO_CLEAN },
       {
@@ -131,20 +131,20 @@ async function cleanupAndRecalculateScores() {
       }
     );
 
-    console.log("Update Stats Result:", JSON.stringify(updateStatsResult, null, 2));
+ 
     if (updateStatsResult.modifiedCount > 0) {
-      console.log("Success: Challenge stats recalculated and updated successfully.");
+    
     } else {
-      console.log("Challenge stats were already consistent or update failed.");
+   
     }
 
   } catch (error) {
-    console.error("Error during score cleanup and recalculation:", error);
+   
   } finally {
     if (connection) {
-        console.log("Disconnecting from MongoDB...");
+       
         await mongoose.disconnect();
-        console.log("Disconnected.");
+       
     }
   }
 }

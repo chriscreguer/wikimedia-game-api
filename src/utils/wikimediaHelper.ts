@@ -127,7 +127,7 @@ export function extractFilenameFromUrl(url: string): string | null {
       // Decode URI component to handle special characters
       return decodeURIComponent(encodedFilename);
     } catch (error) {
-      console.error('Invalid URL:', error);
+    
       return null;
     }
   }

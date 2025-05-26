@@ -12,11 +12,11 @@ async function migrateImageUrls() {
   try {
     // Connect to MongoDB
     await mongoose.connect(process.env.MONGODB_URI as string);
-    console.log('Connected to MongoDB');
+
 
     // Find all challenges
     const challenges = await DailyChallenge.find();
-    console.log(`Found ${challenges.length} challenges to update`);
+
 
     let totalUpdated = 0;
 
@@ -40,16 +40,16 @@ async function migrateImageUrls() {
       if (wasUpdated) {
         await challenge.save();
         totalUpdated++;
-        console.log(`Updated challenge ID: ${challenge._id}`);
+  
       }
     }
 
-    console.log(`Migration complete. Updated ${totalUpdated} challenges.`);
+
   } catch (error) {
-    console.error('Migration failed:', error);
+
   } finally {
     await mongoose.disconnect();
-    console.log('Disconnected from MongoDB');
+
   }
 }
 

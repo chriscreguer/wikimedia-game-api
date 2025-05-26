@@ -22,13 +22,13 @@ const AFFECTED_CHALLENGE_NOMINAL_DATES = [
 
 async function restoreSpecificStatsAndFinalize() {
     if (AFFECTED_CHALLENGE_NOMINAL_DATES.length === 0) {
-        console.log("No affected challenge dates specified. Exiting.");
+
         return;
     }
 
     // A single connection is fine; we'll use different models for different collections.
     await mongoose.connect(LIVE_DB_URI);
-    console.log("Connected to MongoDB.");
+
 
     // Model for the live 'dailychallenges' collection (already imported as DailyChallengeLive)
     // Model for the backup 'dailychallenges_FROM_BACKUP' collection
@@ -37,7 +37,7 @@ async function restoreSpecificStatsAndFinalize() {
     for (const nominalDateStr of AFFECTED_CHALLENGE_NOMINAL_DATES) {
         // Dates in MongoDB are stored as UTC. Assuming these nominal dates correspond to midnight UTC.
         const targetDateUTC = new Date(`${nominalDateStr}T00:00:00.000Z`);
-        console.log(`Processing challenge for nominal date: ${nominalDateStr} (UTC: ${targetDateUTC.toISOString()})`);
+      
 
         try {
             const backupDoc = await DailyChallengeBackupModel.findOne({ date: targetDateUTC });
@@ -56,22 +56,22 @@ async function restoreSpecificStatsAndFinalize() {
                 );
 
                 if (updateResult.modifiedCount > 0) {
-                    console.log(`Successfully restored stats.roundGuessDistributions and set finalized flag for ${nominalDateStr}.`);
+                  
                 } else if (updateResult.matchedCount > 0) {
-                    console.log(`Challenge for ${nominalDateStr} found, but no update made (data might have been identical or already set).`);
+                 
                 } else {
-                    console.warn(`Could not find live DailyChallenge for ${nominalDateStr} to update.`);
+                 
                 }
             } else {
-                console.warn(`Could not find backup data or its roundGuessDistributions for ${nominalDateStr} in dailychallenges_FROM_BACKUP.`);
+               
             }
         } catch (error) {
-            console.error(`Error processing date ${nominalDateStr}:`, error);
+
         }
     }
 
     await mongoose.disconnect();
-    console.log("Finished processing. MongoDB connection closed.");
+
 }
 
 // Before running this script:
@@ -80,6 +80,6 @@ async function restoreSpecificStatsAndFinalize() {
 // 3. Ensure your `.env` file has the correct `MONGODB_URI`.
 
 restoreSpecificStatsAndFinalize().catch(err => {
-    console.error("Unhandled error during script execution:", err);
+
     mongoose.disconnect(); // Ensure disconnect on unhandled error
 });

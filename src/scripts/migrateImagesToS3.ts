@@ -21,10 +21,10 @@ async function uploadFileToS3(filePath: string, fileName: string) {
     };
 
     await s3Client.send(new PutObjectCommand(params));
-    console.log(`Successfully uploaded ${fileName} to S3`);
+
     return true;
   } catch (error) {
-    console.error(`Error uploading ${fileName}:`, error);
+
     return false;
   }
 }
@@ -51,17 +51,17 @@ function getContentType(fileName: string): string {
 
 async function migrateImagesToS3() {
   try {
-    console.log(`Reading files from ${uploadsDir}`);
+
     
     // Check if directory exists
     if (!fs.existsSync(uploadsDir)) {
-      console.error(`Uploads directory not found: ${uploadsDir}`);
+
       return;
     }
 
     // Get all files in the uploads directory
     const files = fs.readdirSync(uploadsDir);
-    console.log(`Found ${files.length} files to migrate`);
+
 
     let successCount = 0;
     let failCount = 0;
@@ -81,9 +81,9 @@ async function migrateImagesToS3() {
       }
     }
 
-    console.log(`Migration complete: ${successCount} successful, ${failCount} failed`);
+   
   } catch (error) {
-    console.error('Migration script failed:', error);
+
   }
 }
 

@@ -27,7 +27,7 @@ class Logger {
     const logEntry = `[${timestamp}] [${level}] ${message} ${meta ? JSON.stringify(meta) : ''}`;
     
     // Log to console
-    console.log(logEntry);
+  
     
     // Append to log file
     fs.appendFileSync(logFile, logEntry + '\n');
