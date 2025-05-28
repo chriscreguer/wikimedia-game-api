@@ -836,7 +836,9 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
     const numericScore = Number(score); // Convert score to number
     if (score === undefined || score === null || isNaN(numericScore) || numericScore < 0 || numericScore > 5000) {
         logger.warn(`[Submit Invalid Score] IP: ${sourceIp}, UA: "${userAgent}", Received invalid score: "${score}", Date: ${date}`);
-        res.status(400).json({ error: `Invalid score value submitted. Score must be a number between 0 and 5000.` });
+        if (!res.headersSent) {
+            res.status(400).json({ error: `Invalid score value submitted. Score must be a number between 0 and 5000.` });
+        }
         return;
     }
 
@@ -848,24 +850,22 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
 
         // --- Determine Challenge Date and Boundaries ---
         if (date) {
-            // Use the date provided in the request body (expected format YYYY-MM-DD)
             queryDateString = date as string;
-            // Create UTC date range from the provided string
             startDate = new Date(queryDateString + 'T00:00:00.000Z');
             endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
             if (isNaN(startDate.getTime())) {
                 logger.warn(`[Submit Invalid Date] IP: ${sourceIp}, Invalid date format: ${date}`);
-                res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+                if (!res.headersSent) {
+                    res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
+                }
                 return;
             }
             logger.info(`[Submit] Processing for specific date ${queryDateString} (UTC)`);
         } else {
-            // Default to today's date based on TARGET_TIMEZONE (now ET)
             const now = new Date();
             queryDateString = formatInTimeZone(now, TARGET_TIMEZONE, 'yyyy-MM-dd');
-            // Create UTC date range based on the timezone-specific date
-            startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE); // Midnight in TARGET_TIMEZONE converted to UTC
-            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours later UTC
+            startDate = toZonedTime(`${queryDateString}T00:00:00`, TARGET_TIMEZONE);
+            endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
             logger.info(`[Submit] Processing for current ${TARGET_TIMEZONE} date ${queryDateString} (UTC range: ${startDate.toISOString()} to ${endDate.toISOString()})`);
         }
 
@@ -876,186 +876,24 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
 
         // --- Atomically Increment Completions (ALWAYS) ---
         const updatedChallengeIncremented = await DailyChallenge.findOneAndUpdate(
-            {
-                date: { $gte: startDate, $lt: endDate },
-                 active: true // Keep this unless you want to track completions for inactive challenges
-            },
+            { date: { $gte: startDate, $lt: endDate }, active: true },
             { $inc: { 'stats.completions': 1 } },
-            { new: true, upsert: false } // Return the updated document, DO NOT create if not found
+            { new: true, upsert: false }
         );
 
         if (!updatedChallengeIncremented) {
             logger.warn(`[Submit Not Found] Challenge not found or inactive for date: ${queryDateString}, IP: ${sourceIp}`);
-            res.status(404).json({ error: 'No active challenge found for this date' });
+            if (!res.headersSent) {
+                res.status(404).json({ error: 'No active challenge found for this date' });
+            }
             return;
         }
-
-        // Use this variable to hold the final state to send back
-        // Initialize with the state after completion increment
-        let finalChallengeState = updatedChallengeIncremented;
-
-        // --- Perform distribution/average updates ONLY if it's NOT a past challenge ---
-        if (!isPastChallenge) {
-            logger.info(`[Submit Current Date] Processing full stats update for challenge ID: ${updatedChallengeIncremented._id} on date ${queryDateString}.`);
-
-            // --- Update Distributions (Atomic) ---
-            // Need to use the state *before* potential refetch for finding the index
-            const existingScoreIndex = finalChallengeState.stats.distributions.findIndex(d => d.score === numericScore);
-            if (existingScoreIndex > -1) {
-                 logger.info(`[Submit DB Update] Incrementing count for existing score ${numericScore} on challenge ${finalChallengeState._id}`);
-                await DailyChallenge.updateOne(
-                    { _id: finalChallengeState._id, 'stats.distributions.score': numericScore },
-                    { $inc: { 'stats.distributions.$.count': 1 } }
-                );
-            } else {
-                 logger.info(`[Submit DB Update] Adding new score ${numericScore} to distributions for challenge ${finalChallengeState._id}`);
-                await DailyChallenge.updateOne(
-                    { _id: finalChallengeState._id },
-                    { $push: { 'stats.distributions': { score: numericScore, count: 1 } } }
-                );
-            }
-
-            // --- Refetch state AFTER distribution updates to ensure calculations use latest data ---
-            const refetchedChallenge = await DailyChallenge.findById(finalChallengeState._id);
-            if (!refetchedChallenge) {
-                logger.error(`[Submit Error] Failed to fetch updated challenge after distribution updates for ID: ${finalChallengeState._id}`);
-                res.status(500).json({ error: 'Internal server error during score update refetch' });
-                return;
-            }
-            finalChallengeState = refetchedChallenge; // Use the latest state from now on
-
-            // --- Recalculate Average Score ---
-            const newCompletions = finalChallengeState.stats.completions; // Use completions from refetched state
-            const currentDistributions = finalChallengeState.stats.distributions; // Use distributions from refetched state
-             logger.info(`[Submit Calc] Recalculating average score. Completions: ${newCompletions}, Distributions Count: ${currentDistributions.length}`);
-            const totalScoreSum = currentDistributions.reduce((sum, dist) => sum + (dist.score * (dist.count || 0)), 0);
-            const newAverageScore = newCompletions > 0 ? totalScoreSum / newCompletions : 0;
-
-            // --- Potentially Recalculate Processed Distribution ---
-            let processedDataForUpdate: ProcessedDistribution | undefined = finalChallengeState.stats.processedDistribution; // Existing processed data
-            let shouldRecalculate = false;
-             if (newCompletions <= 1000 || newCompletions % 100 === 0) { // Recalculate frequently early on, then every 100
-                 shouldRecalculate = true;
-                 logger.info(`[Submit Calc] Completion threshold (${newCompletions}) met. Recalculating processed distribution.`);
-             }
-
-            if (shouldRecalculate) {
-                 try {
-                     logger.info(`[Submit Calc] Calling processDistributionData for challenge ${finalChallengeState._id}.`);
-                     const newlyProcessedData = processDistributionData(
-                         currentDistributions,
-                         newCompletions,
-                         undefined // No specific user score needed for global recalc
-                     );
-                     // *** ADDED LOGGING ***
-                     logger.info(`[Submit] newlyProcessedData (before saving to DB): ChallengeID: ${finalChallengeState._id}, Completions: ${newCompletions}`, newlyProcessedData);
-                     // *** END LOGGING ***
-
-                     // Update DB with NEW processed distribution AND average score
-                     await DailyChallenge.updateOne(
-                         { _id: finalChallengeState._id },
-                         { $set: { 'stats.processedDistribution': newlyProcessedData, 'stats.averageScore': newAverageScore } }
-                     );
-                     processedDataForUpdate = newlyProcessedData; // Use the new data for the response
-                     // Manually update the state variable to reflect the change for the response logic below
-                     finalChallengeState.stats.processedDistribution = newlyProcessedData;
-                     finalChallengeState.stats.averageScore = newAverageScore;
-                     logger.info(`[Submit DB Update] Saved updated processedDistribution and average score to DB for challenge ${finalChallengeState._id}.`);
-                 } catch (processingError) {
-                      logger.error(`[Submit Calc Error] Error during processDistributionData or saving it for challenge ${finalChallengeState._id}:`, processingError);
-                      // If processing fails, just save the average score
-                      await DailyChallenge.updateOne(
-                         { _id: finalChallengeState._id },
-                         { $set: { 'stats.averageScore': newAverageScore } }
-                      );
-                       finalChallengeState.stats.averageScore = newAverageScore; // Update state variable
-                      logger.warn(`[Submit DB Update] Saved updated average score (${newAverageScore}) after distribution processing error for challenge ${finalChallengeState._id}.`);
-                 }
-             } else {
-                 // If not recalculating distribution, still save the potentially updated average score
-                 await DailyChallenge.updateOne(
-                     { _id: finalChallengeState._id },
-                     { $set: { 'stats.averageScore': newAverageScore } }
-                 );
-                  finalChallengeState.stats.averageScore = newAverageScore; // Update state variable
-                 logger.info(`[Submit DB Update] Saved updated average score (${newAverageScore}) for challenge ${finalChallengeState._id}. No distribution recalculation needed.`);
-             }
-
-        } else {
-            // This block executes for PAST challenges
-            logger.info(`[Submit Past Date] Only incremented completions for challenge ID: ${updatedChallengeIncremented._id}. Preparing to return existing stats.`);
-            // finalChallengeState already holds the correct data (only completions incremented)
-        }
-
-        // --- START: Emergency Archival Failsafe ---
-        const EMERGENCY_COMPLETION_THRESHOLD = 250000;
         
-        // Check if finalChallengeState is valid and has the necessary properties
-        if (finalChallengeState && typeof finalChallengeState.stats === 'object' && finalChallengeState.stats !== null && finalChallengeState._id) {
-            const currentCompletions = finalChallengeState.stats.completions;
-            const isFinalized = finalChallengeState.roundStatsFinalized;
-            const challengeIdStr = String(finalChallengeState._id); // Use String() for robust conversion
-
-            if (
-                typeof currentCompletions === 'number' && 
-                currentCompletions >= EMERGENCY_COMPLETION_THRESHOLD &&
-                !isFinalized 
-            ) {
-                logger.warn(`[Submit Failsafe] EMERGENCY: Challenge ${queryDateString} (ID: ${challengeIdStr}) reached ${currentCompletions} completions. Triggering immediate archival and finalization.`);
-                
-                archiveSpecificDayEmergency(queryDateString, challengeIdStr)
-                    .then(() => {
-                        logger.info(`[Submit Failsafe] Emergency archival for ${queryDateString} likely completed or is in progress.`);
-                    })
-                    .catch(err => {
-                        logger.error(`[Submit Failsafe] Asynchronous EMERGENCY archival for ${queryDateString} FAILED. Check other logs from EmergencyArchiver. Error:`, err);
-                    });
-            }
-        } else {
-            logger.error(`[Submit Failsafe] Critical error: finalChallengeState or its properties are not valid before emergency archival check. ID: ${finalChallengeState?._id}`);
-        }
-        // --- END: Emergency Archival Failsafe ---
-
-        // --- START: Conditional Round Guess Processing ---
-        if (finalChallengeState && typeof finalChallengeState.stats === 'object' && finalChallengeState.stats !== null) {
-            const completions = finalChallengeState.stats.completions;
-            const isRoundStatsFinalized = finalChallengeState.roundStatsFinalized;
-
-            let shouldRecalculateRoundGuesses = false;
-
-            if (isRoundStatsFinalized) {
-                logger.info(`[Submit Calc] Round guess distributions for date ${queryDateString} are ALREADY FINALIZED. Skipping recalculation.`);
-                shouldRecalculateRoundGuesses = false;
-            } else {
-                logger.info(`[Submit Calc] Round guess distributions for date ${queryDateString} are NOT YET FINALIZED. Applying recalculation logic.`);
-                if (completions <= 100) {
-                    shouldRecalculateRoundGuesses = true;
-                } else if (completions <= 500 && completions % 25 === 0) {
-                    shouldRecalculateRoundGuesses = true;
-                } else if (completions > 500 && completions % 100 === 0) {
-                    shouldRecalculateRoundGuesses = true;
-                }
-            }
-
-            if (shouldRecalculateRoundGuesses) {
-                logger.info(`[Submit Calc] Regular conditions met to recalculate round guesses for date ${queryDateString}. Triggering processing.`);
-                processAndStoreRoundGuessDistributions(queryDateString).catch(err => {
-                    logger.error(`[Submit Background Processing Error] Regular round guess distribution processing failed for date ${queryDateString}:`, err);
-                });
-            }
-        } else {
-            logger.error(`[Submit Logic Error] Critical error: finalChallengeState or stats not valid before conditional round guess processing. ID: ${finalChallengeState?._id}`);
-        }
-        // --- END: Conditional Round Guess Processing ---
-
-        // --- Start: New block for saving round guesses (Phase 1) ---
+        // --- Save Round Guesses (Phase 1 - Synchronous Part) ---
         if (guesses && Array.isArray(guesses) && guesses.length > 0) {
-            logger.info(`[Submit] Phase 1: Processing ${guesses.length} received round guesses...`);
+            logger.info(`[Submit Sync] Processing ${guesses.length} received round guesses for immediate save...`);
             try {
-                // ENSURE 'startDate' below is the correct variable from this route's existing logic 
-                // that holds the UTC start date of the challenge being submitted.
-                const correctChallengeDateForGuesses = startDate; 
-
+                const correctChallengeDateForGuesses = startDate;
                 const roundGuessesToSave = guesses
                     .filter(guess => typeof guess.roundIndex === 'number' && typeof guess.guessedYear === 'number')
                     .map(guess => ({
@@ -1066,40 +904,197 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
 
                 if (roundGuessesToSave.length > 0) {
                     await RoundGuess.insertMany(roundGuessesToSave, { ordered: false });
-                    logger.info(`[Submit Guesses OK] Phase 1: Saved ${roundGuessesToSave.length} round guesses for challenge date ${correctChallengeDateForGuesses.toISOString().split('T')[0]}.`);
+                    logger.info(`[Submit Sync Guesses OK] Saved ${roundGuessesToSave.length} round guesses for challenge date ${correctChallengeDateForGuesses.toISOString().split('T')[0]}.`);
                 }
             } catch (guessSaveError: any) {
-                logger.error(`[Submit Guesses Error] Phase 1: Failed to save round guesses for challenge date ${startDate.toISOString().split('T')[0]}: ${guessSaveError.message}`, guessSaveError);
-                // This error should NOT prevent the main success response from being sent.
+                logger.error(`[Submit Sync Guesses Error] Failed to save round guesses for challenge date ${startDate.toISOString().split('T')[0]}: ${guessSaveError.message}`, guessSaveError);
+                // This error should ideally be handled, but for now, we proceed not to block the main response.
             }
         }
-        // --- End: New block for saving round guesses (Phase 1) ---
 
-        // --- Construct and Send Response (Common for both paths) ---
-        // Use the finalChallengeState which contains the correct data for both past and present scenarios
-        const responseData = {
-            message: isPastChallenge ? 'Completion count updated for past challenge.' : 'Score submitted successfully',
-            stats: {
-                averageScore: finalChallengeState.stats.averageScore, // Existing or updated average
-                completions: finalChallengeState.stats.completions, // Always the updated count
-                // Send existing or updated processed data - ensure structure matches frontend expectation
-                processedDistribution: finalChallengeState.stats.processedDistribution ? {
-                     totalParticipants: finalChallengeState.stats.processedDistribution.totalParticipants,
-                     curvePoints: finalChallengeState.stats.processedDistribution.curvePoints,
-                     minScore: finalChallengeState.stats.processedDistribution.minScore,
-                     maxScore: finalChallengeState.stats.processedDistribution.maxScore,
-                     medianScore: finalChallengeState.stats.processedDistribution.medianScore
-                     // Note: We don't calculate/send percentileRank from the submit endpoint
-                 } : undefined
-             }
-         };
+        // Helper to map processed distribution for the response
+        const mapProcessedDistributionForResponse = (pd: any) => {
+            if (!pd) return undefined;
+            return {
+                totalParticipants: pd.totalParticipants,
+                curvePoints: pd.curvePoints,
+                minScore: pd.minScore,
+                maxScore: pd.maxScore,
+                medianScore: pd.medianScore
+            };
+        };
+        
+        if (!isPastChallenge) {
+            // --- CURRENT CHALLENGE: Respond quickly, process heavy stats in background ---
+            logger.info(`[Submit Sync Current Date] Responding early for challenge ID: ${updatedChallengeIncremented._id} on date ${queryDateString}.`);
+            
+            const preliminaryStats = {
+                averageScore: updatedChallengeIncremented.stats.averageScore, // Stats before this score's full impact on average/distribution
+                completions: updatedChallengeIncremented.stats.completions,    // Completions includes this user
+                processedDistribution: mapProcessedDistributionForResponse(updatedChallengeIncremented.stats.processedDistribution)
+            };
+            
+            if (!res.headersSent) {
+                res.status(200).json({
+                    message: 'Score submitted successfully. Detailed stats are updating.',
+                    stats: preliminaryStats
+                });
+            }
 
-        logger.info(`[Submit Response] Sending response for IP: ${sourceIp}, Score: ${numericScore}, Date: ${queryDateString}`);
-        res.status(200).json(responseData);
+            // --- BACKGROUND PROCESSING for current challenge ---
+            (async () => {
+                try {
+                    logger.info(`[Submit Async] Starting background stats update for challenge ID: ${updatedChallengeIncremented._id}, Date: ${queryDateString}`);
+                    const challengeId = updatedChallengeIncremented._id;
+                    
+                    // --- Update Distributions (Atomic) ---
+                    // Use a fresh copy or be careful with the existing updatedChallengeIncremented state if it's mutated elsewhere.
+                    // For safety, one might refetch or use a deep copy if mutations are complex.
+                    // Here, we assume updatedChallengeIncremented.stats.distributions is reasonably fresh for findIndex.
+                    const existingScoreIndex = updatedChallengeIncremented.stats.distributions.findIndex(d => d.score === numericScore);
+                    if (existingScoreIndex > -1) {
+                        logger.info(`[Submit Async DB Update] Incrementing count for existing score ${numericScore} on challenge ${challengeId}`);
+                        await DailyChallenge.updateOne(
+                            { _id: challengeId, 'stats.distributions.score': numericScore },
+                            { $inc: { 'stats.distributions.$.count': 1 } }
+                        );
+                    } else {
+                        logger.info(`[Submit Async DB Update] Adding new score ${numericScore} to distributions for challenge ${challengeId}`);
+                        await DailyChallenge.updateOne(
+                            { _id: challengeId },
+                            { $push: { 'stats.distributions': { score: numericScore, count: 1 } } }
+                        );
+                    }
+
+                    // --- Refetch state AFTER distribution updates to ensure calculations use latest data ---
+                    const refetchedChallenge = await DailyChallenge.findById(challengeId);
+                    if (!refetchedChallenge) {
+                        logger.error(`[Submit Async Error] Failed to fetch updated challenge after distribution updates for ID: ${challengeId}`);
+                        return; // Exit background task
+                    }
+                    
+                    let currentChallengeState = refetchedChallenge;
+
+                    // --- Recalculate Average Score ---
+                    const newCompletions = currentChallengeState.stats.completions;
+                    const currentDistributions = currentChallengeState.stats.distributions;
+                    logger.info(`[Submit Async Calc] Recalculating average score. Completions: ${newCompletions}, Distributions Count: ${currentDistributions.length}`);
+                    const totalScoreSum = currentDistributions.reduce((sum, dist) => sum + (dist.score * (dist.count || 0)), 0);
+                    const newAverageScore = newCompletions > 0 ? totalScoreSum / newCompletions : 0;
+
+                    // --- Potentially Recalculate Processed Distribution ---
+                    let shouldRecalculateProcessedDist = false;
+                    if (newCompletions <= 1000 || newCompletions % 100 === 0) {
+                        shouldRecalculateProcessedDist = true;
+                        logger.info(`[Submit Async Calc] Completion threshold (${newCompletions}) met. Recalculating processed distribution for ${challengeId}.`);
+                    }
+
+                    if (shouldRecalculateProcessedDist) {
+                        try {
+                            logger.info(`[Submit Async Calc] Calling processDistributionData for challenge ${challengeId}.`);
+                            const newlyProcessedData = processDistributionData(
+                                currentDistributions,
+                                newCompletions,
+                                undefined // No specific user score needed for global recalc
+                            );
+                            logger.info(`[Submit Async] newlyProcessedData (before saving to DB): ChallengeID: ${challengeId}, Completions: ${newCompletions}`, newlyProcessedData);
+                            await DailyChallenge.updateOne(
+                                { _id: challengeId },
+                                { $set: { 'stats.processedDistribution': newlyProcessedData, 'stats.averageScore': newAverageScore } }
+                            );
+                            logger.info(`[Submit Async DB Update] Saved updated processedDistribution and average score to DB for challenge ${challengeId}.`);
+                        } catch (processingError) {
+                            logger.error(`[Submit Async Calc Error] Error during processDistributionData or saving it for challenge ${challengeId}:`, processingError);
+                            await DailyChallenge.updateOne( // Save average score even if distribution processing fails
+                                { _id: challengeId },
+                                { $set: { 'stats.averageScore': newAverageScore } }
+                            );
+                            logger.warn(`[Submit Async DB Update] Saved updated average score (${newAverageScore}) after distribution processing error for challenge ${challengeId}.`);
+                        }
+                    } else {
+                        await DailyChallenge.updateOne(
+                            { _id: challengeId },
+                            { $set: { 'stats.averageScore': newAverageScore } }
+                        );
+                        logger.info(`[Submit Async DB Update] Saved updated average score (${newAverageScore}) for challenge ${challengeId}. No distribution recalculation needed.`);
+                    }
+                    
+                    // Update currentChallengeState with the latest stats for subsequent async operations
+                    currentChallengeState.stats.averageScore = newAverageScore;
+                    // If processedDistribution was updated, it would be in DB, currentChallengeState here might not reflect it unless refetched again.
+                    // For simplicity, we assume subsequent async operations can fetch if they need the absolute latest.
+                    // Or, pass refetchedChallenge/currentChallengeState to them.
+
+                    // --- START: Emergency Archival Failsafe (in background) ---
+                    const EMERGENCY_COMPLETION_THRESHOLD = 250000;
+                    if (currentChallengeState && typeof currentChallengeState.stats === 'object' && currentChallengeState.stats !== null && currentChallengeState._id) {
+                        const currentCompletions = currentChallengeState.stats.completions;
+                        const isFinalized = currentChallengeState.roundStatsFinalized;
+                        const challengeIdStr = String(currentChallengeState._id);
+
+                        if (typeof currentCompletions === 'number' && currentCompletions >= EMERGENCY_COMPLETION_THRESHOLD && !isFinalized) {
+                            logger.warn(`[Submit Async Failsafe] EMERGENCY: Challenge ${queryDateString} (ID: ${challengeIdStr}) reached ${currentCompletions} completions. Triggering immediate archival and finalization.`);
+                            archiveSpecificDayEmergency(queryDateString, challengeIdStr)
+                                .then(() => logger.info(`[Submit Async Failsafe] Emergency archival for ${queryDateString} likely completed.`))
+                                .catch(err => logger.error(`[Submit Async Failsafe] Asynchronous EMERGENCY archival for ${queryDateString} FAILED. Error:`, err));
+                        }
+                    } else {
+                         logger.error(`[Submit Async Failsafe] Critical error: currentChallengeState invalid for emergency archival check. ID: ${currentChallengeState?._id}`);
+                    }
+
+                    // --- START: Conditional Round Guess Processing (in background) ---
+                    if (currentChallengeState && typeof currentChallengeState.stats === 'object' && currentChallengeState.stats !== null) {
+                        const completions = currentChallengeState.stats.completions;
+                        const isRoundStatsFinalized = currentChallengeState.roundStatsFinalized;
+                        let shouldRecalculateRoundGuesses = false;
+                        if (isRoundStatsFinalized) {
+                            // Already finalized, do nothing
+                        } else if (completions <= 100 || (completions <= 500 && completions % 25 === 0) || (completions > 500 && completions % 100 === 0)) {
+                            shouldRecalculateRoundGuesses = true;
+                        }
+
+                        if (shouldRecalculateRoundGuesses) {
+                            logger.info(`[Submit Async Calc] Conditions met to recalculate round guesses for date ${queryDateString}. Triggering processing.`);
+                            processAndStoreRoundGuessDistributions(queryDateString)
+                                .catch(err => logger.error(`[Submit Async Background Processing Error] Round guess distribution processing failed for date ${queryDateString}:`, err));
+                        }
+                    } else {
+                         logger.error(`[Submit Async Logic Error] Critical error: currentChallengeState invalid for round guess processing. ID: ${currentChallengeState?._id}`);
+                    }
+                    logger.info(`[Submit Async] Background stats update COMPLETED for challenge ID: ${challengeId}, Date: ${queryDateString}`);
+
+                } catch (bgError) {
+                    logger.error(`[Submit Async Error] Full background processing failed for challenge ${updatedChallengeIncremented._id}, Date: ${queryDateString}:`, bgError);
+                }
+            })().catch(err => { // Catch errors from invoking the async IIFE itself
+                 logger.error(`[Submit Async Invocation Error] Could not start background processing for ${queryDateString}:`, err);
+            });
+            // End of current challenge specific logic (response already sent)
+
+        } else {
+            // --- PAST CHALLENGE: Process synchronously (already relatively fast) ---
+            logger.info(`[Submit Sync Past Date] Processing past challenge ID: ${updatedChallengeIncremented._id} on date ${queryDateString}.`);
+            // For past challenges, finalChallengeState is just updatedChallengeIncremented (only completions changed)
+            const finalChallengeState = updatedChallengeIncremented;
+            
+            const responseData = {
+                message: 'Completion count updated for past challenge.',
+                stats: {
+                    averageScore: finalChallengeState.stats.averageScore,
+                    completions: finalChallengeState.stats.completions,
+                    processedDistribution: mapProcessedDistributionForResponse(finalChallengeState.stats.processedDistribution)
+                }
+            };
+            if (!res.headersSent) {
+                res.status(200).json(responseData);
+            }
+        }
 
     } catch (err) {
-        logger.error(`[Submit Error] IP: ${sourceIp}, Score: ${score}, Date: ${date}`, err);
-        res.status(500).json({ error: 'Internal server error during score update' });
+        logger.error(`[Submit Error Main] IP: ${sourceIp}, Score: ${score}, Date: ${date}`, err);
+        if (!res.headersSent) { // Ensure response is sent only once
+            res.status(500).json({ error: 'Internal server error during score update' });
+        }
     }
 });
 
