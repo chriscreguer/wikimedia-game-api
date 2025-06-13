@@ -984,7 +984,7 @@ router.post('/daily-challenge/submit', submitLimiter, async (req: Request, res: 
 
                     // --- Potentially Recalculate Processed Distribution ---
                     let shouldRecalculateProcessedDist = false;
-                    if (newCompletions <= 1000 || newCompletions % 1 === 0) {
+                    if (newCompletions <= 1000 || newCompletions % 100 === 0) {
                         shouldRecalculateProcessedDist = true;
                         logger.info(`[Submit Async Calc] Completion threshold (${newCompletions}) met. Recalculating processed distribution for ${challengeId}.`);
                     }
